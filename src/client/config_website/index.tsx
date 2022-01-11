@@ -1,4 +1,5 @@
-import ReactDOM from "react-dom";
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 
 ReactDOM.render(
     <h1>Hello Admin!</h1>,
