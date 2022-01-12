@@ -20,8 +20,8 @@ module.exports = env => ({
                         loader: "babel-loader",
                         options: {
                             presets: [
-                                "@babel/env",
-                                "@babel/react",
+                                "@babel/preset-env",
+                                "@babel/preset-react",
                                 "@babel/preset-typescript"
                             ],
                             plugins: [
