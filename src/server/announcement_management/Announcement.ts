@@ -1,15 +1,8 @@
+import { AnnouncementAuthorError } from "./AnnouncementAuthorError";
 import * as AnnouncementConfig from "./AnnouncementConfig.json";
 
 export class Announcement {
 
-    static AnnouncementAuthorError = class extends Error {
-
-        static DEFAULT_ANNOUNCEMENT_AUTHOR_ERROR_MESSAGE = "Error, the announcement author must be a valid e-mail address";
-
-        constructor(msg: string) {
-            super(msg);
-        }
-    }
     private readonly _title: string;
     private readonly _author: string
     private readonly timeOfAddition: number;
@@ -30,8 +23,8 @@ export class Announcement {
     public constructor(title: string, author: string, text: string, timeOfAddition: number=Date.now(),
                        DurationToTimeout: number=+AnnouncementConfig.DEFAULT_ANNOUNCEMENT_TIMEOUT) {
         if (!Announcement.validateAuthor(author)) {
-            throw new Announcement.AnnouncementAuthorError(
-                Announcement.AnnouncementAuthorError.DEFAULT_ANNOUNCEMENT_AUTHOR_ERROR_MESSAGE);
+            throw new AnnouncementAuthorError(
+                AnnouncementAuthorError.DEFAULT_ANNOUNCEMENT_AUTHOR_ERROR_MESSAGE);
         }
         this._title = title;
         this._author = author;
