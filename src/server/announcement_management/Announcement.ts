@@ -13,6 +13,9 @@ export class Announcement {
     private readonly _title: string;
     private readonly _author: string
     private readonly timeOfAddition: number;
+    private readonly _timeout: number;
+
+    private _text: string;
 
     /**
      * Creates an announcement with the specified parameters.
@@ -24,40 +27,35 @@ export class Announcement {
      *
      * @throws AnnouncementAuthorError gets thrown, if the author is not a valid e-mail address
      */
-    public constructor(title: string, author: string, text: string, timeOfAddition?: number, DurationToTimeout?: number) {
+    public constructor(title: string, author: string, text: string, timeOfAddition?: number=Date.now(), DurationToTimeout?: number=+AnnouncementConfig.DEFAULT_ANNOUNCEMENT_TIMEOUT) {
         if (!Announcement.validateAuthor(author)) {
             throw new Announcement.AnnouncementAuthorError(Announcement.AnnouncementAuthorError.DEFAULT_ANNOUNCEMENT_AUTHOR_ERROR_MESSAGE);
         }
         this._title = title;
         this._author = author;
         this._text = text;
-
-        this.timeOfAddition = Date.now();
-        this._timeout = this.timeOfAddition + +AnnouncementConfig.DEFAULT_ANNOUNCEMENT_TIMEOUT
+        this.timeOfAddition = timeOfAddition
+        this._timeout = this.timeOfAddition +DurationToTimeout;
     }
 
-    private _text: string;
-
-    get text(): string {
+    public get text(): string {
         return this._text;
     }
 
-    set text(value: string) {
+    public set text(value: string) {
         this._text = value;
     }
 
-    private _timeout: number;
-
-    get timeout(): number {
+    public get timeout(): number {
         return this._timeout;
     }
 
-    get author(): string {
+    public get author(): string {
         return this._author;
     }
 
-    get title(): string {
-        return this._title;
+    public get title(): string {
+        return this.title;
     }
 
 // author must be an email-address
