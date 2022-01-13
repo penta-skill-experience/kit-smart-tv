@@ -1,4 +1,7 @@
+import * as AnnouncementConfig from "./AnnouncementConfig.json";
+
 export class Announcement {
+
     private readonly title : string;
     private readonly author : string
     private readonly timeOfAddition : number;
@@ -16,7 +19,7 @@ export class Announcement {
         this.text = text;
 
         this.timeOfAddition = Date.now();
-
+        this.timeout = this.timeOfAddition + +AnnouncementConfig.DEFAULT_ANNOUNCEMENT_TIMEOUT
     }
 
     // author must be an email-address
