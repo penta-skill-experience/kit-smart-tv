@@ -27,9 +27,11 @@ export class Announcement {
      *
      * @throws AnnouncementAuthorError gets thrown, if the author is not a valid e-mail address
      */
-    public constructor(title: string, author: string, text: string, timeOfAddition?: number=Date.now(), DurationToTimeout?: number=+AnnouncementConfig.DEFAULT_ANNOUNCEMENT_TIMEOUT) {
+    public constructor(title: string, author: string, text: string, timeOfAddition: number=Date.now(),
+                       DurationToTimeout: number=+AnnouncementConfig.DEFAULT_ANNOUNCEMENT_TIMEOUT) {
         if (!Announcement.validateAuthor(author)) {
-            throw new Announcement.AnnouncementAuthorError(Announcement.AnnouncementAuthorError.DEFAULT_ANNOUNCEMENT_AUTHOR_ERROR_MESSAGE);
+            throw new Announcement.AnnouncementAuthorError(
+                Announcement.AnnouncementAuthorError.DEFAULT_ANNOUNCEMENT_AUTHOR_ERROR_MESSAGE);
         }
         this._title = title;
         this._author = author;
@@ -55,7 +57,7 @@ export class Announcement {
     }
 
     public get title(): string {
-        return this.title;
+        return this._title;
     }
 
 // author must be an email-address
