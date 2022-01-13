@@ -3,10 +3,27 @@ import * as AnnouncementConfig from "../../../../server/announcement_management/
 
 // TODO: write test for throw of announcementAuthorError
 
+const announcementTitle = "HelloWorld";
+const announcementAuthor = "john.smith@example.com";
+const announcementText = "What a wonderful world";
+
+describe("testing new announcement for given timeOfAddition and given timeout", () => {
+    const timeOfAddition = 12345
+    const durationToTimeout = 5;
+
+    const announcement = new Announcement(announcementTitle, announcementAuthor, announcementText,
+        timeOfAddition, durationToTimeout);
+
+    test ("testing get timeOfAddition()", () => {
+        expect(announcement.timeOfAddition).toEqual(timeOfAddition);
+    })
+
+    test("testing get timeout()", () => {
+        expect(announcement.timeout).toEqual(timeOfAddition + durationToTimeout);
+    })
+})
+
 describe("testing getters and setters of Announcement.ts", () => {
-    const announcementTitle = "HelloWorld";
-    const announcementAuthor = "john.smith@example.com";
-    const announcementText = "What a wonderful world";
 
     const announcement = new Announcement(announcementTitle, announcementAuthor, announcementText);
 
@@ -23,7 +40,7 @@ describe("testing getters and setters of Announcement.ts", () => {
     })
 
     test("testing get timeout() with default timeout", () => {
-        expect(announcement.timeout).toEqual(AnnouncementConfig.DEFAULT_ANNOUNCEMENT_TIMEOUT);
+        expect(announcement.timeout).toEqual(announcement.timeOfAddition + +AnnouncementConfig.DEFAULT_ANNOUNCEMENT_TIMEOUT);
     })
 
     test("testing set text()", () => {
