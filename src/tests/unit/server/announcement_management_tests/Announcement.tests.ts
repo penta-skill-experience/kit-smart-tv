@@ -1,7 +1,6 @@
 import {Announcement} from "../../../../server/announcement_management/Announcement";
 import * as AnnouncementConfig from "../../../../server/announcement_management/AnnouncementConfig.json";
-
-// TODO: write test for throw of announcementAuthorError
+import {AnnouncementAuthorError} from "../../../../server/announcement_management/AnnouncementAuthorError";
 
 const announcementTitle = "HelloWorld";
 const announcementAuthor = "john.smith@example.com";
@@ -47,5 +46,14 @@ describe("testing getters and setters of Announcement.ts", () => {
         const newText = "New text";
         announcement.text = newText;
         expect(announcement.text).toEqual(newText);
+    })
+})
+
+describe("testing errors for Announcement.ts", () => {
+    const invalidAuthor = "";
+
+
+    test("testing error for invalid author", () => {
+        expect(new Announcement(announcementTitle, invalidAuthor, announcementText)).toThrow(AnnouncementAuthorError);
     })
 })
