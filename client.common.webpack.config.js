@@ -7,7 +7,7 @@ both import this common config.
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
-module.exports = env => ({
+module.exports = (env, styleLoader) => ({
     entry: path.join(__dirname, "src", "client", env.client_dir, "index.tsx"),
 
     mode: "development",
@@ -17,14 +17,13 @@ module.exports = env => ({
             {
                 test: /\.css/,
                 use: [
-                    "style-loader",//MiniCssExtractPlugin.loader,
+                    styleLoader,  // different values for development vs. production
                     {
                         loader: "css-loader",
                         options: {
                             modules: {
                                 exportLocalsConvention: "camelCase",  // convert CSS to camelCase in JS (e.g. "my-class" in CSS becomes "style.myClass" in JS)
                                 localIdentName: "[local]__[hash:base64:5]",  // adds a unique hash to the original CSS name for modularization
-                                //namedExport: true,
                             },
                             importLoaders: 1,  // "1" means "use PostCSS"
                         },
@@ -64,7 +63,6 @@ module.exports = env => ({
             // a template is needed in order to provide a root component with the id "root" to ReactDOM
             template: path.join(__dirname, "src", "client", env.client_dir, "index.html"),
         }),
-//        MiniCssExtractPlugin.pluginName,
     ],
 
     output: {
