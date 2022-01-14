@@ -15,8 +15,34 @@ module.exports = env => ({
     module: {
         rules: [
             {
-                test: /\.(css|scss)$/,
-                use: ["style-loader", "css-loader", "postcss-loader"],
+                test: /\.css/,
+                use: [
+                    "style-loader",//MiniCssExtractPlugin.loader,
+                    {
+                        loader: "css-loader",
+                        options: {
+                            modules: {
+                                exportLocalsConvention: "camelCase",  // convert CSS to camelCase in JS (e.g. "my-class" in CSS becomes "style.myClass" in JS)
+                                localIdentName: "[local]__[hash:base64:5]",  // adds a unique hash to the original CSS name for modularization
+                                //namedExport: true,
+                            },
+                            importLoaders: 1,  // "1" means "use PostCSS"
+                        },
+                    },
+                    {
+                        loader: "postcss-loader",  // postcss-loader is configured via postcss.config.js
+                        options: {
+                            postcssOptions: {
+                                plugins: [
+                                    "postcss-import",
+                                    "tailwindcss",
+                                    "postcss-preset-env",  // postcss-preset-env converts modern CSS into something most browsers can understand
+                                                           // postcss-preset-env includes autoprefixer
+                                ],
+                            },
+                        }
+                    },
+                ],
             },
             {
                 test: /\.(ts|tsx)$/,
@@ -30,7 +56,7 @@ module.exports = env => ({
         ],
     },
     resolve: {
-        extensions: ['*', '.js', ".ts", ".tsx"]
+        extensions: ['*', '.js', ".ts", ".tsx", ".css"]
     },
 
     plugins: [
@@ -38,6 +64,7 @@ module.exports = env => ({
             // a template is needed in order to provide a root component with the id "root" to ReactDOM
             template: path.join(__dirname, "src", "client", env.client_dir, "index.html"),
         }),
+//        MiniCssExtractPlugin.pluginName,
     ],
 
     output: {
