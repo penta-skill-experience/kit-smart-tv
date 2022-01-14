@@ -1,3 +1,9 @@
+/*
+This file contains the webpack config that is used for both development and production mode.
+The respective configs (client.dev.webpack.config.js and client.prod.webpack.config.js)
+both import this common config.
+ */
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
@@ -37,6 +43,5 @@ module.exports = env => ({
     output: {
         clean: true,  // clean the /dist folder before each build, so that only used files will be generated
         path: path.join(__dirname, "dist", env.client_dir),
-        filename: 'bundle.[hash].js',  // use [hash] to avoid changes not showing because of browser caching
-    },
+    }
 });
