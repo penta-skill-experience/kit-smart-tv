@@ -8,9 +8,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = (env, styleLoader) => ({
-    entry: path.join(__dirname, "src", "client", env.client_dir, "index.tsx"),
 
-    mode: "development",
+    entry: path.join(__dirname, "src", "client", env.client_dir, "index.tsx"),
 
     module: {
         rules: [
