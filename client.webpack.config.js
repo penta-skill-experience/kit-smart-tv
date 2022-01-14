@@ -36,6 +36,6 @@ module.exports = env => ({
 
     output: {
         path: path.join(__dirname, "dist", env.client_dir),
-        filename: 'index.js',
+        filename: 'bundle.[hash].js',  // use [hash] to avoid changes not showing because of browser caching
     },
 });
