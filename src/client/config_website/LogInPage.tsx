@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export class LogInPage extends React.Component{
+export class LogInPage extends React.Component {
     state ={
         password: ""
     };
