@@ -1,63 +1,88 @@
 import * as React from "react";
-import meme1 from "./mem.jpg";
-import meme2 from "./mem2.jpg";
+import ToggleButton from '@mui/material/ToggleButton';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
+import meme1 from './mem.jpg'
+import meme2 from './mem2.jpg'
+import {useState} from "react";
 
-export class PersonalizationPage extends React.Component{
-    state = {
-        light_scheme: false,
-        dark_scheme: false,
-        font_size:"medium"
-    }
 
-    constructor(props) {
-        super(props);
-        this.handleChosenColorScheme = this.handleChosenColorScheme.bind(this);
-    }
 
-    handleChosenColorScheme(event){
-        alert('checkbos clicked' + event.target.checked)
+export function PersonalizationPage() {
+    const [color_scheme,setColorScheme] = useState<string | null>(null)
+    const [fontSize, setFontSize] = useState<string | null>(null)
 
-        //this.setState({color_scheme: event.target.checked})
-    }
+    const handleColorSchemeChange = (
+        event: React.MouseEvent<HTMLElement>,
+        newColorScheme: string | null,
+    ) => {
+        setColorScheme(newColorScheme);
+    };
 
-    render() {
-        return <div className="gap-5 columns-2">
-            <h1>Choose your color scheme:</h1>
-            <label>
-                Light(default):
-                <input type="checkbox" onChange= {this.handleChosenColorScheme}/>
-                Dark:
-                <input type="checkbox" onChange= {this.handleChosenColorScheme}/>
-            </label>
+    const handleFontSizeChange = (
+        event: React.MouseEvent<HTMLElement>,
+        newFontSize: string | null,
+    ) => {
+        setFontSize(newFontSize);
+    };
 
-            <h1>Choose your preferred font size:</h1>
+    return (
+        <>
+            <ToggleButtonGroup
+                value = {color_scheme}
+                exclusive
+                onChange = {handleColorSchemeChange}
+            >
+                <h1>Choose your color scheme:</h1>
+                <h1>light mode:</h1>
+                <ToggleButton value="light">
+                    <Brightness7Icon/>
+                </ToggleButton>
+                <h1>dark mode:</h1>
+                <ToggleButton value="dark">
+                    <Brightness4Icon/>
+                </ToggleButton>
+            </ToggleButtonGroup>
 
-            <label>
-                Small:
-                <input type="checkbox" />
-                Medium(default):
-                <input type="checkbox" defaultChecked={true}/>
-                Large:
-                <input type="checkbox"/>
-            </label>
-            {this.renderBackgrounds()}
+            <ToggleButtonGroup
+                value = {fontSize}
+                exclusive
+                onChange = {handleFontSizeChange}
+            >
+                <h1>Choose your preferred font size:</h1>
+                    <h1>Small:</h1>
+                    <ToggleButton value = "small">
+                        <RadioButtonCheckedIcon/>
+                    </ToggleButton>
+                    <h1>Medium:</h1>
+                    <ToggleButton value = "medium">
+                        <RadioButtonCheckedIcon/>
+                    </ToggleButton>
+                    <h1>Large:</h1>
+                    <ToggleButton value = "large">
+                        <RadioButtonCheckedIcon/>
+                    </ToggleButton>
+            </ToggleButtonGroup>
+            {renderBackground(color_scheme)}
+        </>
+    );
+}
+
+function renderBackground(color_scheme) {
+    if (color_scheme === "light") {
+        return <div>
+            <h1>Available backgrounds for light mode:</h1>
+            <img src={meme1}/>
         </div>
-    }
 
-    renderBackgrounds(){
-        if (this.state.light_scheme === true){
-            return <div>
-                <h1>Available backgrounds for mode:</h1>
-                <img src={meme1}/>
-            </div>
-
-        } else if (this.state.dark_scheme === true) {
-            return <div>
-                <h1>Available backgrounds for dark mode:</h1>
-                <img src={meme2}/>
-            </div>
-        } else {
-            return
-        }
+    } else if (color_scheme === "dark") {
+        return <div>
+            <h1>Available backgrounds for dark mode:</h1>
+            <img src={meme2}/>
+        </div>
+    } else {
+        return
     }
 }
