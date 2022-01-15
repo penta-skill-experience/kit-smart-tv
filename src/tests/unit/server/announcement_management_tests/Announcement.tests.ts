@@ -54,6 +54,8 @@ describe("testing errors for Announcement.ts", () => {
 
 
     test("testing error for invalid author", () => {
-        expect(new Announcement(announcementTitle, invalidAuthor, announcementText)).toThrow(AnnouncementAuthorError);
+        expect(() => {
+            new Announcement(announcementTitle, invalidAuthor, announcementText)
+        }).toThrow(AnnouncementAuthorError);
     })
 })
