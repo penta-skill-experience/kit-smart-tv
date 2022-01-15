@@ -8,11 +8,22 @@
     "build-display-website": "webpack --config client.webpack.config.js --env=client_dir=display_website",
     "build-server": "webpack --config server.webpack.config.js",
     "build-all": "webpack --config client.webpack.config.js --env=client_dir=config_website & webpack --config client.webpack.config.js --env=client_dir=display_website & webpack --config server.webpack.config.js",
-    "test": "jest --config 'jest.config.ts' --coverage"
+    "test": "jest --config 'jest.config.ts' --coverage",
+    "api-dev": "ts-node-dev --respawn --transpile-only src/server/api/app.ts"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/body-parser": "^1.19.2",
+    "@types/config": "^0.0.41",
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.7",
+    "@types/lodash": "^4.14.178",
+    "@types/nanoid": "^3.0.0",
+    "@types/node": "^17.0.8",
+    "@types/pino": "^7.0.5",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
     "css-loader": "^6.5.1",
@@ -26,12 +37,25 @@
     "ts-jest": "^27.1.2",
     "ts-loader": "^9.2.6",
     "ts-node": "^10.4.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.4",
     "webpack": "^5.65.0",
     "webpack-cli": "^4.9.1"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "config": "^3.3.7",
+    "cors": "^2.8.5",
+    "dayjs": "^1.10.7",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "mongoose": "^6.1.6",
+    "nanoid": "^3.1.32",
+    "pino": "^7.6.3",
+    "pino-pretty": "^7.3.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "typescript": "^4.5.4"
+    "zod": "^3.11.6"
   }
 }
