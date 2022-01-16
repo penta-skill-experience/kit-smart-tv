@@ -2,7 +2,7 @@ import * as React from "react";
 export class SquareHolder extends React.Component<any, any> {
 
     render() {
-        return <div className="w-full h-0 shadow-2xl pb-full rounded-2xl bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-70">
+        return <div className="w-full shadow-2xl rounded-2xl bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-70">
                 <div className="flex space-x-1 justify-center p-2" style={{
                     opacity: 1
                 }}>
