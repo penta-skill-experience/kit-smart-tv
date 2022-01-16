@@ -70,5 +70,6 @@ module.exports = (env, styleLoader) => ({
     output: {
         clean: true,  // clean the /dist folder before each build, so that only used files will be generated
         path: path.join(__dirname, "dist", env.client_dir),
+        // "filename" will be set by other .webpack.configs.js files
     }
 });
