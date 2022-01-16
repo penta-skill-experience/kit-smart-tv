@@ -1,27 +1,19 @@
-import {Announcement} from "../../server/announcement_management/Announcement";
-import {VerifiedUser} from "../values/VerifiedUser";
-
 export class AdminStatePersistence {
 
-    setAnnouncements(announcements: Announcement[]) {
-        //todo
+    login(password: string) {
+        // todo
     }
 
-    getAnnouncements(): Announcement[] {
-        //todo
-        return [];
+    logout(password: string) {
+        // todo
     }
 
-    getVerifiedUsers(): VerifiedUser[] {
+    getAdminLoginState(): boolean {
         //todo
-        return [];
+        return true;
     }
 
-    addVerifiedUser(verifiedUser: VerifiedUser) {
-        //todo
-    }
-
-    removeVerifiedUser(verifiedUser: VerifiedUser) {
+    setPassword(oldpw: string, newpw: string) {
         //todo
     }
 }

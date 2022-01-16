@@ -5,7 +5,6 @@ export class AnnouncementPersistence {
 
     setAnnouncements(announcements: Announcement[]) {
         //todo
-        return [];
     }
 
     getAnnouncements(): Announcement[] {
