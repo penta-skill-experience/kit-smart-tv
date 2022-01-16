@@ -1,5 +1,7 @@
 import * as React from "react";
 import {SquareHolder} from "./SquareHolder";
+import {DigitalTime} from "./DigitalTime";
+
 export class RootComponent extends React.Component<any, any> {
     render() {
         return <div className = "w-screen h-screen bg-no-repeat bg-cover bg-center" style={{
@@ -11,7 +13,9 @@ export class RootComponent extends React.Component<any, any> {
                 </div>
                 <div className="z-20 w-full h-screen lg:w-4/12 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30">
                     <div className="pl-4 pr-4 pb-2 pt-2 grid grid-rows-2 gap-8 mt-2">
-                        <div className="w-full h-0 pb-full"/>
+                        <div className="pl-4 pr-4 pb-2 pt-2 w-full h-0 pb-full">
+                            <DigitalTime/>
+                        </div>
                         <SquareHolder/>
                     </div>
                 </div>
