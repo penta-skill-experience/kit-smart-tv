@@ -41,15 +41,15 @@ export class DesignValuesPersistence {
         //todo
     }
 
-    getFontSizeTypes(): string[] {
+    getFontSizes(): string[] {
         //todo
         return [];
     }
 
-    //todo: do we need this method? What is FontSizeTypes?
-    // setFontSizeTypes(list: FontSizeTypes[]) {
-    //     //todo
-    // }
+    //todo: do we need this method?
+    setFontSizes(list: FontSize[]) {
+        //todo
+    }
 
     getFontSize(id: string): FontSize {
         //todo
