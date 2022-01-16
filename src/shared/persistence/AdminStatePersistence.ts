@@ -1,11 +1,10 @@
 import {Announcement} from "../../server/announcement_management/Announcement";
 import {VerifiedUser} from "../values/VerifiedUser";
 
-export class AnnouncementPersistence {
+export class AdminStatePersistence {
 
     setAnnouncements(announcements: Announcement[]) {
         //todo
-        return [];
     }
 
     getAnnouncements(): Announcement[] {
