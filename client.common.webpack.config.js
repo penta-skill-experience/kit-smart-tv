@@ -19,13 +19,13 @@ module.exports = (env, styleLoader) => ({
                     styleLoader,  // different values for development vs. production
                     {
                         loader: "css-loader",
-                        options: {
-                            modules: {
-                                exportLocalsConvention: "camelCase",  // convert CSS to camelCase in JS (e.g. "my-class" in CSS becomes "style.myClass" in JS)
-                                localIdentName: "[local]__[hash:base64:5]",  // adds a unique hash to the original CSS name for modularization
-                            },
-                            importLoaders: 1,  // "1" means "use PostCSS"
-                        },
+                        // options: {
+                        //     modules: {
+                        //         exportLocalsConvention: "camelCase",  // convert CSS to camelCase in JS (e.g. "my-class" in CSS becomes "style.myClass" in JS)
+                        //         localIdentName: "[local]__[hash:base64:5]",  // adds a unique hash to the original CSS name for modularization
+                        //     },
+                        //     importLoaders: 1,  // "1" means "use PostCSS"
+                        // },
                     },
                     {
                         loader: "postcss-loader",  // postcss-loader is configured via postcss.config.js
