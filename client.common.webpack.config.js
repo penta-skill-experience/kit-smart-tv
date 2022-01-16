@@ -9,6 +9,8 @@ const path = require('path');
 
 module.exports = (env, styleLoader) => ({
 
+    target: "web",
+
     entry: path.join(__dirname, "src", "client", env.client_dir, "index.tsx"),
 
     module: {
