@@ -17,29 +17,31 @@ export abstract class AnnouncementAuthorType {
     static readonly ADMIN = new class extends AnnouncementAuthorType {
 
         isThisAuthorType(author: string): Boolean {
+            let returnValue = false;
             AnnouncementConfig.ADMINS.forEach(admin => {
                 if (admin.EMAIL === author) {
-                    return true;
+                    returnValue = true;
                 }
             })
-            return false;
+            return returnValue;
         }
 
 };
 
-    static VERIFIED = new class extends AnnouncementAuthorType {
+    static readonly VERIFIED = new class extends AnnouncementAuthorType {
 
         isThisAuthorType(author: string): Boolean {
+            let returnValue = false;
             new AnnouncementPersistence().getVerifiedUsers().forEach(verifiedUser => {
                 if (verifiedUser.email === author) {
-                    return true;
+                    returnValue = true;
                 }
             });
-            return false;
+            return returnValue;
         }
     }
 
-    static UNVERIFIED = new class extends AnnouncementAuthorType {
+    static readonly UNVERIFIED = new class extends AnnouncementAuthorType {
 
         isThisAuthorType(author: string): Boolean {
             return !AnnouncementAuthorType.VERIFIED.isThisAuthorType(author) &&
