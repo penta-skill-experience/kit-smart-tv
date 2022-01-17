@@ -2,6 +2,8 @@ import * as AnnouncementConfig from "../../../../server/announcement_management/
 import {VerifiedUser} from "../../../../shared/values/VerifiedUser";
 import {AnnouncementPersistence} from "../../../../shared/persistence/AnnouncementPersistence";
 import {Announcement} from "../../../../server/announcement_management/Announcement";
+import {SetAnnouncementCommand} from "../../../../server/announcement_management/SetAnnouncementCommand";
+import {AnnouncementCommandError} from "../../../../server/announcement_management/AnnouncementCommand";
 
 // mocking AnnouncementConfig.json
 jest.mock('../../../../server/announcement_management/AnnouncementConfig.json', () => ({
@@ -17,8 +19,12 @@ jest.mock('../../../../server/announcement_management/AnnouncementConfig.json', 
 const bob = new VerifiedUser("bob@example.com", "bob");
 const alice = new VerifiedUser("alice@example.com", "alice");
 const verifiedUsers = [bob, alice];
-const announcements = [new Announcement("Bobs Announcement", bob.email, "This is bobs announcement."),
-    new Announcement("Announcement from alice", alice.email, "This announcement is from alice")];
+
+const bobAnnouncement = new Announcement("Bobs Announcement", bob.email, "This is bobs announcement.");
+const aliceAnnouncement = new Announcement(
+    "Announcement from alice", alice.email, "This announcement is from alice");
+const announcements = [bobAnnouncement, aliceAnnouncement];
+let setAnnouncements : Announcement[] = [];
 
 //mocking announcementPersistence to return test values for these tests
 const getAnnouncementsMock = jest.spyOn(AnnouncementPersistence.prototype, "getAnnouncements");
@@ -31,4 +37,102 @@ getAnnouncementsMock.mockImplementation(() => {
 getVerifiedUsersMock.mockImplementation(() => {
     return verifiedUsers;
 });
-setAnnouncementsMock.mockImplementation(() => {});
+setAnnouncementsMock.mockImplementation(announcementsToSet => {
+    setAnnouncements = announcementsToSet;
+});
+
+afterEach(() => {
+    setAnnouncements = [];
+})
+
+afterAll(() => {
+    jest.restoreAllMocks();
+})
+
+describe("SetAnnouncementCommand.ts handles verified users correctly", () => {
+
+    test("verified user can add announcement", () => {
+
+        const newAnnouncement = new Announcement("Another Announcement from Bob",
+            bob.email, "This is another announcement from Bob")
+
+        new SetAnnouncementCommand(newAnnouncement).executeCommand();
+
+        expect(setAnnouncements.includes(bobAnnouncement)).toBe(true);
+        expect(setAnnouncements.includes(aliceAnnouncement)).toBe(true);
+        expect(setAnnouncements.includes(newAnnouncement)).toBe(true);
+        expect(setAnnouncements.length).toEqual(3);
+    });
+
+    test("verified user can edit his own announcement", () => {
+        const updatedBobAnnouncement = new Announcement(bobAnnouncement.title, bob.email,
+            "This is bobs updated announcement");
+
+        new SetAnnouncementCommand(updatedBobAnnouncement).executeCommand();
+
+        expect(setAnnouncements.includes(updatedBobAnnouncement)).toBe(true);
+        expect(setAnnouncements.includes(aliceAnnouncement)).toBe(true);
+        expect(setAnnouncements.length).toEqual(2);
+    });
+
+    test ("verified user cannot edit announcements from others", () => {
+        const bobUpdatesAliceAnnouncement = new Announcement(aliceAnnouncement.title, bob.email,
+            "This announcement from alice was updated by bob.");
+
+        expect(() => {
+            new SetAnnouncementCommand(bobUpdatesAliceAnnouncement).executeCommand();
+        }).toThrow(AnnouncementCommandError);
+        expect(setAnnouncements.length).toEqual(0); // not changed from default value
+    });
+});
+
+describe("SetAnnouncementCommand.ts handles unverified users correctly", () => {
+    const unverifiedUserEmail = "unverifieduser@example.com";
+
+    test("an unverified user cannot add an announcement", () => {
+        const newAnnouncement = new Announcement("new Announcement", unverifiedUserEmail,
+            "This is a new announcement");
+
+        expect(() => {
+            new SetAnnouncementCommand(newAnnouncement).executeCommand();
+        }).toThrow(AnnouncementCommandError);
+        expect(setAnnouncements.length).toEqual(0);
+    });
+
+    test("an unverified user cannot edit an existing announcement", () => {
+        const editedAnnouncementByUnverified = new Announcement(bobAnnouncement.title, unverifiedUserEmail,
+            "This Announcement was edited by an unverified user");
+
+        expect(() => {
+            new SetAnnouncementCommand(editedAnnouncementByUnverified).executeCommand();
+        }).toThrow(AnnouncementCommandError);
+        expect(setAnnouncements.length).toEqual(0);
+    });
+});
+
+describe("SetAnnouncementCommand.ts handles admins correctly", () => {
+
+    test("an admin can add an announcement", () => {
+        const announcementFromAdmin = new Announcement("Announcement from an admin", AnnouncementConfig.ADMINS[0].EMAIL,
+            "The text of the announcement from an admin");
+
+        new SetAnnouncementCommand(announcementFromAdmin).executeCommand();
+
+        expect(setAnnouncements.includes(bobAnnouncement)).toBe(true);
+        expect(setAnnouncements.includes(aliceAnnouncement)).toBe(true);
+        expect(setAnnouncements.includes(announcementFromAdmin)).toBe(true);
+        expect(setAnnouncements.length).toEqual(3);
+    });
+
+    test("an admin can edit any announcement", () => {
+
+        const updatedAliceAnnouncementByAdmin = new Announcement(aliceAnnouncement.title, AnnouncementConfig.ADMINS[0].EMAIL,
+            "the text of alice' announcement was updated by an admin");
+
+        new SetAnnouncementCommand(updatedAliceAnnouncementByAdmin).executeCommand();
+
+        expect(setAnnouncements.includes(bobAnnouncement)).toBe(true);
+        expect(setAnnouncements.includes(updatedAliceAnnouncementByAdmin)).toBe(true);
+        expect(setAnnouncements.length).toEqual(2);
+    });
+});
