@@ -1,20 +1,33 @@
-import demoImg from "./img/demo.jpg";
 import * as React from "react";
+import {SquareHolder} from "./SquareHolder";
+import {DigitalTime} from "./DigitalTime";
 
 export class RootComponent extends React.Component<any, any> {
     render() {
-        return <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
-            <div className="md:flex">
-                <div className="md:shrink-0">
-                    <img className="h-48 w-full object-cover md:h-full md:w-48" src={demoImg}
-                         alt="Demo Image"/>
+        return <div className = "w-full min-h-screen bg-cover bg-no-repeat bg-center" style={{
+            backgroundImage: `url("https://images.wallpaperscraft.com/image/single/city_skyscrapers_clouds_rain_road_cars_lights_58563_3840x2160.jpg")`
+        }}>
+            <div className="flex flex-wrap">
+                <div className="z-30 absolute right-10 absolute bottom-7">
+                    <img className="sm:w-3/4 lg:w-full" src="https://www.artwork.de/wp-content/uploads/2015/08/logo_TF_NEU_4c_ai.png" alt="IHKLogo"/>
                 </div>
-                <div className="p-8">
-                    <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Example</div>
-                    <a href="#" className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">Some HTML designed with Tailwind CSS</a>
-                    <p className="mt-2 text-gray-500">
-                        You can remove this if you want.
-                        Have a look at <a href={"https://tailwindcss.com/"}>tailwind</a>.</p>
+                <div className="z-20 lg:w-4/12 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30">
+
+                    <div className="grid grid-rows-2 gap-8 min-h-screen box-border p-8">
+                        <div className="w-full">
+                            <DigitalTime/>
+                        </div>
+                        <SquareHolder/>
+
+                    </div>
+                </div>
+                <div className="z-10 w-2/3 absolute right-0">
+                    <div className="grid grid-cols-2 gap-8 min-h-screen box-border p-8">
+                        <SquareHolder />
+                        <SquareHolder />
+                        <SquareHolder />
+                        <SquareHolder />
+                    </div>
                 </div>
             </div>
         </div>;
