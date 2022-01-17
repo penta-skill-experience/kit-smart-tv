@@ -1,36 +1,31 @@
 import * as React from "react";
+import {useState} from "react";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 
-export class LogInPage extends React.Component {
-    state ={
-        password: ""
-    };
+export const LogInPage = ({logInInput, handleInput, handleLogIn, children}) => {
 
-    constructor(props) {
-        super(props);
-        this.handleLogIn = this.handleLogIn.bind(this);
-        this.handleInput = this.handleInput.bind(this);
-    }
-
-    handleInput(event){
-        this.setState({password: event.target.value})
-    }
-
-    handleLogIn(){
-        // to do
-        // connect with persistence
-        alert('A password was submitted: ' + this.state.password);
-    }
-
-    render(){
-        return <div className="md:container md:mx-auto">
-            <h1 className="text-7xl">Log In Admin Interface</h1>
-            <form onSubmit={this.handleLogIn}>
-                <label>
-                    Password:
-                    <input type="text" value={this.state.password} onChange={this.handleInput} />
-                </label>
-            </form>
-            <button onClick={this.handleLogIn}>Log In</button>
-        </div>
-    }
+    return (
+        <Box
+            sx={{
+                width: 300,
+                height: 300,}
+            }
+        >
+            <div>
+                <h1>Log In Admin Interface</h1>
+                <TextField
+                    value={logInInput}
+                    label="Old Password"
+                    onChange={handleInput}
+                />
+                <Button
+                    onClick={handleLogIn}
+                    variant="outlined"
+                >
+                    Log In</Button>
+            </div>
+        </Box>
+    );
 }

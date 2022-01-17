@@ -8,6 +8,7 @@ import {LayoutPage} from "./LayoutPage";
 import {AdminPasswordPage} from "./AdminPasswordPage";
 import {useState} from "react";
 import {SelectChangeEvent} from "@mui/material/Select";
+import {LogInPage} from "./LogInPage";
 
 
 interface TabPanelProps {
@@ -34,6 +35,27 @@ function TabPanel(props: TabPanelProps) {
 }
 
 export function ConfigWebsite() {
+    //state variables and methods for login page
+    const password = 'password123';
+    const [logInInput, setLogInInput] = useState('');
+    const [loggedInStatus, setLoggedInStatus] = useState(false);
+
+    const handleInput = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setLogInInput(event.target.value);
+    };
+
+    const handleLogIn= () => {
+        // to do
+        // connect with persistence
+        if (logInInput === password) {
+            setLoggedInStatus(true);
+        } else {
+            alert('password not correct')
+        }
+    };
+
     //state variables and methods for tabs
     const [pageNumber, setPageNumber] = React.useState(0);
 
@@ -42,8 +64,8 @@ export function ConfigWebsite() {
     };
 
     //state variables and methods for personalization page
-    const [colorScheme,setColorScheme] = useState<string | null>(null)
-    const [fontSize, setFontSize] = useState<string | null>(null)
+    const [colorScheme,setColorScheme] = useState<string | null>(null);
+    const [fontSize, setFontSize] = useState<string | null>(null);
 
     const handleColorSchemeChange = (
         event: React.MouseEvent<HTMLElement>,
@@ -92,50 +114,67 @@ export function ConfigWebsite() {
 
     //todo
     //Connect with persistence
-    const handlePasswordChange = () =>{
+    const handlePasswordChange = () => {
         alert('Old Password is ' + oldPassword + ' New Password is ' + newPassword)
+    };
+
+    function renderConfigWebsite() {
+        if(loggedInStatus === false) {
+            return (
+                <LogInPage
+                    logInInput={logInInput}
+                    handleInput={handleInput}
+                    handleLogIn={handleLogIn}
+                >
+                </LogInPage>
+            );
+        } else {
+            return (
+                <div>
+                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                        <Tabs value={pageNumber} onChange={handleChange} aria-label="basic tabs example">
+                            <Tab label="Personalization"/>
+                            <Tab label="Layout"/>
+                            <Tab label="Admin"/>
+                        </Tabs>
+                    </Box>
+                    <TabPanel value={pageNumber} index={0}>
+                        <PersonalizationPage
+                            colorScheme={colorScheme}
+                            fontSize={fontSize}
+                            handleColorSchemeChange={handleColorSchemeChange}
+                            handleFontSizeChange={handleFontSizeChange}
+                        >
+                        </PersonalizationPage>
+
+                    </TabPanel>
+                    <TabPanel value={pageNumber} index={1}>
+                        <LayoutPage
+                            list={list}
+                            widget={widget}
+                            handleWidgetSelection={handleWidgetSelection}
+                            handleAddWidget={handleAddWidget}
+                        >
+                        </LayoutPage>
+                    </TabPanel>
+                    <TabPanel value={pageNumber} index={2}>
+                        <AdminPasswordPage
+                            oldPassword={oldPassword}
+                            newPassword={newPassword}
+                            handleOldPassword={handleOldPassword}
+                            handleNewPassword={handleNewPassword}
+                            handlePasswordChange={handlePasswordChange}
+                        >
+                        </AdminPasswordPage>
+                    </TabPanel>
+                </div>
+            );
+        }
+
     }
 
-
-    return(
-        <div>
-
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={pageNumber} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="Personalization"/>
-                    <Tab label="Layout"/>
-                    <Tab label="Admin"/>
-                </Tabs>
-            </Box>
-            <TabPanel value={pageNumber} index={0}>
-                <PersonalizationPage
-                    colorScheme={colorScheme}
-                    fontSize={fontSize}
-                    handleColorSchemeChange={handleColorSchemeChange}
-                    handleFontSizeChange={handleFontSizeChange}
-                >
-                </PersonalizationPage>
-
-            </TabPanel>
-            <TabPanel value={pageNumber} index={1}>
-                <LayoutPage
-                    list={list}
-                    widget={widget}
-                    handleWidgetSelection={handleWidgetSelection}
-                    handleAddWidget={handleAddWidget}
-                >
-                </LayoutPage>
-            </TabPanel>
-            <TabPanel value={pageNumber} index={2}>
-                <AdminPasswordPage
-                    oldPassword={oldPassword}
-                    newPassword={newPassword}
-                    handleOldPassword={handleOldPassword}
-                    handleNewPassword={handleNewPassword}
-                    handlePasswordChange={handlePasswordChange}
-                >
-                </AdminPasswordPage>
-            </TabPanel>
+    return(<div>
+            {renderConfigWebsite()}
         </div>
     );
 }
