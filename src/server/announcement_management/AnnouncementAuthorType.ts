@@ -11,8 +11,6 @@ import {AnnouncementPersistence} from "../../shared/persistence/AnnouncementPers
  */
 export abstract class AnnouncementAuthorType {
 
-    values = [AnnouncementAuthorType.ADMIN, AnnouncementAuthorType.VERIFIED,
-              AnnouncementAuthorType.UNVERIFIED];
 
     static readonly ADMIN = new class extends AnnouncementAuthorType {
 
@@ -48,6 +46,9 @@ export abstract class AnnouncementAuthorType {
                 !AnnouncementAuthorType.ADMIN.isThisAuthorType(author);
         }
     }
+
+    static values = [AnnouncementAuthorType.ADMIN, AnnouncementAuthorType.VERIFIED,
+        AnnouncementAuthorType.UNVERIFIED];
 
     /**
      * returns true, if the given author is of this author type.
