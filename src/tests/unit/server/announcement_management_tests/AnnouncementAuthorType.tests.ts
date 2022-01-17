@@ -1,6 +1,7 @@
 import * as AnnouncementConfig from "../../../../server/announcement_management/AnnouncementConfig.json";
 import {AnnouncementPersistence} from "../../../../shared/persistence/AnnouncementPersistence";
 import {VerifiedUser} from "../../../../shared/values/VerifiedUser";
+import {AnnouncementAuthorType} from "../../../../server/announcement_management/AnnouncementAuthorType";
 
 jest.mock('../../../../server/announcement_management/AnnouncementConfig.json', () => ({
 
@@ -27,7 +28,9 @@ describe("testing AnnouncementAuthorType.ts", () => {
     });
 
     test("test ADMIN identifies correct admins", () => {
-
+        expect(AnnouncementAuthorType.ADMIN.isThisAuthorType(AnnouncementConfig.ADMINS[0].IDENTIFIER)).toBe(true);
+        expect(AnnouncementAuthorType.ADMIN.isThisAuthorType(AnnouncementConfig.ADMINS[1].IDENTIFIER)).toBe(true);
+        expect(AnnouncementAuthorType.ADMIN.isThisAuthorType("notAnAdmin@example.com")).toBe(false);
     })
 
     afterAll(() => {
