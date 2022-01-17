@@ -10,28 +10,12 @@ import {useState} from "react";
 
 
 
-export function PersonalizationPage() {
-    const [color_scheme,setColorScheme] = useState<string | null>(null)
-    const [fontSize, setFontSize] = useState<string | null>(null)
-
-    const handleColorSchemeChange = (
-        event: React.MouseEvent<HTMLElement>,
-        newColorScheme: string | null,
-    ) => {
-        setColorScheme(newColorScheme);
-    };
-
-    const handleFontSizeChange = (
-        event: React.MouseEvent<HTMLElement>,
-        newFontSize: string | null,
-    ) => {
-        setFontSize(newFontSize);
-    };
+export const PersonalizationPage= ({colorScheme, fontSize, handleColorSchemeChange, handleFontSizeChange, children}) => {
 
     return (
         <>
             <ToggleButtonGroup
-                value = {color_scheme}
+                value = {colorScheme}
                 exclusive
                 onChange = {handleColorSchemeChange}
             >
@@ -65,19 +49,19 @@ export function PersonalizationPage() {
                         <RadioButtonCheckedIcon/>
                     </ToggleButton>
             </ToggleButtonGroup>
-            {renderBackground(color_scheme)}
+            {renderBackground(colorScheme)}
         </>
     );
-}
+};
 
-function renderBackground(color_scheme) {
-    if (color_scheme === "light") {
+function renderBackground(colorScheme) {
+    if (colorScheme === "light") {
         return <div>
             <h1>Available backgrounds for light mode:</h1>
             <img src={meme1}/>
         </div>
 
-    } else if (color_scheme === "dark") {
+    } else if (colorScheme === "dark") {
         return <div>
             <h1>Available backgrounds for dark mode:</h1>
             <img src={meme2}/>

@@ -3,16 +3,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import {Button} from "@mui/material";
 
-export function LayoutPage() {
-    const initialList = [];
-    const [list, setList] = React.useState(initialList);
-    const [widget, setWidget] = React.useState('');
-
-    const handleChange = (event: SelectChangeEvent) => {
-        setWidget(event.target.value)
-        setList(list.concat(widget));
-    }
+export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget, children}) => {
 
     return(
         <div>
@@ -24,7 +17,7 @@ export function LayoutPage() {
             <FormControl sx={{minWidth: 120}}>
                 <Select
                     value={widget}
-                    onChange={handleChange}
+                    onChange={handleWidgetSelection}
                 >
                     //todo
                     //Add widgets
@@ -33,6 +26,7 @@ export function LayoutPage() {
                     <MenuItem value={'test3'}>Test3</MenuItem>
                 </Select>
             </FormControl>
+            <Button onClick={handleAddWidget}>Add Widget</Button>
         </div>
     );
-}
+};

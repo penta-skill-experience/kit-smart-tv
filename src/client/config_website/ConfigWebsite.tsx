@@ -6,6 +6,8 @@ import Box from '@mui/material/Box';
 import {PersonalizationPage} from "./PersonalizationPage";
 import {LayoutPage} from "./LayoutPage";
 import {AdminPasswordPage} from "./AdminPasswordPage";
+import {useState} from "react";
+import {SelectChangeEvent} from "@mui/material/Select";
 
 
 interface TabPanelProps {
@@ -32,11 +34,68 @@ function TabPanel(props: TabPanelProps) {
 }
 
 export function ConfigWebsite() {
-    const [pageNumber, setValue] = React.useState(0);
+    //state variables and methods for tabs
+    const [pageNumber, setPageNumber] = React.useState(0);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
+        setPageNumber(newValue);
     };
+
+    //state variables and methods for personalization page
+    const [colorScheme,setColorScheme] = useState<string | null>(null)
+    const [fontSize, setFontSize] = useState<string | null>(null)
+
+    const handleColorSchemeChange = (
+        event: React.MouseEvent<HTMLElement>,
+        newColorScheme: string | null,
+    ) => {
+        setColorScheme(newColorScheme);
+    };
+
+    const handleFontSizeChange = (
+        event: React.MouseEvent<HTMLElement>,
+        newFontSize: string | null,
+    ) => {
+        setFontSize(newFontSize);
+    };
+
+    //state variables and methods for layout page
+    const initialList = [];
+    const [list, setList] = React.useState(initialList);
+    const [widget, setWidget] = React.useState('');
+
+    const handleWidgetSelection = (event: SelectChangeEvent) => {
+        setWidget(event.target.value)
+    }
+
+    const handleAddWidget = () => {
+        if (widget !== '') {
+            setList(list.concat(widget));
+        }
+    }
+
+    //state variables and methods for admin password page
+    const [newPassword, setNewPassword] = useState('')
+    const [oldPassword, setOldPassword] = useState('')
+
+    const handleOldPassword = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setOldPassword(event.target.value);
+    };
+
+    const handleNewPassword = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setNewPassword(event.target.value);
+    };
+
+    //todo
+    //Connect with persistence
+    const handlePasswordChange = () =>{
+        alert('Old Password is ' + oldPassword + ' New Password is ' + newPassword)
+    }
+
 
     return(
         <div>
@@ -49,17 +108,39 @@ export function ConfigWebsite() {
                 </Tabs>
             </Box>
             <TabPanel value={pageNumber} index={0}>
-                <PersonalizationPage/>
+                <PersonalizationPage
+                    colorScheme={colorScheme}
+                    fontSize={fontSize}
+                    handleColorSchemeChange={handleColorSchemeChange}
+                    handleFontSizeChange={handleFontSizeChange}
+                >
+                </PersonalizationPage>
+
             </TabPanel>
             <TabPanel value={pageNumber} index={1}>
-                <LayoutPage/>
+                <LayoutPage
+                    list={list}
+                    widget={widget}
+                    handleWidgetSelection={handleWidgetSelection}
+                    handleAddWidget={handleAddWidget}
+                >
+                </LayoutPage>
             </TabPanel>
             <TabPanel value={pageNumber} index={2}>
-                <AdminPasswordPage/>
+                <AdminPasswordPage
+                    oldPassword={oldPassword}
+                    newPassword={newPassword}
+                    handleOldPassword={handleOldPassword}
+                    handleNewPassword={handleNewPassword}
+                    handlePasswordChange={handlePasswordChange}
+                >
+                </AdminPasswordPage>
             </TabPanel>
         </div>
     );
 }
+
+
 
 
 
