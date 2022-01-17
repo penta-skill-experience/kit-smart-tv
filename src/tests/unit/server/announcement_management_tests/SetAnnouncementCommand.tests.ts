@@ -3,7 +3,10 @@ import {VerifiedUser} from "../../../../shared/values/VerifiedUser";
 import {AnnouncementPersistence} from "../../../../shared/persistence/AnnouncementPersistence";
 import {Announcement} from "../../../../server/announcement_management/Announcement";
 import {SetAnnouncementCommand} from "../../../../server/announcement_management/SetAnnouncementCommand";
-import {AnnouncementCommandError} from "../../../../server/announcement_management/AnnouncementCommand";
+import {
+    AnnouncementCommandError,
+    IllegalAnnouncementTextForCommandError
+} from "../../../../server/announcement_management/AnnouncementCommand";
 
 // mocking AnnouncementConfig.json
 jest.mock('../../../../server/announcement_management/AnnouncementConfig.json', () => ({
@@ -84,6 +87,12 @@ describe("SetAnnouncementCommand.ts handles verified users correctly", () => {
         }).toThrow(AnnouncementCommandError);
         expect(setAnnouncements.length).toEqual(0); // not changed from default value
     });
+
+    test("an announcement with an empty text cannot be added", () => {
+        expect(() => {
+            new SetAnnouncementCommand(new Announcement("title", bob.email, ""));
+        }).toThrow(IllegalAnnouncementTextForCommandError);
+    })
 });
 
 describe("SetAnnouncementCommand.ts handles unverified users correctly", () => {
