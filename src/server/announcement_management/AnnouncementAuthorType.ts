@@ -8,6 +8,8 @@ import {AnnouncementPersistence} from "../../shared/persistence/AnnouncementPers
  * to check whether that is the correct author type.
  *
  * This class is supposed to be used like an enum, whose entries are the author types.
+ *
+ * An author may only ever be associated with one of these types. Meaning for example, an admin cannot also be a verified user
  */
 export abstract class AnnouncementAuthorType {
 
