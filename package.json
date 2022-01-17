@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build-config-website": "webpack --config client.webpack.config.js --env=client_dir=config_website",
-    "build-display-website": "webpack --config client.webpack.config.js --env=client_dir=display_website",
+    "build-config-website": "webpack --config client.prod.webpack.config.js --env=client_dir=config_website",
+    "start-config-website": "webpack serve --config client.dev.webpack.config.js --open --env=client_dir=config_website",
+    "build-display-website": "webpack --config client.prod.webpack.config.js --env=client_dir=display_website",
+    "start-display-website": "webpack serve --config client.dev.webpack.config.js --open --env=client_dir=display_website",
     "build-server": "webpack --config server.webpack.config.js",
-    "build-all": "webpack --config client.webpack.config.js --env=client_dir=config_website & webpack --config client.webpack.config.js --env=client_dir=display_website & webpack --config server.webpack.config.js",
-    "test": "jest --config 'jest.config.ts' --coverage",
-    "api-dev": "ts-node-dev --respawn --transpile-only src/server/api/app.ts"
+    "api-dev": "ts-node-dev --respawn --transpile-only src/server/api/app.ts",
+    "test": "jest --config 'jest.config.ts' --coverage"
+    "build-all": "webpack --config client.webpack.config.js --env=client_dir=config_website & webpack --config client.webpack.config.js --env=client_dir=display_website & webpack --config server.webpack.config.js"
   },
   "author": "",
   "license": "ISC",
@@ -29,6 +31,7 @@
     "css-loader": "^6.5.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.5.0",
     "postcss-import": "^14.0.2",
     "postcss-loader": "^6.2.1",
     "postcss-preset-env": "^7.2.0",
@@ -40,9 +43,15 @@
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.5.4",
     "webpack": "^5.65.0",
-    "webpack-cli": "^4.9.1"
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.7.3",
+    "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@mui/icons-material": "^5.2.5",
+    "@mui/material": "^5.2.8",
     "bcrypt": "^5.0.1",
     "config": "^3.3.7",
     "cors": "^2.8.5",
