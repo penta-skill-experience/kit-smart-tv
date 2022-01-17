@@ -3,6 +3,7 @@ import {AnnouncementPersistence} from "../../../../shared/persistence/Announceme
 import {VerifiedUser} from "../../../../shared/values/VerifiedUser";
 import {AnnouncementAuthorType} from "../../../../server/announcement_management/AnnouncementAuthorType";
 
+// mocking AnnouncementConfig.json
 jest.mock('../../../../server/announcement_management/AnnouncementConfig.json', () => ({
 
     "DEFAULT_ANNOUNCEMENT_TIMEOUT": "1210000000",
@@ -17,8 +18,6 @@ jest.mock('../../../../server/announcement_management/AnnouncementConfig.json', 
 
 describe("testing AnnouncementAuthorType.ts", () => {
 
-    const announcementPersistence = new AnnouncementPersistence();
-
     const verifiedUser1 = new VerifiedUser("verifieduser1@testing.com", "verified");
     const verifiedUser2 = new VerifiedUser("bob.smith@example.com", "bob");
     const verifiedUser3 = new VerifiedUser("alice.smith@example.com","alice");
@@ -27,7 +26,7 @@ describe("testing AnnouncementAuthorType.ts", () => {
     const unverifiedUserEmail2 = "anotherunverifiedUser@example.com";
 
     // mocking getVerifiedUsers from AnnouncementPersistence
-    const mockedGetVerifiedUsers = jest.spyOn(announcementPersistence, "getVerifiedUsers");
+    const mockedGetVerifiedUsers = jest.spyOn(AnnouncementPersistence.prototype, "getVerifiedUsers");
     mockedGetVerifiedUsers.mockImplementation(() => {
         return [verifiedUser1, verifiedUser2, verifiedUser3];
     });
