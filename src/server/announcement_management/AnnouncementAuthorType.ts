@@ -1,4 +1,5 @@
 import * as AnnouncementConfig from "./AnnouncementConfig.json";
+import {AnnouncementPersistence} from "../../shared/persistence/AnnouncementPersistence";
 
 /**
  * This class contains all AnnouncementAuthorTypes as implementations of this abstract class.
@@ -29,7 +30,11 @@ export abstract class AnnouncementAuthorType {
     static VERIFIED = new class extends AnnouncementAuthorType {
 
         isThisAuthorType(author: string): Boolean {
-            // TODO
+            new AnnouncementPersistence().getVerifiedUsers().forEach(verifiedUser => {
+                if (verifiedUser.email === author) {
+                    return true;
+                }
+            });
             return false;
         }
     }
@@ -37,8 +42,8 @@ export abstract class AnnouncementAuthorType {
     static UNVERIFIED = new class extends AnnouncementAuthorType {
 
         isThisAuthorType(author: string): Boolean {
-            // TODO
-            return false;
+            return !AnnouncementAuthorType.VERIFIED.isThisAuthorType(author) &&
+                !AnnouncementAuthorType.ADMIN.isThisAuthorType(author);
         }
     }
 
