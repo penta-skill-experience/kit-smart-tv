@@ -30,4 +30,4 @@ export async function validatePassword({
     return omit(admin.toJSON(), "password");
 }
 
-export async function updatePassword(){}
+export async function updatePassword() {}
