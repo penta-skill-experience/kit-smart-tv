@@ -1,13 +1,10 @@
 import * as AnnouncementConfig from "../../../../server/announcement_management/AnnouncementConfig.json";
-
-// mocking AnnouncementConfig.json
 import {VerifiedUser} from "../../../../shared/values/VerifiedUser";
 import {AnnouncementPersistence} from "../../../../shared/persistence/AnnouncementPersistence";
-import {
-    AnnouncementAuthorTypeIdentifier
-} from "../../../../server/announcement_management/AnnouncementAuthorTypeIdentifier";
+import {AnnouncementAuthorTypeIdentifier} from "../../../../server/announcement_management/AnnouncementAuthorTypeIdentifier";
 import {AnnouncementAuthorType} from "../../../../server/announcement_management/AnnouncementAuthorType";
 
+// mocking AnnouncementConfig.json
 jest.mock('../../../../server/announcement_management/AnnouncementConfig.json', () => ({
 
     "DEFAULT_ANNOUNCEMENT_TIMEOUT": "1210000000",
