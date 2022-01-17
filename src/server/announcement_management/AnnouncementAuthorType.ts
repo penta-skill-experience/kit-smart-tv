@@ -1,3 +1,5 @@
+import * as AnnouncementConfig from "./AnnouncementConfig.json";
+
 /**
  * This class contains all AnnouncementAuthorTypes as implementations of this abstract class.
  * This class provides an attribute field, which holds the author types.
@@ -14,7 +16,12 @@ export abstract class AnnouncementAuthorType {
     static readonly ADMIN = new class extends AnnouncementAuthorType {
 
         isThisAuthorType(author: string): Boolean {
-            throw new Error("Method not implemented.");
+            AnnouncementConfig.ADMINS.forEach(admin => {
+                if (admin.EMAIL === author) {
+                    return true;
+                }
+            })
+            return false;
         }
 
 };

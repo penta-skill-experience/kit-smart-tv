@@ -7,10 +7,10 @@ jest.mock('../../../../server/announcement_management/AnnouncementConfig.json', 
 
     "DEFAULT_ANNOUNCEMENT_TIMEOUT": "1210000000",
     "ADMINS": [{
-        "IDENTIFIER": "admin1@example.com"
+        "EMAIL": "admin1@example.com"
     },
         {
-            "IDENTIFIER": "anotheradmin@example.com"
+            "EMAIL": "anotheradmin@example.com"
         }]
 
 }), {virtual: true});
@@ -33,8 +33,8 @@ describe("testing AnnouncementAuthorType.ts", () => {
     });
 
     test("test ADMIN identifies correct admins", () => {
-        expect(AnnouncementAuthorType.ADMIN.isThisAuthorType(AnnouncementConfig.ADMINS[0].IDENTIFIER)).toBe(true);
-        expect(AnnouncementAuthorType.ADMIN.isThisAuthorType(AnnouncementConfig.ADMINS[1].IDENTIFIER)).toBe(true);
+        expect(AnnouncementAuthorType.ADMIN.isThisAuthorType(AnnouncementConfig.ADMINS[0].EMAIL)).toBe(true);
+        expect(AnnouncementAuthorType.ADMIN.isThisAuthorType(AnnouncementConfig.ADMINS[1].EMAIL)).toBe(true);
         expect(AnnouncementAuthorType.ADMIN.isThisAuthorType("notAnAdmin@example.com")).toBe(false);
     })
 
@@ -56,8 +56,8 @@ describe("testing AnnouncementAuthorType.ts", () => {
         expect(AnnouncementAuthorType.UNVERIFIED.isThisAuthorType(unverifiedUserEmail2)).toBe(true);
 
         // UNVERIFIED.isThisAuthorType also should return false if the given author is an admin but not a verified user
-        expect(AnnouncementAuthorType.UNVERIFIED.isThisAuthorType(AnnouncementConfig.ADMINS[0].IDENTIFIER)).toBe(false);
-        expect(AnnouncementAuthorType.UNVERIFIED.isThisAuthorType(AnnouncementConfig.ADMINS[1].IDENTIFIER)).toBe(false);
+        expect(AnnouncementAuthorType.UNVERIFIED.isThisAuthorType(AnnouncementConfig.ADMINS[0].EMAIL)).toBe(false);
+        expect(AnnouncementAuthorType.UNVERIFIED.isThisAuthorType(AnnouncementConfig.ADMINS[1].EMAIL)).toBe(false);
     })
 
     afterAll(() => {
