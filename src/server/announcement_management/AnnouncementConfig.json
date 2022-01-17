@@ -1,9 +1,4 @@
 {
   "DEFAULT_ANNOUNCEMENT_TIMEOUT": "1210000000",
-  "ADMINS": [{
-        "IDENTIFIER": "admin1@example.com"
-    },
-    {
-        "IDENTIFIER": "anotheradmin@example.com"
-    }]
+  "ADMINS": []
 }
