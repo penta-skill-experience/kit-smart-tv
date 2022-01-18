@@ -1,6 +1,7 @@
 import * as React from "react";
 import {SquareHolder} from "./SquareHolder";
 import {DigitalTime} from "./DigitalTime";
+import {Weather} from "./Weather";
 
 export class RootComponent extends React.Component<any, any> {
     render() {
@@ -13,12 +14,10 @@ export class RootComponent extends React.Component<any, any> {
                 </div>
                 <div className="z-20 lg:w-4/12 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30">
 
-                    <div className="grid grid-rows-2 gap-8 min-h-screen box-border p-8">
-                        <div className="w-full">
-                            <DigitalTime/>
-                        </div>
+                    <div className="grid grid-rows-2 grid-flow-row gap-8 min-h-screen box-border p-10">
+                        <DigitalTime/>
                         <SquareHolder/>
-
+                        <Weather/>
                     </div>
                 </div>
                 <div className="z-10 w-2/3 absolute right-0">

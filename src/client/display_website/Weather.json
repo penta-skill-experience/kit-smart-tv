@@ -1,0 +1,6 @@
+{
+  "REFRESH_RATE": 10000,
+  "API_KEY": "b5f142241278dc5e901f7f14f5f618a0",
+  "URL": "https://api.openweathermap.org/data/2.5/weather?q=Lagos&appid="
+}
+
