@@ -30,4 +30,9 @@ export async function validatePassword({
     return omit(admin.toJSON(), "password");
 }
 
+export async function getAdmin(){
+    return AdminModel.findOne({name: 'admin'});
+}
+
+
 export async function updatePassword() {}

@@ -1,6 +1,6 @@
 import * as mongoose from "mongoose";
 import * as bcrypt from "bcrypt";
-import * as config from 'config';
+import config from '../config.json';
 
 
 export interface AdminInput {
@@ -35,7 +35,7 @@ adminSchema.pre("save", async function (next){
         return next();
     }
 
-    const salt = await bcrypt.genSalt(config.get<number>("saltWorkFactor"));
+    const salt = await bcrypt.genSalt(config.saltWorkFactor);
 
     admin.password = bcrypt.hashSync(admin.password, salt);
 
