@@ -3,10 +3,7 @@ import {VerifiedUser} from "../../../../shared/values/VerifiedUser";
 import {AnnouncementPersistence} from "../../../../shared/persistence/AnnouncementPersistence";
 import {Announcement} from "../../../../server/announcement_management/Announcement";
 import {RemoveAnnouncementCommand} from "../../../../server/announcement_management/RemoveAnnouncementCommand";
-import {
-    AnnouncementCommandError,
-    IllegalAnnouncementTextForCommandError
-} from "../../../../server/announcement_management/AnnouncementCommand";
+import {AnnouncementCommandError} from "../../../../server/announcement_management/AnnouncementCommand";
 
 // mocking AnnouncementConfig.json
 jest.mock('../../../../server/announcement_management/AnnouncementConfig.json', () => ({
@@ -97,7 +94,20 @@ describe("testing RemoveAnnouncementCommand handles verified users correctly", (
         expect(() => {
             new RemoveAnnouncementCommand(removeAliceAnnouncement).executeCommand();
         }).toThrow(AnnouncementCommandError);
-        expect(setAnnouncementsMock).not.toHaveBeenCalled();
+        expect(setAnnouncements.length).toEqual(0);
+    });
+});
+
+describe("testing RemoveAnnouncementCommand handles admin correctly", () => {
+
+    test("admin can remove any announcement", () => {
+        const removeAliceAnnouncement = new Announcement(aliceAnnouncement.title, AnnouncementConfig.ADMINS[0].EMAIL,
+            removeAnnouncementText);
+
+        new RemoveAnnouncementCommand(removeAliceAnnouncement).executeCommand();
+
+        expect(setAnnouncements.includes(bobAnnouncement)).toBe(true);
+        expect(setAnnouncements.length).toEqual(1);
     })
 });
 
