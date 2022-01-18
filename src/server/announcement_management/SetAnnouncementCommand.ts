@@ -1,7 +1,9 @@
 import {
     AnnouncementCommand,
     AnnouncementCommandError,
-    IllegalAnnouncementTextForCommandError
+    IllegalAnnouncementTextForCommandError,
+    getAnnouncementTitles,
+    getAnnouncementForTitle
 } from "./AnnouncementCommand";
 import {Announcement} from "./Announcement";
 import {AnnouncementAuthorTypeIdentifier} from "./AnnouncementAuthorTypeIdentifier";
@@ -36,9 +38,8 @@ export class SetAnnouncementCommand implements AnnouncementCommand {
         const authorType = new AnnouncementAuthorTypeIdentifier().getAuthorType(this.announcement.author);
 
         const currentAnnouncements = new AnnouncementPersistence().getAnnouncements();
-        const currentAnnouncementTitles = currentAnnouncements.map(currentAnnouncement => {
-            return currentAnnouncement.title;
-        });
+        const currentAnnouncementTitles = getAnnouncementTitles(currentAnnouncements);
+
         if (currentAnnouncementTitles.includes(this.announcement.title)) {
             this.editAnnouncement(authorType, currentAnnouncements);
         } else {
@@ -47,7 +48,7 @@ export class SetAnnouncementCommand implements AnnouncementCommand {
     }
 
     private editAnnouncement(authorType : AnnouncementAuthorType, currentAnnouncements : Announcement[]) {
-        const announcementToEdit = this.findAnnouncementForTitle(currentAnnouncements, this.announcement.title);
+        const announcementToEdit = getAnnouncementForTitle(currentAnnouncements, this.announcement.title);
 
         if (!(announcementToEdit.author === this.announcement.author
             || authorType.isAllowedToEditAnnouncementsFromOtherAuthors())) {
@@ -73,16 +74,4 @@ export class SetAnnouncementCommand implements AnnouncementCommand {
         announcementsToSend.push(this.announcement);
         new AnnouncementPersistence().setAnnouncements(announcementsToSend);
     }
-
-    private findAnnouncementForTitle(currentAnnouncements : Announcement[], title : string) : Announcement {
-        let announcementToReturn : Announcement;
-        currentAnnouncements.forEach(currentAnnouncement => {
-            // there is only ever one announcement for each title. That announcement is found and stored.
-            if (currentAnnouncement.title === title) {
-                announcementToReturn = currentAnnouncement;
-            }
-        })
-        return announcementToReturn;
-    }
-
 }
