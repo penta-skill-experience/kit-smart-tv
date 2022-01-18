@@ -108,6 +108,18 @@ describe("testing RemoveAnnouncementCommand handles admin correctly", () => {
 
         expect(setAnnouncements.includes(bobAnnouncement)).toBe(true);
         expect(setAnnouncements.length).toEqual(1);
-    })
+    });
 });
+
+describe("miscellaneous", () => {
+
+    test("attempting to remove a non existing announcement does nothing", () => {
+        const nonExistingAnnouncement = new Announcement("not existing", bob.email,
+            "text of not existing announcement");
+
+        new RemoveAnnouncementCommand(nonExistingAnnouncement).executeCommand();
+
+        expect(setAnnouncements.length).toEqual(0);
+    })
+})
 
