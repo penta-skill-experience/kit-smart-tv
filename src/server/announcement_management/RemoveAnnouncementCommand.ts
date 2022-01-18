@@ -36,9 +36,9 @@ export class RemoveAnnouncementCommand implements AnnouncementCommand {
 
         const announcementsToSend = [...currentAnnouncements];
         const indexToRemove = announcementsToSend.indexOf(announcementToRemoveFromCurrent, 0);
-        if (indexToRemove > -1) {
-            announcementsToSend.splice(indexToRemove, 1);
-        }
+
+        announcementsToSend.splice(indexToRemove, 1);
+
         new AnnouncementPersistence().setAnnouncements(announcementsToSend);
 
     }

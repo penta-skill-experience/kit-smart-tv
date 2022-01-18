@@ -56,9 +56,9 @@ export class SetAnnouncementCommand implements AnnouncementCommand {
         }
         const announcementsToSend = [...currentAnnouncements];
         const indexToRemove = announcementsToSend.indexOf(announcementToEdit, 0);
-        if (indexToRemove > -1) {
-            announcementsToSend.splice(indexToRemove, 1);
-        }
+
+        announcementsToSend.splice(indexToRemove, 1);
+
         this.pushAnnouncementAndSendToPersistence(announcementsToSend);
     }
 
