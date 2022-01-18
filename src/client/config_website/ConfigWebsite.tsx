@@ -5,7 +5,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import {PersonalizationPage} from "./PersonalizationPage";
 import {LayoutPage} from "./LayoutPage";
-import {AdminPasswordPage} from "./AdminPasswordPage";
+import {AdminPage} from "./AdminPage";
 import {useState} from "react";
 import {SelectChangeEvent} from "@mui/material/Select";
 import {LogInPage} from "./LogInPage";
@@ -84,16 +84,39 @@ export function ConfigWebsite() {
     //state variables and methods for layout page
     const initialList = [];
     const [list, setList] = React.useState(initialList);
-    const [widget, setWidget] = React.useState('');
+    const [widget, setWidget] = React.useState({
+        id:0,
+        name:'',
+        position1:false,
+        position2:false,
+        position3:false,
+        position4:false,
+        position5:false,
+        configurable:false,
+    });
 
     const handleWidgetSelection = (event: SelectChangeEvent) => {
-        setWidget(event.target.value)
-    }
+        const updatedValue = {
+            id:0,
+            name:event.target.value,
+            position1:false,
+            position2:false,
+            position3:false,
+            position4:false,
+            position5:false,
+            configurable:false,
+        }
+        setWidget(updatedValue)
+    };
 
     const handleAddWidget = () => {
-        if (widget !== '') {
+        if (widget.name !== '') {
             setList(list.concat(widget));
         }
+    };
+
+    const handleDeleteWidget = id => {
+        setList(list.filter(item => item.id !== id));
     }
 
     //state variables and methods for admin password page
@@ -117,6 +140,16 @@ export function ConfigWebsite() {
     const handlePasswordChange = () => {
         alert('Old Password is ' + oldPassword + ' New Password is ' + newPassword)
     };
+
+    const handleChangeSave = () => {
+        if (colorScheme === null || fontSize === null) {
+            alert('Color scheme and font size must be chosen')
+        }
+    };
+
+    const handleLogout = () => {
+        setLoggedInStatus(false);
+    }
 
     function renderConfigWebsite() {
         if(loggedInStatus === false) {
@@ -154,18 +187,21 @@ export function ConfigWebsite() {
                             widget={widget}
                             handleWidgetSelection={handleWidgetSelection}
                             handleAddWidget={handleAddWidget}
+                            handleDeleteWidget={handleDeleteWidget}
                         >
                         </LayoutPage>
                     </TabPanel>
                     <TabPanel value={pageNumber} index={2}>
-                        <AdminPasswordPage
+                        <AdminPage
                             oldPassword={oldPassword}
                             newPassword={newPassword}
                             handleOldPassword={handleOldPassword}
                             handleNewPassword={handleNewPassword}
                             handlePasswordChange={handlePasswordChange}
+                            handleChangeSave={handleChangeSave}
+                            handleLogout={handleLogout}
                         >
-                        </AdminPasswordPage>
+                        </AdminPage>
                     </TabPanel>
                 </div>
             );

@@ -1,12 +1,6 @@
 import * as React from "react";
-import ToggleButton from '@mui/material/ToggleButton';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import meme1 from './mem.jpg'
 import meme2 from './mem2.jpg'
-import {useState} from "react";
 import {FormLabel, Grid} from "@mui/material";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -42,8 +36,6 @@ export const PersonalizationPage= ({colorScheme, fontSize, handleColorSchemeChan
                 <Grid item>
                     {renderBackground(colorScheme)}
                 </Grid>
-
-
             </Grid>
         </div>
     );
