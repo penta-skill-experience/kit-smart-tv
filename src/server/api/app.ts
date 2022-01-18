@@ -1,3 +1,8 @@
+/*
+This file is the entry point of the server.
+Each request that reaches the server will be handled here.
+ */
+
 import * as express from "express";
 import * as config from 'config';
 import connect from './utils/conntectDb';
