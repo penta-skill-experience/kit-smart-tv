@@ -1,6 +1,17 @@
 import { AnnouncementAuthorError } from "./AnnouncementAuthorError";
 import * as AnnouncementConfig from "./AnnouncementConfig.json";
 
+/**
+ * an instance of this class represents an announcement.
+ *
+ * An announcement is identified by its title.
+ *
+ * The author of an announcement must be an e-mail address.
+ *
+ * The time of addition is the unix timestamp of the time, when the announcement was added to the system.
+ *
+ * The timeout is the unix timestamp of the time, when the timeout of the announcement occurs.
+ */
 export class Announcement {
 
     private readonly _title: string;
