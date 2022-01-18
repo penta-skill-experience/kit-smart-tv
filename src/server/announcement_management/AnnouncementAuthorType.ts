@@ -16,6 +16,14 @@ export abstract class AnnouncementAuthorType {
 
     static readonly ADMIN = new class extends AnnouncementAuthorType {
 
+        isAllowedToAddAnnouncement(): Boolean {
+            return true;
+        }
+
+        isAllowedToEditAnnouncementsFromOtherAuthors(): Boolean {
+            return true;
+        }
+
         isThisAuthorType(author: string): Boolean {
             let returnValue = false;
             AnnouncementConfig.ADMINS.forEach(admin => {
@@ -30,6 +38,13 @@ export abstract class AnnouncementAuthorType {
 
     static readonly VERIFIED = new class extends AnnouncementAuthorType {
 
+        isAllowedToAddAnnouncement(): Boolean {
+           return true;
+        }
+        isAllowedToEditAnnouncementsFromOtherAuthors(): Boolean {
+            return false;
+        }
+
         isThisAuthorType(author: string): Boolean {
             let returnValue = false;
             new AnnouncementPersistence().getVerifiedUsers().forEach(verifiedUser => {
@@ -42,6 +57,14 @@ export abstract class AnnouncementAuthorType {
     }
 
     static readonly UNVERIFIED = new class extends AnnouncementAuthorType {
+
+        isAllowedToAddAnnouncement(): Boolean {
+            return false;
+        }
+
+        isAllowedToEditAnnouncementsFromOtherAuthors(): Boolean {
+            return false;
+        }
 
         isThisAuthorType(author: string): Boolean {
             return !AnnouncementAuthorType.VERIFIED.isThisAuthorType(author) &&
@@ -57,4 +80,15 @@ export abstract class AnnouncementAuthorType {
      * @param author the given author
      */
     abstract isThisAuthorType(author : string) : Boolean;
+
+    /**
+     * returns true, if the author type this is called for is allowed to add announcements, otherwise false.
+     */
+    abstract isAllowedToAddAnnouncement() : Boolean;
+
+    /**
+     * returns true, if the author type this is called for is allowed to edit announcements from
+     * other authors, otherwise false.
+     */
+    abstract isAllowedToEditAnnouncementsFromOtherAuthors() : Boolean;
 }
