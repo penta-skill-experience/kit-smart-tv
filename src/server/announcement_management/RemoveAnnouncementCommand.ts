@@ -1,6 +1,13 @@
 import {AnnouncementCommand} from "./AnnouncementCommand";
+import {Announcement} from "./Announcement";
 
-class RemoveAnnouncementCommand implements AnnouncementCommand {
+export class RemoveAnnouncementCommand implements AnnouncementCommand {
+
+    private readonly announcementToRemove;
+
+    constructor(announcement : Announcement) {
+        this.announcementToRemove = announcement;
+    }
 
     executeCommand() {
         // TODO
