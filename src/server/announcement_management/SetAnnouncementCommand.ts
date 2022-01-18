@@ -19,7 +19,7 @@ export class SetAnnouncementCommand implements AnnouncementCommand {
         "allowed to add announcements";
 
 
-    private announcement : Announcement
+    private readonly announcement : Announcement;
 
     /**
      * Constructs a SetAnnouncementCommand.
