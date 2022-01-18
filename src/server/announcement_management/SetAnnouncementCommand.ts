@@ -47,11 +47,7 @@ export class SetAnnouncementCommand implements AnnouncementCommand {
     }
 
     private editAnnouncement(authorType : AnnouncementAuthorType, currentAnnouncements : Announcement[]) {
-        const announcementToEdit = currentAnnouncements.map(currentAnnouncement => {
-            if (currentAnnouncement.title === this.announcement.title) {
-                return currentAnnouncement;
-            }
-        })[0]; // there is only ever one announcement with that title. That announcement is found and stored.
+        const announcementToEdit = this.findAnnouncementForTitle(currentAnnouncements, this.announcement.title);
 
         if (!(announcementToEdit.author === this.announcement.author
             || authorType.isAllowedToEditAnnouncementsFromOtherAuthors())) {
@@ -76,6 +72,17 @@ export class SetAnnouncementCommand implements AnnouncementCommand {
         const announcementsToSend = [...announcements];
         announcementsToSend.push(this.announcement);
         new AnnouncementPersistence().setAnnouncements(announcementsToSend);
+    }
+
+    private findAnnouncementForTitle(currentAnnouncements : Announcement[], title : string) : Announcement {
+        let announcementToReturn : Announcement;
+        currentAnnouncements.forEach(currentAnnouncement => {
+            // there is only ever one announcement for each title. That announcement is found and stored.
+            if (currentAnnouncement.title === title) {
+                announcementToReturn = currentAnnouncement;
+            }
+        })
+        return announcementToReturn;
     }
 
 }
