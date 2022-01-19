@@ -1,8 +1,6 @@
 import * as React from "react";
-import {useState} from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
 import {Grid} from "@mui/material";
 
 export const LogInPage = ({logInInput, handleInput, handleLogIn, children}) => {
@@ -29,9 +27,5 @@ export const LogInPage = ({logInInput, handleInput, handleLogIn, children}) => {
                 </Grid>
             </Grid>
         </div>
-
-
-
-
     );
 }
