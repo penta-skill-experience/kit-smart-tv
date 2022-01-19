@@ -2,10 +2,14 @@ import * as React from "react";
 import {SquareHolder} from "./SquareHolder";
 import {DigitalTime} from "./DigitalTime";
 import {Weather} from "./Weather";
+import {CafeteriaOpening} from "./CafeteriaOpening";
 
 export class RootComponent extends React.Component<any, any> {
     render() {
-        return <div className = "w-full min-h-screen bg-cover bg-no-repeat bg-center" style={{
+        return <div className = "w-full min-h-screen bg-cover bg-no-repeat bg-center " style={{
+            width: "100vw",
+            height: "100vh",
+            overflow: "hidden",
             backgroundImage: `url("https://images.wallpaperscraft.com/image/single/city_skyscrapers_clouds_rain_road_cars_lights_58563_3840x2160.jpg")`
         }}>
             <div className="flex flex-wrap">
@@ -19,7 +23,9 @@ export class RootComponent extends React.Component<any, any> {
                             <DigitalTime/>
                             <Weather/>
                         </div>
-                        <SquareHolder/>
+                        <SquareHolder>
+                            <CafeteriaOpening/>
+                        </SquareHolder>
                     </div>
                 </div>
                 <div className="z-10 w-2/3 absolute right-0">

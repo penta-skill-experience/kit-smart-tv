@@ -3,7 +3,8 @@ export class SquareHolder extends React.Component<any, any> {
 
     render() {
         return <div className="w-full shadow-2xl rounded-2xl bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-70">
-                <div className="flex space-x-1 justify-center p-2" style={{
+            {this.props.children}
+            <div className="flex space-x-1 justify-center p-2" style={{
                     opacity: 1
                 }}>
                     <a href="#"
