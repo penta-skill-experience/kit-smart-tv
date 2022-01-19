@@ -10,6 +10,18 @@ import {AnnouncementAuthorTypeIdentifier} from "./AnnouncementAuthorTypeIdentifi
 import {AnnouncementPersistence} from "../../shared/persistence/AnnouncementPersistence";
 import {AnnouncementAuthorType} from "./AnnouncementAuthorType";
 
+/**
+ * An implementation of {@link AnnouncementCommand}.
+ *
+ * An instance of this class is initialized with an announcement, instance of {@link Announcement}.
+ *
+ * If an announcement with the title of that announcement already exists, the text of that
+ * announcement is set to the text of that announcement. Only the same author or an admin can
+ * update the annoucement.
+ *
+ * If such an announcement doesn't exist yet, the announcement is stored. Only a verified user or
+ * an admin can add an announcement.
+ */
 export class SetAnnouncementCommand implements AnnouncementCommand {
 
     private static readonly INVALID_ANNOUNCEMENT_TEXT = "";

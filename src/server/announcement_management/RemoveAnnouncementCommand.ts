@@ -8,6 +8,11 @@ import {Announcement} from "./Announcement";
 import {AnnouncementPersistence} from "../../shared/persistence/AnnouncementPersistence";
 import {AnnouncementAuthorTypeIdentifier} from "./AnnouncementAuthorTypeIdentifier";
 
+/**
+ * An implementation of {@link AnnouncementCommand}
+ *
+ * This command removes the announcement it is initialized with from the stored announcement.
+ */
 export class RemoveAnnouncementCommand implements AnnouncementCommand {
 
     private static readonly AUTHOR_CANNOT_REMOVE_THIS_ANNOUNCEMENT_ERROR_MSG = "Error, this author cannot " +
