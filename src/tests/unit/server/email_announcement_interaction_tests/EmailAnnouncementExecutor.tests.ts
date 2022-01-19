@@ -72,4 +72,8 @@ describe("testing EmailAnnouncementExecutor calls Commands correctly", () => {
 
         expect(removeCommandMock).toHaveBeenCalledTimes(1);
     });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
+    })
 })
