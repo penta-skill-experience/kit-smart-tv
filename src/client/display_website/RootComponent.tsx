@@ -15,9 +15,11 @@ export class RootComponent extends React.Component<any, any> {
                 <div className="z-20 lg:w-4/12 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30">
 
                     <div className="grid grid-rows-2 grid-flow-row gap-8 min-h-screen box-border p-10">
-                        <DigitalTime/>
+                        <div className="grid grid-rows-2 grid-flow-row gap-0 box-border">
+                            <DigitalTime/>
+                            <Weather/>
+                        </div>
                         <SquareHolder/>
-                        <Weather/>
                     </div>
                 </div>
                 <div className="z-10 w-2/3 absolute right-0">
