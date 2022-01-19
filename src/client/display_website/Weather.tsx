@@ -62,7 +62,7 @@ export class Weather extends React.Component<any, any> {
                     humidity: {this.state.humidity}%
                 </div>
                 <div className="pl-5 font-light leading-normal text-white text-base sm:text-xl sm:text-left lg:text-2xl">
-                wind: {this.state.windSpeed}km/h
+                wind: {Math.round(this.state.windSpeed)} km/h
                 </div>
             </div>
             </div>;
