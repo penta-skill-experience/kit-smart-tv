@@ -3,7 +3,13 @@ import {AnnouncementCommand} from "../announcement_management/AnnouncementComman
 
 export class EmailAnnouncementCommandIdentifier {
 
-    identifyCommand(announcement : Announcement) : AnnouncementCommand {
+    private readonly announcement : Announcement;
+
+    constructor(announcement : Announcement) {
+        this.announcement = announcement;
+    }
+
+    identifyCommand() : AnnouncementCommand {
         throw new Error("not yet implemented");
     }
 }
