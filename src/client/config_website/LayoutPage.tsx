@@ -8,7 +8,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget, children}) => {
+export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget, handleDeleteWidget, handlePosition, children}) => {
 
     return(
         <div>
@@ -18,47 +18,81 @@ export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget
                         {list.map(widget => (
                             <Grid container spacing={2} direction="row" alignItems="center">
                                 <Grid item>
-                                    {widget}
+                                    {widget.name}
                                 </Grid>
                                 <Grid item>
                                     <FormGroup>
-                                        <FormControlLabel control={<Checkbox />} label="1" />
+                                        <FormControlLabel
+                                            label="1"
+                                            control={<Checkbox
+                                                checked={widget.position1}
+                                                onChange={
+                                                () => {handlePosition(widget.id, 1)}
+                                            }/>}
+                                        />
                                     </FormGroup>
                                 </Grid>
                                 <Grid item>
                                     <FormGroup>
-                                        <FormControlLabel control={<Checkbox />} label="2" />
+                                        <FormControlLabel
+                                            label="2"
+                                            control={<Checkbox
+                                                checked={widget.position2}
+                                                onChange={
+                                                () => {handlePosition(widget.id, 2)}
+                                            }/>}
+                                        />
                                     </FormGroup>
                                 </Grid>
                                 <Grid item>
                                     <FormGroup>
-                                        <FormControlLabel control={<Checkbox />} label="3" />
+                                        <FormControlLabel
+                                            label="3"
+                                            control={<Checkbox
+                                                checked={widget.position3}
+                                                onChange={
+                                                () => {handlePosition(widget.id, 3)}
+                                            }/>}
+                                        />
                                     </FormGroup>
                                 </Grid>
                                 <Grid item>
                                     <FormGroup>
-                                        <FormControlLabel control={<Checkbox />} label="4" />
+                                        <FormControlLabel
+                                            label="4"
+                                            control={<Checkbox
+                                                checked={widget.position4}
+                                                onChange={
+                                                () => {handlePosition(widget.id, 4)}
+                                            }/>}
+                                        />
                                     </FormGroup>
                                 </Grid>
                                 <Grid item>
                                     <FormGroup>
-                                        <FormControlLabel control={<Checkbox />} label="5" />
+                                        <FormControlLabel
+                                            label="5"
+                                            control={<Checkbox
+                                                checked={widget.position5}
+                                                onChange={
+                                                () => {handlePosition(widget.id, 5)}
+                                            }/>}
+                                        />
                                     </FormGroup>
                                 </Grid>
                                 <Grid item>
-                                    <Button>
+                                    <Button onClick={() => handleDeleteWidget(widget.id)}>
                                         <DeleteIcon/>
                                     </Button>
                                 </Grid>
                             </Grid>
-                            //<li key={item}>{item}</li>
                         ))}
                     </ul>
                 </Grid>
                 <Grid item>
                     <FormControl sx={{minWidth: 120}}>
                         <Select
-                            value={widget}
+                            value={widget.name}
                             onChange={handleWidgetSelection}
                         >
                             //todo
