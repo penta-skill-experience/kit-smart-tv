@@ -6,6 +6,7 @@ both import this common config.
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = (env, styleLoader) => ({
 
@@ -68,6 +69,21 @@ module.exports = (env, styleLoader) => ({
             template: path.join(__dirname, "src", "client", env.client_dir, "index.html"),
         }),
     ],
+
+    // need this part for omitting .LICENSE.txt files in the output
+    optimization: {
+        minimize: true,
+        minimizer: [
+            new TerserPlugin({
+                terserOptions: {
+                    format: {
+                        comments: false,
+                    },
+                },
+                extractComments: false,
+            }),
+        ]
+    },
 
     output: {
         clean: true,  // clean the /dist folder before each build, so that only used files will be generated

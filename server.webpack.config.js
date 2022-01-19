@@ -1,4 +1,5 @@
 const path = require("path");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
 
@@ -20,6 +21,21 @@ module.exports = {
 
     resolve: {
         extensions: ['*', '.js', ".ts"]
+    },
+
+    // need this part for omitting .LICENSE.txt files in the output
+    optimization: {
+        minimize: true,
+        minimizer: [
+            new TerserPlugin({
+                terserOptions: {
+                    format: {
+                        comments: false,
+                    },
+                },
+                extractComments: false,
+            }),
+        ]
     },
 
     output: {
