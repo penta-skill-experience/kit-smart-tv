@@ -83,6 +83,7 @@ export function ConfigWebsite() {
 
     //state variables and methods for layout page
     const initialList = [];
+    const [counter, setCounter] = useState(1);
     const [list, setList] = React.useState(initialList);
     const [widget, setWidget] = React.useState({
         id:0,
@@ -95,9 +96,11 @@ export function ConfigWebsite() {
         configurable:false,
     });
 
+    const incrementCounter = () => setCounter(counter + 1);
+
     const handleWidgetSelection = (event: SelectChangeEvent) => {
         const updatedValue = {
-            id:0,
+            id:counter,
             name:event.target.value,
             position1:false,
             position2:false,
@@ -112,11 +115,40 @@ export function ConfigWebsite() {
     const handleAddWidget = () => {
         if (widget.name !== '') {
             setList(list.concat(widget));
+            incrementCounter();
         }
     };
 
-    const handleDeleteWidget = id => {
+    const handleDeleteWidget = (id) => {
         setList(list.filter(item => item.id !== id));
+    }
+
+    const handlePosition = (id, position) => {
+        const newList = list.map((item) => {
+            if (item.id === id) {
+                if (position === 1) {
+                    const newWidget = { ...item, position1: !item.position1 };
+                    return newWidget;
+                } else if (position === 2) {
+                    const newWidget = { ...item, position2: !item.position2 };
+                    return newWidget;
+                } else if (position === 3) {
+                    const newWidget = { ...item, position3: !item.position3 };
+                    return newWidget;
+                } else if (position === 4) {
+                    const newWidget = { ...item, position4: !item.position4 };
+                    return newWidget;
+                } else {
+                    const newWidget = { ...item, position5: !item.position5 };
+                    return newWidget;
+                }
+            } else {
+                return item;
+            };
+        });
+
+        setList(newList);
+
     }
 
     //state variables and methods for admin password page
@@ -188,6 +220,7 @@ export function ConfigWebsite() {
                             handleWidgetSelection={handleWidgetSelection}
                             handleAddWidget={handleAddWidget}
                             handleDeleteWidget={handleDeleteWidget}
+                            handlePosition={handlePosition}
                         >
                         </LayoutPage>
                     </TabPanel>
