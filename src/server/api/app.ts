@@ -10,11 +10,18 @@ import validate from "./middleware/validateResource";
 import {createAdminSchema} from "./schema/admin.schema";
 import {createAdminHandler} from "./controller/admin.controller";
 import path from "path";
+import {createAdminSessionHandler, deleteSessionHandler, getSessionHandler} from "./controller/session.controller";
+import validateResource from "./middleware/validateResource";
+import {createSessionSchema} from "./schema/session.schema";
+import deserializeAdmin from "./middleware/deserializeAdmin";
+import requireAdmin from "./middleware/requireAdmin";
+import 'dotenv/config';
 
 const port = config.port;
 
 const app = express();
 app.use(express.json());
+app.use(deserializeAdmin);
 
 // host static files of display_website and config_website
 app.use("/",
@@ -27,5 +34,17 @@ app.listen(port, async () => {
     await connect();
 
     app.get('/healthcheck', (req: Request, res: Response) => res.sendStatus(200));
+
     app.post("/admin", validate(createAdminSchema), createAdminHandler);
+
+    app.post(
+        "/api/sessions",
+        validateResource(createSessionSchema),
+        createAdminSessionHandler
+    );
+
+    app.get("/api/sessions", requireAdmin, getSessionHandler);
+
+    app.delete("/api/sessions", requireAdmin, deleteSessionHandler);
+
 });

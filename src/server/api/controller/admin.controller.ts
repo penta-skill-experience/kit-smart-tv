@@ -7,7 +7,6 @@ export async function createAdminHandler(req: Request<CreateAdminInput["body"]>,
         const admin = await createAdmin(req.body);
         return res.send(admin);
     } catch (e: any) {
-        console.log(e.message);
         return res.status(409).send("CreateAdminError: E1: permitted action: admin already created");
     }
 }

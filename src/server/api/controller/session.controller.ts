@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import config from "config";
+import config from "../config.json";
 import {
     createSession,
     findSession,
@@ -17,7 +17,10 @@ export async function createAdminSessionHandler(req: Request, res: Response) {
     }
 
     // nur createn wenn es keine valid session gibt, sonst error return, dass access verweigert ist.
-
+    const session_previously_started = await findSession({ valid: true });
+    if(session_previously_started){
+        return res.status(405).send("already logged in");
+    }
     // create a session
     const session = await createSession(admin._id, req.get("user-agent") || "");
 
@@ -26,14 +29,14 @@ export async function createAdminSessionHandler(req: Request, res: Response) {
     const accessToken = signJwt(
         { ...admin, session: session._id },
         "accessTokenPrivateKey",
-        { expiresIn: config.get("accessTokenTtl") } // 15 minutes,
+        { expiresIn: config.accessTokenTtl} // 15 minutes,
     );
 
     // create a refresh token
     const refreshToken = signJwt(
         { ...admin, session: session._id },
         "refreshTokenPrivateKey",
-        { expiresIn: config.get("refreshTokenTtl") } // 15 minutes
+        { expiresIn: config.refreshTokenTtl} // 1y
     );
 
     // return access & refresh tokens

@@ -20,7 +20,7 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['*', '.js', ".ts"]
+        extensions: ['*', '.js', '.ts']
     },
 
     // need this part for omitting .LICENSE.txt files in the output

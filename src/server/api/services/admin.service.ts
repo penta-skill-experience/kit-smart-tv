@@ -8,6 +8,8 @@ export async function createAdmin(input: DocumentDefinition<AdminInput> ) { // i
 
         return omit(admin.toJSON(), "password");
     } catch (e: any) {
+
+        console.log(e.message);
         throw new Error(e);
     }
 }
