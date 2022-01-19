@@ -9,6 +9,8 @@ const path = require('path');
 
 module.exports = (env, styleLoader) => ({
 
+    target: "web",
+
     entry: path.join(__dirname, "src", "client", env.client_dir, "index.tsx"),
 
     module: {
@@ -19,16 +21,19 @@ module.exports = (env, styleLoader) => ({
                     styleLoader,  // different values for development vs. production
                     {
                         loader: "css-loader",
-                        // options: {
-                        //     modules: {
-                        //         exportLocalsConvention: "camelCase",  // convert CSS to camelCase in JS (e.g. "my-class" in CSS becomes "style.myClass" in JS)
-                        //         localIdentName: "[local]__[hash:base64:5]",  // adds a unique hash to the original CSS name for modularization
-                        //     },
-                        //     importLoaders: 1,  // "1" means "use PostCSS"
-                        // },
+                        options: {
+                            // todo: if we want to use this (CSS modules),
+                            //       only do this for files with extension ".module.css"
+                            //       (so we need to add another rule to webpack)
+                            // modules: {
+                            //     exportLocalsConvention: "camelCase",  // convert CSS to camelCase in JS (e.g. "my-class" in CSS becomes "style.myClass" in JS)
+                            //     localIdentName: "[local]__[hash:base64:5]",  // adds a unique hash to the original CSS name for modularization
+                            // },
+                            importLoaders: 1,  // "1" means "use PostCSS"
+                        },
                     },
                     {
-                        loader: "postcss-loader",  // postcss-loader is configured via postcss.config.js
+                        loader: "postcss-loader",
                         options: {
                             postcssOptions: {
                                 plugins: [
@@ -67,5 +72,6 @@ module.exports = (env, styleLoader) => ({
     output: {
         clean: true,  // clean the /dist folder before each build, so that only used files will be generated
         path: path.join(__dirname, "dist", env.client_dir),
+        // "filename" will be set by other .webpack.configs.js files
     }
 });
