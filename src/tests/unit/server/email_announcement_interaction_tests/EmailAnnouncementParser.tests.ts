@@ -31,7 +31,7 @@ const mail1 : IMailObject = {
 }
 
 const mail2Subject = "Another test";
-const mail2address = "alice.smith@.gmail.com";
+const mail2address = "alice.smith@gmail.com";
 const mail2text = "Greetings from alice smith."
 
 const mail2 : IMailObject = {
