@@ -4,6 +4,7 @@ import {
 } from "../../../../server/email_announcement_interaction/EmailAnnouncementCommandIdentifier";
 import {SetAnnouncementCommand} from "../../../../server/announcement_management/SetAnnouncementCommand";
 import {RemoveAnnouncementCommand} from "../../../../server/announcement_management/RemoveAnnouncementCommand";
+import * as MailInteractionConfig from "../../../../server/email_announcement_interaction/MailInteractionConfig.json"
 
 test("testing EmailAnnouncementCommandIdentifier identifies SetAnnouncementCommand correctly", () => {
     const announcement = new Announcement("title", "bob@example.com", "This is a text for a SetAnnouncementCommand");
@@ -12,8 +13,7 @@ test("testing EmailAnnouncementCommandIdentifier identifies SetAnnouncementComma
 });
 
 test("testing EmailAnnouncementCommandIdentifier identifies RemoveAnnouncementCommand correctly", () => {
-    const removeAnnouncementText = "";
-    const announcement = new Announcement("title", "bob@example.com", removeAnnouncementText);
+    const announcement = new Announcement("title", "bob@example.com", MailInteractionConfig.REMOVE_ANNOUNCEMENT_TEXT);
 
     expect(new EmailAnnouncementCommandIdentifier(announcement).identifyCommand()).toBeInstanceOf(RemoveAnnouncementCommand);
 });
