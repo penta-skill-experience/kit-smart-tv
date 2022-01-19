@@ -1,5 +1,6 @@
 import { AnnouncementAuthorError } from "./AnnouncementAuthorError";
 import * as AnnouncementConfig from "./AnnouncementConfig.json";
+import * as emailValidator from "email-validator";
 
 /**
  * an instance of this class represents an announcement.
@@ -69,8 +70,7 @@ export class Announcement {
     }
 
 // author must be an email-address
-    private static validateAuthor(authorToValidate: String): Boolean {
-        const validator = require("email-validator");
-        return validator.validate(authorToValidate);
+    private static validateAuthor(authorToValidate: string): Boolean {
+        return emailValidator.validate(authorToValidate);
     }
 }
