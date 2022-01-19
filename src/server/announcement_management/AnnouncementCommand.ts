@@ -1,7 +1,15 @@
 import {Announcement} from "./Announcement";
 
+/**
+ * This is an interface to be implemented by announcement commands.
+ * An announcement command is a command, that changes the
+ * state of the stored announcements.
+ */
 export interface AnnouncementCommand {
 
+    /**
+     * executes this command
+     */
     executeCommand();
 
 }
@@ -35,12 +43,24 @@ export class IllegalAnnouncementTextForCommandError extends Error {
     }
 }
 
+/**
+ * Returns an array of strings containing the titles of the supplied announcements.
+ *
+ * @param announcements the supplied announcements
+ */
 export function getAnnouncementTitles(announcements : Announcement[]) : string[] {
     return announcements.map(announcement => {
         return announcement.title;
     });
 }
 
+/**
+ * Returns the announcement with the given title from the supplied announcements or undefined if no such
+ * announcement exists.
+ *
+ * @param announcements the supplied announcements
+ * @param title the title of the announcement to find
+ */
 export function getAnnouncementForTitle(announcements : Announcement[], title : string) : Announcement | undefined {
     let announcementToReturn : Announcement;
     announcements.forEach(currentAnnouncement => {
