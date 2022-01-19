@@ -9,6 +9,7 @@ import {AdminPage} from "./AdminPage";
 import {useState} from "react";
 import {SelectChangeEvent} from "@mui/material/Select";
 import {LogInPage} from "./LogInPage";
+import {Button, Grid} from "@mui/material";
 
 
 interface TabPanelProps {
@@ -196,6 +197,27 @@ export function ConfigWebsite() {
         } else {
             return (
                 <div>
+                    <Box sx={{
+                        border: 1,
+                        backgroundColor:'text.primary',}
+                    }>
+                        <Grid container spacing={2} direction="row" alignItems="center">
+                            <Grid item xs={2}></Grid>
+                            <Grid item container xs={8} alignItems="center" justifyContent="center">
+                                <Grid item container alignItems="center" justifyContent="center">
+                                    <Grid item>
+                                        <Typography variant="h6" color='white'>Admin Interface</Typography>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                            <Grid item container xs={2} direction="column">
+                                <Button onClick={handleLogout}>
+                                    Log Out
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Box>
+
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         <Tabs value={pageNumber} onChange={handleChange} aria-label="basic tabs example">
                             <Tab label="Personalization"/>
@@ -232,7 +254,6 @@ export function ConfigWebsite() {
                             handleNewPassword={handleNewPassword}
                             handlePasswordChange={handlePasswordChange}
                             handleChangeSave={handleChangeSave}
-                            handleLogout={handleLogout}
                         >
                         </AdminPage>
                     </TabPanel>
