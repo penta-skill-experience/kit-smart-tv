@@ -1,6 +1,8 @@
 /**
  * this error class is an illegal argument error for an invalid author.
  *
+ * An instance of this class must be instantiated with an error message.
+ *
  * This Error is not meant to be caught.
  */
 export class AnnouncementAuthorError extends Error {

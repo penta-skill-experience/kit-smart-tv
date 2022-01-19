@@ -13,7 +13,11 @@ import {AnnouncementPersistence} from "../../shared/persistence/AnnouncementPers
  */
 export abstract class AnnouncementAuthorType {
 
-
+    /**
+     * An instance of an implementation of {@code AnnouncementAuthorType}.
+     *
+     * This instance is used to represent the author type ADMIN.
+     */
     static readonly ADMIN = new class extends AnnouncementAuthorType {
 
         isAllowedToAddAnnouncement(): Boolean {
@@ -36,6 +40,11 @@ export abstract class AnnouncementAuthorType {
 
 };
 
+    /**
+     * An instance of an implementation of {@code AnnouncementAuthorType}.
+     *
+     * This instance is used to represent the author type VERIFIED.
+     */
     static readonly VERIFIED = new class extends AnnouncementAuthorType {
 
         isAllowedToAddAnnouncement(): Boolean {
@@ -56,6 +65,11 @@ export abstract class AnnouncementAuthorType {
         }
     }
 
+    /**
+     * An instance of an implementation of {@code AnnouncementAuthorType}.
+     *
+     * This instance is used to represent the author type UNVERIFIED.
+     */
     static readonly UNVERIFIED = new class extends AnnouncementAuthorType {
 
         isAllowedToAddAnnouncement(): Boolean {
