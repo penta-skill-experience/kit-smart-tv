@@ -10,8 +10,8 @@ export async function createSession(adminId: string, userAgent: string) {
     return session.toJSON();
 }
 
-export async function findSessions(query: FilterQuery<SessionDocument>) {
-    return SessionModel.find(query).lean();
+export async function findSession(query: FilterQuery<SessionDocument>) {
+    return SessionModel.findOne(query).lean();
 }
 
 export async function updateSession(
