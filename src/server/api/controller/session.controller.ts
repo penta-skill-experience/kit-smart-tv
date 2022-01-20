@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import config from "../config.json";
 import {
-    createSession,
+    createSession, deleteSession,
     findSession,
     updateSession,
 } from "../services/session.service";
@@ -53,13 +53,23 @@ export async function getSessionHandler(req: Request, res: Response) {
         return res.status(401).send("Invalid password");
     }
 
-    return res.send(session);
+
+    let delta = Math.floor((Date.now() - session.updatedAt.valueOf()) / (1000*60));
+    if(delta >= config.sessionTtlInMinutes){
+        await deleteSession({ admin: adminId});
+        return res.status(401).send("Session expired. Please log in.");
+    }
+
+    await updateSession({ _id: session._id }, { valid: true });
+    const valid_until = new Date(Date.now() + config.sessionTtlInMinutes*60*1000);
+
+    return res.send({session, valid_until});
 }
 
 export async function deleteSessionHandler(req: Request, res: Response) {
     const sessionId = res.locals.admin.session;
 
-    await updateSession({ _id: sessionId }, { valid: false });
+    await deleteSession({ _id: sessionId });
 
     return res.send({
         accessToken: null,

@@ -21,6 +21,12 @@ export async function updateSession(
     return SessionModel.updateOne(query, update);
 }
 
+export async function deleteSession(
+    query: FilterQuery<SessionDocument>
+) {
+    return SessionModel.deleteOne(query);
+}
+
 export async function reIssueAccessToken({
                                              refreshToken,
                                          }: {
@@ -32,7 +38,10 @@ export async function reIssueAccessToken({
 
     const session = await SessionModel.findById(get(decoded, "session"));
 
-    if (!session || !session.valid) return false;
+    if (!session) return false;
+
+    //nicht auf valid checken sondern, ob die session nicht schon abgelaufen ist, wenn abgelaufen dann löschen.
+    if(!session.valid) return false;
 
     const admin = await getAdmin();
 

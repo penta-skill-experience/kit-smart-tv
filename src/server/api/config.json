@@ -3,5 +3,6 @@
     "dbUri": "mongodb://localhost:27017/",
     "saltWorkFactor": 9,
     "accessTokenTtl": "15m",
-    "refreshTokenTtl": "1y"
+    "refreshTokenTtl": "1y",
+    "sessionTtlInMinutes": 11
 }

@@ -37,6 +37,8 @@ app.listen(port, async () => {
 
     app.post("/admin", validate(createAdminSchema), createAdminHandler);
 
+    //app.put("/admin", [requireAdmin, validateResource(updatePasswordSchema)], updatePasswordHandler)
+
     app.post(
         "/api/sessions",
         validateResource(createSessionSchema),
