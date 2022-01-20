@@ -9,9 +9,9 @@
     "build-display-website": "webpack --config client.prod.webpack.config.js --env=client_dir=display_website",
     "start-display-website": "webpack serve --config client.dev.webpack.config.js --open --env=client_dir=display_website",
     "build-server": "webpack --config server.webpack.config.js",
-    "build-all": "webpack --config client.webpack.config.js --env=client_dir=config_website & webpack --config client.webpack.config.js --env=client_dir=display_website & webpack --config server.webpack.config.js",
     "test": "jest --coverage",
-    "test announcement_management": "jest --config ./src/tests/unit/server/announcement_management_tests/jest.config.ts --coverage"
+    "test announcement_management": "jest --config ./src/tests/unit/server/announcement_management_tests/jest.config.ts --coverage",
+    "loc": "cloc --vcs=git --exclude-list-file=.clocignore"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +19,7 @@
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
     "axios": "^0.24.0",
+    "cloc": "^2.9.0",
     "css-loader": "^6.5.1",
     "fetch-jsonp": "^1.2.1",
     "file-loader": "^6.2.0",

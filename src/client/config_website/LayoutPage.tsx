@@ -1,18 +1,159 @@
 import * as React from "react";
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import {Button, Checkbox, Grid} from "@mui/material";
-import FormGroup from '@mui/material/FormGroup';
+import Select from '@mui/material/Select';
+import {Button, Grid} from "@mui/material";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import LockIcon from '@mui/icons-material/Lock';
+
 
 export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget, handleDeleteWidget, handlePosition, children}) => {
 
     return(
         <div>
             <Grid container spacing={2} direction="column" justifyContent="flex-start" alignItems="flex-start">
+                <Grid item container spacing={2} direction="row">
+                    <Grid item>
+                        <Box
+                            sx={{
+                                width: 150,
+                                height: 150,
+                                backgroundColor: 'text.primary',
+                            }
+                            }
+                        >
+                            <Grid container direction="row" alignItems="center" justifyContent="space-between">
+                                <Grid item xs={12}>''</Grid>
+                                <Grid item xs={12}>''</Grid>
+                                <Grid item  container alignItems="center" justifyContent="center">
+                                    <Grid item>
+                                        <LockIcon color='error'/>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Box>
+
+                    </Grid>
+
+                    <Grid item>
+                        <Box
+                            sx={{
+                                width: 150,
+                                height: 150,
+                                backgroundColor: 'text.primary',
+                                }
+                            }
+                        >
+                            <Grid container direction="row" alignItems="center" justifyContent="space-between">
+                                <Grid item xs={12}>''</Grid>
+                                <Grid item xs={12}>''</Grid>
+                                <Grid item  container alignItems="center" justifyContent="center">
+                                    <Grid item>
+                                        <Typography variant="h6" color='white'>1.top center</Typography>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Box>
+
+                    </Grid>
+
+                    <Grid item>
+                        <Box
+                            sx={{
+                                width: 150,
+                                height: 150,
+                                backgroundColor: 'text.primary',
+                            }
+                            }
+                        >
+                            <Grid container direction="row" alignItems="center" justifyContent="space-between">
+                                <Grid item xs={12}>''</Grid>
+                                <Grid item xs={12}>''</Grid>
+                                <Grid item  container alignItems="center" justifyContent="center">
+                                    <Grid item>
+                                        <Typography variant="h6" color='white'>2.top right</Typography>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Box>
+
+                    </Grid>
+
+                </Grid>
+
+                <Grid item container spacing={2} direction="row">
+                    <Grid item>
+                        <Box
+                            sx={{
+                                width: 150,
+                                height: 150,
+                                backgroundColor: 'text.primary',
+                            }
+                            }
+                        >
+                            <Grid container direction="row" alignItems="center" justifyContent="space-between">
+                                <Grid item xs={12}>''</Grid>
+                                <Grid item xs={12}>''</Grid>
+                                <Grid item  container alignItems="center" justifyContent="center">
+                                    <Grid item>
+                                        <Typography variant="h6" color='white'>3.bottom left</Typography>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Box>
+
+                    </Grid>
+
+                    <Grid item>
+                        <Box
+                            sx={{
+                                width: 150,
+                                height: 150,
+                                backgroundColor: 'text.primary',
+                            }
+                            }
+                        >
+                            <Grid container direction="row" alignItems="center" justifyContent="space-between">
+                                <Grid item xs={12}>''</Grid>
+                                <Grid item xs={12}>''</Grid>
+                                <Grid item  container alignItems="center" justifyContent="center">
+                                    <Grid item>
+                                        <Typography variant="h6" color='white'>4.bottom center</Typography>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Box>
+
+                    </Grid>
+
+                    <Grid item>
+                        <Box
+                            sx={{
+                                width: 150,
+                                height: 150,
+                                backgroundColor: 'text.primary',
+                            }
+                            }
+                        >
+                            <Grid container direction="row" alignItems="center" justifyContent="space-between">
+                                <Grid item xs={12}>''</Grid>
+                                <Grid item xs={12}>''</Grid>
+                                <Grid item  container alignItems="center" justifyContent="center">
+                                    <Grid item>
+                                        <Typography variant="h6" color='white'>5.bottom right</Typography>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Box>
+
+                    </Grid>
+                </Grid>
+
                 <Grid item>
                     <ul>
                         {list.map(widget => (
@@ -21,64 +162,73 @@ export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget
                                     {widget.name}
                                 </Grid>
                                 <Grid item>
-                                    <FormGroup>
-                                        <FormControlLabel
-                                            label="1"
-                                            control={<Checkbox
-                                                checked={widget.position1}
-                                                onChange={
-                                                () => {handlePosition(widget.id, 1)}
-                                            }/>}
-                                        />
-                                    </FormGroup>
-                                </Grid>
-                                <Grid item>
-                                    <FormGroup>
-                                        <FormControlLabel
-                                            label="2"
-                                            control={<Checkbox
-                                                checked={widget.position2}
-                                                onChange={
-                                                () => {handlePosition(widget.id, 2)}
-                                            }/>}
-                                        />
-                                    </FormGroup>
-                                </Grid>
-                                <Grid item>
-                                    <FormGroup>
-                                        <FormControlLabel
-                                            label="3"
-                                            control={<Checkbox
-                                                checked={widget.position3}
-                                                onChange={
-                                                () => {handlePosition(widget.id, 3)}
-                                            }/>}
-                                        />
-                                    </FormGroup>
-                                </Grid>
-                                <Grid item>
-                                    <FormGroup>
-                                        <FormControlLabel
-                                            label="4"
-                                            control={<Checkbox
-                                                checked={widget.position4}
-                                                onChange={
-                                                () => {handlePosition(widget.id, 4)}
-                                            }/>}
-                                        />
-                                    </FormGroup>
-                                </Grid>
-                                <Grid item>
-                                    <FormGroup>
-                                        <FormControlLabel
-                                            label="5"
-                                            control={<Checkbox
-                                                checked={widget.position5}
-                                                onChange={
-                                                () => {handlePosition(widget.id, 5)}
-                                            }/>}
-                                        />
-                                    </FormGroup>
+                                    <FormControl>
+                                        <RadioGroup
+                                            row
+                                        >
+                                            <FormControlLabel
+                                                label="1"
+                                                control={
+                                                <Radio
+                                                    checked={widget.position === "1"}
+                                                    onChange={
+                                                        () => {
+                                                            handlePosition(widget.id, "1")
+                                                        }
+                                                     }
+                                                />
+                                                }
+                                            />
+                                            <FormControlLabel
+                                                label="2"
+                                                control={
+                                                <Radio
+                                                    checked={widget.position === "2"}
+                                                    onChange={
+                                                        () => {
+                                                            handlePosition(widget.id, "2")
+                                                        }
+                                                    }/>
+                                                 }
+                                            />
+                                            <FormControlLabel
+                                                label="3"
+                                                control={
+                                                    <Radio
+                                                        checked={widget.position === "3"}
+                                                        onChange={
+                                                            () => {
+                                                                handlePosition(widget.id, "3")
+                                                            }
+                                                        }/>
+                                                }
+                                            />
+                                            <FormControlLabel
+                                                label="4"
+                                                control={
+                                                    <Radio
+                                                        checked={widget.position === "4"}
+                                                        onChange={
+                                                            () => {
+                                                                handlePosition(widget.id, "4")
+                                                            }
+                                                        }/>
+                                                }
+                                            />
+                                            <FormControlLabel
+                                                label="5"
+                                                control={
+                                                    <Radio
+                                                        checked={widget.position === "5"}
+                                                        onChange={
+                                                            () => {
+                                                                handlePosition(widget.id, "5")
+                                                            }
+                                                        }/>
+                                                }
+                                            />
+                                        </RadioGroup>
+                                    </FormControl>
                                 </Grid>
                                 <Grid item>
                                     <Button onClick={() => handleDeleteWidget(widget.id)}>
