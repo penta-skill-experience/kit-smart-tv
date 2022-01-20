@@ -20,13 +20,11 @@ export async function validatePassword({
     password: string;
 }) {
     const admin = await AdminModel.findOne({name: 'admin'});
-
     if (!admin) {
         return false;
     }
 
     const isValid = await admin.comparePassword(password);
-
     if (!isValid) return false;
 
     return omit(admin.toJSON(), "password");

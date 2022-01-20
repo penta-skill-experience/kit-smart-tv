@@ -11,7 +11,7 @@ export const createAdminSchema = object({
 export type CreateAdminInput = TypeOf<typeof createAdminSchema>;
 
 
-//geht nur mit aktiver session, muss noch geändert werden
+
 export const updatePasswordSchema = object({
     body: object({
         password: string({

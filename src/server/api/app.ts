@@ -7,8 +7,8 @@ import express, {Request, Response} from "express";
 import config from "./config.json";
 import connect from './utils/conntectDb';
 import validate from "./middleware/validateResource";
-import {createAdminSchema} from "./schema/admin.schema";
-import {createAdminHandler} from "./controller/admin.controller";
+import {createAdminSchema, updatePasswordSchema} from "./schema/admin.schema";
+import {createAdminHandler, updatePasswordHandler} from "./controller/admin.controller";
 import path from "path";
 import {createAdminSessionHandler, deleteSessionHandler, getSessionHandler} from "./controller/session.controller";
 import validateResource from "./middleware/validateResource";
@@ -37,7 +37,7 @@ app.listen(port, async () => {
 
     app.post("/admin", validate(createAdminSchema), createAdminHandler);
 
-    //app.put("/admin", [requireAdmin, validateResource(updatePasswordSchema)], updatePasswordHandler)
+    app.put("/admin", [requireAdmin, validateResource(updatePasswordSchema)], updatePasswordHandler)
 
     app.post(
         "/api/sessions",
