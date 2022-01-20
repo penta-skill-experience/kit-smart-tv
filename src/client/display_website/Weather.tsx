@@ -27,8 +27,6 @@ export class Weather extends React.Component<any, any> {
     getWeather() {
         axios.get(WeatherConfig.URL + WeatherConfig.API_KEY)
             .then(resp => {
-                console.log(resp.data);
-                console.log(resp.data.current.weather[0].icon);
                 this.setState({
                     temp: resp.data.current.temp,
                     humidity: resp.data.current.humidity,
@@ -43,32 +41,28 @@ export class Weather extends React.Component<any, any> {
     }
 
     render() {
-        return <div className="w-full">
-            <div className="grid grid-col-3 grid-flow-col gap-3 box-border">
-                <img src={WeatherConfig.URL_ICONS + this.state.icon + "@4x.png"} alt="logo"/>
-                <div className="grid grid-rows-3 gap-0">
+        return <div className="grid grid-col-3 grid-flow-col gap-3 box-border items-center pt-16">
+                <img className="scale-125" src={WeatherConfig.URL_ICONS + this.state.icon + "@4x.png"} alt="logo"/>
+                <div className="justify-center">
                     <div className="font-light leading-normal text-white text-base sm:text-8xl">
                         {kelvinToCelsiusRounded(this.state.temp)}°
                     </div>
-                    <div className="font-light leading-normal text-white text-base sm:text-2xl">
+                    <div className="font-light leading-normal text-white text-base sm:text-3xl">
                         Karlsruhe
                     </div>
                 </div>
-                <div className="grid grid-rows-3 gap-0">
-                    <div
-                        className="pl-5 font-light leading-normal text-white text-base sm:text-xl sm:text-left lg:text-2xl">
-                        precipitation: {this.state.precipitation * 100}%
+                <div className="grid grid-rows-3 gap-4">
+                    <div className="pl-5 font-light leading-normal text-white text-base sm:text-xl sm:text-left lg:text-4xl">
+                        precipitation: <span className="font-medium sm:text-xl sm:text-left lg:text-5xl">{this.state.precipitation * 100}</span>%
+                    </div>
+                    <div className="pl-5 font-light leading-normal text-white text-base sm:text-xl sm:text-left lg:text-4xl">
+                        humidity: <span className="font-medium sm:text-xl sm:text-left lg:text-5xl">{this.state.humidity}</span>%
                     </div>
                     <div
-                        className="pl-5 font-light leading-normal text-white text-base sm:text-xl sm:text-left lg:text-2xl">
-                        humidity: {this.state.humidity}%
-                    </div>
-                    <div
-                        className="pl-5 font-light leading-normal text-white text-base sm:text-xl sm:text-left lg:text-2xl">
-                        wind: {Math.round(this.state.windSpeed)} km/h
+                        className="pl-5 font-light leading-normal text-white text-base sm:text-xl sm:text-left lg:text-4xl">
+                        wind: <span className="font-medium sm:text-xl sm:text-left lg:text-5xl">{Math.round(this.state.windSpeed)}</span> km/h
                     </div>
                 </div>
-            </div>
         </div>;
     }
 }
