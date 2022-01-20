@@ -1,15 +1,6 @@
 import * as React from "react";
 import * as TramScheduleConfig from "./TramSchedule.json";
-import fetchJsonp = require("fetch-jsonp");
-
-fetchJsonp(TramScheduleConfig.URL, {
-    jsonpCallback:'callback'
-})
-    .then(resp => {
-        return resp;
-    }).catch(ex => {
-    console.log('parsing failed', ex)
-});
+import axios from "axios"
 
 export class TramSchedule extends React.Component<any, any> {
 
@@ -19,10 +10,25 @@ export class TramSchedule extends React.Component<any, any> {
             temp: ""
         };
     }
-
+    async getSchedule() {
+        await axios.get("https://cors-anywhere.herokuapp.com/" + TramScheduleConfig.URL, {
+            headers: {
+                'origin': 'www.example.com'
+            }
+        })
+            .then(resp => {
+                console.log(resp.data);
+                this.setState({
+                    temp: resp.data
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
     componentDidMount() {
-        fetchJsonp(TramScheduleConfig.URL);
-        setInterval(() => fetchJsonp(TramScheduleConfig.URL), TramScheduleConfig.REFRESH_RATE);
+        this.getSchedule();
+        setInterval(() => this.getSchedule(), TramScheduleConfig.REFRESH_RATE);
     }
 
     render() {
