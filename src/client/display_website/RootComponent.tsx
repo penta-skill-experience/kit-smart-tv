@@ -2,6 +2,7 @@ import * as React from "react";
 import {SquareHolder} from "./SquareHolder";
 import {DigitalTime} from "./DigitalTime";
 import {Weather} from "./Weather";
+import {TramSchedule} from "./TramSchedule";
 
 export class RootComponent extends React.Component<any, any> {
     render() {
@@ -19,6 +20,7 @@ export class RootComponent extends React.Component<any, any> {
                             <DigitalTime/>
                             <Weather/>
                         </div>
+                        <TramSchedule/>
                         <SquareHolder/>
                     </div>
                 </div>
