@@ -16,9 +16,11 @@ export class RootComponent extends React.Component<any, any> {
                 <div className="z-30 absolute right-10 absolute bottom-7">
                     <img className="sm:w-3/4 lg:w-full" src="https://www.artwork.de/wp-content/uploads/2015/08/logo_TF_NEU_4c_ai.png" alt="IHKLogo"/>
                 </div>
-                <div className="z-20 lg:w-4/12 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30">
+                <div className="z-20 lg:w-4/12 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30" style={{
+                    height: "100vh"
+                }}>
 
-                    <div className="grid grid-rows-2 grid-flow-row gap-8 min-h-screen box-border p-10">
+                    <div className="grid grid-rows-2 grid-flow-row gap-8 box-border p-10 h-full">
                         <div>
                             <DigitalTime/>
                             <Weather/>
@@ -29,7 +31,9 @@ export class RootComponent extends React.Component<any, any> {
                     </div>
                 </div>
                 <div className="z-10 w-2/3 absolute right-0">
-                    <div className="grid grid-cols-2 gap-8 min-h-screen box-border p-8">
+                    <div className="grid grid-cols-2 gap-8 box-border p-8" style={{
+                        height: "100vh"
+                    }}>
                         <SquareHolder />
                         <SquareHolder />
                         <SquareHolder />

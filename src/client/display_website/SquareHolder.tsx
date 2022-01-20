@@ -2,12 +2,12 @@ import * as React from "react";
 export class SquareHolder extends React.Component<any, any> {
 
     render() {
-        return <div className="w-full">
-            <div className="w-fit shadow-2xl rounded-2xl bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-70">
+        return <div className="w-fit">
+            <div className="shadow-2xl rounded-2xl bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-70">
                 <span className="pt-5 pl-5 font-light leading-normal text-green-600 text-base sm:text-8xl">
                     {this.props.title}
                 </span>
-                <span className="pr-5 pl-3 font-light leading-normal text-green-600 text-base sm:text-4xl">
+                <span className="pr-5 pl-3 pr-5 font-light leading-normal text-green-600 text-base sm:text-4xl">
                     {this.props.subTitle}
                 </span>
                 <div className = "pt-5 pl-10 pr-5 pb-4">
