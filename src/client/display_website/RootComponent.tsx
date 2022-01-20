@@ -2,7 +2,7 @@ import * as React from "react";
 import {SquareHolder} from "./SquareHolder";
 import {DigitalTime} from "./DigitalTime";
 import {Weather} from "./Weather";
-import {CafeteriaOpening} from "./CafeteriaOpening";
+import {TramSchedule} from "./TramSchedule";
 
 export class RootComponent extends React.Component<any, any> {
     render() {
@@ -23,8 +23,8 @@ export class RootComponent extends React.Component<any, any> {
                             <DigitalTime/>
                             <Weather/>
                         </div>
-                        <SquareHolder>
-                            <CafeteriaOpening/>
+                        <SquareHolder title = "Tram Schedule" subTitle = "(Durlacher Tor)">
+                            <TramSchedule/>
                         </SquareHolder>
                     </div>
                 </div>

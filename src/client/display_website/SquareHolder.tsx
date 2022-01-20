@@ -2,9 +2,17 @@ import * as React from "react";
 export class SquareHolder extends React.Component<any, any> {
 
     render() {
-        return <div className="w-full shadow-2xl rounded-2xl bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-70">
-            {this.props.children}
-            <div className="flex space-x-1 justify-center p-2" style={{
+        return <div className="w-full">
+            <div className="w-fit shadow-2xl rounded-2xl bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-70">
+                <div className="pt-5 pl-5 pr-5 font-light leading-normal text-green-600 text-base sm:text-8xl">
+                    {this.props.title}
+                </div>
+                <div className="pl-5 pr-5 font-light leading-normal text-green-600 text-base sm:text-4xl">
+                {this.props.subTitle}
+                </div>
+                <div className = "pt-5 pl-10 pr-5 pb-4">
+                    {this.props.children}
+                <div className="flex space-x-1 justify-center p-2 pt-5" style={{
                     opacity: 1
                 }}>
                     <a href="#"
@@ -17,6 +25,8 @@ export class SquareHolder extends React.Component<any, any> {
                        className="px-1 py-1 rounded-full bg-gray-600 rounded-md hover:bg-gray-800 hover:text-white">
                     </a>
                 </div>
+                </div>
+            </div>
         </div>;
     }
 }
