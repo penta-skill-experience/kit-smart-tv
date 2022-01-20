@@ -12,8 +12,14 @@ interface TramScheduleState {
     trains: DepartureData[];
 }
 
-export class TramSchedule extends React.Component<any, TramScheduleState> {
+let justArrived = (x: string): string => {
+    if (/^-?\d+$/.test(x) && Number(x) == 0) {
+        return "now!"
+    }
+    return x;
+};
 
+export class TramSchedule extends React.Component<any, TramScheduleState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,20 +28,13 @@ export class TramSchedule extends React.Component<any, TramScheduleState> {
     }
 
     getSchedule() {
-        axios.get(TramScheduleConfig.CORS_ANYWHERE + TramScheduleConfig.URL, {
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Headers": "Origin",
-                'Origin': 'www.example.com'
-            }
-        })
+        axios.get(TramScheduleConfig.CORS_ANYWHERE + TramScheduleConfig.URL)
             .then(resp => {
-                console.log(resp.data);
                 this.setState({
                     trains: resp.data.departures.map(d => ({
                         route: d.route,
                         destination: d.destination,
-                        time: d.time
+                        time: justArrived(d.time)
                     })),
                 });
             })
