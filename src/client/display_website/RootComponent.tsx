@@ -20,8 +20,9 @@ export class RootComponent extends React.Component<any, any> {
                             <DigitalTime/>
                             <Weather/>
                         </div>
-                        <TramSchedule/>
-                        <SquareHolder/>
+                        <SquareHolder title = "Tram Schedule" subTitle = "(Durlacher Tor)">
+                            <TramSchedule/>
+                        </SquareHolder>
                     </div>
                 </div>
                 <div className="z-10 w-2/3 absolute right-0">
