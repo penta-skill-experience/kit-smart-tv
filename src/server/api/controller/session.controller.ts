@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import config from "../config.json";
 import {
     createSession, deleteSession,
-    findSession,
+    findSession, isValidSession,
     updateSession,
 } from "../services/session.service";
 import { validatePassword } from "../services/admin.service";
@@ -15,11 +15,11 @@ export async function createAdminSessionHandler(req: Request, res: Response) {
     if (!admin) {
         return res.status(401).send("Invalid password");
     }
-
-    // nur createn wenn es keine valid session gibt, sonst error return, dass access verweigert ist.
-    const session_previously_started = await findSession({ valid: true });
-    if(session_previously_started){
-        return res.status(405).send("already logged in");
+    const session_previously_started = await findSession({ admin: admin._id });
+    if(session_previously_started) {
+        if (await isValidSession(session_previously_started._id)) {
+            return res.status(405).send("already logged in");
+        }
     }
     // create a session
     const session = await createSession(admin._id, req.get("user-agent") || "");
@@ -49,16 +49,18 @@ export async function getSessionHandler(req: Request, res: Response) {
 
     const session = await findSession({ admin: adminId, valid: true });
 
-    if (!session) {
-        return res.status(401).send("Invalid password");
-    }
+    // if (!session) {
+    //     return res.status(401).send("no session");
+    // }
+    //
+    //
+    // let delta = Math.floor((Date.now() - session.updatedAt.valueOf()) / (1000*60));
+    // if(delta >= config.sessionTtlInMinutes){
+    //     await deleteSession({ admin: adminId});
+    //     return res.status(401).send("Session expired. Please log in.");
+    // }
 
 
-    let delta = Math.floor((Date.now() - session.updatedAt.valueOf()) / (1000*60));
-    if(delta >= config.sessionTtlInMinutes){
-        await deleteSession({ admin: adminId});
-        return res.status(401).send("Session expired. Please log in.");
-    }
 
     await updateSession({ _id: session._id }, { valid: true });
     const valid_until = new Date(Date.now() + config.sessionTtlInMinutes*60*1000);

@@ -1,7 +1,6 @@
 import {Request, Response} from "express";
-import {createAdmin, validatePassword} from "../services/admin.service";
+import {createAdmin, updatePassword} from "../services/admin.service";
 import {CreateAdminInput, updatePasswordInput} from "../schema/admin.schema";
-import AdminModel from "../models/admin.model";
 
 export async function createAdminHandler(req: Request<CreateAdminInput["body"]>, res: Response) { //req: {},{}, Request<CreateAdminInput["body"]>
     try {
@@ -14,21 +13,18 @@ export async function createAdminHandler(req: Request<CreateAdminInput["body"]>,
 
 export async function updatePasswordHandler(req: Request<updatePasswordInput["body"]>, res: Response) {
     try {
-        const admin = await validatePassword({password: req.body.password});
 
-        if (!admin) {
-            return res.status(401).send("Invalid password");
-        }
         // admin in datenbank updaten
+        const updated_admin = await updatePassword({
+            old_password: req.body.password,
+            new_password: req.body.new_password
+        })
+        if (updated_admin) {
+            return res.send("password updated");
+        } else {
+            return res.status(409).send("could not update password");
+        }
 
-        AdminModel.findById(admin._id, function(err, doc) {
-            if (err) return false;
-            doc.password = req.body.new_password;
-            doc.save();
-        });
-
-
-        return res.send("password updated")
     } catch (e: any) {
         console.log(e.message);
         return res.status(409).send(e.message);

@@ -35,4 +35,19 @@ export async function getAdmin(){
 }
 
 
-export async function updatePassword() {}
+export async function updatePassword({
+                                         old_password,
+                                         new_password,
+                                     }: {
+    old_password: string;
+    new_password: string;
+}) {
+    const admin = await AdminModel.findOne({name: "admin"}, async function (err, admin) {
+        if (err) return false;
+        const isValid = await admin.comparePassword(old_password);
+        if (!isValid) return false;
+        admin.password = new_password;
+        admin.save();
+    });
+    return omit(admin.toJSON(), "password");
+}
