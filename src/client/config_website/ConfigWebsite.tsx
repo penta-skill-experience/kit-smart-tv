@@ -89,12 +89,7 @@ export function ConfigWebsite() {
     const [widget, setWidget] = React.useState({
         id:0,
         name:'',
-        position1:false,
-        position2:false,
-        position3:false,
-        position4:false,
-        position5:false,
-        configurable:false,
+        position:''
     });
 
     const incrementCounter = () => setCounter(counter + 1);
@@ -103,20 +98,21 @@ export function ConfigWebsite() {
         const updatedValue = {
             id:counter,
             name:event.target.value,
-            position1:false,
-            position2:false,
-            position3:false,
-            position4:false,
-            position5:false,
-            configurable:false,
+            position:''
         }
         setWidget(updatedValue)
     };
 
     const handleAddWidget = () => {
         if (widget.name !== '') {
-            setList(list.concat(widget));
+            const newWidget = {
+                id:counter,
+                name:widget.name,
+                position:''
+            }
+            setList(list.concat(newWidget));
             incrementCounter();
+            console.log('Added widget ' + newWidget.name + ' with id ' + newWidget.id)
         }
     };
 
@@ -127,22 +123,8 @@ export function ConfigWebsite() {
     const handlePosition = (id, position) => {
         const newList = list.map((item) => {
             if (item.id === id) {
-                if (position === 1) {
-                    const newWidget = { ...item, position1: !item.position1 };
-                    return newWidget;
-                } else if (position === 2) {
-                    const newWidget = { ...item, position2: !item.position2 };
-                    return newWidget;
-                } else if (position === 3) {
-                    const newWidget = { ...item, position3: !item.position3 };
-                    return newWidget;
-                } else if (position === 4) {
-                    const newWidget = { ...item, position4: !item.position4 };
-                    return newWidget;
-                } else {
-                    const newWidget = { ...item, position5: !item.position5 };
-                    return newWidget;
-                }
+                const newWidget = { ...item, position: position }
+                return newWidget;
             } else {
                 return item;
             };
