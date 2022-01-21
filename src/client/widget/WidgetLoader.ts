@@ -1,6 +1,6 @@
 import {Widget} from "./Widget";
-import {RssFeedWidget} from "../widget_catalog/rss-feed/RssFeedWidget";
-import {TramScheduleWidget} from "../widget_catalog/tram-schedule/TramScheduleWidget";
+import {RssFeedWidget} from "../widget_catalog/rss_feed/RssFeedWidget";
+import {TramScheduleWidget} from "../widget_catalog/tram_schedule/TramScheduleWidget";
 import {WeatherWidget} from "../widget_catalog/weather/WeatherWidget";
 import {TimeWidget} from "../widget_catalog/time/TimeWidget";
 
