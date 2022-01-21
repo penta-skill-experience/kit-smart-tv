@@ -1,6 +1,8 @@
 import * as EmailConfig from "./MailAccontConfig.json";
+import * as EmailInteractionConfig from "./MailInteractionConfig.json"
 import {MailListener} from "mail-listener-typescript";
 import {EmailAnnouncementExecutor} from "./EmailAnnouncementExecutor";
+import * as fs from "fs";
 
 class AnnouncementMailListener {
 
@@ -36,6 +38,10 @@ class AnnouncementMailListener {
 
         this.mailListener.on("mail", async mail => {
             new EmailAnnouncementExecutor().executeEmailCommand(mail);
+        })
+
+        this.mailListener.on("error", async error => {
+            fs.writeFileSync(EmailInteractionConfig.MAIL_LISTENER_ERROR_FILE_NAME, error);
         })
     }
 }
