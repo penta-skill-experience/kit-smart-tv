@@ -33,7 +33,7 @@ export const PersonalizationPage= ({colorScheme, fontSize, handleColorSchemeChan
                         </RadioGroup>
                     </FormControl>
                 </Grid>
-                <Grid item>
+                <Grid item xs={12}>
                     {renderBackground(colorScheme)}
                 </Grid>
             </Grid>
@@ -43,16 +43,20 @@ export const PersonalizationPage= ({colorScheme, fontSize, handleColorSchemeChan
 
 function renderBackground(colorScheme) {
     if (colorScheme === "light") {
-        return <div>
-            <h1>Available backgrounds for light mode:</h1>
-            <img src={meme1}/>
-        </div>
+        return (
+            <div>
+                <h1>Available backgrounds for light mode:</h1>
+                <img src={meme1}/>
+            </div>
+        );
 
     } else if (colorScheme === "dark") {
-        return <div>
-            <h1>Available backgrounds for dark mode:</h1>
-            <img src={meme2}/>
-        </div>
+        return (
+            <div>
+                <h1>Available backgrounds for dark mode:</h1>
+                <img src={meme2}/>
+            </div>
+        );
     } else {
         return
     }

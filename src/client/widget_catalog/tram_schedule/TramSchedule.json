@@ -1,0 +1,8 @@
+{
+  "REFRESH_RATE": 600000,
+  "API_KEY": "b5f142241278dc5e901f7f14f5f618a0",
+  "URL": "https://live.kvv.de/webapp/departures/bystop/DTO?maxInfos=10&key=377d840e54b59adbe53608ba1aad70e8",
+  "CORS_ANYWHERE": "https://cors-anywhere.herokuapp.com/",
+  "ITEM_COUNT": 4
+}
+

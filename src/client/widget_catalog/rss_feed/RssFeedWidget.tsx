@@ -1,6 +1,6 @@
-import {Widget} from "../widget/Widget";
-import {WidgetConfigSaver} from "../widget/WidgetConfigSaver";
 import * as React from "react";
+import {Widget} from "../../widget/Widget";
+import {WidgetConfigSaver} from "../../widget/WidgetConfigSaver";
 import {RssFeedDisplayComponent} from "./RssFeedDisplayComponent";
 import {RssFeedConfig} from "./RssFeedConfig";
 import {RssFeedConfigComponent} from "./RssFeedConfigComponent";

@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {Grid} from "@mui/material";
 
-export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNewPassword, handlePasswordChange, handleChangeSave, handleLogout, children} ) => {
+export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNewPassword, handlePasswordChange, handleChangeSave, children} ) => {
 
     return (
         <Box
@@ -43,13 +43,6 @@ export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNe
                             variant="outlined"
                         >
                             Save Changes</Button>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button
-                            onClick={handleLogout}
-                            variant="outlined"
-                        >
-                            Log out</Button>
                     </Grid>
                 </Grid>
             </div>
