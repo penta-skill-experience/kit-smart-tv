@@ -4,10 +4,16 @@ import {MailListener} from "mail-listener-typescript";
 import {EmailAnnouncementExecutor} from "./EmailAnnouncementExecutor";
 import * as fs from "fs";
 
+/**
+ * A class to create a mail listener to listen for announcements.
+ */
 class AnnouncementMailListener {
 
     private mailListener : MailListener
 
+    /**
+     * Creates the mail listener using the options supplied from MailAccountConfig.json.
+     */
     createMailListener() {
         const options = { // see https://www.npmjs.com/package/mail-listener-typescript
             username: EmailConfig.USERNAME,
@@ -38,13 +44,16 @@ class AnnouncementMailListener {
 
         this.mailListener.on("mail", async mail => {
             new EmailAnnouncementExecutor().executeEmailCommand(mail);
-        })
+        });
 
         this.mailListener.on("error", async error => {
             fs.writeFileSync(EmailInteractionConfig.MAIL_LISTENER_ERROR_FILE_NAME, error);
-        })
+        });
     }
 
+    /**
+     * Stops and disconnects a created listener.
+     */
     stopMailListener() {
         this.mailListener.stop();
     }
