@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "e2b80ebd-bbef-4630-891d-f5f5fb9c0991",
-		"name": "REST API Tutorial",
+		"name": "API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -63,11 +63,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{endpoint}}/sessions",
+							"raw": "{{endpoint}}/api/sessions",
 							"host": [
 								"{{endpoint}}"
 							],
 							"path": [
+								"api",
 								"sessions"
 							]
 						}
@@ -303,7 +304,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"password\": \"{{password}}\"\n}",
+							"raw": "{\n    \"password\": \"{{alt_password}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -311,11 +312,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{endpoint}}/sessions",
+							"raw": "{{endpoint}}/api/sessions",
 							"host": [
 								"{{endpoint}}"
 							],
 							"path": [
+								"api",
 								"sessions"
 							]
 						}
