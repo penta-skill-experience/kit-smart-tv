@@ -53,7 +53,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
         } catch (e) {
             // todo: make design for error message nicer
             return <SquareHolder title={widget.getTitle()}>
-                Error while creating widget: {e.message}
+                <p>Error while creating widget: {e.message}</p>
             </SquareHolder>;
         }
     }

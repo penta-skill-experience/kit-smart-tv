@@ -32,7 +32,7 @@ export class SquareHolder extends React.Component<any, any> {
                 <div className="sm:pl-3 sm:pt-1 sm:pb-1 sm:pr-2 xl:pt-3 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12">
                     {this.state.hasError ?
                         // todo: make design for error message nicer
-                        <p>Error: {this.state.error.message}(</p>
+                        <p>Error while rendering widget: {this.state.error.message}</p>
                         : this.props.children  // only show children if they didn't produce an error
                     }
                     <div className="flex space-x-1 justify-center" style={{
