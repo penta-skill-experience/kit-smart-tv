@@ -19,8 +19,13 @@ export class WidgetPersistence {
                     },
                     {
                         widgetId: "rss-feed",
-                        location: 3,
+                        location: 2,
                         rawConfig: {url: "www.example.com"},
+                    },
+                    {
+                        widgetId: "weather",
+                        location: 3,
+                        rawConfig: {},
                     },
                 ];
 

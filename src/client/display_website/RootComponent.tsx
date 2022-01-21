@@ -1,7 +1,7 @@
 import * as React from "react";
 import {SquareHolder} from "./SquareHolder";
 import {DigitalTime} from "./DigitalTime";
-import {Weather} from "./Weather";
+import {Weather} from "../widget_catalog/weather/Weather";
 import {WidgetLoader} from "../widget/WidgetLoader";
 import {WidgetPersistence} from "../../shared/persistence/WidgetPersistence";
 import {WidgetData} from "../widget/WidgetData";
