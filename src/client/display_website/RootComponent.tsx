@@ -6,7 +6,7 @@ import {TramSchedule} from "./TramSchedule";
 
 export class RootComponent extends React.Component<any, any> {
     render() {
-        return <div className = "w-full min-h-screen bg-cover bg-no-repeat bg-center " style={{
+        return <div className = "bg-cover bg-no-repeat bg-center" style={{
             width: "100vw",
             height: "100vh",
             overflow: "hidden",
@@ -14,13 +14,13 @@ export class RootComponent extends React.Component<any, any> {
         }}>
             <div className="flex flex-wrap">
                 <div className="z-30 absolute right-10 absolute bottom-7">
-                    <img className="sm:w-3/4 lg:w-full" src="https://www.artwork.de/wp-content/uploads/2015/08/logo_TF_NEU_4c_ai.png" alt="IHKLogo"/>
+                    <img className="sm:w-28 lg:w-40 2xl:w-60 4xl:w-80" src="https://www.artwork.de/wp-content/uploads/2015/08/logo_TF_NEU_4c_ai.png" alt="IHKLogo"/>
                 </div>
-                <div className="z-20 lg:w-4/12 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30" style={{
+                <div className="z-20 sm:w-4/12 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30" style={{
                     height: "100vh"
                 }}>
 
-                    <div className="grid grid-rows-2 grid-flow-row gap-8 box-border p-10 h-full">
+                    <div className="sm:p-4 lg:p-6 xl:p-8 4xl:p-12 8xl-p-16 grid grid-rows-2 grid-flow-row gap-8 box-border h-full">
                         <div>
                             <DigitalTime/>
                             <Weather/>
@@ -31,7 +31,7 @@ export class RootComponent extends React.Component<any, any> {
                     </div>
                 </div>
                 <div className="z-10 w-2/3 absolute right-0">
-                    <div className="grid grid-cols-2 gap-8 box-border p-8" style={{
+                    <div className="grid grid-cols-2 2xl:gap-8 box-border" style={{
                         height: "100vh"
                     }}>
                         <SquareHolder />
