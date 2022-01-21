@@ -6,6 +6,7 @@
   "TLS": true,
   "CONN_TIMEOUT": 10000,
   "AUTH_TIMEOUT": 5000,
+  "DEBUG": "console.log()",
   "TLS_OPTIONS": { "REJECT_UNAUTHORIZED": false },
   "MAILBOX": "INBOX",
   "SEARCH_FILTER": ["NEW"],
