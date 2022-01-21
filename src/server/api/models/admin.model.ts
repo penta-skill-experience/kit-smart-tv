@@ -42,6 +42,18 @@ adminSchema.pre("save", async function (next){
     return next();
 })
 
+adminSchema.pre('findOneAndUpdate', async function (next) {
+    try {
+        if (this["_update"].password) {
+            const salt = await bcrypt.genSalt(config.saltWorkFactor);
+            this["_update"].password = await bcrypt.hash(this["_update"].password, salt);
+        }
+        next();
+    } catch (err) {
+        return next(err);
+    }
+});
+
 adminSchema.methods.comparePassword = async function (
     candidatePassword: string
 ): Promise<boolean> {
