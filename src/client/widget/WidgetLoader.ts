@@ -1,5 +1,6 @@
 import {Widget} from "./Widget";
-import {RssFeedWidget} from "../widget_catalog/RssFeedWidget";
+import {RssFeedWidget} from "../widget_catalog/rss-feed/RssFeedWidget";
+import {TramScheduleWidget} from "../widget_catalog/tram-schedule/TramScheduleWidget";
 
 export class WidgetLoader {
 
@@ -7,6 +8,7 @@ export class WidgetLoader {
 
     constructor() {
         this.widgets.set("rss-feed", new RssFeedWidget());
+        this.widgets.set("tram-schedule", new TramScheduleWidget());
     }
 
     getWidgetIds(): string[] {
