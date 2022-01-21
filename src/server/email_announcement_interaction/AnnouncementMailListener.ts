@@ -44,4 +44,8 @@ class AnnouncementMailListener {
             fs.writeFileSync(EmailInteractionConfig.MAIL_LISTENER_ERROR_FILE_NAME, error);
         })
     }
+
+    stopMailListener() {
+        this.mailListener.stop();
+    }
 }
