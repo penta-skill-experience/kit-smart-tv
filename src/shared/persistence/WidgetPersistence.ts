@@ -27,6 +27,11 @@ export class WidgetPersistence {
                         location: 3,
                         rawConfig: {},
                     },
+                    {
+                        widgetId: "time",
+                        location: 4,
+                        rawConfig: {},
+                    },
                 ];
 
                 resolve(data);

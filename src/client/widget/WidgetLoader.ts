@@ -2,6 +2,7 @@ import {Widget} from "./Widget";
 import {RssFeedWidget} from "../widget_catalog/rss-feed/RssFeedWidget";
 import {TramScheduleWidget} from "../widget_catalog/tram-schedule/TramScheduleWidget";
 import {WeatherWidget} from "../widget_catalog/weather/WeatherWidget";
+import {TimeWidget} from "../widget_catalog/time/TimeWidget";
 
 export class WidgetLoader {
 
@@ -11,6 +12,7 @@ export class WidgetLoader {
         this.widgets.set("rss-feed", new RssFeedWidget());
         this.widgets.set("tram-schedule", new TramScheduleWidget());
         this.widgets.set("weather", new WeatherWidget());
+        this.widgets.set("time", new TimeWidget());
     }
 
     getWidgetIds(): string[] {
