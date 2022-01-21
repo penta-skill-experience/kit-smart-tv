@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import config from "../config.json";
 import {
     createSession, deleteSession,
-    findSession, isValidSession,
+    findSession,
     updateSession,
 } from "../services/session.service";
 import { validatePassword } from "../services/admin.service";
@@ -17,9 +17,7 @@ export async function createAdminSessionHandler(req: Request, res: Response) {
     }
     const session_previously_started = await findSession({ admin: admin._id });
     if(session_previously_started) {
-        if (await isValidSession(session_previously_started._id)) {
-            return res.status(405).send("already logged in");
-        }
+        await deleteSession({ _id: session_previously_started._id });
     }
     // create a session
     const session = await createSession(admin._id, req.get("user-agent") || "");
