@@ -59,6 +59,9 @@ describe("testing EmailAnnouncementExecutor calls Commands correctly", () => {
     beforeEach(() => {
         setCommandMock = jest.spyOn(SetAnnouncementCommand.prototype, "executeCommand");
         removeCommandMock = jest.spyOn(RemoveAnnouncementCommand.prototype, "executeCommand");
+
+        setCommandMock.mockImplementation(() => {});
+        removeCommandMock.mockImplementation(() => {});
     });
 
     test("testing EmailAnnouncementExecutor calls SetAnnouncementCommand properly", () => {
