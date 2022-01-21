@@ -44,9 +44,18 @@ export class RootComponent extends React.Component<any, RootComponentState> {
 
     private renderWidget(widgetData: WidgetData) {
         const widget = this.widgetLoader.getWidget(widgetData.widgetId);
-        return <SquareHolder title={widget.getTitle()}>
-            {widget.createDisplayComponent(widgetData.rawConfig)}
-        </SquareHolder>;
+
+        try {
+            const widgetComponent = widget.createDisplayComponent(widgetData.rawConfig);
+            return <SquareHolder title={widget.getTitle()}>
+                {widgetComponent}
+            </SquareHolder>;
+        } catch (e) {
+            // todo: make design for error message nicer
+            return <SquareHolder title={widget.getTitle()}>
+                Error while creating widget: {e.message}
+            </SquareHolder>;
+        }
     }
 
     render() {
