@@ -1,8 +1,7 @@
 import * as React from "react";
-
+import * as SquareHolderConfig from "./SquareHolder.json";
 export class SquareHolder extends React.Component<any, any> {
 
-    static scroll = 2;
     pageScroll = function() {
         document.getElementById(this.state.uniqueID).scrollBy(0,this.state.scroll); // horizontal and vertical scroll increments
         if((document.getElementById(this.state.uniqueID).scrollTop +
@@ -26,7 +25,7 @@ export class SquareHolder extends React.Component<any, any> {
             uniqueID: this.randomID(),
             hasError: false,
             error: undefined,
-            scroll: 2
+            scroll: SquareHolderConfig.SCROLL_SPEED
         };
         this.pageScroll = this.pageScroll.bind(this);
         setInterval(() => this.pageScroll(), 50);
