@@ -5,17 +5,16 @@ Each request that reaches the server will be handled here.
 
 import express, {Request, Response} from "express";
 import config from "./config.json";
-import { connectRemote} from './utils/conntectDb';
-import validate from "./middleware/validateResource";
+import {connectRemote} from './utils/conntectDb';
 import {createAdminSchema, updatePasswordSchema} from "./schema/admin.schema";
 import {createAdminHandler, updatePasswordHandler} from "./controller/admin.controller";
 import path from "path";
 import {createAdminSessionHandler, deleteSessionHandler, getSessionHandler} from "./controller/session.controller";
-import validateResource from "./middleware/validateResource";
 import {createSessionSchema} from "./schema/session.schema";
 import deserializeAdmin from "./middleware/deserializeAdmin";
 import requireAdmin from "./middleware/requireAdmin";
 import 'dotenv/config';
+import {ensureRequestStructure} from "./middleware/ensureRequestStructure";
 
 const port = config.port;
 
@@ -33,15 +32,15 @@ app.listen(port, async () => {
     console.log(`this app is running at http://localhost:${port}`);
     await connectRemote();
 
-    app.get('/healthcheck', (req: Request, res: Response) => res.sendStatus(200));
+    app.get("/healthcheck", (req: Request, res: Response) => res.sendStatus(200));
 
-    app.post("/admin/create-admin", validate(createAdminSchema), createAdminHandler);
+    app.post("/admin/create-admin", ensureRequestStructure(createAdminSchema), createAdminHandler);
 
-    app.put("/admin/update-password", [requireAdmin, validateResource(updatePasswordSchema)], updatePasswordHandler)
+    app.put("/admin/update-password", requireAdmin, ensureRequestStructure(updatePasswordSchema), updatePasswordHandler);
 
     app.post(
         "/api/sessions",
-        validateResource(createSessionSchema),
+        ensureRequestStructure(createSessionSchema),
         createAdminSessionHandler
     );
 

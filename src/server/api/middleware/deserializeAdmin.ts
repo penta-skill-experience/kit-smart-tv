@@ -3,7 +3,7 @@ import {Request, Response, NextFunction} from "express";
 import {verifyJwt} from "../utils/jwt.utils";
 import {reIssueAccessToken} from "../services/session.service";
 
-const deserializeAdmin = async function (req: Request, res: Response, next: NextFunction) {
+const deserializeAdmin = async (req: Request, res: Response, next: NextFunction) => {
     const accessToken = get(req, "headers.authorization", "")
         .replace(/^Bearer\s/, "");
 

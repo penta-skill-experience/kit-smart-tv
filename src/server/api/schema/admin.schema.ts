@@ -10,8 +10,6 @@ export const createAdminSchema = object({
 
 export type CreateAdminInput = TypeOf<typeof createAdminSchema>;
 
-
-
 export const updatePasswordSchema = object({
     body: object({
         password: string({
