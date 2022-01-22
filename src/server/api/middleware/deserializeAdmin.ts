@@ -1,17 +1,11 @@
-import { get } from "lodash";
-import { Request, Response, NextFunction } from "express";
-import { verifyJwt } from "../utils/jwt.utils";
-import { reIssueAccessToken } from "../services/session.service";
+import {get} from "lodash";
+import {Request, Response, NextFunction} from "express";
+import {verifyJwt} from "../utils/jwt.utils";
+import {reIssueAccessToken} from "../services/session.service";
 
-const deserializeAdmin = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
-    const accessToken = get(req, "headers.authorization", "").replace(
-        /^Bearer\s/,
-        ""
-    );
+const deserializeAdmin = async function (req: Request, res: Response, next: NextFunction) {
+    const accessToken = get(req, "headers.authorization", "")
+        .replace(/^Bearer\s/, "");
 
     const refreshToken = get(req, "headers.x-refresh");
 
@@ -19,7 +13,7 @@ const deserializeAdmin = async (
         return next();
     }
 
-    const { decoded, expired } = verifyJwt(accessToken, "accessTokenPublicKey");
+    const {decoded, expired} = verifyJwt(accessToken, "accessTokenPublicKey");
 
     if (decoded) {
         res.locals.admin = decoded;
@@ -27,7 +21,7 @@ const deserializeAdmin = async (
     }
 
     if (expired && refreshToken) {
-        const newAccessToken = await reIssueAccessToken({ refreshToken });
+        const newAccessToken = await reIssueAccessToken({refreshToken});
 
         if (newAccessToken) {
             res.setHeader("x-access-token", newAccessToken);
