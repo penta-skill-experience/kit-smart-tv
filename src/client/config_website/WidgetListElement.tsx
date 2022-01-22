@@ -76,7 +76,6 @@ function DeleteDialogComponent({id ,handleDeleteWidget}) {
 
     return(
         <Grid item>
-
             <Button onClick={handleOpen}>
                 <DeleteIcon/>
             </Button>
@@ -85,18 +84,15 @@ function DeleteDialogComponent({id ,handleDeleteWidget}) {
                 <DialogContent>
                     <DialogContentText>
                         The changes can't be restored and have to be manually recreated.
-                        Delete widget with id {id}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleDisagree}>Disagree</Button>
-                    <Button onClick={handleAgree}>
+                    <Button variant="outlined" onClick={handleDisagree}>Disagree</Button>
+                    <Button variant="outlined" onClick={handleAgree}>
                         Agree
                     </Button>
                 </DialogActions>
             </Dialog>
         </Grid>
     );
-
-
 }
