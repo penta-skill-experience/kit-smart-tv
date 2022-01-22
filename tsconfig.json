@@ -4,7 +4,8 @@
     "target": "es6",
     "sourceMap": true,
     "jsx": "react",
-    "resolveJsonModule": true   // this allows to import a JSON file as JavaScript object (type "Object")
+    "resolveJsonModule": true, // this allows to import a JSON file as JavaScript object (type "Object")
+    "esModuleInterop": true
   },
   "include": [
     "src"
