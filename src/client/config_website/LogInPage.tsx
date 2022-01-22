@@ -1,9 +1,15 @@
 import * as React from "react";
-import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import {Grid} from "@mui/material";
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import Input from '@mui/material/Input';
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-export const LogInPage = ({logInInput, handleInput, handleLogIn, children}) => {
+export const LogInPage = ({logInInput, handleInput, visible, handleLogIn, handleClickShowPassword, children}) => {
 
     return (
         <div>
@@ -11,12 +17,25 @@ export const LogInPage = ({logInInput, handleInput, handleLogIn, children}) => {
                 <Grid item xs={12}>
                     <h1 className="text-lg">Log In Admin Interface</h1>
                 </Grid>
+
                 <Grid item>
-                    <TextField
+                <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
+                    <InputLabel>Password</InputLabel>
+                    <Input
+                        type={visible ? 'text' : 'password'}
                         value={logInInput}
-                        label="Enter Password"
                         onChange={handleInput}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    onClick={handleClickShowPassword}
+                                >
+                                    {visible ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        }
                     />
+                </FormControl>
                 </Grid>
                 <Grid item>
                     <Button

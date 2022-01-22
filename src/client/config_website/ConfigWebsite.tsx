@@ -39,6 +39,7 @@ export function ConfigWebsite() {
     //state variables and methods for login page
     const password = 'password123';
     const [logInInput, setLogInInput] = useState('');
+    const [visible, setVisible] = useState(false);
     const [loggedInStatus, setLoggedInStatus] = useState(false);
 
     const handleInput = (
@@ -48,7 +49,7 @@ export function ConfigWebsite() {
     };
 
     const handleLogIn= () => {
-        // to do
+        // todo
         // connect with persistence
         if (logInInput === password) {
             setLoggedInStatus(true);
@@ -56,6 +57,10 @@ export function ConfigWebsite() {
             alert('password not correct')
         }
     };
+
+    const handleClickShowPassword = () => {
+        setVisible(!visible)
+    }
 
     //state variables and methods for tabs
     const [pageNumber, setPageNumber] = React.useState(0);
@@ -172,8 +177,10 @@ export function ConfigWebsite() {
             return (
                 <LogInPage
                     logInInput={logInInput}
+                    visible={visible}
                     handleInput={handleInput}
                     handleLogIn={handleLogIn}
+                    handleClickShowPassword={handleClickShowPassword}
                 >
                 </LogInPage>
             );
@@ -222,7 +229,6 @@ export function ConfigWebsite() {
                         <LayoutPage
                             list={list}
                             widget={widget}
-                            open={open}
                             handleWidgetSelection={handleWidgetSelection}
                             handleAddWidget={handleAddWidget}
                             handleDeleteWidget={handleDeleteWidget}
