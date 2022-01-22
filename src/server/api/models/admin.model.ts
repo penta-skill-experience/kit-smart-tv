@@ -10,6 +10,7 @@ export interface AdminInput {
 export interface AdminDocument extends AdminInput, mongoose.Document {
     createdAt: Date;
     updatedAt: Date;
+
     comparePassword(candidatePassword: string): Promise<Boolean>;
 }
 
@@ -24,11 +25,9 @@ const adminSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-}, {
-    timestamps: true,
-})
+}, {timestamps: true,});
 
-adminSchema.pre("save", async function (next){
+adminSchema.pre("save", async function (next) {
     let admin = this as AdminDocument;
 
     if (!admin.isModified("password")) {
@@ -61,6 +60,4 @@ adminSchema.methods.comparePassword = async function (
     return bcrypt.compare(candidatePassword, admin.password).catch(() => false);
 };
 
-const AdminModel = mongoose.model<AdminDocument>("Admin", adminSchema);
-
-export default AdminModel;
+export const AdminModel = mongoose.model<AdminDocument>("Admin", adminSchema);

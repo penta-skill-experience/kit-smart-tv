@@ -1,52 +1,39 @@
 import {DocumentDefinition} from "mongoose";
 import {omit} from "lodash";
-import AdminModel, {AdminInput} from "../models/admin.model";
+import {AdminModel, AdminInput} from "../models/admin.model";
 
-export async function createAdmin(input: DocumentDefinition<AdminInput> ) { // input: DocumentDefinition<AdminInput> //input: CreateAdminInput["body"]
-    try {
-        const admin = await AdminModel.create(input);
-
-        return omit(admin.toJSON(), "password");
-    } catch (e: any) {
-
-        console.log(e.message);
-        throw new Error(e);
-    }
+export async function createAdmin(input: DocumentDefinition<AdminInput>) { // input: DocumentDefinition<AdminInput> //input: CreateAdminInput["body"]
+    const admin = await AdminModel.create(input);
+    return omit(admin.toJSON(), "password");
 }
 
-export async function validatePassword({
-                                           password,
-                                       }: {
-    password: string;
-}) {
+export async function validatePassword(data: { password: string; }) {
     const admin = await AdminModel.findOne({name: 'admin'});
     if (!admin) {
         return false;
     }
 
-    const isValid = await admin.comparePassword(password);
+    const isValid = await admin.comparePassword(data.password);
     if (!isValid) return false;
 
     return omit(admin.toJSON(), "password");
 }
 
-export async function getAdmin(){
+export async function getAdmin() {
     return AdminModel.findOne({name: 'admin'});
 }
 
 
-export async function updatePassword({
-                                         old_password,
-                                         new_password,
-                                     }: {
+type PasswordChangeData = {
     old_password: string;
     new_password: string;
-}) {
-    const admin =  await validatePassword({password: old_password});
-    if(!admin){
-        return false;
+};
+
+export async function updatePassword(data: PasswordChangeData) {
+    if (!await validatePassword({password: data.old_password})) {
+        return undefined;
     }
 
-    return AdminModel.findOneAndUpdate({name: "admin"}, {password: new_password});
+    return AdminModel.findOneAndUpdate({name: "admin"}, {password: data.new_password});
 
 }

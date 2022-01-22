@@ -15,6 +15,8 @@ import deserializeAdmin from "./middleware/deserializeAdmin";
 import requireAdmin from "./middleware/requireAdmin";
 import 'dotenv/config';
 import {ensureRequestStructure} from "./middleware/ensureRequestStructure";
+import {updateWidgetSchema} from "./schema/widgetData.schema";
+import {createWidgetDataHandler} from "./controller/widget.controller";
 
 const port = config.port;
 
@@ -48,4 +50,5 @@ app.listen(port, async () => {
 
     app.delete("/api/sessions", requireAdmin, deleteSessionHandler);
 
+    app.put("/widgets", requireAdmin, ensureRequestStructure(updateWidgetSchema), createWidgetDataHandler);
 });
