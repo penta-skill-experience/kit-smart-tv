@@ -5,7 +5,7 @@ Each request that reaches the server will be handled here.
 
 import express, {Request, Response} from "express";
 import config from "./config.json";
-import connect from './utils/conntectDb';
+import { connectRemote} from './utils/conntectDb';
 import validate from "./middleware/validateResource";
 import {createAdminSchema, updatePasswordSchema} from "./schema/admin.schema";
 import {createAdminHandler, updatePasswordHandler} from "./controller/admin.controller";
@@ -31,13 +31,13 @@ app.use("/admin-interface",
 
 app.listen(port, async () => {
     console.log(`this app is running at http://localhost:${port}`);
-    await connect();
+    await connectRemote();
 
     app.get('/healthcheck', (req: Request, res: Response) => res.sendStatus(200));
 
-    app.post("/admin", validate(createAdminSchema), createAdminHandler);
+    app.post("/admin/create-admin", validate(createAdminSchema), createAdminHandler);
 
-    app.put("/admin", [requireAdmin, validateResource(updatePasswordSchema)], updatePasswordHandler)
+    app.put("/admin/update-password", [requireAdmin, validateResource(updatePasswordSchema)], updatePasswordHandler)
 
     app.post(
         "/api/sessions",

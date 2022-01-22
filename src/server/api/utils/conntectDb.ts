@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import config from "../config.json";
 
-async function connect() {
+export async function connect() {
     const dbUri = config.dbUri;
 
     try {
@@ -14,4 +14,15 @@ async function connect() {
     }
 }
 
-export default connect;
+
+export async function connectRemote() {
+    const uri = process.env.MONGO_URI;
+    try {
+    await mongoose.connect(uri);
+    console.log("DB connected");
+    } catch (error) {
+        console.log(error.message);
+        console.log("Could not connect to db");
+        process.exit(1);
+    }
+}
