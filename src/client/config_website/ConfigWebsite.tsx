@@ -117,6 +117,7 @@ export function ConfigWebsite() {
     };
 
     const handleDeleteWidget = (id) => {
+        console.log('Widget with id ' + id + ' is removed ')
         setList(list.filter(item => item.id !== id));
     }
 
@@ -204,7 +205,7 @@ export function ConfigWebsite() {
                         <Tabs value={pageNumber} onChange={handleChange} aria-label="basic tabs example">
                             <Tab label="Personalization"/>
                             <Tab label="Layout"/>
-                            <Tab label="Admin"/>
+                            <Tab label="Password"/>
                         </Tabs>
                     </Box>
                     <TabPanel value={pageNumber} index={0}>
@@ -221,6 +222,7 @@ export function ConfigWebsite() {
                         <LayoutPage
                             list={list}
                             widget={widget}
+                            open={open}
                             handleWidgetSelection={handleWidgetSelection}
                             handleAddWidget={handleAddWidget}
                             handleDeleteWidget={handleDeleteWidget}
