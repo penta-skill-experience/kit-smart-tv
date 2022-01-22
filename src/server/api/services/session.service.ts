@@ -51,16 +51,8 @@ export async function reIssueAccessToken({
 
     if (!decoded || !get(decoded, "session")) return false;
 
-    // const session = await SessionModel.findById(get(decoded, "session"));
-    //
-    // if (!session) return false;
-    //
-    // //nicht auf valid checken sondern, ob die session nicht schon abgelaufen ist, wenn abgelaufen dann löschen.
-    // let delta = Math.floor((Date.now() - session.updatedAt.valueOf()) / (1000*60));
-    // if(delta >= config.sessionTtlInMinutes){
-    //     await deleteSession({ admin: get(decoded, "admin")._id});
-    //     return false;
-    // }
+
+    //nicht auf valid checken sondern, ob die session nicht schon abgelaufen ist, wenn abgelaufen dann löschen.
     if(!await isValidSession(get(decoded, "session"))) return false;
 
     const admin = await getAdmin();

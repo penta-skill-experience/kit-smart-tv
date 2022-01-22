@@ -11,7 +11,6 @@ const requireAdmin = async (req: Request, res: Response, next: NextFunction) => 
 
     if(!await isValidSession(get(admin, "session"))) return res.sendStatus(403);
 
-    //const session = SessionModel.findById(res.locals.admin.)
 
     return next();
 };
