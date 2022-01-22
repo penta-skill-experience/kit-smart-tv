@@ -40,7 +40,7 @@ export class Weather extends React.Component<any, any> {
     }
 
     render() {
-        return <div className="grid grid-col-3 grid-flow-col gap-3 box-border items-center sm:pt-4 xl:pt-12 2xl:pt-16 8xl:pt-20">
+        return <div className="grid grid-col-3 grid-flow-col gap-3 box-border items-center sm:pt-4 xl:pt-12 2xl:pt-16 8xl:pt-20 h-fit">
                 <img className="sm:w-8 md:w-10 lg:w-16 xl:w-20 4xl:w-28 8xl:w-40 sm:object-left sm:scale-150 lg:scale-150" src={WeatherConfig.URL_ICONS + this.state.icon + "@4x.png"} alt="logo"/>
                 <div className="justify-center">
                     <div className="font-light leading-normal text-white sm:text-base xl:text-xl 2xl:text-3xl 4xl:text-4xl 8xl:text-6xl">

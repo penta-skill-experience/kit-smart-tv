@@ -23,13 +23,13 @@ export class WidgetPersistence {
                         rawConfig: {url: "www.example.com"},
                     },
                     {
-                        widgetId: "weather",
-                        location: 3,
+                        widgetId: "time",
+                        location: 4,
                         rawConfig: {},
                     },
                     {
-                        widgetId: "time",
-                        location: 4,
+                        widgetId: "cafeteria-menu",
+                        location: 5,
                         rawConfig: {},
                     },
                 ];

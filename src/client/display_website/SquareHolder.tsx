@@ -2,13 +2,31 @@ import * as React from "react";
 
 export class SquareHolder extends React.Component<any, any> {
 
+    static scroll = 2;
+    pageScroll = function() {
+        document.getElementById(this.state.uniqueID).scrollBy(0,this.state.scroll); // horizontal and vertical scroll increments
+        if((document.getElementById(this.state.uniqueID).scrollTop +
+            document.getElementById(this.state.uniqueID).clientHeight) >=
+            document.getElementById(this.state.uniqueID).scrollHeight || document.getElementById(this.state.uniqueID).scrollTop == 0) {
+            this.state.scroll = -this.state.scroll;
+        }
+    }
+    randomID = function() { //generate random ID to make scrolling behavior unique for each Squareholder
+        let part = function() {
+            return (Math.random().toString(10).substring(2));
+        }
+        return ("id" + part()+part()+part());
+    };
     constructor(props) {
         super(props);
-
         this.state = {
+            uniqueID: this.randomID(),
             hasError: false,
             error: undefined,
+            scroll: 2
         };
+        this.pageScroll = this.pageScroll.bind(this);
+        {setInterval(() => this.pageScroll(), 50)}
     }
 
     static getDerivedStateFromError(error) {
@@ -19,22 +37,29 @@ export class SquareHolder extends React.Component<any, any> {
     }
 
     render() {
-        return <div className="w-fit">
-            <div className="shadow-2xl rounded-2xl bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-70">
+        return <div className="w-fit" style={{
+            height: "44vh"
+        }}>
+            <div className="shadow-2xl rounded-2xl bg-clip-padding backdrop-filter backdrop-blur-md">
                 <div
                     className="sm:pl-1 sm:pr-1 lg:pr-4 2xl:pr-6 font-light leading-normal text-green-600 sm:text-base md:text-xl lg:text-2xl xl:text-4xl 2xl:text-5xl 8xl:text-6xl">
                     {this.props.title}
                 </div>
                 <div
-                    className="sm:pl-1 2xl:pr-5 font-light leading-normal text-green-600 sm:text-sm lg:text-base xl:text-xl 2xl:text-2xl 8xl:text-3xl">
+                    className="sm:pl-1 2xl:pr-5 font-light leading-normal text-green-600 sm:text-sm lg:text-base xl:text-xl 2xl:text-2xl 8xl:text-3xl
+                       sm:pt-1 xl:pt-3 2xl:pt-6">
                     {this.props.subTitle}
                 </div>
-                <div className="sm:pl-3 sm:pt-1 sm:pb-1 sm:pr-2 xl:pt-3 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12">
+                <div className="sm:pl-3 sm:pt-1 sm:pb-1 sm:pr-2 xl:pt-3 xl:pl-8 xl:pr-5 2xl:pt-6 xl:pb-4 4xl:pl-12 overflow-x-scroll scrollbar-hide scroll-smooth" id={this.state.uniqueID} style={{
+                    maxHeight: "40vh",
+                    scrollBehavior: "smooth"
+                }}>
                     {this.state.hasError ?
                         // todo: make design for error message nicer
                         <p>Error while rendering widget: {this.state.error.message}</p>
                         : this.props.children  // only show children if they didn't produce an error
                     }
+
                     <div className="flex space-x-1 justify-center" style={{
                         opacity: 1
                     }}>
