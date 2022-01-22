@@ -68,7 +68,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             overflow: "hidden",
             backgroundImage: `url("https://images.wallpaperscraft.com/image/single/city_skyscrapers_clouds_rain_road_cars_lights_58563_3840x2160.jpg")`
         }}>
-            <div className="flex flex-wrap">
+            <div className="flex">
                 <div className="z-30 absolute left-10 absolute bottom-7">
                     <img className="sm:w-24 lg:w-40 2xl:w-60 4xl:w-80"
                          src="https://www.artwork.de/wp-content/uploads/2015/08/logo_TF_NEU_4c_ai.png" alt="IHKLogo"/>
@@ -78,7 +78,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
                          height: "100vh"
                      }}>
                     <div
-                        className="sm:p-4 lg:p-6 xl:p-8 4xl:p-12 8xl:p-14 grid grid-rows-2 grid-flow-row gap-8 box-border h-full">
+                        className="sm:p-4 lg:p-6 xl:p-8 4xl:p-12 8xl:p-14 grid grid-rows-2 grid-flow-row gap-8 box-border">
                         <div>
                             <DigitalTime/>
                             <Weather/>
