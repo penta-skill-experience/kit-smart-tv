@@ -12,6 +12,7 @@
     "build-all": "webpack --config client.webpack.config.js --env=client_dir=config_website & webpack --config client.webpack.config.js --env=client_dir=display_website & webpack --config server.webpack.config.js",
     "test": "jest --coverage",
     "test announcement_management": "jest --config ./src/tests/unit/server/announcement_management_tests/jest.config.ts --coverage",
+    "test email_announcement_interaction": "jest --config ./src/tests/unit/server/email_announcement_interaction_tests/jest.config.ts --coverage",
     "loc": "cloc --vcs=git --exclude-list-file=.clocignore"
   },
   "author": "",
@@ -33,7 +34,6 @@
     "cloc": "^2.9.0",
     "css-loader": "^6.5.1",
     "fetch-jsonp": "^1.2.1",
-    "dotenv": "^14.2.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.5.0",
@@ -42,6 +42,7 @@
     "postcss-preset-env": "^7.2.0",
     "style-loader": "^3.3.1",
     "tailwindcss": "^3.0.13",
+    "terser-webpack-plugin": "^5.3.0",
     "ts-jest": "^27.1.2",
     "ts-loader": "^9.2.6",
     "ts-node": "^10.4.0",
@@ -61,6 +62,7 @@
     "cors": "^2.8.5",
     "dayjs": "^1.10.7",
     "email-validator": "^2.0.4",
+    "mail-listener-typescript": "^1.0.18",
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
@@ -70,8 +72,8 @@
     "pino-pretty": "^7.3.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "terser-webpack-plugin": "^5.3.0",
     "typescript": "^4.5.4",
+    "terser-webpack-plugin": "^5.3.0",
     "zod": "^3.11.6"
   }
 }

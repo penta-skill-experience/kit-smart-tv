@@ -31,8 +31,8 @@ export class DigitalTime extends React.Component<any, any> {
     }
     render() {
         return <div className="flex-col">
-            <div className="pl-5 pt-5 font-light leading-normal text-white text-base sm:text-5xl sm:text-left lg:text-9xl">{this.state.time}</div>;
-            <div className="pl-5 leading-normal text-white text-base sm:text-2xl sm:text-left lg:text-4xl">{weekday[this.state.day]},{this.state.date}</div>
+            <div className="font-light text-white sm:text-2xl md:text-4xl lg:text-6xl xl:text-7xl 2xl:text-8xl 4xl:text-9xl 8xl:text-10xl sm:text-left">{this.state.time}</div
+            ><div className="text-white sm:text-xs md:text-sm lg:text-base lg:text-xl 2xl:text-2xl 4xl:text-4xl 8xl:text-5xl sm:text-left sm:-mt-1 md:-mt-2 lg:-mt-3 xl:-mt-5 2xl:-mt-6 4xl:-mt-8 8xl:-mt-10">{weekday[this.state.day]}, {this.state.date}</div>
         </div>
     }
 }
