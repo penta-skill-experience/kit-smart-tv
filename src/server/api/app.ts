@@ -17,6 +17,8 @@ import 'dotenv/config';
 import {ensureRequestStructure} from "./middleware/ensureRequestStructure";
 import {updateWidgetSchema} from "./schema/widgetData.schema";
 import {getWidgetDataHandler, updateWidgetDataHandler} from "./controller/widget.controller";
+import {updateAnnouncementsSchema} from "./schema/announcements.schema";
+import {getAnnouncementsHandler, updateAnnouncementsHandler} from "./controller/announcements.controller";
 
 const port = config.port;
 
@@ -67,5 +69,9 @@ app.listen(port, async () => {
  *   Announcement Routines
  **/
 
+    //hier braucht man noch mmiddle ware die nur locale calls zulässt.
+    app.put("/announcements", ensureRequestStructure(updateAnnouncementsSchema), updateAnnouncementsHandler)
+
+    app.get("/announcements", getAnnouncementsHandler)
 
 });
