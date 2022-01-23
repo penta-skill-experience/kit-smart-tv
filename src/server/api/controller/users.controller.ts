@@ -8,7 +8,7 @@ export async function updateUsersHandler(req: Request, res: Response) {
         try {
             return res.send(await createUsers(req.body));
         } catch (e) {
-            return res.status(400).send(`could not create announcement data: ${e.message}`);
+            return res.status(400).send(`could not create user data: ${e.message}`);
         }
     }
 }
@@ -19,6 +19,6 @@ export async function getUsersHandler(req: Request, res: Response){
         return res.send(await getUsers());
     }
     catch(e: any){
-        return res.status(501).send(`could not get announcement data: ${e.message}`);
+        return res.status(501).send(`could not get user data: ${e.message}`);
     }
 }

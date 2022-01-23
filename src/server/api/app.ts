@@ -21,6 +21,8 @@ import {updateAnnouncementsSchema} from "./schema/announcements.schema";
 import {getAnnouncementsHandler, updateAnnouncementsHandler} from "./controller/announcements.controller";
 import {updateUsersSchema} from "./schema/users.schema";
 import {getUsersHandler, updateUsersHandler} from "./controller/users.controller";
+import {updateConfigSchema} from "./schema/config.schema";
+import {getConfigHandler, updateConfigHandler} from "./controller/config.controller";
 
 const port = config.port;
 
@@ -90,7 +92,7 @@ app.listen(port, async () => {
 /**
  *   Config Routines
  **/
-    //app.put("/config", ensureRequestStructure(updateConfigSchema), updateConfigHandler)
-    //app.get("/config", getConfigHandler)
+    app.put("/config", ensureRequestStructure(updateConfigSchema), updateConfigHandler)
+    app.get("/config", getConfigHandler)
 
 });
