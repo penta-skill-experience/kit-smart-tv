@@ -172,6 +172,7 @@ export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget
                             <MenuItem value={'test2'}>Test2</MenuItem>
                             <MenuItem value={'test3'}>Test3</MenuItem>
                             <MenuItem value={'Tram Schedule'}>Tram Schedule Widget</MenuItem>
+                            <MenuItem value={'RSS feed'}>RSS feed</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>

@@ -11,6 +11,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import {TramScheduleConfigPage} from "./widget_config_pages/TramScheduleConfigPage";
+import {RSSFeedConfigPage} from "./widget_config_pages/RSSFeedConfigPage";
 
 
 export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, children}) => {
@@ -102,6 +103,12 @@ function DeleteDialogComponent({id ,handleDeleteWidget}) {
 
 function renderConfigButton({name}) {
     if (name === "Tram Schedule") {
-        return (<TramScheduleConfigPage/>);
+        return (
+            <TramScheduleConfigPage/>
+        );
+    } else if (name === "RSS feed") {
+        return (
+          <RSSFeedConfigPage/>
+        );
     }
 }

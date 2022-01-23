@@ -20,7 +20,7 @@ export function TramScheduleConfigPage() {
 
 function TramScheduleConfigDialogComponent() {
     //todo
-    //maybe siftup?
+    //maybe liftup?
     const [value, setValue] = React.useState({label: ''});
 
     const handleTram = () => {
