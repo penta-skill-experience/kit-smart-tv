@@ -3,6 +3,7 @@ import * as mongoose from "mongoose";
 export interface ValuesInput {
     fontSizes: {
         id: string;
+        name: string;
         titleFontSize: number;
         bodyFontSize: number;
         specialFontSize: number;
@@ -10,7 +11,9 @@ export interface ValuesInput {
     }[];
     colorSchemes: {
         id: string;
+        name: string;
         titleColor: string;
+        bodyColor: string;
         specialBoldColor: string;
         specialSubtleColor: string;
         accentBarColor: string;
@@ -32,6 +35,12 @@ const ValuesSchema = new mongoose.Schema({
             id: {
                 type: String,
                 required: true,
+                unique: true,
+            },
+            name: {
+                type: String,
+                required: true,
+                unique: true,
             },
             titleFontSize: {
                 type: Number,
@@ -57,8 +66,18 @@ const ValuesSchema = new mongoose.Schema({
             id: {
                 type: String,
                 required: true,
+                unique: true,
+            },
+            name: {
+                type: String,
+                required: true,
+                unique: true,
             },
             titleColor: {
+                type: String,
+                required: true,
+            },
+            bodyColor: {
                 type: String,
                 required: true,
             },
@@ -79,6 +98,7 @@ const ValuesSchema = new mongoose.Schema({
                     id: {
                         type: String,
                         required: true,
+                        unique: true,
                     },
                     url: {
                         type: String,

@@ -3,7 +3,10 @@ import { z } from "zod";
 export const updateValuesSchema = z.object({
     body: z.object({
         fontSizes: z.array(z.object({
-            id: z.string(),
+            id: z.string({
+                required_error: "id is required",
+            }),
+            name: z.string(),
             titleFontSize: z.number(),
             bodyFontSize: z.number(),
             specialFontSize: z.number(),
@@ -11,6 +14,7 @@ export const updateValuesSchema = z.object({
         })),
         colorSchemes: z.array(z.object({
             id: z.string(),
+            name: z.string(),
             titleColor: z.string(),
             bodyColor: z.string(),
             specialBoldColor: z.string(),
