@@ -47,7 +47,6 @@ export class TramSchedule extends React.Component<any, TramScheduleState> {
         this.getSchedule();
         setInterval(() => this.getSchedule(), TramScheduleConfig.REFRESH_RATE);
     }
-
     render() {
         return <div className="grid grid-flow-row sm:g-0.5 xl:gap-1.5 2xl:gap-2 box-border">
             {
@@ -58,8 +57,8 @@ export class TramSchedule extends React.Component<any, TramScheduleState> {
                 </div>
             }
             {
-                this.state.trains.slice(1, TramScheduleConfig.ITEM_COUNT).map(d =>
-                    <div
+                this.state.trains.slice(1, TramScheduleConfig.ITEM_COUNT).map((d, index) =>
+                    <div key = {index}
                         className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl">
                         {d.route} {d.destination}: &nbsp;&nbsp;&nbsp;{d.time}
                     </div>

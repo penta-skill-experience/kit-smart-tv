@@ -70,7 +70,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             overflow: "hidden",
             backgroundImage: `url("https://images.wallpaperscraft.com/image/single/city_skyscrapers_clouds_rain_road_cars_lights_58563_3840x2160.jpg")`
         }}>
-            <div className={"flex"}>
+            <div className={"flex" + (this.state.darkTheme ? " text-white":" text-black")}>
                 <div className="z-30 absolute left-10 absolute bottom-7">
                     <img className="sm:w-24 lg:w-40 2xl:w-60 4xl:w-80"
                          src="https://www.artwork.de/wp-content/uploads/2015/08/logo_TF_NEU_4c_ai.png" alt="IHKLogo"/>
