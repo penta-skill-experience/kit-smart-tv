@@ -16,7 +16,7 @@ import requireAdmin from "./middleware/requireAdmin";
 import 'dotenv/config';
 import {ensureRequestStructure} from "./middleware/ensureRequestStructure";
 import {updateWidgetSchema} from "./schema/widgetData.schema";
-import {createWidgetDataHandler} from "./controller/widget.controller";
+import {getWidgetDataHandler, updateWidgetDataHandler} from "./controller/widget.controller";
 
 const port = config.port;
 
@@ -36,10 +36,16 @@ app.listen(port, async () => {
 
     app.get("/healthcheck", (req: Request, res: Response) => res.sendStatus(200));
 
+/**
+ *   Admin Routines
+ **/
     app.post("/admin/create-admin", ensureRequestStructure(createAdminSchema), createAdminHandler);
 
     app.put("/admin/update-password", requireAdmin, ensureRequestStructure(updatePasswordSchema), updatePasswordHandler);
 
+/**
+ *   Session Routines
+ **/
     app.post(
         "/api/sessions",
         ensureRequestStructure(createSessionSchema),
@@ -50,5 +56,16 @@ app.listen(port, async () => {
 
     app.delete("/api/sessions", requireAdmin, deleteSessionHandler);
 
-    app.put("/widgets", requireAdmin, ensureRequestStructure(updateWidgetSchema), createWidgetDataHandler);
+/**
+*   Widget Routines
+**/
+    app.get("/widgets", getWidgetDataHandler);
+
+    app.put("/widgets", requireAdmin, ensureRequestStructure(updateWidgetSchema), updateWidgetDataHandler);
+
+/**
+ *   Announcement Routines
+ **/
+
+
 });
