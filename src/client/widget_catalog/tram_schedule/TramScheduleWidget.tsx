@@ -2,6 +2,7 @@ import * as React from "react";
 import {Widget} from "../../widget/Widget";
 import {WidgetConfigSaver} from "../../widget/WidgetConfigSaver";
 import {TramSchedule} from "./TramSchedule";
+import {TramScheduleConfig} from "./TramScheduleConfig";
 
 export class TramScheduleWidget implements Widget {
 
@@ -10,7 +11,11 @@ export class TramScheduleWidget implements Widget {
     }
 
     createDisplayComponent(rawConfig: Object): JSX.Element {
-        return <TramSchedule />;
+        const config = new TramScheduleConfig();
+        config.load(rawConfig);
+        return <TramSchedule
+            stop={config.stop}
+        />;
     }
 
     getTitle(): string {

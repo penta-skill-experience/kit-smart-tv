@@ -15,25 +15,22 @@ export class WidgetPersistence {
                     {
                         widgetId: "tram-schedule",
                         location: 1,
-                        rawConfig: {},
+                        fill: true,
+                        rawConfig: {stop: "Durlacher Tor"},
                     },
                     {
                         widgetId: "rss-feed",
                         location: 2,
+                        fill: false,
                         rawConfig: {url: "www.example.com"},
-                    },
-                    {
-                        widgetId: "time",
-                        location: 4,
-                        rawConfig: {},
                     },
                     {
                         widgetId: "cafeteria-menu",
                         location: 5,
+                        fill: true,
                         rawConfig: {},
                     },
                 ];
-
                 resolve(data);
             }
         );
