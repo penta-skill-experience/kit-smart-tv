@@ -20,4 +20,7 @@ export class CafeteriaMenuWidget implements Widget {
     isConfigurable(): boolean {
         return true;
     }
+    getFill(): boolean{
+        return true;
+    }
 }

@@ -20,5 +20,8 @@ export class WeatherWidget implements Widget {
     isConfigurable(): boolean {
         return false;
     }
+    getFill(): boolean{
+        return false;
+    }
 
 }

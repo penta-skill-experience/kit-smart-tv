@@ -47,7 +47,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
 
         try {
             const widgetComponent = widget.createDisplayComponent(widgetData.rawConfig);
-            return <SquareHolder title={widget.getTitle()}>
+            return <SquareHolder title={widget.getTitle()} fill={widget.getFill()}>
                 {widgetComponent}
             </SquareHolder>;
         } catch (e) {

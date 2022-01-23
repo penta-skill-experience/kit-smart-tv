@@ -20,5 +20,8 @@ export class TimeWidget implements Widget {
     isConfigurable(): boolean {
         return false;
     }
+    getFill(): boolean{
+        return false;
+    }
 
 }

@@ -34,4 +34,7 @@ export class RssFeedWidget implements Widget {
         return false;
     }
 
+    getFill(): boolean{
+        return false;
+    }
 }
