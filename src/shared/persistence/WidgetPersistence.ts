@@ -16,7 +16,7 @@ export class WidgetPersistence {
                         widgetId: "tram-schedule",
                         location: 1,
                         fill: true,
-                        rawConfig: {},
+                        rawConfig: {stop: "Durlacher Tor"},
                     },
                     {
                         widgetId: "rss-feed",
@@ -31,7 +31,6 @@ export class WidgetPersistence {
                         rawConfig: {},
                     },
                 ];
-
                 resolve(data);
             }
         );

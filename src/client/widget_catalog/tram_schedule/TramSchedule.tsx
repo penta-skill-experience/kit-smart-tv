@@ -10,6 +10,7 @@ interface DepartureData {
 
 interface TramScheduleState {
     trains: DepartureData[];
+    stop: string;
 }
 
 let justArrived = (x: string): string => {
@@ -23,25 +24,41 @@ export class TramSchedule extends React.Component<any, TramScheduleState> {
     constructor(props) {
         super(props);
         this.state = {
-            trains: []
+            trains: [],
+            stop: this.props.stop
         };
     }
-
     getSchedule() {
-        axios.get(TramScheduleConfig.CORS_ANYWHERE + TramScheduleConfig.URL)
+        axios.get(TramScheduleConfig.CORS_ANYWHERE + TramScheduleConfig.URL_STOP_SEARCH_BEFORE_STOP
+            + this.state.stop
+            + TramScheduleConfig.URL_STOP_SEARCH_AFTER_STOP
+            + TramScheduleConfig.API_KEY)
             .then(resp => {
-                this.setState({
-                    trains: resp.data.departures.map(d => ({
-                        route: d.route,
-                        destination: d.destination,
-                        time: justArrived(d.time)
-                    })),
-                });
+                let checker = resp.data.stops;
+                if(checker.length == 0) {
+                    throw new Error(`This stop does not exist`);
+                }
+                axios.get(TramScheduleConfig.CORS_ANYWHERE
+                    + TramScheduleConfig.URL_BEFORE_STOP
+                    + checker[0].id
+                    + TramScheduleConfig.URL_AFTER_STOP
+                    + TramScheduleConfig.API_KEY)
+                    .then(resp => {
+                        console.log(checker[0].id);
+                        this.setState({
+                            trains: resp.data.departures.map(d => ({
+                                route: d.route,
+                                destination: d.destination,
+                                time: justArrived(d.time)
+                            })),
+                            stop: checker[0].id
+                        });
+                    });
             })
             .catch(function (error) {
                 console.log(error);
             });
-    }
+    };
 
     componentDidMount() {
         this.getSchedule();
