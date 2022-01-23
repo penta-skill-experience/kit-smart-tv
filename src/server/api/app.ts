@@ -51,8 +51,8 @@ app.listen(port, async () => {
     app.delete("/api/sessions", requireAdmin, deleteSessionHandler);
 
 
-    app.put("/widgets", requireAdmin, ensureRequestStructure(updateWidgetSchema), updateWidgetDataHandler);
-
     app.get("/widgets", getWidgetDataHandler);
+
+    app.put("/widgets", requireAdmin, ensureRequestStructure(updateWidgetSchema), updateWidgetDataHandler);
 
 });
