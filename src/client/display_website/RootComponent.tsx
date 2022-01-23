@@ -65,7 +65,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
     render() {
         // go through the list of all widget data and render them in their respective locations
         return <div className="bg-cover bg-no-repeat bg-center" id="mainFrame" style={{
-            background: 'url('+this.state.backgroundImage+')',
+            backgroundImage: 'url('+this.state.backgroundImage+')',
             width: "100vw",
             height: "100vh",
             overflow: "hidden"
