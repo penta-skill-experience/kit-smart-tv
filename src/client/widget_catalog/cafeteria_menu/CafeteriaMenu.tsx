@@ -49,10 +49,10 @@ export class CafeteriaMenu extends React.Component<any, CafeteriaMenuState> {
                 this.state.menus//.slice(1, CafeteriaMenuConfig.ITEM_COUNT)
                     .map(d =>
                         <div
-                            className="font-light leading-normal text-white sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl">
+                            className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl">
                             {d.food}:
                             <div
-                                className="font-light leading-normal text-white sm:text-xs lg:text-sm xl:text-base 2xl:text-lg 4xl:text-xl 8xl:text-2xl sm:text-left">
+                                className="font-light leading-normal sm:text-xs lg:text-sm xl:text-base 2xl:text-lg 4xl:text-xl 8xl:text-2xl sm:text-left">
                                 {d.location}
                             </div>
                         </div>

@@ -8,6 +8,7 @@ import {WidgetData} from "../widget/WidgetData";
 
 interface RootComponentState {
     widgetDataByLocation: WidgetData[][];
+    darkTheme;
 }
 
 export class RootComponent extends React.Component<any, RootComponentState> {
@@ -20,6 +21,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
 
         this.state = {
             widgetDataByLocation: [[], [], [], [], [], []],  // 6 locations possible
+            darkTheme: true,
         };
     }
 
@@ -47,7 +49,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
 
         try {
             const widgetComponent = widget.createDisplayComponent(widgetData.rawConfig);
-            return <SquareHolder title={widget.getTitle()} fill={widget.getFill()}>
+            return <SquareHolder title={widget.getTitle()} fill={widget.getFill()} darkTheme={this.state.darkTheme}>
                 {widgetComponent}
             </SquareHolder>;
         } catch (e) {
@@ -68,7 +70,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             overflow: "hidden",
             backgroundImage: `url("https://images.wallpaperscraft.com/image/single/city_skyscrapers_clouds_rain_road_cars_lights_58563_3840x2160.jpg")`
         }}>
-            <div className="flex">
+            <div className={"flex"}>
                 <div className="z-30 absolute left-10 absolute bottom-7">
                     <img className="sm:w-24 lg:w-40 2xl:w-60 4xl:w-80"
                          src="https://www.artwork.de/wp-content/uploads/2015/08/logo_TF_NEU_4c_ai.png" alt="IHKLogo"/>
