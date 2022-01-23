@@ -10,6 +10,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
+import {TramScheduleConfigPage} from "./widget_config_pages/TramScheduleConfigPage";
 
 
 export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, children}) => {
@@ -29,6 +30,9 @@ export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, chi
                         {renderPosition({item:item, position:"5", handlePosition: handlePosition})}
                     </RadioGroup>
                 </FormControl>
+            </Grid>
+            <Grid item>
+                {renderConfigButton(item.name)}
             </Grid>
             <Grid item>
                 <DeleteDialogComponent id={item.id} handleDeleteWidget={handleDeleteWidget}/>
@@ -61,7 +65,6 @@ function DeleteDialogComponent({id ,handleDeleteWidget}) {
 
 
     const handleOpen = () => {
-        console.log('item id in handleOpen is' + id)
         setOpen(true);
     };
 
@@ -95,4 +98,10 @@ function DeleteDialogComponent({id ,handleDeleteWidget}) {
             </Dialog>
         </Grid>
     );
+}
+
+function renderConfigButton(name) {
+    if (name === "Tram Schedule") {
+        return <TramScheduleConfigPage selectedTramStop={'Yep Station'}/>;
+    }
 }

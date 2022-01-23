@@ -94,16 +94,20 @@ export function ConfigWebsite() {
     const [widget, setWidget] = React.useState({
         id:0,
         name:'',
-        position:''
+        position:'',
+        configurable:false
     });
 
     const incrementCounter = () => setCounter(counter + 1);
 
     const handleWidgetSelection = (event: SelectChangeEvent) => {
+        //todo
+        //config is not always true
         const updatedValue = {
             id:counter,
             name:event.target.value,
-            position:''
+            position:'',
+            configurable:true,
         }
         setWidget(updatedValue)
     };
@@ -111,9 +115,12 @@ export function ConfigWebsite() {
     const handleAddWidget = () => {
         if (widget.name !== '') {
             const newWidget = {
+                //todo
+                //config is not always true
                 id:counter,
                 name:widget.name,
-                position:''
+                position:'',
+                configurable:true,
             }
             setList(list.concat(newWidget));
             incrementCounter();
