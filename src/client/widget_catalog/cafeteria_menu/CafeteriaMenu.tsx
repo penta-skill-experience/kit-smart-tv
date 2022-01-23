@@ -24,7 +24,6 @@ export class CafeteriaMenu extends React.Component<any, CafeteriaMenuState> {
     getMenu() {
         axios.get(CafeteriaMenuConfig.URL)
             .then(resp => {
-                console.log(resp.data);
                 this.setState({
                     date: resp.data[0].date, //check for first day that it's open
                     menus: resp.data[0].meals.map(d => ({
