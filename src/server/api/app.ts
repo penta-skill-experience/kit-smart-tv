@@ -94,14 +94,14 @@ app.listen(port, async () => {
 /**
  *   Config Routines
  **/
-    app.put("/config", ensureRequestStructure(updateConfigSchema), updateConfigHandler)
+    app.put("/config", requireAdmin, ensureRequestStructure(updateConfigSchema), updateConfigHandler)
     app.get("/config", getConfigHandler)
 
 
 /**
  *   Values Routines
  **/
-    app.put("/values", ensureRequestStructure(updateValuesSchema), updateValuesHandler)
+    app.put("/values", requireAdmin, ensureRequestStructure(updateValuesSchema), updateValuesHandler)
     app.get("/values", getValuesHandler)
 
 });
