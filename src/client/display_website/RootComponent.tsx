@@ -9,6 +9,7 @@ import {WidgetData} from "../widget/WidgetData";
 interface RootComponentState {
     widgetDataByLocation: WidgetData[][];
     darkTheme;
+    backgroundImage;
 }
 
 export class RootComponent extends React.Component<any, RootComponentState> {
@@ -22,6 +23,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
         this.state = {
             widgetDataByLocation: [[], [], [], [], [], []],  // 6 locations possible
             darkTheme: true,
+            backgroundImage: "https://images.wallpaperscraft.com/image/single/city_skyscrapers_clouds_rain_road_cars_lights_58563_3840x2160.jpg"
         };
     }
 
@@ -61,14 +63,12 @@ export class RootComponent extends React.Component<any, RootComponentState> {
     }
 
     render() {
-
         // go through the list of all widget data and render them in their respective locations
-
-        return <div className="bg-cover bg-no-repeat bg-center" style={{
+        return <div className="bg-cover bg-no-repeat bg-center" id="mainFrame" style={{
+            background: 'url('+this.state.backgroundImage+')',
             width: "100vw",
             height: "100vh",
-            overflow: "hidden",
-            backgroundImage: `url("https://images.wallpaperscraft.com/image/single/city_skyscrapers_clouds_rain_road_cars_lights_58563_3840x2160.jpg")`
+            overflow: "hidden"
         }}>
             <div className={"flex" + (this.state.darkTheme ? " text-white":" text-black")}>
                 <div className="z-30 absolute left-10 absolute bottom-7">
