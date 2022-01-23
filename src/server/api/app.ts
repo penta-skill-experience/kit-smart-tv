@@ -36,10 +36,16 @@ app.listen(port, async () => {
 
     app.get("/healthcheck", (req: Request, res: Response) => res.sendStatus(200));
 
+    /**
+     *   Admin Routines
+     **/
     app.post("/admin/create-admin", ensureRequestStructure(createAdminSchema), createAdminHandler);
 
     app.put("/admin/update-password", requireAdmin, ensureRequestStructure(updatePasswordSchema), updatePasswordHandler);
 
+    /**
+     *   Session Routines
+     **/
     app.post(
         "/api/sessions",
         ensureRequestStructure(createSessionSchema),
@@ -50,9 +56,16 @@ app.listen(port, async () => {
 
     app.delete("/api/sessions", requireAdmin, deleteSessionHandler);
 
-
+/**
+*   Widget Routines
+**/
     app.get("/widgets", getWidgetDataHandler);
 
     app.put("/widgets", requireAdmin, ensureRequestStructure(updateWidgetSchema), updateWidgetDataHandler);
+
+    /**
+     *   Announcement Routines
+     **/
+
 
 });
