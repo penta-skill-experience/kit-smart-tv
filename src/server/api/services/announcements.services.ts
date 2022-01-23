@@ -14,7 +14,5 @@ export function updateAnnouncements(input: DocumentDefinition<AnnouncementsInput
 }
 
 export function getAnnouncements() {
-    return AnnouncementsModel.findOne({}).then(o => {
-        omit(o.toJSON(), ["_id", "createdAt", "updatedAt", "__v"]);
-    });
+    return AnnouncementsModel.findOne({}).then(o => omit(o.toJSON(), ["_id", "createdAt", "updatedAt", "__v"]));
 }

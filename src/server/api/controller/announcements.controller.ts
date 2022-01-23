@@ -2,7 +2,6 @@ import {Request, Response} from "express";
 import {createAnnouncements, getAnnouncements, updateAnnouncements} from "../services/announcements.services";
 
 export async function updateAnnouncementsHandler(req: Request, res: Response) {
-    console.debug(req.body);
     try {
         return res.send(await updateAnnouncements(req.body));
     } catch (e) {

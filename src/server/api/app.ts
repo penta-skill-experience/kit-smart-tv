@@ -19,11 +19,19 @@ import {updateWidgetSchema} from "./schema/widgetData.schema";
 import {getWidgetDataHandler, updateWidgetDataHandler} from "./controller/widget.controller";
 import {updateAnnouncementsSchema} from "./schema/announcements.schema";
 import {getAnnouncementsHandler, updateAnnouncementsHandler} from "./controller/announcements.controller";
+import {updateUsersSchema} from "./schema/users.schema";
+import {getUsersHandler, updateUsersHandler} from "./controller/users.controller";
 
 const port = config.port;
 
 const app = express();
+
+
 app.use(express.json());
+
+//app.use(cors());
+
+
 app.use(deserializeAdmin);
 
 // host static files of display_website and config_website
@@ -71,7 +79,18 @@ app.listen(port, async () => {
 
     //hier braucht man noch mmiddle ware die nur locale calls zulässt.
     app.put("/announcements", ensureRequestStructure(updateAnnouncementsSchema), updateAnnouncementsHandler)
-
     app.get("/announcements", getAnnouncementsHandler)
+
+/**
+ *   verified User Routines
+ **/
+    app.put("/users", requireAdmin, ensureRequestStructure(updateUsersSchema), updateUsersHandler)
+    app.get("/users", getUsersHandler)
+
+/**
+ *   Config Routines
+ **/
+    //app.put("/config", ensureRequestStructure(updateConfigSchema), updateConfigHandler)
+    //app.get("/config", getConfigHandler)
 
 });
