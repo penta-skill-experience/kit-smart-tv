@@ -46,20 +46,6 @@ export async function getSessionHandler(req: Request, res: Response) {
     const adminId = res.locals.admin._id;
 
     const session = await findSession({ admin: adminId, valid: true });
-
-    // if (!session) {
-    //     return res.status(401).send("no session");
-    // }
-    //
-    //
-    // let delta = Math.floor((Date.now() - session.updatedAt.valueOf()) / (1000*60));
-    // if(delta >= config.sessionTtlInMinutes){
-    //     await deleteSession({ admin: adminId});
-    //     return res.status(401).send("Session expired. Please log in.");
-    // }
-
-
-
     await updateSession({ _id: session._id }, { valid: true });
     const valid_until = new Date(Date.now() + config.sessionTtlInMinutes*60*1000);
 
