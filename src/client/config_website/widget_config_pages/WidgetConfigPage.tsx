@@ -20,7 +20,7 @@ export function WidgetConfigPage({content}) {
             <Button onClick={handleOpen}>
                 <MiscellaneousServicesIcon/>
             </Button>
-            <Dialog onClose={handleClose} open={open}>
+            <Dialog onClose={handleClose} open={open} maxWidth={'xl'} PaperProps={{ sx: { width: "30%", height: "100%" } }}>
                 {content}
             </Dialog>
         </Grid>

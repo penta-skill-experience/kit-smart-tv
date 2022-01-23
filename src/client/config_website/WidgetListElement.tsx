@@ -32,7 +32,7 @@ export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, chi
                 </FormControl>
             </Grid>
             <Grid item>
-                {renderConfigButton(item.name)}
+                {renderConfigButton({name: item.name})}
             </Grid>
             <Grid item>
                 <DeleteDialogComponent id={item.id} handleDeleteWidget={handleDeleteWidget}/>
@@ -100,8 +100,8 @@ function DeleteDialogComponent({id ,handleDeleteWidget}) {
     );
 }
 
-function renderConfigButton(name) {
+function renderConfigButton({name}) {
     if (name === "Tram Schedule") {
-        return <TramScheduleConfigPage selectedTramStop={'Yep Station'}/>;
+        return (<TramScheduleConfigPage/>);
     }
 }
