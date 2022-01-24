@@ -2,7 +2,6 @@ import {Request, Response} from "express";
 import {createConfig, getConfig, updateConfig} from "../services/config.services";
 
 export async function updateConfigHandler(req: Request, res: Response) {
-    console.debug(req.body)
     try {
         return res.send(await updateConfig(req.body));
     } catch (e) {
