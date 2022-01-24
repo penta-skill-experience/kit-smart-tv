@@ -17,8 +17,8 @@ import {RSSFeedConfigPage} from "./widget_config_pages/RSSFeedConfigPage";
 export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, children}) => {
 
     return (
-        <Grid container spacing={2} direction="row" alignItems="center">
-            <Grid item>
+        <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
+            <Grid item xs={1}>
                 {item.name}
             </Grid>
             <Grid item>
@@ -32,11 +32,11 @@ export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, chi
                     </RadioGroup>
                 </FormControl>
             </Grid>
-            <Grid item>
-                {renderConfigButton({name: item.name})}
+            <Grid item >
+                <DeleteDialogComponent id={item.id} handleDeleteWidget={handleDeleteWidget}/>
             </Grid>
             <Grid item>
-                <DeleteDialogComponent id={item.id} handleDeleteWidget={handleDeleteWidget}/>
+                {renderConfigButton({name: item.name})}
             </Grid>
         </Grid>
 

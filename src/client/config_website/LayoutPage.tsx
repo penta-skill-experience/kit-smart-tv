@@ -14,8 +14,8 @@ export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget
 
     return(
         <div>
-            <Grid container spacing={2} direction="column" justifyContent="flex-start" alignItems="flex-start">
-                <Grid item container spacing={2} direction="row">
+            <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="flex-start">
+                <Grid item container spacing={2} direction="row" xs={12}>
                     <Grid item>
                         <Box
                             sx={{
@@ -152,7 +152,7 @@ export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget
                     </Grid>
                 </Grid>
 
-                <Grid item>
+                <Grid item xs={12}>
                     <ul>
                         {list.map(item => (
                             <WidgetListElement item={item} handlePosition={handlePosition} handleDeleteWidget={handleDeleteWidget}>
