@@ -11,6 +11,7 @@ import {SelectChangeEvent} from "@mui/material/Select";
 import {LogInPage} from "./LogInPage";
 import {Button, Grid} from "@mui/material";
 import {AnnouncementsPage} from "./AnnouncementsPage";
+import * as emailValidator from "email-validator";
 
 
 interface TabPanelProps {
@@ -86,6 +87,18 @@ export function ConfigWebsite() {
         newFontSize: string | null,
     ) => {
         setFontSize(newFontSize);
+    };
+
+    const [selectedLightImage, setSelectedLightImage] = React.useState('');
+
+    const handleLightImageSelect = (event) => {
+        setSelectedLightImage(event.target.value);
+    };
+
+    const [selectedDarkImage, setSelectedDarkImage] = React.useState('');
+
+    const handleDarkImageSelect = (event) => {
+        setSelectedDarkImage(event.target.value);
     };
 
     //state variables and methods for layout page
@@ -191,6 +204,44 @@ export function ConfigWebsite() {
         }
     };
 
+    //state variables and methods for announcements page
+    const initialMailList = [];
+    const [mailList, setMailList] = React.useState(initialMailList);
+    const [verUser, setVerUser] = React.useState({
+        mail:'',
+        name:'',
+    });
+
+    const handleMailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setVerUser({...verUser, mail:event.target.value});
+    };
+
+    const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setVerUser({...verUser, name:event.target.value});
+    };
+
+    const handleAddMail = () => {
+        if (!emailValidator.validate(verUser.mail)) {
+            alert('E-Mail does not exist')
+            return;
+        }
+        if (verUser.name !== '' && verUser.mail !== '') {
+            const newUser = {
+                mail:verUser.mail,
+                name:verUser.name,
+            }
+            setMailList(mailList.concat(newUser));
+            return;
+        }
+        alert('Username and email have to be filled out')
+    };
+
+    const handleDeleteUser = (mail) => {
+        setMailList(mailList.filter(item => item.mail !== mail));
+    }
+
+    //state variable for log out
+
     const handleLogout = () => {
         setLoggedInStatus(false);
     }
@@ -245,6 +296,10 @@ export function ConfigWebsite() {
                             fontSize={fontSize}
                             handleColorSchemeChange={handleColorSchemeChange}
                             handleFontSizeChange={handleFontSizeChange}
+                            selectedLightImage={selectedLightImage}
+                            selectedDarkImage={selectedDarkImage}
+                            handleLightImageSelect={handleLightImageSelect}
+                            handleDarkImageSelect={handleDarkImageSelect}
                         >
                         </PersonalizationPage>
 
@@ -273,7 +328,15 @@ export function ConfigWebsite() {
                         </AdminPage>
                     </TabPanel>
                     <TabPanel value={pageNumber} index={3}>
-                        <AnnouncementsPage/>
+                        <AnnouncementsPage
+                            mailList={mailList}
+                            verUser={verUser}
+                            handleMailChange={handleMailChange}
+                            handleNameChange={handleNameChange}
+                            handleAddMail={handleAddMail}
+                            handleDeleteUser={handleDeleteUser}
+                        >
+                        </AnnouncementsPage>
                     </TabPanel>
                 </div>
             );
@@ -286,8 +349,3 @@ export function ConfigWebsite() {
         </div>
     );
 }
-
-
-
-
-
