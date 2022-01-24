@@ -6,7 +6,6 @@ const config: Config.InitialOptions = {
         '^.+\\.ts?$': 'ts-jest',
     },
     testMatch: ["**/?(*.)+(tests).[t]s?(x)"],
-    globalSetup: "./src/server/api/app.ts"
 
 };
 export default config;
