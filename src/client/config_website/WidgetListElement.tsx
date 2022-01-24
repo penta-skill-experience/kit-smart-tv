@@ -12,9 +12,10 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import {TramScheduleConfigPage} from "./widget_config_pages/TramScheduleConfigPage";
 import {RSSFeedConfigPage} from "./widget_config_pages/RSSFeedConfigPage";
+import Checkbox from '@mui/material/Checkbox';
 
 
-export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, children}) => {
+export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, handleColorSolid, children}) => {
 
     return (
         <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
@@ -31,6 +32,13 @@ export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, chi
                         {renderPosition({item:item, position:"5", handlePosition: handlePosition})}
                     </RadioGroup>
                 </FormControl>
+            </Grid>
+            <Grid item>
+                <FormControlLabel control={
+                    <Checkbox
+                        checked={item.colorSolid}
+                        onChange={() => handleColorSolid(item.id, item.colorSolid)}
+                    />} label="Solid Color" />
             </Grid>
             <Grid item >
                 <DeleteDialogComponent id={item.id} handleDeleteWidget={handleDeleteWidget}/>

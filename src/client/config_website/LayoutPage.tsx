@@ -10,7 +10,7 @@ import {WidgetListElement} from "./WidgetListElement";
 
 
 
-export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget, handleDeleteWidget, handlePosition, children}) => {
+export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget, handleDeleteWidget, handlePosition, handleColorSolid, children}) => {
 
     return(
         <div>
@@ -155,12 +155,17 @@ export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget
                 <Grid item xs={12}>
                     <ul>
                         {list.map(item => (
-                            <WidgetListElement item={item} handlePosition={handlePosition} handleDeleteWidget={handleDeleteWidget}>
+                            <WidgetListElement
+                                item={item}
+                                handlePosition={handlePosition}
+                                handleDeleteWidget={handleDeleteWidget}
+                                handleColorSolid={handleColorSolid}
+                            >
                             </WidgetListElement>
                         ))}
                     </ul>
                 </Grid>
-                <Grid item>
+                <Grid item xs={12}>
                     <FormControl sx={{minWidth: 120}}>
                         <Select
                             value={widget.name}
@@ -176,7 +181,7 @@ export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item>
+                <Grid item xs={12}>
                     <Button onClick={handleAddWidget} variant="outlined">Add Widget</Button>
                 </Grid>
             </Grid>

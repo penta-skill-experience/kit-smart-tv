@@ -96,7 +96,8 @@ export function ConfigWebsite() {
         id:0,
         name:'',
         position:'',
-        configurable:false
+        configurable:false,
+        colorSolid:false
     });
 
     const incrementCounter = () => setCounter(counter + 1);
@@ -109,6 +110,7 @@ export function ConfigWebsite() {
             name:event.target.value,
             position:'',
             configurable:true,
+            colorSolid:false
         }
         setWidget(updatedValue)
     };
@@ -122,6 +124,7 @@ export function ConfigWebsite() {
                 name:widget.name,
                 position:'',
                 configurable:true,
+                colorSolid:false
             }
             setList(list.concat(newWidget));
             incrementCounter();
@@ -146,6 +149,18 @@ export function ConfigWebsite() {
 
         setList(newList);
 
+    }
+
+    const handleColorSolid = (id, isChecked) => {
+        const newList = list.map((item) =>{
+            if (item.id === id) {
+                const newWidget = {...item, colorSolid: !isChecked}
+                return newWidget;
+            } else {
+                return item;
+            };
+        });
+        setList(newList)
     }
 
     //state variables and methods for admin password page
@@ -242,6 +257,7 @@ export function ConfigWebsite() {
                             handleAddWidget={handleAddWidget}
                             handleDeleteWidget={handleDeleteWidget}
                             handlePosition={handlePosition}
+                            handleColorSolid={handleColorSolid}
                         >
                         </LayoutPage>
                     </TabPanel>
