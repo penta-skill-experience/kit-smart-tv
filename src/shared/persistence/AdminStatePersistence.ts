@@ -1,4 +1,5 @@
 import * as https from "https";
+import config from "./persistence.config.json";
 
 export class AdminStatePersistence {
     get refresh_token(): string {
@@ -13,7 +14,7 @@ export class AdminStatePersistence {
     }
 
     async login(password: string) : Promise<boolean> {
-        const response = await fetch('http://localhost:80/api/sessions', {
+        const response = await fetch(`${config.DOMAIN}/api/sessions`, {
             method: 'POST',
             body: JSON.stringify(password), // string or object
             headers: {
@@ -36,7 +37,7 @@ export class AdminStatePersistence {
     }
 
     async logout(access_token: string, refresh_token: string): Promise<boolean> {
-        const response = await fetch('http://localhost:80/api/sessions', {
+        const response = await fetch(`${config.DOMAIN}/api/sessions`, {
             method: 'DELETE',
             body: null, // string or object
             headers: {
@@ -61,7 +62,7 @@ export class AdminStatePersistence {
     }
 
     async getAdminLoginState(access_token: string, refresh_token: string): Promise<boolean> {
-        const response = await fetch('http://localhost:80/api/sessions', {
+        const response = await fetch(`${config.DOMAIN}/api/sessions`, {
             method: 'GET',
             body: null,
             headers: {
@@ -84,7 +85,7 @@ export class AdminStatePersistence {
     }
 
     async setPassword(oldpw: string, newpw: string, access_token: string, refresh_token: string): Promise<boolean> {
-        const response = await fetch('http://localhost:80/admin/update-password', {
+        const response = await fetch(`${config.DOMAIN}/admin/update-password`, {
             method: 'PUT',
             body: JSON.stringify({password: oldpw, new_password: newpw}),
             headers: {
