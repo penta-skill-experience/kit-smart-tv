@@ -58,7 +58,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
         const widget = this.widgetLoader.getWidget(widgetData.widgetId);
         try {
             const widgetComponent = widget.createDisplayComponent(widgetData.rawConfig);
-            return <SquareHolder title={widget.getTitle()} fill={widgetData.fill} darkTheme={this.state.darkTheme}>
+            return <SquareHolder title={widget.getTitle()} darkTheme={this.state.darkTheme}>
                 {widgetComponent}
             </SquareHolder>;
         } catch (e) {
