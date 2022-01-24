@@ -30,6 +30,12 @@ export class WidgetPersistence {
                         fill: true,
                         rawConfig: {},
                     },
+                    {
+                        widgetId: "rss-feed",
+                        location: 5,
+                        fill: false,
+                        rawConfig: {url: "www.example.com"},
+                    },
                 ];
                 resolve(data);
             }

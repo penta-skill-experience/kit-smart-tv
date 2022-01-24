@@ -28,7 +28,7 @@ export class SquareHolder extends React.Component<any, any> {
             scroll: SquareHolderConfig.SCROLL_SPEED
         };
         this.pageScroll = this.pageScroll.bind(this);
-        setInterval(() => this.pageScroll(), 50);
+        setInterval(() => this.pageScroll(), SquareHolderConfig.SCROLL_REFRESH);
         //(this.doesOverflow() ? setInterval(() => this.pageScroll(), 50):"");
     }
 
