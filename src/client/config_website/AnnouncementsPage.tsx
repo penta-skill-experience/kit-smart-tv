@@ -3,39 +3,9 @@ import {Grid} from "@mui/material";
 import TextField from '@mui/material/TextField';
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
+import * as emailValidator from "email-validator"
 
-export const AnnouncementsPage = () => {
-    const initialMailList = [];
-    const [mailList, setMailList] = React.useState(initialMailList);
-    const [verUser, setVerUser] = React.useState({
-        mail:'',
-        name:'',
-    });
-
-
-    const handleMailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setVerUser({...verUser, mail:event.target.value});
-    };
-
-    const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setVerUser({...verUser, name:event.target.value});
-    };
-
-    const handleAddMail = () => {
-        if (verUser.name !== '' && verUser.mail !== '') {
-            const newUser = {
-                mail:verUser.mail,
-                name:verUser.name,
-            }
-            setMailList(mailList.concat(newUser));
-        }
-        alert('Username and email have to be filled out')
-    };
-
-    const handleDeleteUser = (mail) => {
-        setMailList(mailList.filter(item => item.mail !== mail));
-    }
-
+export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNameChange, handleAddMail, handleDeleteUser, children}) => {
 
     return(
         <div>
