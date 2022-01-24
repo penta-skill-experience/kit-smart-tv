@@ -3,21 +3,19 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import {Button, Grid} from "@mui/material";
-import FormControlLabel from '@mui/material/FormControlLabel';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import LockIcon from '@mui/icons-material/Lock';
+import {WidgetListElement} from "./WidgetListElement";
 
 
-export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget, handleDeleteWidget, handlePosition, children}) => {
+
+export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget, handleDeleteWidget, handlePosition, handleColorSolid, children}) => {
 
     return(
         <div>
-            <Grid container spacing={2} direction="column" justifyContent="flex-start" alignItems="flex-start">
-                <Grid item container spacing={2} direction="row">
+            <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="flex-start">
+                <Grid item container spacing={2} direction="row" xs={12}>
                     <Grid item>
                         <Box
                             sx={{
@@ -154,92 +152,20 @@ export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget
                     </Grid>
                 </Grid>
 
-                <Grid item>
+                <Grid item xs={12}>
                     <ul>
-                        {list.map(widget => (
-                            <Grid container spacing={2} direction="row" alignItems="center">
-                                <Grid item>
-                                    {widget.name}
-                                </Grid>
-                                <Grid item>
-                                    <FormControl>
-                                        <RadioGroup
-                                            row
-                                        >
-                                            <FormControlLabel
-                                                label="1"
-                                                control={
-                                                <Radio
-                                                    checked={widget.position === "1"}
-                                                    onChange={
-                                                        () => {
-                                                            handlePosition(widget.id, "1")
-                                                        }
-                                                     }
-                                                />
-                                                }
-                                            />
-                                            <FormControlLabel
-                                                label="2"
-                                                control={
-                                                <Radio
-                                                    checked={widget.position === "2"}
-                                                    onChange={
-                                                        () => {
-                                                            handlePosition(widget.id, "2")
-                                                        }
-                                                    }/>
-                                                 }
-                                            />
-                                            <FormControlLabel
-                                                label="3"
-                                                control={
-                                                    <Radio
-                                                        checked={widget.position === "3"}
-                                                        onChange={
-                                                            () => {
-                                                                handlePosition(widget.id, "3")
-                                                            }
-                                                        }/>
-                                                }
-                                            />
-                                            <FormControlLabel
-                                                label="4"
-                                                control={
-                                                    <Radio
-                                                        checked={widget.position === "4"}
-                                                        onChange={
-                                                            () => {
-                                                                handlePosition(widget.id, "4")
-                                                            }
-                                                        }/>
-                                                }
-                                            />
-                                            <FormControlLabel
-                                                label="5"
-                                                control={
-                                                    <Radio
-                                                        checked={widget.position === "5"}
-                                                        onChange={
-                                                            () => {
-                                                                handlePosition(widget.id, "5")
-                                                            }
-                                                        }/>
-                                                }
-                                            />
-                                        </RadioGroup>
-                                    </FormControl>
-                                </Grid>
-                                <Grid item>
-                                    <Button onClick={() => handleDeleteWidget(widget.id)}>
-                                        <DeleteIcon/>
-                                    </Button>
-                                </Grid>
-                            </Grid>
+                        {list.map(item => (
+                            <WidgetListElement
+                                item={item}
+                                handlePosition={handlePosition}
+                                handleDeleteWidget={handleDeleteWidget}
+                                handleColorSolid={handleColorSolid}
+                            >
+                            </WidgetListElement>
                         ))}
                     </ul>
                 </Grid>
-                <Grid item>
+                <Grid item xs={12}>
                     <FormControl sx={{minWidth: 120}}>
                         <Select
                             value={widget.name}
@@ -250,10 +176,12 @@ export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget
                             <MenuItem value={'test1'}>Test1</MenuItem>
                             <MenuItem value={'test2'}>Test2</MenuItem>
                             <MenuItem value={'test3'}>Test3</MenuItem>
+                            <MenuItem value={'Tram Schedule'}>Tram Schedule Widget</MenuItem>
+                            <MenuItem value={'RSS feed'}>RSS feed</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item>
+                <Grid item xs={12}>
                     <Button onClick={handleAddWidget} variant="outlined">Add Widget</Button>
                 </Grid>
             </Grid>

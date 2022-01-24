@@ -1,3 +1,5 @@
+import * as https from "https";
+
 export class AdminStatePersistence {
     get refresh_token(): string {
         return this._refresh_token;
@@ -57,6 +59,26 @@ export class AdminStatePersistence {
         }
         return false;
     }
+
+    async getAdminLoginState(access_token: string, refresh_token: string) {
+        var options = {
+        'method': 'GET',
+        'hostname': 'localhost',
+        'port': 80,
+        'path': '/api/sessions',
+        'headers': {
+            'x-refresh': this._refresh_token,
+            'Authorization': 'Bearer ' + this._access_token
+        },
+        'maxRedirects': 20
+    };
+
+        var req = https.request(options, function (res) {
+            var chunks = [];
+
+            res.on("data", function (chunk) {
+                chunks.push(chunk);
+            });
 
     async getAdminLoginState(access_token: string, refresh_token: string): Promise<boolean> {
         const response = await fetch('http://localhost:80/api/sessions', {
