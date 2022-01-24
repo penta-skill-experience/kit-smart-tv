@@ -56,7 +56,11 @@ export abstract class AnnouncementAuthorType {
 
         isThisAuthorType(author: string): Boolean {
             let returnValue = false;
-            new AnnouncementPersistence().getVerifiedUsers().forEach(verifiedUser => {
+            new AnnouncementPersistence().getVerifiedUsers()
+                .filter(verifiedUser => {
+                    return !AnnouncementAuthorType.ADMIN.isThisAuthorType(verifiedUser.email) // removing admins from list of verifies users to avoid overwriting admin type
+                })
+                .forEach(verifiedUser => {
                 if (verifiedUser.email === author) {
                     returnValue = true;
                 }
