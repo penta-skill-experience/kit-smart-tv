@@ -1,45 +1,33 @@
 import * as React from "react";
 import * as RotatorComponentConfig from "./RotatorComponent.json";
+import {Carousel} from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 export class RotatorComponent extends React.Component<any, any> {
-    setLength = function () {
-        this.state.elements = this.props.children.length;
-    }
-    pageSwitch = function () {
-        this.setState({index: (this.state.index + 1)});
-        if (this.state.index >= this.state.elements) {
-            this.setState({index: 0});
-        }
+
+    private pageSwitch() {
+        const newIndex = (this.state.index + 1) % React.Children.count(this.props.children);
+        this.setState({index: newIndex});
     }
 
     constructor(props) {
         super(props);
         this.state = {
             index: 0,
-            elements: 0
         };
-        this.setLength();
-        this.pageSwitch = this.pageSwitch.bind(this);
         setInterval(() => this.pageSwitch(), RotatorComponentConfig.SWITCH_SPEED);
     }
 
     render() {
-        return <div className="w-fit" style={{
-            height: "44vh"
-        }}>
-            {React.Children.map(this.props.children, (child, i) =>
-                <div>
-                    {((this.state.index == i) ? child : "")}
-                </div>
-            )}
-            {(this.state.elements > 1 && this.state.elements < RotatorComponentConfig.MAXIMUM_DOTS) ?
-                <div className="flex justify-center"> {React.Children.map(this.props.children, (child, k) =>
-                    <a href="#"
-                       className={"w-4 h-4 rounded-full rounded-md " + ((this.state.index == k) ? "bg-gray-900" : "bg-gray-500")}>
-                    </a>
-                )}
-                </div>
-                : ""}
+        return <div className="w-full h-full">
+            <Carousel showIndicators={React.Children.count(this.props.children) > 1} showStatus={false} showArrows={false} autoPlay showThumbs={false} transitionTime={1000} infiniteLoop={true} dynamicHeight={true}>
+                {
+                    React.Children.map(this.props.children, child =>
+                        <div>
+                            {child}
+                        </div>)
+                }
+            </Carousel>
         </div>
     }
 }
