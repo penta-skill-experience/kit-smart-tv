@@ -2,8 +2,6 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const common = require("./client.common.webpack.config");
 const {merge} = require("webpack-merge");
 
-console.log(MiniCssExtractPlugin);
-
 module.exports = env => merge(common(env, MiniCssExtractPlugin.loader), {
     mode: "production",
     output: {

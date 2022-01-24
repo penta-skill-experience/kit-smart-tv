@@ -1,0 +1,22 @@
+{
+  "USERNAME": "kit-smart-tv.testing@outlook.de",
+  "PASSWORD": "testingITECKITSmartTV",
+  "HOST": "outlook.office365.com",
+  "PORT": 993,
+  "TLS": true,
+  "CONN_TIMEOUT": 10000,
+  "AUTH_TIMEOUT": 5000,
+  "DEBUG": "console.log()",
+  "TLS_OPTIONS": { "REJECT_UNAUTHORIZED": false },
+  "MAILBOX": "INBOX",
+  "SEARCH_FILTER": ["NEW"],
+  "MARK_SEEN": true,
+  "FETCH_UNREAD_ON_START": true,
+  "MAIL_PARSER_OPTIONS": { "STREAM_ATTACHMENTS": false },
+  "ATTACHMENTS": false,
+  "ATTACHMENT_OPTIONS": {
+    "SAVE_ATTACHMENTS": false,
+    "DIRECTORY": "attachments/",
+    "STREAM": true
+  }
+}

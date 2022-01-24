@@ -1,4 +1,4 @@
-import {WidgetConfig} from "./WidgetConfig";
+import {WidgetConfig} from "../WidgetConfig";
 
 export class RssFeedConfig implements WidgetConfig {
     url: string;
