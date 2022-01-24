@@ -10,6 +10,7 @@ import {useState} from "react";
 import {SelectChangeEvent} from "@mui/material/Select";
 import {LogInPage} from "./LogInPage";
 import {Button, Grid} from "@mui/material";
+import {AnnouncementsPage} from "./AnnouncementsPage";
 
 
 interface TabPanelProps {
@@ -216,10 +217,11 @@ export function ConfigWebsite() {
                     </Box>
 
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        <Tabs value={pageNumber} onChange={handleChange} aria-label="basic tabs example">
+                        <Tabs value={pageNumber} onChange={handleChange}>
                             <Tab label="Personalization"/>
                             <Tab label="Layout"/>
                             <Tab label="Password"/>
+                            <Tab label="Announcements"/>
                         </Tabs>
                     </Box>
                     <TabPanel value={pageNumber} index={0}>
@@ -253,6 +255,9 @@ export function ConfigWebsite() {
                             handleChangeSave={handleChangeSave}
                         >
                         </AdminPage>
+                    </TabPanel>
+                    <TabPanel value={pageNumber} index={3}>
+                        <AnnouncementsPage/>
                     </TabPanel>
                 </div>
             );
