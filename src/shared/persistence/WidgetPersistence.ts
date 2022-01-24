@@ -1,4 +1,5 @@
 import {WidgetData} from "../../client/widget/WidgetData";
+import config from "./persistence.config.json";
 
 export class WidgetPersistence {
 
@@ -7,8 +8,8 @@ export class WidgetPersistence {
         //todo
     }
 
-    async getWidgetDataList(): Promise<WidgetData[]> {
-        return fetch(`http://localhost:80/widgets`)
+    getWidgetDataList(): Promise<WidgetData[]> {
+        return fetch(`${config.DOMAIN}/widgets`)
             .then((value: Response) => value.json())
             .then(data => data.widgetDataList);
     }
