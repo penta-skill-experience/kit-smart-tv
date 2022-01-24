@@ -66,19 +66,6 @@ export class SquareHolder extends React.Component<any, any> {
                         <p>Error while rendering widget: {this.state.error.message}</p>
                         : this.props.children  // only show children if they didn't produce an error
                     }
-                    <div className="flex space-x-1 justify-center" style={{
-                        opacity: 1
-                    }}>
-                        <a href="#"
-                           className="rounded-full bg-gray-600 rounded-md hover:bg-gray-800 hover:text-white">
-                        </a>
-                        <a href="#"
-                           className="rounded-full bg-gray-600 rounded-md hover:bg-gray-800 hover:text-white">
-                        </a>
-                        <a href="#"
-                           className="rounded-full bg-gray-600 rounded-md hover:bg-gray-800 hover:text-white">
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>;
