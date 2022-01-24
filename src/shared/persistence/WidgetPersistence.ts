@@ -8,14 +8,8 @@ export class WidgetPersistence {
     }
 
     async getWidgetDataList(): Promise<WidgetData[]> {
-        //todo: this is just a mock
-
-        const response = await fetch('http://localhost:80/widgets');
-        const myJson = await response.json();
-
-        return new Promise<WidgetData[]>(resolve => {
-                resolve(myJson);
-            }
-        );
+        return fetch(`http://localhost:80/widgets`)
+            .then((value: Response) => value.json())
+            .then(data => data.widgetDataList);
     }
 }

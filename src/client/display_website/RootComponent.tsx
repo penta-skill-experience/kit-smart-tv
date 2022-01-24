@@ -30,10 +30,12 @@ export class RootComponent extends React.Component<any, RootComponentState> {
     componentDidMount() {
         // Query a list of all widget data.
         // setState() is called once they are received and will trigger re-rendering.
-        this.widgetPersistence.getWidgetDataList().then(widgetDataList => this.setState({
-            // separate the widgetData by location
-            widgetDataByLocation: [0, 1, 2, 3, 4, 5].map(location => widgetDataList.filter(widgetData => widgetData.location === location))
-        }));
+        this.widgetPersistence.getWidgetDataList().then(widgetDataList => {
+            this.setState({
+                // separate the widgetData by location
+                widgetDataByLocation: [0, 1, 2, 3, 4, 5].map(location => widgetDataList.filter(widgetData => widgetData.location === location))
+            });
+        });
     }
 
     private renderLocation(location: number) {
