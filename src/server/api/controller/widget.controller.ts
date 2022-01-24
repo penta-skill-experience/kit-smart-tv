@@ -2,7 +2,6 @@ import {Request, Response} from "express";
 import {createWidgetData, getWidgetData, updateWidgetData} from "../services/widgetData.service";
 
 export async function updateWidgetDataHandler(req: Request, res: Response) {
-    console.debug(req.body);
     try {
         return res.send(await updateWidgetData(req.body));
     } catch (e) {

@@ -23,12 +23,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{endpoint}}/admin",
+							"raw": "{{endpoint}}/admin/create-admin",
 							"host": [
 								"{{endpoint}}"
 							],
 							"path": [
-								"admin"
+								"admin",
+								"create-admin"
 							]
 						}
 					},
@@ -218,12 +219,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{endpoint}}/admin",
+							"raw": "{{endpoint}}/admin/update-password",
 							"host": [
 								"{{endpoint}}"
 							],
 							"path": [
-								"admin"
+								"admin",
+								"update-password"
 							]
 						}
 					},
@@ -267,12 +269,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{endpoint}}/admin",
+							"raw": "{{endpoint}}/admin/update-password",
 							"host": [
 								"{{endpoint}}"
 							],
 							"path": [
-								"admin"
+								"admin",
+								"update-password"
 							]
 						}
 					},
@@ -478,18 +481,15 @@
 			]
 		},
 		{
-			"name": "Product",
+			"name": "Announcements",
 			"item": [
 				{
-					"name": "Create Product",
+					"name": "Get Announcements with Token",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"var jsonData = JSON.parse(responseBody);",
-									"postman.setEnvironmentVariable(\"productId\", jsonData.productId);",
-									"",
 									"",
 									"const newAccessToken = responseHeaders['x-access-token']",
 									"",
@@ -513,7 +513,70 @@
 								}
 							]
 						},
-						"method": "POST",
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-refresh",
+								"value": "{{refreshToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{endpoint}}/announcements",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"announcements"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Announcements",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const newAccessToken = responseHeaders['x-access-token']",
+									"",
+									"if(newAccessToken){",
+									"    console.log('Set new access token')",
+									"postman.setEnvironmentVariable(\"accessToken\", newAccessToken);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									" //in 14 day // 14d = 12096e5ms",
+									"postman.setEnvironmentVariable(\"timeout\", JSON.stringify(new Date(Date.now() + 12096e5)));",
+									"",
+									"",
+									"",
+									"postman.setEnvironmentVariable(\"timeOfAddition\", JSON.stringify(Date.now()));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
 						"header": [
 							{
 								"key": "x-refresh",
@@ -523,7 +586,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"Canon EOS 1500D DSLR Camera with 18-55mm Lens\",\n    \"description\": \"Designed for first-time DSLR owners who want impressive results straight out of the box, capture those magic moments no matter your level with the EOS 1500D. With easy to use automatic shooting modes, large 24.1 MP sensor, Canon Camera Connect app integration and built-in feature guide, EOS 1500D is always ready to go.\",\n    \"price\": 879.99,\n    \"image\": \"https://i.imgur.com/QlRphfQ.jpg\"\n}",
+							"raw": "{\n    \"announcementDataList\": [\n        {\n            \"title\": \"new colleague\",\n            \"text\": \"Ragesh is our new collegue! He is working remotely.\",\n            \"author\": \"Bob\",\n            \"timeout\": \"2022-01-23T10:35:45.451Z\",\n            \"timeOfAddition\": \"2022-01-23T10:35:45.451Z\"\n        },\n        {\n            \"title\": \"new publication\",\n            \"text\": \"Alice published an article on Elsevier\",\n            \"author\": \"Bob\",\n            \"timeout\": \"2022-01-23T10:35:45.451Z\",\n            \"timeOfAddition\": \"2022-01-23T10:35:45.451Z\"\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -531,20 +594,226 @@
 							}
 						},
 						"url": {
-							"raw": "{{endpoint}}/api/products",
+							"raw": "{{endpoint}}/announcements",
 							"host": [
 								"{{endpoint}}"
 							],
 							"path": [
-								"api",
-								"products"
+								"announcements"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Config",
+			"item": [
+				{
+					"name": "Update Config",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const newAccessToken = responseHeaders['x-access-token']",
+									"",
+									"if(newAccessToken){",
+									"    console.log('Set new access token')",
+									"postman.setEnvironmentVariable(\"accessToken\", newAccessToken);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									" //in 14 day // 14d = 12096e5ms",
+									"postman.setEnvironmentVariable(\"timeout\", JSON.stringify(new Date(Date.now() + 12096e5)));",
+									"",
+									"",
+									"",
+									"postman.setEnvironmentVariable(\"timeOfAddition\", JSON.stringify(Date.now()));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-refresh",
+								"value": "{{refreshToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fontSize\": \"medium\",\n    \"colorScheme\": \"dark\",\n    \"background\": \"https://images.wallpaperscraft.com/image/single/city_skyscrapers_clouds_rain_road_cars_lights_58563_3840x2160.jpg\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/config",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"config"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Get Product",
+					"name": "Get Config",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const newAccessToken = responseHeaders['x-access-token']",
+									"",
+									"if(newAccessToken){",
+									"    console.log('Set new access token')",
+									"postman.setEnvironmentVariable(\"accessToken\", newAccessToken);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									" //in 14 day // 14d = 12096e5ms",
+									"postman.setEnvironmentVariable(\"timeout\", JSON.stringify(new Date(Date.now() + 12096e5)));",
+									"",
+									"",
+									"",
+									"postman.setEnvironmentVariable(\"timeOfAddition\", JSON.stringify(Date.now()));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-refresh",
+								"value": "{{refreshToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"announcementDataList\": [\n        {\n            \"email\": \"test@web.de\",\n            \"name\": \"Ragesh\"\n        },\n        {\n            \"email\": \"bob@itec.edu\",\n            \"name\": \"Bob\"\n        },\n        {\n            \"email\": \"alice@itec.edu\",\n            \"name\": \"Alice\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/config",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"config"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Widgets",
+			"item": [
+				{
+					"name": "Get WidgetDataList with Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"const newAccessToken = responseHeaders['x-access-token']",
+									"",
+									"if(newAccessToken){",
+									"    console.log('Set new access token')",
+									"postman.setEnvironmentVariable(\"accessToken\", newAccessToken);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-refresh",
+								"value": "{{refreshToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{endpoint}}/widgets",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"widgets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get WidgetDataList without Token",
 					"event": [
 						{
 							"listen": "test",
@@ -556,37 +825,26 @@
 							}
 						}
 					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"A post title\",\n    \"body\": \"Some HTML text Some HTML text Some HTML text Some HTML text Some HTML text Some HTML text Some HTML text Some HTML text Some HTML text Some HTML text Some HTML text Some HTML text Some HTML text Some HTML text\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{endpoint}}/api/products/{{productId}}",
+							"raw": "{{endpoint}}/widgets",
 							"host": [
 								"{{endpoint}}"
 							],
 							"path": [
-								"api",
-								"products",
-								"{{productId}}"
+								"widgets"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Update Product",
+					"name": "Update WidgetDataList",
 					"event": [
 						{
 							"listen": "test",
@@ -624,7 +882,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"Canon EOS 1500D DSLR Camera with 18-55mm Lens\",\n    \"description\": \"Designed for first-time DSLR owners who want impressive results straight out of the box, capture those magic moments no matter your level with the EOS 1500D. With easy to use automatic shooting modes, large 24.1 MP sensor, Canon Camera Connect app integration and built-in feature guide, EOS 1500D is always ready to go.\",\n    \"price\": 699.99,\n    \"image\": \"https://i.imgur.com/QlRphfQ.jpg\"\n}",
+							"raw": "{\n    \"widgetDataList\": [\n        {\n            \"widgetId\": \"tram-schedule\",\n            \"location\": 1,\n            \"_id\": \"61ec6ec7271e856433e60d1b\"\n        },\n        {\n            \"widgetId\": \"rss-feed\",\n            \"location\": 2,\n            \"rawConfig\": {\n                \"url\": \"www.example.com\"\n            },\n            \"_id\": \"61ec6ec7271e856433e60d1c\"\n        },\n        {\n            \"widgetId\": \"weather\",\n            \"location\": 3,\n            \"_id\": \"61ec6ec7271e856433e60d1d\"\n        },\n        {\n            \"widgetId\": \"time\",\n            \"location\": 4,\n            \"_id\": \"61ec6ec7271e856433e60d1e\"\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -632,21 +890,24 @@
 							}
 						},
 						"url": {
-							"raw": "{{endpoint}}/api/products/{{productId}}",
+							"raw": "{{endpoint}}/widgets",
 							"host": [
 								"{{endpoint}}"
 							],
 							"path": [
-								"api",
-								"products",
-								"{{productId}}"
+								"widgets"
 							]
 						}
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "Values",
+			"item": [
 				{
-					"name": "Delete Product",
+					"name": "Update Values",
 					"event": [
 						{
 							"listen": "test",
@@ -658,6 +919,20 @@
 									"    console.log('Set new access token')",
 									"postman.setEnvironmentVariable(\"accessToken\", newAccessToken);",
 									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									" //in 14 day // 14d = 12096e5ms",
+									"postman.setEnvironmentVariable(\"timeout\", JSON.stringify(new Date(Date.now() + 12096e5)));",
+									"",
+									"",
+									"",
+									"postman.setEnvironmentVariable(\"timeOfAddition\", JSON.stringify(Date.now()));"
 								],
 								"type": "text/javascript"
 							}
@@ -674,7 +949,7 @@
 								}
 							]
 						},
-						"method": "DELETE",
+						"method": "PUT",
 						"header": [
 							{
 								"key": "x-refresh",
@@ -684,7 +959,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"A post title\",\n    \"body\": \"Some HTML text Some HTML text Some HTML text Some HTML text Some HTML text Some HTML text Some HTML text Some HTML text Some HTML text Some HTML text Some HTML text Some HTML text Some HTML text Some HTML text\"\n}",
+							"raw": "{\n    \"fontSizes\": [\n        {\n            \"id\": \"1\",\n            \"name\": \"large\",\n            \"titleFontSize\": 16,\n            \"bodyFontSize\": 16,\n            \"specialFontSize\": 16,\n            \"specialFontSizeAccent\": 16\n        },\n        {\n            \"id\": \"1\",\n            \"name\": \"small\",\n            \"titleFontSize\": 11,\n            \"bodyFontSize\": 11,\n            \"specialFontSize\": 11,\n            \"specialFontSizeAccent\": 11\n        }\n    ],\n    \"colorSchemes\": [\n        {\n            \"id\": \"1\",\n            \"name\": \"dark\",\n            \"titleColor\": \"black\",\n            \"bodyColor\": \"black\",\n            \"specialBoldColor\": \"black\",\n            \"specialSubtleColor\": \"black\",\n            \"accentBarColor\": \"black\",\n            \"backgrounds\": [\n                {\n                    \"id\": \"1\",\n                    \"url\": \"https://www.test.de\"\n                },\n                {\n                    \"id\": \"2\",\n                    \"url\": \"https://www.test.com\"\n                }\n            ]\n        },\n        {\n            \"id\": \"2\",\n            \"name\": \"light\",\n            \"titleColor\": \"white\",\n            \"bodyColor\": \"black\",\n            \"specialBoldColor\": \"white\",\n            \"specialSubtleColor\": \"white\",\n            \"accentBarColor\": \"white\",\n            \"backgrounds\": [\n                {\n                    \"id\": \"1\",\n                    \"url\": \"https://www.test.de/light\"\n                },\n                {\n                    \"id\": \"2\",\n                    \"url\": \"https://www.test.com/light\"\n                }\n            ]\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -692,14 +967,87 @@
 							}
 						},
 						"url": {
-							"raw": "{{endpoint}}/api/products/{{productId}}",
+							"raw": "{{endpoint}}/values",
 							"host": [
 								"{{endpoint}}"
 							],
 							"path": [
-								"api",
-								"products",
-								"{{productId}}"
+								"values"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Values",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const newAccessToken = responseHeaders['x-access-token']",
+									"",
+									"if(newAccessToken){",
+									"    console.log('Set new access token')",
+									"postman.setEnvironmentVariable(\"accessToken\", newAccessToken);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									" //in 14 day // 14d = 12096e5ms",
+									"postman.setEnvironmentVariable(\"timeout\", JSON.stringify(new Date(Date.now() + 12096e5)));",
+									"",
+									"",
+									"",
+									"postman.setEnvironmentVariable(\"timeOfAddition\", JSON.stringify(Date.now()));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-refresh",
+								"value": "{{refreshToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"announcementDataList\": [\n        {\n            \"email\": \"test@web.de\",\n            \"name\": \"Ragesh\"\n        },\n        {\n            \"email\": \"bob@itec.edu\",\n            \"name\": \"Bob\"\n        },\n        {\n            \"email\": \"alice@itec.edu\",\n            \"name\": \"Alice\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/values",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"values"
 							]
 						}
 					},
@@ -708,40 +1056,156 @@
 			]
 		},
 		{
-			"name": "Announcements",
-			"item": []
-		},
-		{
-			"name": "Widgets",
-			"item": []
-		},
-		{
-			"name": "Metrics",
+			"name": "Users",
 			"item": [
 				{
-					"name": "Get metrics",
+					"name": "Update Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const newAccessToken = responseHeaders['x-access-token']",
+									"",
+									"if(newAccessToken){",
+									"    console.log('Set new access token')",
+									"postman.setEnvironmentVariable(\"accessToken\", newAccessToken);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									" //in 14 day // 14d = 12096e5ms",
+									"postman.setEnvironmentVariable(\"timeout\", JSON.stringify(new Date(Date.now() + 12096e5)));",
+									"",
+									"",
+									"",
+									"postman.setEnvironmentVariable(\"timeOfAddition\", JSON.stringify(Date.now()));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
-						"method": "GET",
-						"header": [],
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-refresh",
+								"value": "{{refreshToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"usersDataList\": [\n        {\n            \"email\": \"test@web.de\",\n            \"name\": \"Ragesh\"\n        },\n        {\n            \"email\": \"bob@itec.edu\",\n            \"name\": \"Bob\"\n        },\n        {\n            \"email\": \"alice@itec.edu\",\n            \"name\": \"Alice\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:9100/metrics",
-							"protocol": "http",
+							"raw": "{{endpoint}}/users",
 							"host": [
-								"localhost"
+								"{{endpoint}}"
 							],
-							"port": "9100",
 							"path": [
-								"metrics"
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const newAccessToken = responseHeaders['x-access-token']",
+									"",
+									"if(newAccessToken){",
+									"    console.log('Set new access token')",
+									"postman.setEnvironmentVariable(\"accessToken\", newAccessToken);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									" //in 14 day // 14d = 12096e5ms",
+									"postman.setEnvironmentVariable(\"timeout\", JSON.stringify(new Date(Date.now() + 12096e5)));",
+									"",
+									"",
+									"",
+									"postman.setEnvironmentVariable(\"timeOfAddition\", JSON.stringify(Date.now()));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-refresh",
+								"value": "{{refreshToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"announcementDataList\": [\n        {\n            \"email\": \"test@web.de\",\n            \"name\": \"Ragesh\"\n        },\n        {\n            \"email\": \"bob@itec.edu\",\n            \"name\": \"Bob\"\n        },\n        {\n            \"email\": \"alice@itec.edu\",\n            \"name\": \"Alice\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/users",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"users"
 							]
 						}
 					},
 					"response": []
 				}
 			]
-		},
-		{
-			"name": "Config",
-			"item": []
 		}
 	],
 	"auth": {
@@ -816,6 +1280,16 @@
 		{
 			"key": "alt_refreshToken",
 			"value": "<refreshToken will be set when you create a session>",
+			"type": "string"
+		},
+		{
+			"key": "timeout",
+			"value": "\"2022-01-23T10:35:45.451Z\"",
+			"type": "string"
+		},
+		{
+			"key": "timeOfAddition",
+			"value": "\"2022-01-23T10:35:45.451Z\"",
 			"type": "string"
 		}
 	]

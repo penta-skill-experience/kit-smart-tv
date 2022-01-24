@@ -17,11 +17,25 @@ import 'dotenv/config';
 import {ensureRequestStructure} from "./middleware/ensureRequestStructure";
 import {updateWidgetSchema} from "./schema/widgetData.schema";
 import {getWidgetDataHandler, updateWidgetDataHandler} from "./controller/widget.controller";
+import {updateAnnouncementsSchema} from "./schema/announcements.schema";
+import {getAnnouncementsHandler, updateAnnouncementsHandler} from "./controller/announcements.controller";
+import {updateUsersSchema} from "./schema/users.schema";
+import {getUsersHandler, updateUsersHandler} from "./controller/users.controller";
+import {updateConfigSchema} from "./schema/config.schema";
+import {getConfigHandler, updateConfigHandler} from "./controller/config.controller";
+import {updateValuesSchema} from "./schema/values.schema";
+import {getValuesHandler, updateValuesHandler} from "./controller/values.controller";
 
 const port = config.port;
 
 const app = express();
+
+
 app.use(express.json());
+
+//app.use(cors());
+
+
 app.use(deserializeAdmin);
 
 // host static files of display_website and config_website
@@ -67,5 +81,27 @@ app.listen(port, async () => {
  *   Announcement Routines
  **/
 
+    //hier braucht man noch mmiddle ware die nur locale calls zulässt.
+    app.put("/announcements", ensureRequestStructure(updateAnnouncementsSchema), updateAnnouncementsHandler)
+    app.get("/announcements", getAnnouncementsHandler)
+
+/**
+ *   verified User Routines
+ **/
+    app.put("/users", requireAdmin, ensureRequestStructure(updateUsersSchema), updateUsersHandler)
+    app.get("/users", getUsersHandler)
+
+/**
+ *   Config Routines
+ **/
+    app.put("/config", requireAdmin, ensureRequestStructure(updateConfigSchema), updateConfigHandler)
+    app.get("/config", getConfigHandler)
+
+
+/**
+ *   Values Routines
+ **/
+    app.put("/values", requireAdmin, ensureRequestStructure(updateValuesSchema), updateValuesHandler)
+    app.get("/values", getValuesHandler)
 
 });
