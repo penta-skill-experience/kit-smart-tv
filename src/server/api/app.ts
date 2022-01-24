@@ -5,7 +5,7 @@ Each request that reaches the server will be handled here.
 
 import express, {Request, Response} from "express";
 import config from "./config.json";
-import {connectRemote} from './utils/conntectDb';
+import {connect} from './utils/conntectDb';
 import {createAdminSchema, updatePasswordSchema} from "./schema/admin.schema";
 import {createAdminHandler, updatePasswordHandler} from "./controller/admin.controller";
 import path from "path";
@@ -26,9 +26,9 @@ import {getConfigHandler, updateConfigHandler} from "./controller/config.control
 import {updateValuesSchema} from "./schema/values.schema";
 import {getValuesHandler, updateValuesHandler} from "./controller/values.controller";
 
-serverSetup();
+serverSetup(process.env.MONGO_URI);
 
-export function serverSetup() {
+export function serverSetup(dbUri : string) {
     const port = config.port;
 
     const app = express();
@@ -49,7 +49,7 @@ export function serverSetup() {
 
     app.listen(port, async () => {
         console.log(`this app is running at http://localhost:${port}`);
-        await connectRemote();
+        await connect(dbUri);
 
         app.get("/healthcheck", (req: Request, res: Response) => res.sendStatus(200));
 
