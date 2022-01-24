@@ -6,10 +6,32 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
 
 
 
-export const PersonalizationPage= ({colorScheme, fontSize, handleColorSchemeChange, handleFontSizeChange, children}) => {
+const lightBackgroundList = [
+    { img: meme1, id:'1', title:'bild1', colorScheme: 'light' },
+    { img: meme1, id:'2', title:'bild2', colorScheme: 'light' },
+    { img: meme1, id:'3', title:'bild3', colorScheme: 'light' },
+    { img: meme1, id:'4', title:'bild4', colorScheme: 'light' },
+    { img: meme1, id:'5', title:'bild5', colorScheme: 'light' },
+    { img: meme1, id:'6', title:'bild6', colorScheme: 'light' },
+];
+
+const darkBackgroundList = [
+    { img: meme2, id:'1', title:'bild1'},
+    { img: meme2, id:'2', title:'bild2'},
+    { img: meme2, id:'3', title:'bild3'},
+    { img: meme2, id:'4', title:'bild4'},
+    { img: meme2, id:'5', title:'bild5'},
+    { img: meme2, id:'6', title:'bild6'},
+];
+
+export const PersonalizationPage= ({colorScheme, fontSize, handleColorSchemeChange, handleFontSizeChange,
+                                       selectedLightImage, selectedDarkImage, handleLightImageSelect,
+                                       handleDarkImageSelect, children}) => {
 
     return (
         <div>
@@ -34,30 +56,127 @@ export const PersonalizationPage= ({colorScheme, fontSize, handleColorSchemeChan
                     </FormControl>
                 </Grid>
                 <Grid item xs={12}>
-                    {renderBackground(colorScheme)}
+                    {renderBackground({
+                        colorScheme:colorScheme,
+                        selectedLightImage:selectedLightImage,
+                        selectedDarkImage:selectedDarkImage,
+                        handleLightImageSelect:handleLightImageSelect,
+                        handleDarkImageSelect:handleDarkImageSelect,
+                    })}
                 </Grid>
             </Grid>
         </div>
     );
 };
 
-function renderBackground(colorScheme) {
+function renderBackground({colorScheme, selectedLightImage, selectedDarkImage, handleLightImageSelect, handleDarkImageSelect}) {
+
     if (colorScheme === "light") {
         return (
             <div>
                 <h1>Available backgrounds for light mode:</h1>
-                <img src={meme1}/>
+                <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+                    {lightBackgroundList.map((item) => (
+                        <div>
+                            <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center">
+                                <Grid item>
+                                    <ImageListItem key={item.img}>
+                                        {/**/}
+                                        <img
+                                            src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                                            srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                                            loading="lazy"
+                                            alt={item.title}
+                                        />
+                                    </ImageListItem>
+                                </Grid>
+                                <Grid item>
+                                    <Radio
+                                        checked={selectedLightImage === item.id}
+                                        onChange={handleLightImageSelect}
+                                        value={item.id}
+                                    />
+                                </Grid>
+                            </Grid>
+                        </div>
+                    ))}
+                </ImageList>
             </div>
         );
-
     } else if (colorScheme === "dark") {
         return (
             <div>
                 <h1>Available backgrounds for dark mode:</h1>
-                <img src={meme2}/>
+                <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+                    {darkBackgroundList.map((item) => (
+                        <div>
+                            <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center">
+                                <Grid item>
+                                    <img
+                                        src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                                        srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                                        loading="lazy"
+                                        alt={item.title}
+                                    />
+                                </Grid>
+                                <Grid item>
+                                    <Radio
+                                        checked={selectedDarkImage === item.id}
+                                        onChange={handleDarkImageSelect}
+                                        value={item.id}
+                                    />
+                                </Grid>
+                            </Grid>
+                        </div>
+                    ))}
+                </ImageList>
             </div>
         );
     } else {
         return
     }
 }
+
+function renderImage({colorScheme, item}) {
+    if (colorScheme === item.colorScheme) {
+        return (
+            <img
+                src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                loading="lazy"
+                alt={item.title}
+            />
+        );
+    }
+
+};
+
+/*
+* else if (colorScheme === "dark") {
+        return (
+            <div>
+                <h1>Available backgrounds for dark mode:</h1>
+                <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+                    {darkBackgroundList.map((item) => (
+                        <div>
+                            <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center">
+                                <Grid item>
+                                    <ImageListItem key={item.img}>
+                                        {renderImage({colorScheme: colorScheme, item: item})}
+                                    </ImageListItem>
+                                </Grid>
+                                <Grid item>
+                                    <Radio
+                                        checked={selectedDarkImage === item.id}
+                                        onChange={handleDarkImageSelect}
+                                        value={item.id}
+                                    />
+                                </Grid>
+                            </Grid>
+                        </div>
+                    ))}
+                </ImageList>
+            </div>
+        );
+    }
+* */
