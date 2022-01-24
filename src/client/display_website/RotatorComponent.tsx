@@ -24,14 +24,16 @@ export class RotatorComponent extends React.Component<any, any> {
     }
 
     render() {
-        return <div>
+        return <div className="w-fit" style={{
+            height: "44vh"
+        }}>
             {React.Children.map(this.props.children, (child, i) =>
                 <div>
                     {((this.state.index == i) ? child : "")}
                 </div>
             )}
             {(this.state.elements > 1 && this.state.elements < RotatorComponentConfig.MAXIMUM_DOTS) ?
-                <div className="flex space-x-1 justify-center"> {React.Children.map(this.props.children, (child, k) =>
+                <div className="flex justify-center"> {React.Children.map(this.props.children, (child, k) =>
                     <a href="#"
                        className={"w-4 h-4 rounded-full rounded-md " + ((this.state.index == k) ? "bg-gray-900" : "bg-gray-500")}>
                     </a>

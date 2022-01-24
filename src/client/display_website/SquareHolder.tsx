@@ -43,10 +43,7 @@ export class SquareHolder extends React.Component<any, any> {
     }
 
     render() {
-        return <div className="w-fit" style={{
-            height: "44vh"
-        }}>
-            <div className={"shadow-2xl rounded-2xl bg-clip-padding backdrop-filter backdrop-blur-md box-border"
+        return <div className={"shadow-2xl rounded-2xl bg-clip-padding backdrop-filter backdrop-blur-md box-border"
                 + (this.props.fill ? (this.props.darkTheme ? " bg-zinc-900" : " bg-neutral-100") : "")}>
                 <div
                     className="sm:px-2 lg:px-3 xl:px-4 4xl:px-5 8xl:px-6 font-light leading-normal text-green-600 sm:text-base md:text-xl lg:text-2xl xl:text-4xl 2xl:text-5xl 8xl:text-6xl">
@@ -67,7 +64,6 @@ export class SquareHolder extends React.Component<any, any> {
                         : this.props.children  // only show children if they didn't produce an error
                     }
                 </div>
-            </div>
-        </div>;
+            </div>;
     }
 }
