@@ -3,6 +3,9 @@ import * as SquareHolderConfig from "./SquareHolder.json";
 export class SquareHolder extends React.Component<any, any> {
 
     pageScroll = function() {
+        if(this.state.uniqueID === null || document.getElementById(this.state.uniqueID) === null) {
+            return;
+        }
         document.getElementById(this.state.uniqueID).scrollBy(0,this.state.scroll); // horizontal and vertical scroll increments
         if((document.getElementById(this.state.uniqueID).scrollTop +
             document.getElementById(this.state.uniqueID).clientHeight) >=
