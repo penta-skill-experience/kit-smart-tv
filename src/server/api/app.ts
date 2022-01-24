@@ -26,82 +26,87 @@ import {getConfigHandler, updateConfigHandler} from "./controller/config.control
 import {updateValuesSchema} from "./schema/values.schema";
 import {getValuesHandler, updateValuesHandler} from "./controller/values.controller";
 
-const port = config.port;
+serverSetup();
 
-const app = express();
+export function serverSetup() {
+    const port = config.port;
+
+    const app = express();
 
 
-app.use(express.json());
+    app.use(express.json());
 
 //app.use(cors());
 
 
-app.use(deserializeAdmin);
+    app.use(deserializeAdmin);
 
 // host static files of display_website and config_website
-app.use("/",
-    express.static(path.resolve(__dirname, "..", "display_website")));
-app.use("/admin-interface",
-    express.static(path.resolve(__dirname, "..", "config_website")));
+    app.use("/",
+        express.static(path.resolve(__dirname, "..", "display_website")));
+    app.use("/admin-interface",
+        express.static(path.resolve(__dirname, "..", "config_website")));
 
-app.listen(port, async () => {
-    console.log(`this app is running at http://localhost:${port}`);
-    await connectRemote();
+    app.listen(port, async () => {
+        console.log(`this app is running at http://localhost:${port}`);
+        await connectRemote();
 
-    app.get("/healthcheck", (req: Request, res: Response) => res.sendStatus(200));
+        app.get("/healthcheck", (req: Request, res: Response) => res.sendStatus(200));
 
-/**
- *   Admin Routines
- **/
-    app.post("/admin/create-admin", ensureRequestStructure(createAdminSchema), createAdminHandler);
+        /**
+         *   Admin Routines
+         **/
+        app.post("/admin/create-admin", ensureRequestStructure(createAdminSchema), createAdminHandler);
 
-    app.put("/admin/update-password", requireAdmin, ensureRequestStructure(updatePasswordSchema), updatePasswordHandler);
+        app.put("/admin/update-password", requireAdmin, ensureRequestStructure(updatePasswordSchema), updatePasswordHandler);
 
-/**
- *   Session Routines
- **/
-    app.post(
-        "/api/sessions",
-        ensureRequestStructure(createSessionSchema),
-        createAdminSessionHandler
-    );
+        /**
+         *   Session Routines
+         **/
+        app.post(
+            "/api/sessions",
+            ensureRequestStructure(createSessionSchema),
+            createAdminSessionHandler
+        );
 
-    app.get("/api/sessions", requireAdmin, getSessionHandler);
+        app.get("/api/sessions", requireAdmin, getSessionHandler);
 
-    app.delete("/api/sessions", requireAdmin, deleteSessionHandler);
+        app.delete("/api/sessions", requireAdmin, deleteSessionHandler);
 
-/**
-*   Widget Routines
-**/
-    app.get("/widgets", getWidgetDataHandler);
+        /**
+         *   Widget Routines
+         **/
+        app.get("/widgets", getWidgetDataHandler);
 
-    app.put("/widgets", requireAdmin, ensureRequestStructure(updateWidgetSchema), updateWidgetDataHandler);
+        app.put("/widgets", requireAdmin, ensureRequestStructure(updateWidgetSchema), updateWidgetDataHandler);
 
-/**
- *   Announcement Routines
- **/
+        /**
+         *   Announcement Routines
+         **/
 
-    //hier braucht man noch mmiddle ware die nur locale calls zulässt.
-    app.put("/announcements", ensureRequestStructure(updateAnnouncementsSchema), updateAnnouncementsHandler)
-    app.get("/announcements", getAnnouncementsHandler)
+        //hier braucht man noch mmiddle ware die nur locale calls zulässt.
+        app.put("/announcements", ensureRequestStructure(updateAnnouncementsSchema), updateAnnouncementsHandler)
+        app.get("/announcements", getAnnouncementsHandler)
 
-/**
- *   verified User Routines
- **/
-    app.put("/users", requireAdmin, ensureRequestStructure(updateUsersSchema), updateUsersHandler)
-    app.get("/users", getUsersHandler)
+        /**
+         *   verified User Routines
+         **/
+        app.put("/users", requireAdmin, ensureRequestStructure(updateUsersSchema), updateUsersHandler)
+        app.get("/users", getUsersHandler)
 
-/**
- *   Config Routines
- **/
-    app.put("/config", requireAdmin, ensureRequestStructure(updateConfigSchema), updateConfigHandler)
-    app.get("/config", getConfigHandler)
+        /**
+         *   Config Routines
+         **/
+        app.put("/config", requireAdmin, ensureRequestStructure(updateConfigSchema), updateConfigHandler)
+        app.get("/config", getConfigHandler)
 
 
-/**
- *   Values Routines
- **/
-    app.put("/values", requireAdmin, ensureRequestStructure(updateValuesSchema), updateValuesHandler)
-    app.get("/values", getValuesHandler)
+        /**
+         *   Values Routines
+         **/
+        app.put("/values", requireAdmin, ensureRequestStructure(updateValuesSchema), updateValuesHandler)
+        app.get("/values", getValuesHandler)
 
-});
+    });
+}
+
