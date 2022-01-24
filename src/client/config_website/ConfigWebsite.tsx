@@ -221,9 +221,14 @@ export function ConfigWebsite() {
     };
 
     const handleAddMail = () => {
+        const alreadyExists = mailList.some(item => verUser.mail === item.mail);
         if (!emailValidator.validate(verUser.mail)) {
             alert('E-Mail does not exist')
             return;
+        }
+        if (alreadyExists === true) {
+            alert('This E-Mail already exists')
+            return;;
         }
         if (verUser.name !== '' && verUser.mail !== '') {
             const newUser = {
