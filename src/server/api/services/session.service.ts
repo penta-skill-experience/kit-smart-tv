@@ -18,7 +18,8 @@ export async function updateSession(
     query: FilterQuery<SessionDocument>,
     update: UpdateQuery<SessionDocument>
 ) {
-    return SessionModel.updateOne(query, update);
+    await SessionModel.updateOne(query, update);
+    return SessionModel.findOne(query);
 }
 
 export async function deleteSession(
