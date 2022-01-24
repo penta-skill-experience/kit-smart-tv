@@ -51,14 +51,14 @@ app.listen(port, async () => {
     app.get("/healthcheck", (req: Request, res: Response) => res.sendStatus(200));
 
 /**
- *   Admin Routines
+ *   Admin Routes
  **/
     app.post("/admin/create-admin", ensureRequestStructure(createAdminSchema), createAdminHandler);
 
     app.put("/admin/update-password", requireAdmin, ensureRequestStructure(updatePasswordSchema), updatePasswordHandler);
 
 /**
- *   Session Routines
+ *   Session Routes
  **/
     app.post(
         "/api/sessions",
@@ -71,14 +71,14 @@ app.listen(port, async () => {
     app.delete("/api/sessions", requireAdmin, deleteSessionHandler);
 
 /**
-*   Widget Routines
+*   Widget Routes
 **/
     app.get("/widgets", getWidgetDataHandler);
 
     app.put("/widgets", requireAdmin, ensureRequestStructure(updateWidgetSchema), updateWidgetDataHandler);
 
 /**
- *   Announcement Routines
+ *   Announcement Routes
  **/
 
     //hier braucht man noch mmiddle ware die nur locale calls zulässt.
@@ -86,20 +86,20 @@ app.listen(port, async () => {
     app.get("/announcements", getAnnouncementsHandler)
 
 /**
- *   verified User Routines
+ *   verified User Routes
  **/
     app.put("/users", requireAdmin, ensureRequestStructure(updateUsersSchema), updateUsersHandler)
     app.get("/users", getUsersHandler)
 
 /**
- *   Config Routines
+ *   Config Routes
  **/
     app.put("/config", requireAdmin, ensureRequestStructure(updateConfigSchema), updateConfigHandler)
     app.get("/config", getConfigHandler)
 
 
 /**
- *   Values Routines
+ *   Values Routes
  **/
     app.put("/values", requireAdmin, ensureRequestStructure(updateValuesSchema), updateValuesHandler)
     app.get("/values", getValuesHandler)

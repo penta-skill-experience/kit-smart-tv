@@ -3,35 +3,18 @@ import {WidgetData} from "../../client/widget/WidgetData";
 export class WidgetPersistence {
 
     setWidgetDataList(list: WidgetData[]) {
+        console.log(list);
         //todo
     }
 
-    getWidgetDataList(): Promise<WidgetData[]> {
+    async getWidgetDataList(): Promise<WidgetData[]> {
         //todo: this is just a mock
-        return new Promise<WidgetData[]>(resolve => {
 
-                // insert data for widgets that you want to test here:
-                const data = [
-                    {
-                        widgetId: "tram-schedule",
-                        location: 1,
-                        fill: true,
-                        rawConfig: {stop: "Durlacher Tor"},
-                    },
-                    {
-                        widgetId: "rss-feed",
-                        location: 2,
-                        fill: false,
-                        rawConfig: {url: "www.example.com"},
-                    },
-                    {
-                        widgetId: "cafeteria-menu",
-                        location: 5,
-                        fill: true,
-                        rawConfig: {},
-                    },
-                ];
-                resolve(data);
+        const response = await fetch('http://localhost:80/widgets');
+        const myJson = await response.json();
+
+        return new Promise<WidgetData[]>(resolve => {
+                resolve(myJson);
             }
         );
     }
