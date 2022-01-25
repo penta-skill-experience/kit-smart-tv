@@ -28,17 +28,17 @@ export abstract class AnnouncementAuthorType {
             return true;
         }
 
-        isThisAuthorType(author: string): Boolean {
+        isThisAuthorType(author: string): Promise<Boolean> {
             let returnValue = false;
             AnnouncementConfig.ADMINS.forEach(admin => {
                 if (admin.EMAIL === author) {
                     returnValue = true;
                 }
             })
-            return returnValue;
+            return new Promise<Boolean>(resolve => resolve(returnValue));
         }
 
-};
+    };
 
     /**
      * An instance of an implementation of {@code AnnouncementAuthorType}.
@@ -48,24 +48,26 @@ export abstract class AnnouncementAuthorType {
     static readonly VERIFIED = new class extends AnnouncementAuthorType {
 
         isAllowedToAddAnnouncement(): Boolean {
-           return true;
+            return true;
         }
+
         isAllowedToEditAnnouncementsFromOtherAuthors(): Boolean {
             return false;
         }
 
-        isThisAuthorType(author: string): Boolean {
-            let returnValue = false;
-            new AnnouncementPersistence().getVerifiedUsers()
-                .filter(verifiedUser => {
-                    return !AnnouncementAuthorType.ADMIN.isThisAuthorType(verifiedUser.email) // removing admins from list of verifies users to avoid overwriting admin type
-                })
-                .forEach(verifiedUser => {
-                if (verifiedUser.email === author) {
-                    returnValue = true;
-                }
+        isThisAuthorType(author: string): Promise<Boolean> {
+            return new Promise<Boolean>(resolve => {
+                let returnValue = false;
+                new AnnouncementPersistence().getVerifiedUsers().then(
+                    data => data.filter(verifiedUser => !AnnouncementAuthorType.ADMIN.isThisAuthorType(verifiedUser.email))  // removing admins from list of verifies users to avoid overwriting admin type
+                        .forEach(verifiedUser => {
+                            if (verifiedUser.email === author) {
+                                returnValue = true;
+                            }
+                        })
+                );
+                resolve(returnValue);
             });
-            return returnValue;
         }
     }
 
@@ -84,9 +86,10 @@ export abstract class AnnouncementAuthorType {
             return false;
         }
 
-        isThisAuthorType(author: string): Boolean {
-            return !AnnouncementAuthorType.VERIFIED.isThisAuthorType(author) &&
+        isThisAuthorType(author: string): Promise<Boolean> {
+            const returnValue = !AnnouncementAuthorType.VERIFIED.isThisAuthorType(author) &&
                 !AnnouncementAuthorType.ADMIN.isThisAuthorType(author);
+            return new Promise(resolve => resolve(returnValue));
         }
     }
 
@@ -97,16 +100,16 @@ export abstract class AnnouncementAuthorType {
      * returns true, if the given author is of this author type.
      * @param author the given author
      */
-    abstract isThisAuthorType(author : string) : Boolean;
+    abstract isThisAuthorType(author: string): Promise<Boolean>;
 
     /**
      * returns true, if the author type this is called for is allowed to add announcements, otherwise false.
      */
-    abstract isAllowedToAddAnnouncement() : Boolean;
+    abstract isAllowedToAddAnnouncement(): Boolean;
 
     /**
      * returns true, if the author type this is called for is allowed to edit announcements from
      * other authors, otherwise false.
      */
-    abstract isAllowedToEditAnnouncementsFromOtherAuthors() : Boolean;
+    abstract isAllowedToEditAnnouncementsFromOtherAuthors(): Boolean;
 }
