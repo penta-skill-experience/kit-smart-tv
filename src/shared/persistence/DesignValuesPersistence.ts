@@ -19,11 +19,11 @@ export class DesignValuesPersistence {
                 "dark": new ColorScheme(
                     "dark",
                     "Dark",
-                    "text-green-600",
+                    "limeGreen",
                     "white",
                     "",
                     "",
-                    "bg-zinc-900",
+                    "rgba(48, 48, 48, .6)",
                     [new Background("image", "https://images.wallpaperscraft.com/image/single/city_skyscrapers_clouds_rain_road_cars_lights_58563_3840x2160.jpg")]
                 ),
                 "light": new ColorScheme(

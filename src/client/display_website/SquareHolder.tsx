@@ -1,6 +1,14 @@
 import * as React from "react";
 import * as SquareHolderConfig from "./SquareHolder.json";
-export class SquareHolder extends React.Component<any, any> {
+import "./SquareHolder.css";
+
+interface SquareHolderProps {
+    title: string;
+    titleColor: string;
+    accentColor: string;
+}
+
+export class SquareHolder extends React.Component<SquareHolderProps, any> {
 
     pageScroll = function() {
         if(this.state.uniqueID === null || document.getElementById(this.state.uniqueID) === null) {
@@ -42,9 +50,13 @@ export class SquareHolder extends React.Component<any, any> {
     }
 
     render() {
-        return <div className={"shadow-2xl rounded-2xl box-border bg-clip-padding backdrop-filter backdrop-blur-md " + this.props.accentColor}>
-                <div
-                    className={"sm:px-2 lg:px-3 xl:px-4 4xl:px-5 8xl:px-6 font-light leading-normal sm:text-base md:text-xl lg:text-2xl xl:text-4xl 2xl:text-5xl 8xl:text-6xl " + this.props.titleColor}>
+        return <div className={"shadow-2xl rounded-2xl box-border"} id="squareHeld" style={{
+            backgroundColor: this.props.accentColor
+        }}>
+            <div
+                    className={"sm:px-2 lg:px-3 xl:px-4 4xl:px-5 8xl:px-6 font-light leading-normal sm:text-base md:text-xl lg:text-2xl xl:text-4xl 2xl:text-5xl 8xl:text-6xl"} style={{
+                    color: this.props.titleColor
+                 }}>
                     {this.props.title}
                 </div>
                 <div className={"sm:pl-5 sm:pt-1 sm:pb-2 sm:pr-2 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12 overflow-x-scroll scrollbar-hide scroll-smooth"}

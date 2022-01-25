@@ -9,7 +9,6 @@ import {RotatorComponent} from "./RotatorComponent";
 import {DesignValuesPersistence} from "../../shared/persistence/DesignValuesPersistence";
 import {DesignConfigPersistence} from "../../shared/persistence/DesignConfigPersistence";
 
-
 interface RootComponentState {
     widgetDataByLocation: WidgetData[][];
     themeID;
@@ -22,7 +21,6 @@ interface RootComponentState {
 }
 
 export class RootComponent extends React.Component<any, RootComponentState> {
-
     private designValuesPersistence = new DesignValuesPersistence();
     private designConfigPersistence = new DesignConfigPersistence();
     private readonly widgetLoader = new WidgetLoader();
@@ -41,21 +39,22 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             backgroundImage: "",
         };
     }
+
     loadTheme() {
         const theme = this.designConfigPersistence.getSelectedColorSchemeId();
         this.designValuesPersistence.getColorScheme(theme).then(resp => {
-            console.log(resp);
             this.setState({
                 themeID: resp.id,
                 titleFontColor: resp.titleFontColor,
                 bodyFontColor: resp.bodyFontColor,
                 specialBoldFontColor: resp.specialBoldFontColor,
-                specialSubtleFontColor: resp.specialSubtleFontColor, //wrong spelling
+                specialSubtleFontColor: resp.specialSubtleFontColor,
                 accentBarColor: resp.accentBarColor,
                 backgroundImage: this.designConfigPersistence.getSelectedBackground(),
             });
         });
     }
+
     componentDidMount() {
         // Query a list of all widget data.
         // setState() is called once they are received and will trigger re-rendering.
@@ -69,14 +68,15 @@ export class RootComponent extends React.Component<any, RootComponentState> {
     private renderLocation(location: number) {
         const widgetDataList = this.state.widgetDataByLocation[location];
         if (widgetDataList.length === 0) {
-            return <SquareHolder/>;
+            return <SquareHolder title={""} accentColor={this.state.accentBarColor}
+                                 titleColor={this.state.titleFontColor}/>;
         } else {
             return <RotatorComponent>
                 {
                     widgetDataList.map((d, index) =>
-                       <div key={index}>
-                           {this.renderWidget(d)}
-                       </div>
+                        <div key={index}>
+                            {this.renderWidget(d)}
+                        </div>
                     )
                 }
             </RotatorComponent>
@@ -87,12 +87,14 @@ export class RootComponent extends React.Component<any, RootComponentState> {
         const widget = this.widgetLoader.getWidget(widgetData.widgetId);
         try {
             const widgetComponent = widget.createDisplayComponent(widgetData.rawConfig);
-            return <SquareHolder title={widget.getTitle()} accentColor={this.state.accentBarColor} titleColor={this.state.titleFontColor}>
+            return <SquareHolder title={widget.getTitle()} accentColor={this.state.accentBarColor}
+                                 titleColor={this.state.titleFontColor}>
                 {widgetComponent}
             </SquareHolder>;
         } catch (e) {
             // todo: make design for error message nicer
-            return <SquareHolder title={widget.getTitle()}>
+            return <SquareHolder title={widget.getTitle()} accentColor={this.state.accentBarColor}
+                                 titleColor={this.state.titleFontColor}>
                 <p>Error while creating widget: {e.message}</p>
             </SquareHolder>;
         }
@@ -106,7 +108,9 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             height: "100vh",
             overflow: "hidden"
         }}>
-            <div className={"flex" +  ' text-' + this.state.bodyFontColor + ''}>
+            <div className={"flex "} style={{
+                color: this.state.bodyFontColor
+            }}>
                 <div className="z-30 absolute left-10 absolute bottom-7">
                     <img className="sm:w-24 lg:w-40 2xl:w-60 4xl:w-80"
                          src="https://www.artwork.de/wp-content/uploads/2015/08/logo_TF_NEU_4c_ai.png" alt="IHKLogo"/>
@@ -130,7 +134,6 @@ export class RootComponent extends React.Component<any, RootComponentState> {
                     {this.renderLocation(3)}
                     {this.renderLocation(4)}
                     {this.renderLocation(5)}
-
                 </div>
             </div>
         </div>;
