@@ -35,10 +35,14 @@ const getVerifiedUsersMock = jest.spyOn(AnnouncementPersistence.prototype, "getV
 const setAnnouncementsMock = jest.spyOn(AnnouncementPersistence.prototype, "setAnnouncements");
 
 getAnnouncementsMock.mockImplementation(() => {
-    return announcements;
+    return new Promise<Announcement[]>(resolve => {
+        resolve(announcements);
+    });
 });
 getVerifiedUsersMock.mockImplementation(() => {
-    return verifiedUsers;
+    return new Promise<VerifiedUser[]>(resolve => {
+        resolve(verifiedUsers);
+    })
 });
 setAnnouncementsMock.mockImplementation(announcementsToSet => {
     setAnnouncements = announcementsToSet;
@@ -82,9 +86,12 @@ describe("SetAnnouncementCommand.ts handles verified users correctly", () => {
         const bobUpdatesAliceAnnouncement = new Announcement(aliceAnnouncement.title, bob.email,
             "This announcement from alice was updated by bob.");
 
-        expect(() => {
-            new SetAnnouncementCommand(bobUpdatesAliceAnnouncement).executeCommand();
-        }).toThrow(AnnouncementCommandError);
+        new SetAnnouncementCommand(bobUpdatesAliceAnnouncement).executeCommand().catch(reason => {
+            expect(reason).toBeInstanceOf(AnnouncementCommandError);
+        })
+        //expect(() => {
+        //    new SetAnnouncementCommand(bobUpdatesAliceAnnouncement).executeCommand();
+        //}).toThrow(AnnouncementCommandError);
         expect(setAnnouncements.length).toEqual(0); // not changed from default value
     });
 
@@ -102,9 +109,12 @@ describe("SetAnnouncementCommand.ts handles unverified users correctly", () => {
         const newAnnouncement = new Announcement("new Announcement", unverifiedUserEmail,
             "This is a new announcement");
 
-        expect(() => {
-            new SetAnnouncementCommand(newAnnouncement).executeCommand();
-        }).toThrow(AnnouncementCommandError);
+        new SetAnnouncementCommand(newAnnouncement).executeCommand().catch(reason => {
+            expect(reason).toBeInstanceOf(AnnouncementCommandError);
+        });
+        //expect(() => {
+        //    new SetAnnouncementCommand(newAnnouncement).executeCommand();
+        //}).toThrow(AnnouncementCommandError);
         expect(setAnnouncements.length).toEqual(0);
     });
 
