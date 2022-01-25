@@ -23,21 +23,30 @@ describe("testing AnnouncementAuthorTypeIdentifier", () => {
     // mocking getVerifiedUsers from AnnouncementPersistence
     const mockedGetVerifiedUsers = jest.spyOn(AnnouncementPersistence.prototype, "getVerifiedUsers");
     mockedGetVerifiedUsers.mockImplementation(() => {
-        return [verifiedUser];
+        return new Promise<VerifiedUser[]>(resolve => {
+            resolve([verifiedUser]);
+        });
     });
 
     test("AnnouncementAuthorTypeIdentifier identifies ADMIN correctly", () => {
-        expect(new AnnouncementAuthorTypeIdentifier().getAuthorType(AnnouncementConfig.ADMINS[0].EMAIL))
-            .toBe(AnnouncementAuthorType.ADMIN);
+        new AnnouncementAuthorTypeIdentifier().getAuthorType(AnnouncementConfig.ADMINS[0].EMAIL).then(result => {
+            expect(result).toBe(AnnouncementAuthorType.ADMIN);
+        });
     });
 
     test("AnnouncementAuthorTypeIdentifier identifies VERIFIED correctly", () => {
-        expect(new AnnouncementAuthorTypeIdentifier().getAuthorType(verifiedUser.email))
-            .toBe(AnnouncementAuthorType.VERIFIED);
+        new AnnouncementAuthorTypeIdentifier().getAuthorType(verifiedUser.email).then(result => {
+            expect(result).toBe(AnnouncementAuthorType.VERIFIED);
+        });
     });
 
     test("AnnouncementAuthorTypeIdentifier identifies UNVERIFIED correctly", () => {
-        expect(new AnnouncementAuthorTypeIdentifier().getAuthorType(unverifiedUserEmail))
-            .toBe(AnnouncementAuthorType.UNVERIFIED);
+        new AnnouncementAuthorTypeIdentifier().getAuthorType(unverifiedUserEmail).then(result => {
+            expect(result).toBe(AnnouncementAuthorType.UNVERIFIED);
+        });
     });
+
+    afterAll(() => {
+        jest.restoreAllMocks();
+    })
 })
