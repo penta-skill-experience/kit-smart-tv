@@ -6,14 +6,16 @@ import {SetAnnouncementCommand} from "../../../../server/announcement_management
 import {RemoveAnnouncementCommand} from "../../../../server/announcement_management/RemoveAnnouncementCommand";
 import * as MailInteractionConfig from "../../../../server/email_announcement_interaction/MailInteractionConfig.json"
 
-test("testing EmailAnnouncementCommandIdentifier identifies SetAnnouncementCommand correctly", () => {
-    const announcement = new Announcement("title", "bob@example.com", "This is a text for a SetAnnouncementCommand");
+describe("testing EmailAnnouncementCommandIdentifier identifies the correct command", () => {
+    test("testing EmailAnnouncementCommandIdentifier identifies SetAnnouncementCommand correctly", () => {
+        const announcement = new Announcement("title", "bob@example.com", "This is a text for a SetAnnouncementCommand");
 
-    expect(new EmailAnnouncementCommandIdentifier(announcement).identifyCommand()).toBeInstanceOf(SetAnnouncementCommand);
-});
+        expect(new EmailAnnouncementCommandIdentifier(announcement).identifyCommand()).toBeInstanceOf(SetAnnouncementCommand);
+    });
 
-test("testing EmailAnnouncementCommandIdentifier identifies RemoveAnnouncementCommand correctly", () => {
-    const announcement = new Announcement("title", "bob@example.com", MailInteractionConfig.REMOVE_ANNOUNCEMENT_TEXT);
+    test("testing EmailAnnouncementCommandIdentifier identifies RemoveAnnouncementCommand correctly", () => {
+        const announcement = new Announcement("title", "bob@example.com", MailInteractionConfig.REMOVE_ANNOUNCEMENT_TEXT);
 
-    expect(new EmailAnnouncementCommandIdentifier(announcement).identifyCommand()).toBeInstanceOf(RemoveAnnouncementCommand);
+        expect(new EmailAnnouncementCommandIdentifier(announcement).identifyCommand()).toBeInstanceOf(RemoveAnnouncementCommand);
+    });
 });
