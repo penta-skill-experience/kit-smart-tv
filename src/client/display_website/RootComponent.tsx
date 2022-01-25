@@ -18,6 +18,7 @@ interface RootComponentState {
     specialSubtleFontColor;
     accentBarColor;
     backgroundImage;
+    relativeSize;
 }
 
 export class RootComponent extends React.Component<any, RootComponentState> {
@@ -37,11 +38,24 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             specialSubtleFontColor: "",
             accentBarColor: "",
             backgroundImage: "",
+            relativeSize: 0
         };
+    }
+
+
+    switchFontSizeDocument(relativeSize: number) {
+        document.documentElement.style.fontSize =  relativeSize + "rem";
     }
 
     loadTheme() {
         const theme = this.designConfigPersistence.getSelectedColorSchemeId();
+        const fontSize = this.designConfigPersistence.getSelectedFontSizeId();
+        this.designValuesPersistence.getFontSize(fontSize).then(resp => {
+            this.setState({
+                relativeSize: resp.relativeSize
+            });
+            this.switchFontSizeDocument(resp.relativeSize);
+        });
         this.designValuesPersistence.getColorScheme(theme).then(resp => {
             this.setState({
                 themeID: resp.id,
@@ -106,7 +120,8 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             backgroundImage: 'url(' + this.state.backgroundImage + ')',
             width: "100vw",
             height: "100vh",
-            overflow: "hidden"
+            overflow: "hidden",
+            fontSize: this.state.relativeSize + "rem",
         }}>
             <div className={"flex "} style={{
                 color: this.state.bodyFontColor
