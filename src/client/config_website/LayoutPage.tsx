@@ -175,7 +175,9 @@ export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget
                             onChange={event => handleWidgetSelection(event)}
                         >
                             {widgetList.map(item => (
-                                <MenuItem value={item}>{item}</MenuItem>
+                                <MenuItem value={widgetLoader.getWidget(item).getTitle()}>
+                                    {widgetLoader.getWidget(item).getTitle()}
+                                </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
