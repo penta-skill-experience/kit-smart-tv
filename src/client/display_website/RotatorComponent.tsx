@@ -20,7 +20,7 @@ export class RotatorComponent extends React.Component<any, any> {
 
     render() {
         return <div className="w-full h-full">
-            <Carousel showIndicators={React.Children.count(this.props.children) > 1} showStatus={false} showArrows={false} autoPlay showThumbs={false} transitionTime={1000} infiniteLoop={true} dynamicHeight={true}>
+            <Carousel showIndicators={React.Children.count(this.props.children) > 1} showStatus={false} showArrows={false} autoPlay showThumbs={false} transitionTime={RotatorComponentConfig.SWITCH_SPEED} interval={RotatorComponentConfig.SWITCH_RATE} infiniteLoop={true} dynamicHeight={true}>
                 {
                     React.Children.map(this.props.children, child =>
                         <div>
