@@ -12,6 +12,7 @@ import {LogInPage} from "./LogInPage";
 import {Button, Grid} from "@mui/material";
 import {AnnouncementsPage} from "./AnnouncementsPage";
 import * as emailValidator from "email-validator";
+import {DesignConfigPersistence} from "../../shared/persistence/DesignConfigPersistence";
 
 
 interface TabPanelProps {
@@ -36,6 +37,8 @@ function TabPanel(props: TabPanelProps) {
         </div>
     );
 }
+
+const designConfigPersistence = new DesignConfigPersistence();
 
 export function ConfigWebsite() {
     //state variables and methods for login page
@@ -74,6 +77,8 @@ export function ConfigWebsite() {
     //state variables and methods for personalization page
     const [colorScheme,setColorScheme] = useState<string | null>(null);
     const [fontSize, setFontSize] = useState<string | null>(null);
+    const [selectedLightImage, setSelectedLightImage] = React.useState('');
+    const [selectedDarkImage, setSelectedDarkImage] = React.useState('');
 
     const handleColorSchemeChange = (
         event: React.MouseEvent<HTMLElement>,
@@ -89,16 +94,23 @@ export function ConfigWebsite() {
         setFontSize(newFontSize);
     };
 
-    const [selectedLightImage, setSelectedLightImage] = React.useState('');
-
     const handleLightImageSelect = (event) => {
         setSelectedLightImage(event.target.value);
     };
 
-    const [selectedDarkImage, setSelectedDarkImage] = React.useState('');
-
     const handleDarkImageSelect = (event) => {
         setSelectedDarkImage(event.target.value);
+    };
+
+    const handlePersonalizationChange = () => {
+        if (colorScheme === null || fontSize === null) {
+            alert('Color scheme and font size must be chosen')
+            return;
+        }
+        alert('Changes saved')
+        designConfigPersistence.setSelectedColorSchemeId(colorScheme);
+        designConfigPersistence.setSelectedFontSize(fontSize);
+        // designConfigPersistence.setSelectedBackground();
     };
 
     //state variables and methods for layout page
@@ -116,6 +128,7 @@ export function ConfigWebsite() {
     const incrementCounter = () => setCounter(counter + 1);
 
     const handleWidgetSelection = (event: SelectChangeEvent) => {
+        console.log(event.target.value)
         //todo
         //config is not always true
         const updatedValue = {
@@ -123,7 +136,7 @@ export function ConfigWebsite() {
             name:event.target.value,
             position:'',
             configurable:true,
-            colorSolid:false
+            colorSolid:false,
         }
         setWidget(updatedValue)
     };
@@ -196,12 +209,6 @@ export function ConfigWebsite() {
     //Connect with persistence
     const handlePasswordChange = () => {
         alert('Old Password is ' + oldPassword + ' New Password is ' + newPassword)
-    };
-
-    const handleChangeSave = () => {
-        if (colorScheme === null || fontSize === null) {
-            alert('Color scheme and font size must be chosen')
-        }
     };
 
     //state variables and methods for announcements page
@@ -305,6 +312,7 @@ export function ConfigWebsite() {
                             selectedDarkImage={selectedDarkImage}
                             handleLightImageSelect={handleLightImageSelect}
                             handleDarkImageSelect={handleDarkImageSelect}
+                            handlePersonalizationChange={handlePersonalizationChange}
                         >
                         </PersonalizationPage>
 
@@ -313,7 +321,7 @@ export function ConfigWebsite() {
                         <LayoutPage
                             list={list}
                             widget={widget}
-                            handleWidgetSelection={handleWidgetSelection}
+                            handleWidgetSelection={(event) => handleWidgetSelection(event)}
                             handleAddWidget={handleAddWidget}
                             handleDeleteWidget={handleDeleteWidget}
                             handlePosition={handlePosition}
@@ -328,7 +336,6 @@ export function ConfigWebsite() {
                             handleOldPassword={handleOldPassword}
                             handleNewPassword={handleNewPassword}
                             handlePasswordChange={handlePasswordChange}
-                            handleChangeSave={handleChangeSave}
                         >
                         </AdminPage>
                     </TabPanel>
