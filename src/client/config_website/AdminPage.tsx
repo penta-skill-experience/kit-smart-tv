@@ -11,7 +11,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 import FormControl from "@mui/material/FormControl";
 
-export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNewPassword, handlePasswordChange, handleChangeSave, children} ) => {
+export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNewPassword, handlePasswordChange, children} ) => {
     const [showOldPassword, setShowOldPassword] = React.useState(false);
     const [showNewPassword, setShowNewPassword] = React.useState(false);
 
@@ -79,11 +79,6 @@ export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNe
                             Save Password</Button>
                     </Grid>
                     <Grid item xs={12}>
-                        <Button
-                            onClick={handleChangeSave}
-                            variant="outlined"
-                        >
-                            Save Changes</Button>
                     </Grid>
                 </Grid>
             </div>
