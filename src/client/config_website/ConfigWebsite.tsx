@@ -110,6 +110,7 @@ export function ConfigWebsite() {
         alert('Changes saved')
         designConfigPersistence.setSelectedColorSchemeId(colorScheme);
         designConfigPersistence.setSelectedFontSize(fontSize);
+        //todo
         // designConfigPersistence.setSelectedBackground();
     };
 
@@ -122,7 +123,6 @@ export function ConfigWebsite() {
         name:'',
         position:'',
         configurable:false,
-        colorSolid:false
     });
 
     const incrementCounter = () => setCounter(counter + 1);
@@ -136,7 +136,6 @@ export function ConfigWebsite() {
             name:event.target.value,
             position:'',
             configurable:true,
-            colorSolid:false,
         }
         setWidget(updatedValue)
     };
@@ -150,7 +149,6 @@ export function ConfigWebsite() {
                 name:widget.name,
                 position:'',
                 configurable:true,
-                colorSolid:false
             }
             setList(list.concat(newWidget));
             incrementCounter();
@@ -170,23 +168,11 @@ export function ConfigWebsite() {
                 return newWidget;
             } else {
                 return item;
-            };
+            }
         });
 
         setList(newList);
 
-    }
-
-    const handleColorSolid = (id, isChecked) => {
-        const newList = list.map((item) =>{
-            if (item.id === id) {
-                const newWidget = {...item, colorSolid: !isChecked}
-                return newWidget;
-            } else {
-                return item;
-            };
-        });
-        setList(newList)
     }
 
     //state variables and methods for admin password page
@@ -235,7 +221,7 @@ export function ConfigWebsite() {
         }
         if (alreadyExists === true) {
             alert('This E-Mail already exists')
-            return;;
+            return;
         }
         if (verUser.name !== '' && verUser.mail !== '') {
             const newUser = {
@@ -278,7 +264,7 @@ export function ConfigWebsite() {
                         backgroundColor:'text.primary',}
                     }>
                         <Grid container spacing={2} direction="row" alignItems="center">
-                            <Grid item xs={2}></Grid>
+                            <Grid item xs={2}>''</Grid>
                             <Grid item container xs={8} alignItems="center" justifyContent="center">
                                 <Grid item container alignItems="center" justifyContent="center">
                                     <Grid item>
@@ -325,7 +311,6 @@ export function ConfigWebsite() {
                             handleAddWidget={handleAddWidget}
                             handleDeleteWidget={handleDeleteWidget}
                             handlePosition={handlePosition}
-                            handleColorSolid={handleColorSolid}
                         >
                         </LayoutPage>
                     </TabPanel>
