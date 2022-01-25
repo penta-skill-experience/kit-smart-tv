@@ -14,7 +14,7 @@ const widgetLoader = new WidgetLoader();
 const widgetList = widgetLoader.getWidgetIds();
 
 
-export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget, handleDeleteWidget, handlePosition, handleColorSolid, children}) => {
+export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget, handleDeleteWidget, handlePosition, children}) => {
 
     return(
         <div>
@@ -163,7 +163,6 @@ export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget
                                 item={item}
                                 handlePosition={handlePosition}
                                 handleDeleteWidget={handleDeleteWidget}
-                                handleColorSolid={handleColorSolid}
                             >
                             </WidgetListElement>
                         ))}

@@ -11,6 +11,8 @@ import ImageListItem from '@mui/material/ImageListItem';
 import Button from "@mui/material/Button";
 
 
+//toddo
+//get from persistence
 
 const lightBackgroundList = [
     { img: meme1, id:'1', title:'bild1', colorScheme: 'light' },
@@ -57,7 +59,7 @@ export const PersonalizationPage= ({colorScheme, fontSize, handleColorSchemeChan
                     </FormControl>
                 </Grid>
                 <Grid item xs={12}>
-                    {renderBackground({
+                    {renderBackgroundImages({
                         colorScheme:colorScheme,
                         selectedLightImage:selectedLightImage,
                         selectedDarkImage:selectedDarkImage,
@@ -77,7 +79,7 @@ export const PersonalizationPage= ({colorScheme, fontSize, handleColorSchemeChan
     );
 };
 
-function renderBackground({colorScheme, selectedLightImage, selectedDarkImage, handleLightImageSelect, handleDarkImageSelect}) {
+function renderBackgroundImages({colorScheme, selectedLightImage, selectedDarkImage, handleLightImageSelect, handleDarkImageSelect}) {
 
     if (colorScheme === "light") {
         return (
@@ -143,47 +145,3 @@ function renderBackground({colorScheme, selectedLightImage, selectedDarkImage, h
         return
     }
 }
-
-function renderImage({colorScheme, item}) {
-    if (colorScheme === item.colorScheme) {
-        return (
-            <img
-                src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                loading="lazy"
-                alt={item.title}
-            />
-        );
-    }
-
-};
-
-/*
-* else if (colorScheme === "dark") {
-        return (
-            <div>
-                <h1>Available backgrounds for dark mode:</h1>
-                <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
-                    {darkBackgroundList.map((item) => (
-                        <div>
-                            <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center">
-                                <Grid item>
-                                    <ImageListItem key={item.img}>
-                                        {renderImage({colorScheme: colorScheme, item: item})}
-                                    </ImageListItem>
-                                </Grid>
-                                <Grid item>
-                                    <Radio
-                                        checked={selectedDarkImage === item.id}
-                                        onChange={handleDarkImageSelect}
-                                        value={item.id}
-                                    />
-                                </Grid>
-                            </Grid>
-                        </div>
-                    ))}
-                </ImageList>
-            </div>
-        );
-    }
-* */
