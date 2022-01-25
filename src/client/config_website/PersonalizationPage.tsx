@@ -8,6 +8,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import Button from "@mui/material/Button";
 
 
 
@@ -31,7 +32,7 @@ const darkBackgroundList = [
 
 export const PersonalizationPage= ({colorScheme, fontSize, handleColorSchemeChange, handleFontSizeChange,
                                        selectedLightImage, selectedDarkImage, handleLightImageSelect,
-                                       handleDarkImageSelect, children}) => {
+                                       handleDarkImageSelect, handlePersonalizationChange, children}) => {
 
     return (
         <div>
@@ -64,6 +65,13 @@ export const PersonalizationPage= ({colorScheme, fontSize, handleColorSchemeChan
                         handleDarkImageSelect:handleDarkImageSelect,
                     })}
                 </Grid>
+                <Grid item xs={12}>
+                    <Button
+                        onClick={handlePersonalizationChange}
+                        variant="outlined"
+                    >
+                        Save Changes</Button>
+                </Grid>
             </Grid>
         </div>
     );
@@ -81,7 +89,6 @@ function renderBackground({colorScheme, selectedLightImage, selectedDarkImage, h
                             <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center">
                                 <Grid item>
                                     <ImageListItem key={item.img}>
-                                        {/**/}
                                         <img
                                             src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
                                             srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
