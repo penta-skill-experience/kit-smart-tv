@@ -24,8 +24,8 @@ export class RemoveAnnouncementCommand implements AnnouncementCommand {
         this.announcementToRemove = announcement;
     }
 
-    executeCommand() {
-        const currentAnnouncements = new AnnouncementPersistence().getAnnouncements();
+    async executeCommand() {
+        const currentAnnouncements = await new AnnouncementPersistence().getAnnouncements();
         const announcementTitles = getAnnouncementTitles(currentAnnouncements);
         if (!announcementTitles.includes(this.announcementToRemove.title)) {
             return;
