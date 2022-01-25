@@ -4,25 +4,22 @@ import {TokenHolderSingleton} from "./TokenHolderSingleton";
 
 export class WidgetPersistence {
 
-    setWidgetDataList(list: WidgetData[]) {
+    setWidgetDataList(list: WidgetData[]): Promise<Response> {
 
-        const myHeaders = new Headers();
-        myHeaders.append("x-refresh", TokenHolderSingleton.instance.refreshToken);
-        myHeaders.append("Authorization", `Bearer ${TokenHolderSingleton.instance.accessToken}`);
-        myHeaders.append("Content-Type", "application/json");
+        const headers = new Headers();
+        headers.append("x-refresh", TokenHolderSingleton.instance.refreshToken);
+        headers.append("Authorization", `Bearer ${TokenHolderSingleton.instance.accessToken}`);
+        headers.append("Content-Type", "application/json");
 
-        const body = {
-            widgetDataList: list,
-        };
+        const body = {widgetDataList: list};
 
         const requestOptions = {
             method: 'PUT',
-            headers: myHeaders,
+            headers: headers,
             body: JSON.stringify(body),
         };
 
-        fetch(`${config.DOMAIN}/widgets`, requestOptions)
-            .catch(error => console.log('error', error));
+        return fetch(`${config.DOMAIN}/widgets`, requestOptions);
     }
 
     getWidgetDataList(): Promise<WidgetData[]> {
