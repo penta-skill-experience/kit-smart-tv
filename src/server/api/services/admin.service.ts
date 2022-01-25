@@ -3,7 +3,8 @@ import {omit} from "lodash";
 import {AdminModel, AdminInput} from "../models/admin.model";
 
 export async function createAdmin(input: DocumentDefinition<AdminInput>) { // input: DocumentDefinition<AdminInput> //input: CreateAdminInput["body"]
-    const admin = await AdminModel.create(input);
+    await AdminModel.create(input);
+    const admin =  await AdminModel.findOne({name: "admin"});
     return omit(admin.toJSON(), "password");
 }
 
@@ -33,7 +34,7 @@ export async function updatePassword(data: PasswordChangeData) {
     if (!await validatePassword({password: data.old_password})) {
         return undefined;
     }
-
-    return AdminModel.findOneAndUpdate({name: "admin"}, {password: data.new_password});
-
+    await AdminModel.findOneAndUpdate({name: "admin"}, {password: data.new_password});
+    const admin = await AdminModel.findOne({name: "admin"});
+    return omit(admin.toJSON(), "password");
 }

@@ -43,10 +43,10 @@ export async function createAdminSessionHandler(req: Request, res: Response) {
 }
 
 export async function getSessionHandler(req: Request, res: Response) {
-    const adminId = res.locals.admin._id;
+    const sessionId = res.locals.admin.session;
 
-    const session = await findSession({ admin: adminId, valid: true });
-    await updateSession({ _id: session._id }, { valid: true });
+    const session = await findSession({ _id: sessionId, valid: true });
+    await updateSession({ _id: sessionId }, { valid: true });
     const valid_until = new Date(Date.now() + config.sessionTtlInMinutes*60*1000);
 
     return res.send({session, valid_until});

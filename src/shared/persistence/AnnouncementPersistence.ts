@@ -1,6 +1,5 @@
 import {Announcement} from "../../server/announcement_management/Announcement";
 import {VerifiedUser} from "../values/VerifiedUser";
-
 export class AnnouncementPersistence {
 
     setAnnouncements(announcements: Announcement[]) {
@@ -8,6 +7,11 @@ export class AnnouncementPersistence {
     }
 
     getAnnouncements(): Announcement[] {
+        let accessToken: string;
+        let refreshToken: string;
+
+
+
         //todo
         return [];
     }
