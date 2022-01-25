@@ -6,7 +6,7 @@ export class DesignConfigPersistence {
 
     getSelectedBackground(): string {
         //todo
-        return "test/123.jpg";
+        return "https://images.wallpaperscraft.com/image/single/city_skyscrapers_clouds_rain_road_cars_lights_58563_3840x2160.jpg";
     }
 
     getSelectedFontSizeId(): string {

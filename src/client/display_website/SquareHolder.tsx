@@ -42,15 +42,10 @@ export class SquareHolder extends React.Component<any, any> {
     }
 
     render() {
-        return <div className={"shadow-2xl rounded-2xl box-border"
-                 + ((this.props.darkTheme === undefined) ? " bg-clip-padding backdrop-filter backdrop-blur-md" : (this.props.darkTheme ? " bg-zinc-900" : " bg-neutral-100"))}>
+        return <div className={"shadow-2xl rounded-2xl box-border bg-clip-padding backdrop-filter backdrop-blur-md " + this.props.accentColor}>
                 <div
-                    className="sm:px-2 lg:px-3 xl:px-4 4xl:px-5 8xl:px-6 font-light leading-normal text-green-600 sm:text-base md:text-xl lg:text-2xl xl:text-4xl 2xl:text-5xl 8xl:text-6xl">
+                    className={"sm:px-2 lg:px-3 xl:px-4 4xl:px-5 8xl:px-6 font-light leading-normal sm:text-base md:text-xl lg:text-2xl xl:text-4xl 2xl:text-5xl 8xl:text-6xl " + this.props.titleColor}>
                     {this.props.title}
-                </div>
-                <div
-                    className={(this.props.subtitle == "" ? "sm:px-2 lg:px-3 xl:px-4 4xl:px-5 8xl:px-6 font-light leading-normal text-green-600 sm:text-sm lg:text-base xl:text-xl 2xl:text-2xl 8xl:text-3xl sm:pt-1 xl:pt-3 2xl:pt-6" : "")}>
-                    {this.props.subTitle}
                 </div>
                 <div className={"sm:pl-5 sm:pt-1 sm:pb-2 sm:pr-2 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12 overflow-x-scroll scrollbar-hide scroll-smooth"}
                      id={this.state.uniqueID} style={{

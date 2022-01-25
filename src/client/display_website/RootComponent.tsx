@@ -6,28 +6,56 @@ import {WidgetLoader} from "../widget/WidgetLoader";
 import {WidgetPersistence} from "../../shared/persistence/WidgetPersistence";
 import {WidgetData} from "../widget/WidgetData";
 import {RotatorComponent} from "./RotatorComponent";
+import {DesignValuesPersistence} from "../../shared/persistence/DesignValuesPersistence";
+import {DesignConfigPersistence} from "../../shared/persistence/DesignConfigPersistence";
+
 
 interface RootComponentState {
     widgetDataByLocation: WidgetData[][];
-    darkTheme;
+    themeID;
+    titleFontColor;
+    bodyFontColor;
+    specialBoldFontColor;
+    specialSubtleFontColor;
+    accentBarColor;
     backgroundImage;
 }
 
 export class RootComponent extends React.Component<any, RootComponentState> {
 
+    private designValuesPersistence = new DesignValuesPersistence();
+    private designConfigPersistence = new DesignConfigPersistence();
     private readonly widgetLoader = new WidgetLoader();
     private readonly widgetPersistence = new WidgetPersistence();
 
     constructor(props: any) {
         super(props);
-
         this.state = {
             widgetDataByLocation: [[], [], [], [], [], []],  // 6 locations possible
-            darkTheme: true,
-            backgroundImage: "https://images.wallpaperscraft.com/image/single/city_skyscrapers_clouds_rain_road_cars_lights_58563_3840x2160.jpg"
+            themeID: "",
+            titleFontColor: "",
+            bodyFontColor: "",
+            specialBoldFontColor: "",
+            specialSubtleFontColor: "",
+            accentBarColor: "",
+            backgroundImage: "",
         };
     }
-
+    loadTheme() {
+        const theme = this.designConfigPersistence.getSelectedColorSchemeId();
+        this.designValuesPersistence.getColorScheme(theme).then(resp => {
+            console.log(resp);
+            this.setState({
+                themeID: resp.id,
+                titleFontColor: resp.titleFontColor,
+                bodyFontColor: resp.bodyFontColor,
+                specialBoldFontColor: resp.specialBoldFontColor,
+                specialSubtleFontColor: resp.specialSubtleFontColor, //wrong spelling
+                accentBarColor: resp.accentBarColor,
+                backgroundImage: this.designConfigPersistence.getSelectedBackground(),
+            });
+        });
+    }
     componentDidMount() {
         // Query a list of all widget data.
         // setState() is called once they are received and will trigger re-rendering.
@@ -35,6 +63,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             // separate the widgetData by location
             widgetDataByLocation: [0, 1, 2, 3, 4, 5].map(location => widgetDataList.filter(widgetData => widgetData.location === location))
         }));
+        this.loadTheme();
     }
 
     private renderLocation(location: number) {
@@ -58,7 +87,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
         const widget = this.widgetLoader.getWidget(widgetData.widgetId);
         try {
             const widgetComponent = widget.createDisplayComponent(widgetData.rawConfig);
-            return <SquareHolder title={widget.getTitle()} darkTheme={this.state.darkTheme}>
+            return <SquareHolder title={widget.getTitle()} accentColor={this.state.accentBarColor} titleColor={this.state.titleFontColor}>
                 {widgetComponent}
             </SquareHolder>;
         } catch (e) {
@@ -77,7 +106,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             height: "100vh",
             overflow: "hidden"
         }}>
-            <div className={"flex" + (this.state.darkTheme ? " text-white" : " text-black")}>
+            <div className={"flex" +  ' text-' + this.state.bodyFontColor + ''}>
                 <div className="z-30 absolute left-10 absolute bottom-7">
                     <img className="sm:w-24 lg:w-40 2xl:w-60 4xl:w-80"
                          src="https://www.artwork.de/wp-content/uploads/2015/08/logo_TF_NEU_4c_ai.png" alt="IHKLogo"/>
