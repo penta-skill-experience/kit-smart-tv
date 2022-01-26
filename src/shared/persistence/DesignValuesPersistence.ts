@@ -19,22 +19,22 @@ export class DesignValuesPersistence {
                 "dark": new ColorScheme(
                     "dark",
                     "Dark",
-                    "#00FF80",
+                    "limeGreen",
                     "white",
-                    "rgba(255, 0, 255, 1)",
-                    "#ff0",
-                    "red",
-                    [new Background("asdf", "someimage.png")]
+                    "",
+                    "",
+                    "rgba(48, 48, 48, .6)",
+                    [new Background("image", "https://images.wallpaperscraft.com/image/single/city_skyscrapers_clouds_rain_road_cars_lights_58563_3840x2160.jpg")]
                 ),
                 "light": new ColorScheme(
                     "light",
                     "Light",
-                    "#00FF80",
+                    "royalBlue",
                     "black",
-                    "rgba(255, 100, 255, 1)",
-                    "#ffa",
-                    "red",
-                    [new Background("asdf", "someimage.png")]
+                    "",
+                    "",
+                    "rgba(240, 240, 240, .6)",
+                    [new Background("image", "https://images.wallpaperscraft.com/image/single/city_skyscrapers_clouds_rain_road_cars_lights_58563_3840x2160.jpg")]
                 ),
             };
             const data = mockDatabaseColorSchemes[id];
@@ -74,9 +74,9 @@ export class DesignValuesPersistence {
         //todo: this is just a mock
         return new Promise<FontSize>(resolve => {
             const mockDatabaseColorSchemes = {
-                "small": new FontSize("small", "Small", 16, 10, 8, 8),
-                "medium": new FontSize("medium", "Medium", 24, 12, 10, 10),
-                "large": new FontSize("large", "Large", 32, 14, 12, 12),
+                "small": new FontSize("small", "Small", 0.8),
+                "medium": new FontSize("medium", "Medium", 1),
+                "large": new FontSize("large", "Large", 1.2),
             };
             const data = mockDatabaseColorSchemes[id];
             resolve(data);

@@ -29,7 +29,7 @@ export class TramSchedule extends React.Component<any, TramScheduleState> {
         };
     }
     getSchedule() {
-        axios.get(TramScheduleConfig.CORS_ANYWHERE + TramScheduleConfig.URL_STOP_SEARCH_BEFORE_STOP
+        axios.get("http://localhost:8080/" + TramScheduleConfig.URL_STOP_SEARCH_BEFORE_STOP
             + this.state.stop
             + TramScheduleConfig.URL_STOP_SEARCH_AFTER_STOP
             + TramScheduleConfig.API_KEY)

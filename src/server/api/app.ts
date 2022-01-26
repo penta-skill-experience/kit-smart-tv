@@ -53,10 +53,10 @@ export function serverSetup(dbUri : string) {
 
         app.get("/healthcheck", (req: Request, res: Response) => res.sendStatus(200));
 
-/**
- *   Admin Routes
- **/
-    app.post("/admin/create-admin", ensureRequestStructure(createAdminSchema), createAdminHandler);
+        /**
+         *   Admin Routes
+         **/
+        app.post("/admin/create-admin", ensureRequestStructure(createAdminSchema), createAdminHandler);
 
         app.put("/admin/update-password", requireAdmin, ensureRequestStructure(updatePasswordSchema), updatePasswordHandler);
 
