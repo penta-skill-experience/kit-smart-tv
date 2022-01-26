@@ -20,7 +20,7 @@ let justArrived = (x: string): string => {
     return x;
 };
 
-export class TramSchedule extends React.Component<any, TramScheduleState> {
+export class TramScheduleDisplayComponent extends React.Component<any, TramScheduleState> {
     constructor(props) {
         super(props);
         this.state = {

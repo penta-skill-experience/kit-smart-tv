@@ -18,7 +18,7 @@ export function TramScheduleConfigPage() {
     return(WidgetConfigPage({content:TramScheduleConfigDialogComponent()}));
 }
 
-function TramScheduleConfigDialogComponent() {
+export function TramScheduleConfigDialogComponent() {
     //todo
     //maybe liftup?
     const [value, setValue] = React.useState({label: ''});

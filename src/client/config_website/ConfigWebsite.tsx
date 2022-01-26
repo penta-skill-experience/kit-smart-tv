@@ -1,12 +1,12 @@
 import Typography from '@mui/material/Typography';
 import * as React from "react";
+import {useState} from "react";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import {PersonalizationPage} from "./PersonalizationPage";
 import {LayoutPage} from "./LayoutPage";
 import {AdminPage} from "./AdminPage";
-import {useState} from "react";
 import {SelectChangeEvent} from "@mui/material/Select";
 import {LogInPage} from "./LogInPage";
 import {Button, Grid} from "@mui/material";
@@ -53,7 +53,6 @@ const adminStatePersistence = new AdminStatePersistence();
 
 export function ConfigWebsite() {
     //state variables and methods for login page
-    const password = 'password123';
     const [logInInput, setLogInInput] = useState('');
     const [visible, setVisible] = useState(false);
     const [loggedInStatus, setLoggedInStatus] = useState(false);
@@ -153,7 +152,7 @@ export function ConfigWebsite() {
             position:'',
             widgetNameText:event.target.value,
             widget: newWidget,
-            widgetData: new WidgetData(event.target.value, -1, null),
+            widgetData: new WidgetData(event.target.value, -1, newWidget.isConfigurable() ? newWidget.getDefaultRawConfig() : {}),
         }
         setWidgetListElement(updatedValue)
     };
@@ -183,19 +182,23 @@ export function ConfigWebsite() {
     };
 
     const handlePosition = (id, position) => {
-        const newList = widgetList.map((item) => {
+        setWidgetList(widgetList.map((item) => {
             if (item.id === id) {
-                const newWidgetData = new WidgetData(item.widgetData.widgetId, position, null)
-                const newWidget = { ...item, widgetData: newWidgetData}
-                //todo
-                //remove
-                console.log('Position of Widget ' + newWidget.widget.getTitle() + 'changed to position ' + newWidget.widgetData.location)
-                return newWidget;
+                const newWidgetData = new WidgetData(item.widgetData.widgetId, position, item.widgetData.rawConfig);
+                return {...item, widgetData: newWidgetData}
             } else {
                 return item;
             }
-        });
-        setWidgetList(newList);
+        }));
+    };
+
+    const handleRawConfigSave = (id, rawConfig) => {
+        setWidgetList(widgetList.map(item => {
+            if (item.id === id) {
+                item.widgetData.rawConfig = rawConfig;
+            }
+            return item;
+        }));
     };
 
     const handleLayoutChange = () => {
@@ -352,6 +355,7 @@ export function ConfigWebsite() {
                             handleAddWidget={handleAddWidget}
                             handleDeleteWidget={handleDeleteWidget}
                             handlePosition={handlePosition}
+                            handleRawConfigSave={handleRawConfigSave}
                             handleLayoutChange={handleLayoutChange}
                         >
                         </LayoutPage>

@@ -10,12 +10,12 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
-import {TramScheduleConfigPage} from "./widget_config_pages/TramScheduleConfigPage";
-import {RSSFeedConfigPage} from "./widget_config_pages/RSSFeedConfigPage";
-import Checkbox from '@mui/material/Checkbox';
+import {TramScheduleConfigDialogComponent} from "./widget_config_pages/TramScheduleConfigPage";
+import {WidgetConfigPage} from "./widget_config_pages/WidgetConfigPage";
+import {ConcreteWidgetConfigSaver} from "./ConcreteWidgetConfigSaver";
 
 
-export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, children}) => {
+export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, handleRawConfigSave, children}) => {
 
     return (
         <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
@@ -37,7 +37,13 @@ export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, chi
                 <DeleteDialogComponent id={item.id} handleDeleteWidget={handleDeleteWidget}/>
             </Grid>
             <Grid item>
-                {renderConfigButton({name: item.widget.getTitle()})}
+                {
+                    item.widget.isConfigurable() &&
+                    <WidgetConfigPage content={item.widget.createConfigComponent(
+                        item.widgetData.rawConfig,
+                        (rawConfig: Object) => handleRawConfigSave(item.id, rawConfig))
+                    }/>
+                }
             </Grid>
         </Grid>
 
@@ -100,16 +106,4 @@ function DeleteDialogComponent({id ,handleDeleteWidget}) {
             </Dialog>
         </Grid>
     );
-}
-
-function renderConfigButton({name}) {
-    if (name === "Tram Schedule") {
-        return (
-            <TramScheduleConfigPage/>
-        );
-    } else if (name === "RSS Feed") {
-        return (
-          <RSSFeedConfigPage/>
-        );
-    }
 }
