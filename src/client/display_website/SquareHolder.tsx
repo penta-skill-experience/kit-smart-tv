@@ -6,6 +6,8 @@ interface SquareHolderProps {
     title: string;
     titleColor: string;
     accentColor: string;
+    specialBoldFontColor: string;
+    specialSubtleFontColor: string;
 }
 
 export class SquareHolder extends React.Component<SquareHolderProps, any> {
@@ -61,7 +63,7 @@ export class SquareHolder extends React.Component<SquareHolderProps, any> {
                 </div>
                 <div className={"sm:pl-5 sm:pt-1 sm:pb-2 sm:pr-2 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12 overflow-x-scroll scrollbar-hide scroll-smooth"}
                      id={this.state.uniqueID} style={{
-                    height: "37vh",
+                    height: "38vh",
                     scrollBehavior: "smooth"
                 }}>
                     {this.state.hasError ?
