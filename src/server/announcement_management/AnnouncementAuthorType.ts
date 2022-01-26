@@ -14,7 +14,7 @@ import {AnnouncementPersistence} from "../../shared/persistence/AnnouncementPers
 export abstract class AnnouncementAuthorType {
 
     /**
-     * An instance of an implementation of {@code AnnouncementAuthorType}.
+     * An instance of an implementation of AnnouncementAuthorType.
      *
      * This instance is used to represent the author type ADMIN.
      */
@@ -28,7 +28,7 @@ export abstract class AnnouncementAuthorType {
             return true;
         }
 
-        isThisAuthorType(author: string): Promise<Boolean> {
+        async isThisAuthorType(author: string): Promise<Boolean> {
             let returnValue = false;
             AnnouncementConfig.ADMINS.forEach(admin => {
                 if (admin.EMAIL === author) {
@@ -41,7 +41,7 @@ export abstract class AnnouncementAuthorType {
     };
 
     /**
-     * An instance of an implementation of {@code AnnouncementAuthorType}.
+     * An instance of an implementation of AnnouncementAuthorType.
      *
      * This instance is used to represent the author type VERIFIED.
      */
@@ -55,12 +55,13 @@ export abstract class AnnouncementAuthorType {
             return false;
         }
 
-        isThisAuthorType(author: string): Promise<Boolean> {
-            return new Promise<Boolean>(resolve => {
+        async isThisAuthorType(author: string): Promise<Boolean> {
+            return new Promise<Boolean>(async resolve => {
                 let returnValue = false;
-                new AnnouncementPersistence().getVerifiedUsers().then(
-                    data => data.filter(verifiedUser => !AnnouncementAuthorType.ADMIN.isThisAuthorType(verifiedUser.email))  // removing admins from list of verifies users to avoid overwriting admin type
-                        .forEach(verifiedUser => {
+                await new AnnouncementPersistence().getVerifiedUsers().then(
+                    data => data.filter(async verifiedUser => {
+                         !await AnnouncementAuthorType.ADMIN.isThisAuthorType(verifiedUser.email) // removing admins from list of verifies users to avoid overwriting admin type
+                    }).forEach(verifiedUser => {
                             if (verifiedUser.email === author) {
                                 returnValue = true;
                             }
@@ -72,7 +73,7 @@ export abstract class AnnouncementAuthorType {
     }
 
     /**
-     * An instance of an implementation of {@code AnnouncementAuthorType}.
+     * An instance of an implementation of AnnouncementAuthorType.
      *
      * This instance is used to represent the author type UNVERIFIED.
      */
@@ -86,9 +87,9 @@ export abstract class AnnouncementAuthorType {
             return false;
         }
 
-        isThisAuthorType(author: string): Promise<Boolean> {
-            const returnValue = !AnnouncementAuthorType.VERIFIED.isThisAuthorType(author) &&
-                !AnnouncementAuthorType.ADMIN.isThisAuthorType(author);
+        async isThisAuthorType(author: string): Promise<Boolean> {
+            const returnValue = !await AnnouncementAuthorType.VERIFIED.isThisAuthorType(author) &&
+                !await AnnouncementAuthorType.ADMIN.isThisAuthorType(author);
             return new Promise(resolve => resolve(returnValue));
         }
     }

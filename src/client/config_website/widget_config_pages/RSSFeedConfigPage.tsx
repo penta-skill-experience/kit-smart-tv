@@ -22,9 +22,6 @@ function RSSFeedConfigDialogComponent() {
             <DialogContent>
                 <Grid container spacing={2} direction="row" justifyContent="center" alignItems="center">
                     <Grid item xs={12}>
-                        <h1>Source RSS Feed:</h1>
-                    </Grid>
-                    <Grid item xs={12}>
                         <h1>Current Source URL:</h1>
                     </Grid>
                     <Grid item xs={12}>

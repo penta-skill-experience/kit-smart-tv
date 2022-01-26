@@ -7,10 +7,14 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import LockIcon from '@mui/icons-material/Lock';
 import {WidgetListElement} from "./WidgetListElement";
+import {WidgetLoader} from "../widget/WidgetLoader";
 
 
+const widgetLoader = new WidgetLoader();
+const widgetList = widgetLoader.getWidgetIds();
 
-export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget, handleDeleteWidget, handlePosition, handleColorSolid, children}) => {
+
+export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget, handleDeleteWidget, handlePosition, children}) => {
 
     return(
         <div>
@@ -159,7 +163,6 @@ export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget
                                 item={item}
                                 handlePosition={handlePosition}
                                 handleDeleteWidget={handleDeleteWidget}
-                                handleColorSolid={handleColorSolid}
                             >
                             </WidgetListElement>
                         ))}
@@ -169,15 +172,13 @@ export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget
                     <FormControl sx={{minWidth: 120}}>
                         <Select
                             value={widget.name}
-                            onChange={handleWidgetSelection}
+                            onChange={event => handleWidgetSelection(event)}
                         >
-                            //todo
-                            //Add widgets
-                            <MenuItem value={'test1'}>Test1</MenuItem>
-                            <MenuItem value={'test2'}>Test2</MenuItem>
-                            <MenuItem value={'test3'}>Test3</MenuItem>
-                            <MenuItem value={'Tram Schedule'}>Tram Schedule Widget</MenuItem>
-                            <MenuItem value={'RSS feed'}>RSS feed</MenuItem>
+                            {widgetList.map(item => (
+                                <MenuItem value={widgetLoader.getWidget(item).getTitle()}>
+                                    {widgetLoader.getWidget(item).getTitle()}
+                                </MenuItem>
+                            ))}
                         </Select>
                     </FormControl>
                 </Grid>

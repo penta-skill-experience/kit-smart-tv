@@ -7,6 +7,7 @@ import {
 import {Announcement} from "./Announcement";
 import {AnnouncementPersistence} from "../../shared/persistence/AnnouncementPersistence";
 import {AnnouncementAuthorTypeIdentifier} from "./AnnouncementAuthorTypeIdentifier";
+import {AnnouncementAuthorType} from "./AnnouncementAuthorType";
 
 /**
  * An implementation of {@link AnnouncementCommand}
@@ -25,14 +26,18 @@ export class RemoveAnnouncementCommand implements AnnouncementCommand {
     }
 
     async executeCommand() {
-        const currentAnnouncements = await new AnnouncementPersistence().getAnnouncements();
+        let currentAnnouncements : Announcement[]
+        await new AnnouncementPersistence().getAnnouncements().then(result => currentAnnouncements = result);
         const announcementTitles = getAnnouncementTitles(currentAnnouncements);
         if (!announcementTitles.includes(this.announcementToRemove.title)) {
             return;
         }
 
         const announcementToRemoveFromCurrent = getAnnouncementForTitle(currentAnnouncements, this.announcementToRemove.title);
-        const authorType = new AnnouncementAuthorTypeIdentifier().getAuthorType(this.announcementToRemove.author);
+        let authorType : AnnouncementAuthorType;
+        await new AnnouncementAuthorTypeIdentifier().getAuthorType(this.announcementToRemove.author).then(result => {
+            authorType = result;
+        });
 
         if (!(announcementToRemoveFromCurrent.author === this.announcementToRemove.author ||
             authorType.isAllowedToEditAnnouncementsFromOtherAuthors())) {
