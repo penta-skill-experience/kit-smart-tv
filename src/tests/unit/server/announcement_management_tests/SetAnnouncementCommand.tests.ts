@@ -42,7 +42,7 @@ getAnnouncementsMock.mockImplementation(() => {
 getVerifiedUsersMock.mockImplementation(() => {
     return new Promise<VerifiedUser[]>(resolve => {
         resolve(verifiedUsers);
-    })
+    });
 });
 setAnnouncementsMock.mockImplementation(announcementsToSet => {
     setAnnouncements = announcementsToSet;

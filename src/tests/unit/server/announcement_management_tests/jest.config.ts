@@ -5,6 +5,6 @@ const config: Config.InitialOptions = {
     transform: {
         '^.+\\.ts?$': 'ts-jest',
     },
-    testMatch: ["**/announcement_management_tests/SetAnnouncementCommand.tests.ts"]
+    testMatch: ["**/announcement_management_tests/?(*.)+(tests).[t]s?(x)"]
 };
 export default config;
