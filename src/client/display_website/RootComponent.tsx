@@ -5,9 +5,12 @@ import {Weather} from "../widget_catalog/weather/Weather";
 import {WidgetLoader} from "../widget/WidgetLoader";
 import {WidgetPersistence} from "../../shared/persistence/WidgetPersistence";
 import {WidgetData} from "../widget/WidgetData";
+import {RotatorComponent} from "./RotatorComponent";
 
 interface RootComponentState {
     widgetDataByLocation: WidgetData[][];
+    darkTheme;
+    backgroundImage;
 }
 
 export class RootComponent extends React.Component<any, RootComponentState> {
@@ -20,6 +23,8 @@ export class RootComponent extends React.Component<any, RootComponentState> {
 
         this.state = {
             widgetDataByLocation: [[], [], [], [], [], []],  // 6 locations possible
+            darkTheme: true,
+            backgroundImage: "https://images.wallpaperscraft.com/image/single/city_skyscrapers_clouds_rain_road_cars_lights_58563_3840x2160.jpg"
         };
     }
 
@@ -35,19 +40,25 @@ export class RootComponent extends React.Component<any, RootComponentState> {
     private renderLocation(location: number) {
         const widgetDataList = this.state.widgetDataByLocation[location];
         if (widgetDataList.length === 0) {
-            return <SquareHolder />;
+            return <SquareHolder/>;
         } else {
-            const widgetData = widgetDataList[0];//todo: rotate dynamically
-            return this.renderWidget(widgetData);
+            return <RotatorComponent>
+                {
+                    widgetDataList.map((d, index) =>
+                       <div key={index}>
+                           {this.renderWidget(d)}
+                       </div>
+                    )
+                }
+            </RotatorComponent>
         }
     }
 
     private renderWidget(widgetData: WidgetData) {
         const widget = this.widgetLoader.getWidget(widgetData.widgetId);
-
         try {
             const widgetComponent = widget.createDisplayComponent(widgetData.rawConfig);
-            return <SquareHolder title={widget.getTitle()}>
+            return <SquareHolder title={widget.getTitle()} darkTheme={this.state.darkTheme}>
                 {widgetComponent}
             </SquareHolder>;
         } catch (e) {
@@ -59,27 +70,24 @@ export class RootComponent extends React.Component<any, RootComponentState> {
     }
 
     render() {
-
         // go through the list of all widget data and render them in their respective locations
-
-        return <div className="bg-cover bg-no-repeat bg-center" style={{
+        return <div className="bg-cover bg-no-repeat bg-center" id="mainFrame" style={{
+            backgroundImage: 'url(' + this.state.backgroundImage + ')',
             width: "100vw",
             height: "100vh",
-            overflow: "hidden",
-            backgroundImage: `url("https://images.wallpaperscraft.com/image/single/city_skyscrapers_clouds_rain_road_cars_lights_58563_3840x2160.jpg")`
+            overflow: "hidden"
         }}>
-            <div className="flex flex-wrap">
-                <div className="z-30 absolute right-10 absolute bottom-7">
-                    <img className="sm:w-28 lg:w-40 2xl:w-60 4xl:w-80"
+            <div className={"flex" + (this.state.darkTheme ? " text-white" : " text-black")}>
+                <div className="z-30 absolute left-10 absolute bottom-7">
+                    <img className="sm:w-24 lg:w-40 2xl:w-60 4xl:w-80"
                          src="https://www.artwork.de/wp-content/uploads/2015/08/logo_TF_NEU_4c_ai.png" alt="IHKLogo"/>
                 </div>
                 <div className="z-20 sm:w-4/12 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30"
                      style={{
                          height: "100vh"
                      }}>
-
                     <div
-                        className="sm:p-4 lg:p-6 xl:p-8 4xl:p-12 8xl-p-16 grid grid-rows-2 grid-flow-row gap-8 box-border h-full">
+                        className="sm:p-4 lg:p-6 xl:p-8 4xl:p-12 8xl:p-14 grid grid-rows-2 grid-flow-row gap-8 box-border">
                         <div>
                             <DigitalTime/>
                             <Weather/>
@@ -87,15 +95,13 @@ export class RootComponent extends React.Component<any, RootComponentState> {
                         {this.renderLocation(1)}
                     </div>
                 </div>
-                <div className="z-10 w-2/3 absolute right-0">
-                    <div className="grid grid-cols-2 2xl:gap-8 box-border" style={{
-                        height: "100vh"
-                    }}>
-                        {this.renderLocation(2)}
-                        {this.renderLocation(3)}
-                        {this.renderLocation(4)}
-                        {this.renderLocation(5)}
-                    </div>
+                <div
+                    className="z-10 w-2/3 sm:p-4 lg:p-6 xl:p-8 4xl:p-12 8xl:p-14 absolute right-0 grid grid-cols-2 box-border sm:gap-2 lg:gap-3 xl:gap-4 4xl:gap-6 8xl:gap-8">
+                    {this.renderLocation(2)}
+                    {this.renderLocation(3)}
+                    {this.renderLocation(4)}
+                    {this.renderLocation(5)}
+
                 </div>
             </div>
         </div>;

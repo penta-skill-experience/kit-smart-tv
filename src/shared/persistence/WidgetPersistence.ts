@@ -9,13 +9,12 @@ export class WidgetPersistence {
     getWidgetDataList(): Promise<WidgetData[]> {
         //todo: this is just a mock
         return new Promise<WidgetData[]>(resolve => {
-
                 // insert data for widgets that you want to test here:
                 const data = [
                     {
                         widgetId: "tram-schedule",
                         location: 1,
-                        rawConfig: {},
+                        rawConfig: {stop: "Durlacher Tor"},
                     },
                     {
                         widgetId: "rss-feed",
@@ -23,17 +22,16 @@ export class WidgetPersistence {
                         rawConfig: {url: "www.example.com"},
                     },
                     {
-                        widgetId: "weather",
-                        location: 3,
+                        widgetId: "cafeteria-menu",
+                        location: 5,
                         rawConfig: {},
                     },
                     {
-                        widgetId: "time",
-                        location: 4,
-                        rawConfig: {},
+                        widgetId: "rss-feed",
+                        location: 5,
+                        rawConfig: {url: "www.example.com"},
                     },
                 ];
-
                 resolve(data);
             }
         );

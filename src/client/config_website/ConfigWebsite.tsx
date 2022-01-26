@@ -10,6 +10,7 @@ import {useState} from "react";
 import {SelectChangeEvent} from "@mui/material/Select";
 import {LogInPage} from "./LogInPage";
 import {Button, Grid} from "@mui/material";
+import {AnnouncementsPage} from "./AnnouncementsPage";
 
 
 interface TabPanelProps {
@@ -39,6 +40,7 @@ export function ConfigWebsite() {
     //state variables and methods for login page
     const password = 'password123';
     const [logInInput, setLogInInput] = useState('');
+    const [visible, setVisible] = useState(false);
     const [loggedInStatus, setLoggedInStatus] = useState(false);
 
     const handleInput = (
@@ -48,7 +50,7 @@ export function ConfigWebsite() {
     };
 
     const handleLogIn= () => {
-        // to do
+        // todo
         // connect with persistence
         if (logInInput === password) {
             setLoggedInStatus(true);
@@ -56,6 +58,10 @@ export function ConfigWebsite() {
             alert('password not correct')
         }
     };
+
+    const handleClickShowPassword = () => {
+        setVisible(!visible)
+    }
 
     //state variables and methods for tabs
     const [pageNumber, setPageNumber] = React.useState(0);
@@ -89,16 +95,22 @@ export function ConfigWebsite() {
     const [widget, setWidget] = React.useState({
         id:0,
         name:'',
-        position:''
+        position:'',
+        configurable:false,
+        colorSolid:false
     });
 
     const incrementCounter = () => setCounter(counter + 1);
 
     const handleWidgetSelection = (event: SelectChangeEvent) => {
+        //todo
+        //config is not always true
         const updatedValue = {
             id:counter,
             name:event.target.value,
-            position:''
+            position:'',
+            configurable:true,
+            colorSolid:false
         }
         setWidget(updatedValue)
     };
@@ -106,9 +118,13 @@ export function ConfigWebsite() {
     const handleAddWidget = () => {
         if (widget.name !== '') {
             const newWidget = {
+                //todo
+                //config is not always true
                 id:counter,
                 name:widget.name,
-                position:''
+                position:'',
+                configurable:true,
+                colorSolid:false
             }
             setList(list.concat(newWidget));
             incrementCounter();
@@ -117,6 +133,7 @@ export function ConfigWebsite() {
     };
 
     const handleDeleteWidget = (id) => {
+        console.log('Widget with id ' + id + ' is removed ')
         setList(list.filter(item => item.id !== id));
     }
 
@@ -132,6 +149,18 @@ export function ConfigWebsite() {
 
         setList(newList);
 
+    }
+
+    const handleColorSolid = (id, isChecked) => {
+        const newList = list.map((item) =>{
+            if (item.id === id) {
+                const newWidget = {...item, colorSolid: !isChecked}
+                return newWidget;
+            } else {
+                return item;
+            };
+        });
+        setList(newList)
     }
 
     //state variables and methods for admin password page
@@ -171,8 +200,10 @@ export function ConfigWebsite() {
             return (
                 <LogInPage
                     logInInput={logInInput}
+                    visible={visible}
                     handleInput={handleInput}
                     handleLogIn={handleLogIn}
+                    handleClickShowPassword={handleClickShowPassword}
                 >
                 </LogInPage>
             );
@@ -201,10 +232,11 @@ export function ConfigWebsite() {
                     </Box>
 
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        <Tabs value={pageNumber} onChange={handleChange} aria-label="basic tabs example">
+                        <Tabs value={pageNumber} onChange={handleChange}>
                             <Tab label="Personalization"/>
                             <Tab label="Layout"/>
-                            <Tab label="Admin"/>
+                            <Tab label="Password"/>
+                            <Tab label="Announcements"/>
                         </Tabs>
                     </Box>
                     <TabPanel value={pageNumber} index={0}>
@@ -225,6 +257,7 @@ export function ConfigWebsite() {
                             handleAddWidget={handleAddWidget}
                             handleDeleteWidget={handleDeleteWidget}
                             handlePosition={handlePosition}
+                            handleColorSolid={handleColorSolid}
                         >
                         </LayoutPage>
                     </TabPanel>
@@ -238,6 +271,9 @@ export function ConfigWebsite() {
                             handleChangeSave={handleChangeSave}
                         >
                         </AdminPage>
+                    </TabPanel>
+                    <TabPanel value={pageNumber} index={3}>
+                        <AnnouncementsPage/>
                     </TabPanel>
                 </div>
             );
