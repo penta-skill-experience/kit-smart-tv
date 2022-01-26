@@ -1,5 +1,7 @@
+import React from "react";
 import {Widget} from "../../widget/Widget";
 import {WidgetConfigSaver} from "../../widget/WidgetConfigSaver";
+import {AnnouncementComponent} from "./AnnouncementComponent";
 
 export class AnnouncementWidget implements Widget {
 
@@ -8,7 +10,7 @@ export class AnnouncementWidget implements Widget {
     }
 
     createDisplayComponent(rawConfig: Object): JSX.Element {
-        return undefined;
+        return <AnnouncementComponent />;
     }
 
     getTitle(): string {
