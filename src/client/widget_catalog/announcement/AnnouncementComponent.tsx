@@ -31,4 +31,17 @@ export class AnnouncementComponent extends React.Component<{}, AnnouncementState
     ComponentDidMount() {
         setInterval(() => this.tick(), AnnouncementConfig.REFRESH_RATE);
     }
+
+    render() {
+        if (this.state.announcements.length > 0) {
+            return this.state.announcements.map(announcement => {
+                return <div>
+                    <b>{announcement.title} - {announcement.author} </b> <br />
+                        {announcement.text} <br />
+                    </div>
+            })
+        } else {
+            return <div />
+        }
+    }
 }
