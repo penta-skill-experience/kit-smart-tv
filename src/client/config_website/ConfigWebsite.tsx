@@ -72,7 +72,9 @@ export function ConfigWebsite() {
         } else {
             alert('password not correct')
         }*/
-        adminStatePersistence.login(logInInput).then(() => {setLoggedInStatus(true);}).catch();
+        adminStatePersistence.login(logInInput)
+            .then(() => setLoggedInStatus(true))
+            .catch(() => alert('Password not correct.'));
     };
 
     const handleClickShowPassword = () => {
