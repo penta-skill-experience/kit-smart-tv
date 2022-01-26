@@ -9,20 +9,23 @@ import FormControl from '@mui/material/FormControl';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import Button from "@mui/material/Button";
+import {DesignValuesPersistence} from "../../shared/persistence/DesignValuesPersistence";
 
 
-//toddo
+//todo
 //get from persistence
-
+const designValuePersistence = new DesignValuesPersistence();
+//                        = designValuePersistence.getBackgrounds(light);
 const lightBackgroundList = [
-    { img: meme1, id:'1', title:'bild1', colorScheme: 'light' },
-    { img: meme1, id:'2', title:'bild2', colorScheme: 'light' },
-    { img: meme1, id:'3', title:'bild3', colorScheme: 'light' },
-    { img: meme1, id:'4', title:'bild4', colorScheme: 'light' },
-    { img: meme1, id:'5', title:'bild5', colorScheme: 'light' },
-    { img: meme1, id:'6', title:'bild6', colorScheme: 'light' },
+    { img: meme1, id:'1', title:'bild1'},
+    { img: meme1, id:'2', title:'bild2'},
+    { img: meme1, id:'3', title:'bild3'},
+    { img: meme1, id:'4', title:'bild4'},
+    { img: meme1, id:'5', title:'bild5'},
+    { img: meme1, id:'6', title:'bild6'},
 ];
 
+//                        = designValuePersistence.getBackgrounds(dark);
 const darkBackgroundList = [
     { img: meme2, id:'1', title:'bild1'},
     { img: meme2, id:'2', title:'bild2'},
