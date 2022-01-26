@@ -2,6 +2,7 @@ import {Widget} from "./Widget";
 import {RssFeedWidget} from "../widget_catalog/rss_feed/RssFeedWidget";
 import {TramScheduleWidget} from "../widget_catalog/tram_schedule/TramScheduleWidget";
 import {CafeteriaMenuWidget} from "../widget_catalog/cafeteria_menu/CafeteriaMenuWidget";
+import {AnnouncementWidget} from "../widget_catalog/announcement/AnnouncementWidget";
 import {CafeteriaOpeningWidget} from "../widget_catalog/cafeteria_opening/CafeteriaOpeningWidget";
 
 export class WidgetLoader {
@@ -12,6 +13,7 @@ export class WidgetLoader {
         this.widgets.set("rss-feed", new RssFeedWidget());
         this.widgets.set("tram-schedule", new TramScheduleWidget());
         this.widgets.set("cafeteria-menu", new CafeteriaMenuWidget());
+        this.widgets.set("announcement", new AnnouncementWidget());
         this.widgets.set("cafeteria-opening", new CafeteriaOpeningWidget());
     }
 
