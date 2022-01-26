@@ -7,7 +7,7 @@ import * as fs from "fs";
 /**
  * A class to create a mail listener to listen for announcements.
  */
-class AnnouncementMailListener {
+export class AnnouncementMailListener {
 
     private mailListener : MailListener
 

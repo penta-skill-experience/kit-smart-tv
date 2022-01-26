@@ -2,6 +2,7 @@ import * as React from "react";
 import {AdminStatePersistence} from "../../../shared/persistence/AdminStatePersistence";
 import {Button} from "@mui/material";
 import {TokenHolderSingleton} from "../../../shared/persistence/TokenHolderSingleton";
+import {AnnouncementPersistence} from "../../../shared/persistence/AnnouncementPersistence";
 
 interface RssFeedDisplayProps {
     url: string;
@@ -36,6 +37,10 @@ export class RssFeedDisplayComponent extends React.Component<RssFeedDisplayProps
                 const adminstate = new AdminStatePersistence();
                 adminstate.logout().then(() => console.log(TokenHolderSingleton.instance.accessToken));
             }}>logout</Button>
+            <Button onClick={() => {
+                const ann = new AnnouncementPersistence();
+                ann.getAnnouncements().then(r => console.log(r)).catch();
+            }}>getAnnouncements</Button>
         </div>;
     }
 }
