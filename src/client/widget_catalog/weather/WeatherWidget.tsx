@@ -5,7 +5,7 @@ import {Weather} from "./Weather";
 
 export class WeatherWidget implements Widget {
 
-    createConfigComponent(rawConfig: Object, saver: WidgetConfigSaver): JSX.Element {
+    createConfigComponent(rawConfig: Object, save: (rawConfig: Object) => void): JSX.Element {
         return undefined;
     }
 
@@ -21,4 +21,7 @@ export class WeatherWidget implements Widget {
         return false;
     }
 
+    getDefaultRawConfig(): Object {
+        return undefined;
+    }
 }

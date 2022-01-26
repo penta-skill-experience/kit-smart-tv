@@ -16,13 +16,13 @@ export class RssFeedWidget implements Widget {
         />;
     }
 
-    createConfigComponent(rawConfig: JSON, saver: WidgetConfigSaver): JSX.Element {
+    createConfigComponent(rawConfig: Object, save: (rawConfig: Object) => void): JSX.Element {
         const config = new RssFeedConfig();
         config.load(rawConfig);
 
         return <RssFeedConfigComponent
             url={config.url}
-            save={() => saver.save(config.save())}
+            save={save}
         />;
     }
 
@@ -32,5 +32,10 @@ export class RssFeedWidget implements Widget {
 
     isConfigurable(): boolean {
         return true;
+    }
+
+    getDefaultRawConfig(): Object {
+        const config = new RssFeedConfig();
+        return config.save();
     }
 }

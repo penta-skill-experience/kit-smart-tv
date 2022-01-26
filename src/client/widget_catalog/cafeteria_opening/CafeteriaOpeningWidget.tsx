@@ -5,7 +5,7 @@ import {CafeteriaOpening} from "./CafeteriaOpening";
 
 export class CafeteriaOpeningWidget implements Widget {
 
-    createConfigComponent(rawConfig: Object, saver: WidgetConfigSaver): JSX.Element {
+    createConfigComponent(rawConfig: Object, save: (rawConfig: Object) => void): JSX.Element {
         return undefined;
     }
 
@@ -19,5 +19,9 @@ export class CafeteriaOpeningWidget implements Widget {
 
     isConfigurable(): boolean {
         return false;
+    }
+
+    getDefaultRawConfig(): Object {
+        return undefined;
     }
 }
