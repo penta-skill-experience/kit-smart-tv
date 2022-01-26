@@ -165,7 +165,7 @@ export function ConfigWebsite() {
                 position:'',
                 widgetNameText:widgetListElement.widgetNameText,
                 widget: widgetListElement.widget,
-                widgetData: widgetListElement.widgetData
+                widgetData: widgetListElement.widgetData,
             }
             setWidgetList(widgetList.concat(newWidget));
             incrementCounter();
@@ -183,7 +183,7 @@ export function ConfigWebsite() {
     const handlePosition = (id, position) => {
         const newList = widgetList.map((item) => {
             if (item.id === id) {
-                const newWidgetData = new WidgetData(widgetListElement.widgetData.widgetId, position, null)
+                const newWidgetData = new WidgetData(item.widgetData.widgetId, position, null)
                 const newWidget = { ...item, widgetData: newWidgetData}
                 //todo
                 //remove
@@ -201,7 +201,11 @@ export function ConfigWebsite() {
             item.widgetData
         ));
         setWidgetDataList(newWidgetDataList);
-        widgetPersistence.setWidgetDataList(widgetDataList);
+        console.log(newWidgetDataList[0]);
+        console.log(newWidgetDataList[1]);
+        console.log(newWidgetDataList[2]);
+        console.log(newWidgetDataList[3]);
+        widgetPersistence.setWidgetDataList(newWidgetDataList);
     };
 
     //state variables and methods for admin password page
