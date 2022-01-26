@@ -52,44 +52,67 @@ export class AdminStatePersistence {
         });
     }
 
-    async getAdminLoginState(access_token: string, refresh_token: string): Promise<boolean> {
-        const response = await fetch(`${config.DOMAIN}/api/sessions`, {
-            method: 'GET',
-            body: null,
-            headers: {
-                'Content-Type': 'application/json',
-                'x-refresh': refresh_token,
-                'Authorization': 'Bearer ' + access_token,
-            }
+    async getAdminLoginState(): Promise<void> {
+        const headers = new Headers();
+        headers.append("x-refresh", TokenHolderSingleton.instance.refreshToken);
+        headers.append("Authorization", `Bearer ${TokenHolderSingleton.instance.accessToken}`);
+        headers.append("Content-Type", "application/json");
+
+        return new Promise<void>((resolve, reject) => {
+            fetch(`${config.DOMAIN}/api/sessions`, {
+                method: 'GET',
+                headers: headers,
+                body: JSON.stringify(null),
+            })
+                .then(response => {
+                    const new_accessToken = response.headers.get('x-access-token');
+                    if (new_accessToken) {
+                        //if a new accessToken is provided, update it.
+                        TokenHolderSingleton.instance.accessToken = response.headers.get('x-access-token');
+                    }
+                    return response.json()
+                })
+                .then(data => {
+                    if (data.valid_until) {
+                        resolve();
+                    } else {
+                        reject();
+                    }
+                }).catch(() => reject())
+                .catch(() => reject());
         });
-        try {
-            const myJson = await response.json(); //extract JSON from the http response
-            if (new Date(myJson.valid_until).valueOf() > Date.now()) {
-                return true;
-            }
-        } catch (e: any) {
-            return false;
-        }
-        return false;
     }
 
-    async setPassword(oldpw: string, newpw: string, access_token: string, refresh_token: string): Promise<boolean> {
-        const response = await fetch(`${config.DOMAIN}/admin/update-password`, {
-            method: 'PUT',
-            body: JSON.stringify({password: oldpw, new_password: newpw}),
-            headers: {
-                'Content-Type': 'application/json',
-                'x-refresh': refresh_token,
-                'Authorization': 'Bearer ' + access_token,
-            }
+
+    async setPassword(oldpw: string, newpw: string,): Promise<void> {
+        const headers = new Headers();
+        headers.append("x-refresh", TokenHolderSingleton.instance.refreshToken);
+        headers.append("Authorization", `Bearer ${TokenHolderSingleton.instance.accessToken}`);
+        headers.append("Content-Type", "application/json");
+
+        const body = {
+            password: oldpw,
+            new_password: newpw
+        };
+
+        return new Promise<void>((resolve, reject) => {
+            fetch(`${config.DOMAIN}/admin/update-password`, {
+                method: 'PUT',
+                headers: headers,
+                body: JSON.stringify(body),
+            })
+                .then(response => {
+                    const new_accessToken = response.headers.get('x-access-token');
+                    if (new_accessToken) {
+                        //if a new accessToken is provided, update it.
+                        TokenHolderSingleton.instance.accessToken = response.headers.get('x-access-token');
+                    }
+                    if (response.status == 200) {
+                        resolve();
+                    }
+                    reject();
+                })
+                .catch(() => reject());
         });
-        try { //extract JSON from the http response
-            if ("password updated" === JSON.stringify(response.body)) {
-                return true;
-            }
-        } catch (e: any) {
-            return false;
-        }
-        return false;
     }
 }
