@@ -27,7 +27,7 @@ export class CafeteriaOpening extends React.Component<any, CafeteriaOpeningState
             closingTime: "",
 
             openColor: "lightseagreen",
-            closedColor: "salmon",
+            closedColor: "tomato",
         };
     }
 
