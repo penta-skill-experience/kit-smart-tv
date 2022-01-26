@@ -63,36 +63,31 @@ describe("SetAnnouncementCommand.ts handles verified users correctly", () => {
         const newAnnouncement = new Announcement("Another Announcement from Bob",
             bob.email, "This is another announcement from Bob")
 
-        new SetAnnouncementCommand(newAnnouncement).executeCommand();
-
-        expect(setAnnouncements.includes(bobAnnouncement)).toBe(true);
-        expect(setAnnouncements.includes(aliceAnnouncement)).toBe(true);
-        expect(setAnnouncements.includes(newAnnouncement)).toBe(true);
-        expect(setAnnouncements.length).toEqual(3);
+        new SetAnnouncementCommand(newAnnouncement).executeCommand().then(() => {
+            expect(setAnnouncements.includes(bobAnnouncement)).toBe(true);
+            expect(setAnnouncements.includes(aliceAnnouncement)).toBe(true);
+            expect(setAnnouncements.includes(newAnnouncement)).toBe(true);
+            expect(setAnnouncements.length).toEqual(3);
+        });
     });
 
     test("verified user can edit his own announcement", () => {
         const updatedBobAnnouncement = new Announcement(bobAnnouncement.title, bob.email,
             "This is bobs updated announcement");
 
-        new SetAnnouncementCommand(updatedBobAnnouncement).executeCommand();
-
-        expect(setAnnouncements.includes(updatedBobAnnouncement)).toBe(true);
-        expect(setAnnouncements.includes(aliceAnnouncement)).toBe(true);
-        expect(setAnnouncements.length).toEqual(2);
+        new SetAnnouncementCommand(updatedBobAnnouncement).executeCommand().then(() => {
+            expect(setAnnouncements.includes(updatedBobAnnouncement)).toBe(true);
+            expect(setAnnouncements.includes(aliceAnnouncement)).toBe(true);
+            expect(setAnnouncements.length).toEqual(2);
+        });
     });
 
     test ("verified user cannot edit announcements from others", () => {
         const bobUpdatesAliceAnnouncement = new Announcement(aliceAnnouncement.title, bob.email,
             "This announcement from alice was updated by bob.");
 
-        new SetAnnouncementCommand(bobUpdatesAliceAnnouncement).executeCommand().catch(reason => {
-            expect(reason).toBeInstanceOf(AnnouncementCommandError);
-        })
-        //expect(() => {
-        //    new SetAnnouncementCommand(bobUpdatesAliceAnnouncement).executeCommand();
-        //}).toThrow(AnnouncementCommandError);
-        expect(setAnnouncements.length).toEqual(0); // not changed from default value
+        expect(new SetAnnouncementCommand(bobUpdatesAliceAnnouncement).executeCommand())
+            .rejects.toBeInstanceOf(AnnouncementCommandError);
     });
 
     test("an announcement with an empty text cannot be added", () => {
@@ -109,23 +104,16 @@ describe("SetAnnouncementCommand.ts handles unverified users correctly", () => {
         const newAnnouncement = new Announcement("new Announcement", unverifiedUserEmail,
             "This is a new announcement");
 
-        new SetAnnouncementCommand(newAnnouncement).executeCommand().catch(reason => {
-            expect(reason).toBeInstanceOf(AnnouncementCommandError);
-        });
-        //expect(() => {
-        //    new SetAnnouncementCommand(newAnnouncement).executeCommand();
-        //}).toThrow(AnnouncementCommandError);
-        expect(setAnnouncements.length).toEqual(0);
+        expect(new SetAnnouncementCommand(newAnnouncement).executeCommand())
+            .rejects.toBeInstanceOf(AnnouncementCommandError);
     });
 
     test("an unverified user cannot edit an existing announcement", () => {
         const editedAnnouncementByUnverified = new Announcement(bobAnnouncement.title, unverifiedUserEmail,
             "This Announcement was edited by an unverified user");
 
-        expect(() => {
-            new SetAnnouncementCommand(editedAnnouncementByUnverified).executeCommand();
-        }).toThrow(AnnouncementCommandError);
-        expect(setAnnouncements.length).toEqual(0);
+        expect(new SetAnnouncementCommand(editedAnnouncementByUnverified).executeCommand())
+            .rejects.toBeInstanceOf(AnnouncementCommandError);
     });
 });
 
@@ -135,12 +123,12 @@ describe("SetAnnouncementCommand.ts handles admins correctly", () => {
         const announcementFromAdmin = new Announcement("Announcement from an admin", AnnouncementConfig.ADMINS[0].EMAIL,
             "The text of the announcement from an admin");
 
-        new SetAnnouncementCommand(announcementFromAdmin).executeCommand();
-
-        expect(setAnnouncements.includes(bobAnnouncement)).toBe(true);
-        expect(setAnnouncements.includes(aliceAnnouncement)).toBe(true);
-        expect(setAnnouncements.includes(announcementFromAdmin)).toBe(true);
-        expect(setAnnouncements.length).toEqual(3);
+        return new SetAnnouncementCommand(announcementFromAdmin).executeCommand().then(() => {
+            expect(setAnnouncements.includes(bobAnnouncement)).toBe(true);
+            expect(setAnnouncements.includes(aliceAnnouncement)).toBe(true);
+            expect(setAnnouncements.includes(announcementFromAdmin)).toBe(true);
+            expect(setAnnouncements.length).toEqual(3);
+        });
     });
 
     test("an admin can edit any announcement", () => {
@@ -148,10 +136,10 @@ describe("SetAnnouncementCommand.ts handles admins correctly", () => {
         const updatedAliceAnnouncementByAdmin = new Announcement(aliceAnnouncement.title, AnnouncementConfig.ADMINS[0].EMAIL,
             "the text of alice' announcement was updated by an admin");
 
-        new SetAnnouncementCommand(updatedAliceAnnouncementByAdmin).executeCommand();
-
-        expect(setAnnouncements.includes(bobAnnouncement)).toBe(true);
-        expect(setAnnouncements.includes(updatedAliceAnnouncementByAdmin)).toBe(true);
-        expect(setAnnouncements.length).toEqual(2);
+        return new SetAnnouncementCommand(updatedAliceAnnouncementByAdmin).executeCommand().then(() => {
+            expect(setAnnouncements.includes(bobAnnouncement)).toBe(true);
+            expect(setAnnouncements.includes(updatedAliceAnnouncementByAdmin)).toBe(true);
+            expect(setAnnouncements.length).toEqual(2);
+        });
     });
 });

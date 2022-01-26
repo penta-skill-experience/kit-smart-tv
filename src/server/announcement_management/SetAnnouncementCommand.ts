@@ -47,7 +47,9 @@ export class SetAnnouncementCommand implements AnnouncementCommand {
     }
 
     async executeCommand() {
-        const authorType = new AnnouncementAuthorTypeIdentifier().getAuthorType(this.announcement.author);
+        let authorType : AnnouncementAuthorType
+        await new AnnouncementAuthorTypeIdentifier().getAuthorType(this.announcement.author).then(result =>
+            authorType = result);
 
         const currentAnnouncements = await new AnnouncementPersistence().getAnnouncements();
         const currentAnnouncementTitles = getAnnouncementTitles(currentAnnouncements);
