@@ -5,7 +5,7 @@ export const updateAnnouncementsSchema = z.object({
         announcementDataList: z.array(z.object({
             title: z.string(),
             text: z.string(),
-            author: z.string(),
+            author: z.string().email(),
             timeout: z.string(),
             timeOfAddition: z.string(),
         })),

@@ -17,5 +17,10 @@ export async function updateAnnouncements(input: DocumentDefinition<Announcement
 }
 
 export async function getAnnouncements() {
-    return await AnnouncementsModel.findOne({}).then(o => omit(o.toJSON(), ["_id", "createdAt", "updatedAt", "__v"]));
+    return AnnouncementsModel.findOne({}).then(o => {
+        if(o != null){
+            return omit(o.toJSON(), ["_id", "createdAt", "updatedAt", "__v"]);
+        }
+        return {};
+    });
 }

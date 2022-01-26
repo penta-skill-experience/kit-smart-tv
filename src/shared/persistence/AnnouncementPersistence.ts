@@ -1,22 +1,50 @@
 import {Announcement} from "../../server/announcement_management/Announcement";
 import {VerifiedUser} from "../values/VerifiedUser";
+import {TokenHolderSingleton} from "./TokenHolderSingleton";
+import config from "./persistence.config.json";
+
+
 export class AnnouncementPersistence {
 
     setAnnouncements(announcements: Announcement[]) {
         //todo
+        console.log(announcements)
     }
 
     getAnnouncements(): Promise<Announcement[]> {
-        //todo
-        return new Promise<Announcement[]>(resolve => {
-            const data = [
-                new Announcement("Trash", "bob@kit.edu", "Don't forget to take out the trash after class"),
-                new Announcement("Life's Good", "alice@kit.edu", "It's almost time to leave for the day lets not forget that life's good"),
-                new Announcement("Life's toll", "alice@kit.edu", "It's almost time to leave for the day lets not forget that life's good"),
-                new Announcement("Life's very nice", "alice@kit.edu", "It's almost time to leave for the day lets not forget that life's good"),
-                new Announcement("Life's amazing", "alice@kit.edu", "It's almost time to leave for the day lets not forget that life's good"),
-            ];
-            resolve(data);
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+
+        if(TokenHolderSingleton.instance.accessToken !== null){
+            headers.append("x-refresh", TokenHolderSingleton.instance.refreshToken);
+            headers.append("Authorization", `Bearer ${TokenHolderSingleton.instance.accessToken}`);
+        }
+
+        return new Promise<Announcement[]>((resolve, reject) => {
+            fetch(`${config.DOMAIN}/announcements`, {
+                method: 'GET',
+                headers: headers,
+            })
+                .then(response => {
+                    const new_accessToken = response.headers.get('x-access-token');
+                    if (new_accessToken) {
+                        //if a new accessToken is provided, update it.
+                        TokenHolderSingleton.instance.accessToken = response.headers.get('x-access-token');
+                    }
+                    return response.json()
+                        .then(data => {
+                            let announcements: Announcement[] = [];
+                            data.announcementDataList.forEach(function (announcement) {
+                                let ann = new Announcement(announcement.title, announcement.author, announcement.text, new Date(announcement.timeOfAddition).valueOf(), (new Date(announcement.timeOut).valueOf()-Date.now()));
+                                announcements.push(ann);
+                            });
+                            resolve(announcements);
+
+                        }).catch(() => {
+                            let announcements: Announcement[] = [];
+                            resolve(announcements);
+                        });
+                }).catch(() => reject());
         });
     }
 
@@ -33,9 +61,10 @@ export class AnnouncementPersistence {
 
     addVerifiedUser(verifiedUser: VerifiedUser) {
         //todo
+        console.log(verifiedUser);
     }
 
     removeVerifiedUser(verifiedUser: VerifiedUser) {
-        //todo
+        console.log(verifiedUser);
     }
 }

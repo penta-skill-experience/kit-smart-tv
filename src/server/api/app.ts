@@ -26,10 +26,14 @@ import {getConfigHandler, updateConfigHandler} from "./controller/config.control
 import {updateValuesSchema} from "./schema/values.schema";
 import {getValuesHandler, updateValuesHandler} from "./controller/values.controller";
 import cors from "cors";
+import {AnnouncementMailListener} from "../email_announcement_interaction/AnnouncementMailListener"
 
-serverSetup(process.env.MONGO_URI);
+serverSetup(process.env.MONGO_URI_TESTING);
 
 export function serverSetup(dbUri : string) {
+    const mail = new AnnouncementMailListener;
+    mail.createMailListener();
+
     const port = config.port;
 
     const app = express();
