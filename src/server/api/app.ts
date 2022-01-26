@@ -28,7 +28,7 @@ import {getValuesHandler, updateValuesHandler} from "./controller/values.control
 
 serverSetup(process.env.MONGO_URI);
 
-export async function serverSetup(dbUri : string) {
+export function serverSetup(dbUri : string) {
     const port = config.port;
 
     const app = express();

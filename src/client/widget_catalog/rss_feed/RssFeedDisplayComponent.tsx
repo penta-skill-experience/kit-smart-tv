@@ -1,4 +1,7 @@
 import * as React from "react";
+import {AdminStatePersistence} from "../../../shared/persistence/AdminStatePersistence";
+import {Button} from "@mui/material";
+import {TokenHolderSingleton} from "../../../shared/persistence/TokenHolderSingleton";
 
 interface RssFeedDisplayProps {
     url: string;
@@ -8,7 +11,31 @@ export class RssFeedDisplayComponent extends React.Component<RssFeedDisplayProps
 
     render() {
         return <div>
-            (RSS Feed Content)
+            (RSS Feed Content)           (RSS Feed Content)
+            <Button onClick={() => {
+                const adminstate = new AdminStatePersistence();
+                adminstate.login("Password456!").then().catch();
+            }}>login</Button>
+            <Button onClick={() => {
+                const adminstate = new AdminStatePersistence();
+                adminstate.login("Password654!").then().catch();
+            }}>alt_login</Button>
+            <Button onClick={() => {
+                const adminstate = new AdminStatePersistence();
+                adminstate.getAdminLoginState().then();
+            }}>beat</Button>
+            <Button onClick={() => {
+                const adminstate = new AdminStatePersistence();
+                adminstate.setPassword("Password456!", "Password654!").then();
+            }}>passwordchange1</Button>
+            <Button onClick={() => {
+                const adminstate = new AdminStatePersistence();
+                adminstate.setPassword("Password654!", "Password456!").then();
+            }}>passwordchange2</Button>
+            <Button onClick={() => {
+                const adminstate = new AdminStatePersistence();
+                adminstate.logout().then(() => console.log(TokenHolderSingleton.instance.accessToken));
+            }}>logout</Button>
         </div>;
     }
 }

@@ -19,6 +19,7 @@ export class AdminStatePersistence {
             })
                 .then(response => response.json()
                     .then(data => {
+                        console.log(data);
                         TokenHolderSingleton.instance.accessToken = data.accessToken;
                         TokenHolderSingleton.instance.refreshToken = data.refreshToken;
                         resolve();
@@ -37,7 +38,6 @@ export class AdminStatePersistence {
             fetch(`${config.DOMAIN}/api/sessions`, {
                 method: 'DELETE',
                 headers: headers,
-                body: JSON.stringify(null),
             })
                 .then(response => response.json()
                     .then(data => {
@@ -63,24 +63,25 @@ export class AdminStatePersistence {
             fetch(`${config.DOMAIN}/api/sessions`, {
                 method: 'GET',
                 headers: headers,
-                body: JSON.stringify(null),
             })
                 .then(response => {
+                    console.log(response);
                     const new_accessToken = response.headers.get('x-access-token');
                     if (new_accessToken) {
                         //if a new accessToken is provided, update it.
                         TokenHolderSingleton.instance.accessToken = response.headers.get('x-access-token');
                     }
                     return response.json()
-                })
-                .then(data => {
-                    if (data.valid_until) {
-                        resolve();
-                    } else {
-                        reject();
-                    }
-                }).catch(() => reject())
-                .catch(() => reject());
+                        .then(data => {
+                            console.log(data);
+                            if (data.valid_until) {
+                                resolve();
+                            } else {
+                                reject();
+                            }
+                        }).catch(() => reject());
+
+                }).catch(() => reject());
         });
     }
 
