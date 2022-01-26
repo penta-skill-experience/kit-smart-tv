@@ -91,7 +91,8 @@ export class RootComponent extends React.Component<any, RootComponentState> {
         const widgetDataList = this.state.widgetDataByLocation[location];
         if (widgetDataList.length === 0) {
             return <SquareHolder title={""} accentColor={this.state.accentBarColor}
-                                 titleColor={this.state.titleFontColor}/>;
+                                 titleColor={this.state.titleFontColor} specialBoldFontColor={this.state.specialBoldFontColor}
+                                 specialSubtleFontColor={this.state.specialSubtleFontColor}/>;
         } else {
             return <RotatorComponent>
                 {
@@ -110,13 +111,15 @@ export class RootComponent extends React.Component<any, RootComponentState> {
         try {
             const widgetComponent = widget.createDisplayComponent(widgetData.rawConfig);
             return <SquareHolder title={widget.getTitle()} accentColor={this.state.accentBarColor}
-                                 titleColor={this.state.titleFontColor}>
+                                 titleColor={this.state.titleFontColor} specialBoldFontColor={this.state.specialBoldFontColor}
+                                 specialSubtleFontColor={this.state.specialSubtleFontColor}>
                 {widgetComponent}
             </SquareHolder>;
         } catch (e) {
             // todo: make design for error message nicer
             return <SquareHolder title={widget.getTitle()} accentColor={this.state.accentBarColor}
-                                 titleColor={this.state.titleFontColor}>
+                                 titleColor={this.state.titleFontColor} specialBoldFontColor={this.state.specialBoldFontColor}
+                                 specialSubtleFontColor={this.state.specialSubtleFontColor}>
                 <p>Error while creating widget: {e.message}</p>
             </SquareHolder>;
         }

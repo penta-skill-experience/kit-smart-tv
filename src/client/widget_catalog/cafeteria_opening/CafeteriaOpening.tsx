@@ -10,6 +10,8 @@ interface CafeteriaOpeningState {
 
     openingTime: string;
     closingTime: string;
+    openColor: string; //make sure so pass these down from above
+    closedColor: string;
 }
 
 export class CafeteriaOpening extends React.Component<any, CafeteriaOpeningState> {
@@ -23,6 +25,9 @@ export class CafeteriaOpening extends React.Component<any, CafeteriaOpeningState
 
             openingTime: "",
             closingTime: "",
+
+            openColor: "green",
+            closedColor: "black",
         };
     }
 
@@ -92,22 +97,36 @@ export class CafeteriaOpening extends React.Component<any, CafeteriaOpeningState
         return <div className="grid grid-flow-row sm:g-0.5 xl:gap-1.5 2xl:gap-2 items-center box-border h-fit">
             {
                 <div
-                    className="grid grid-flow-col font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl">
+                    className="grid grid-flow-row lg:gap-3 xl:gap-4 4xl:gap-6 8xl:gap-8 font-light leading-normal sm:text-xs md:text-sm lg:text-base lg:text-xl 2xl:text-2xl 4xl:text-4xl 8xl:text-5xl sm:text-left">
                     <div>
-                        <div>Dining Hall:</div>
-                        <div>[koeri]Werk:</div>
-                        <div>[pizza+pasta]Werk:</div>
-                        <div>Cafeteria:</div>
+                        <div>Dining Hall:&nbsp;
+                            <span className="font-medium py-1 px-2 rounded-full" style={{
+                                backgroundColor: (this.state.openRightNow ? this.state.openColor : this.state.closedColor),
+                            }}>{(this.state.openRightNow ? "open" : "closed")}</span>
+                        </div>
+                        <div>[koeri]Werk:&nbsp;
+                            <span className="font-medium py-1 px-2 rounded-full" style={{
+                                backgroundColor: (this.state.openRightNow ? this.state.openColor : this.state.closedColor),
+                            }}>{(this.state.openRightNow ? "open" : "closed")}</span>
+                        </div>
+                        <div>[pizza+pasta]Werk:&nbsp;
+                            <span className="font-medium py-1 px-2 rounded-full" style={{
+                                backgroundColor: (this.state.openRightNow ? this.state.openColor : this.state.closedColor),
+                            }}>{(this.state.openRightNow ? "open" : "closed")}</span>
+                        </div>
+                        <div>Cafeteria:&nbsp;
+                            <span className="font-medium py-1 px-2 rounded-full" style={{
+                                backgroundColor: (this.state.openRightNow ? this.state.openColor : this.state.closedColor),
+                            }}>{(this.state.openRightNow ? "open" : "closed")}</span>
+                        </div>
                     </div>
                     <div>
                         {(this.state.openRightNow ?
                             <div>
-                                open until
-                                <div>{this.state.closingTime}</div>
+                                until:{this.state.closingTime}
                             </div> :
                             <div>
-                                closed
-                                until <div>{this.state.openingTime} {(this.state.openToday) ? " today" : " on " + this.state.dateCafeteria}</div>
+                                reopens: {this.state.openingTime} {(this.state.openToday) ? " today" : " on " + this.state.dateCafeteria}
                             </div>)
                         }
                     </div>
