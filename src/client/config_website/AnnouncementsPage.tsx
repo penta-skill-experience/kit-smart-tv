@@ -53,7 +53,7 @@ export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNa
                                     {item.name}
                                 </Grid>
                                 <Grid item xs={1}>
-                                    <Button onClick={() => {handleDeleteUser(item.mail)}}>
+                                    <Button onClick={() => {handleDeleteUser(item)}}>
                                         <DeleteIcon/>
                                     </Button>
                                 </Grid>

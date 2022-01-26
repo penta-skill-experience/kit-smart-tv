@@ -13,10 +13,11 @@ import {Button, Grid} from "@mui/material";
 import {AnnouncementsPage} from "./AnnouncementsPage";
 import * as emailValidator from "email-validator";
 import {DesignConfigPersistence} from "../../shared/persistence/DesignConfigPersistence";
-import {Widget} from "../widget/Widget";
 import {WidgetLoader} from "../widget/WidgetLoader";
 import {WidgetData} from "../widget/WidgetData";
 import {WidgetPersistence} from "../../shared/persistence/WidgetPersistence";
+import {VerifiedUser} from "../../shared/values/VerifiedUser";
+import {AnnouncementPersistence} from "../../shared/persistence/AnnouncementPersistence";
 
 
 interface TabPanelProps {
@@ -45,6 +46,7 @@ function TabPanel(props: TabPanelProps) {
 const designConfigPersistence = new DesignConfigPersistence();
 const widgetLoader = new WidgetLoader();
 const widgetPersistence = new WidgetPersistence();
+const announcementPersistence = new AnnouncementPersistence();
 
 export function ConfigWebsite() {
     //state variables and methods for login page
@@ -223,22 +225,23 @@ export function ConfigWebsite() {
     //state variables and methods for announcements page
     const initialMailList = [];
     const [mailList, setMailList] = React.useState(initialMailList);
-    const [verUser, setVerUser] = React.useState({
+    const [verUserListElement, setVerUserListElement] = React.useState({
         mail:'',
         name:'',
+        verUser:null,
     });
 
     const handleMailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setVerUser({...verUser, mail:event.target.value});
+        setVerUserListElement({...verUserListElement, mail:event.target.value});
     };
 
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setVerUser({...verUser, name:event.target.value});
+        setVerUserListElement({...verUserListElement, name:event.target.value});
     };
 
     const handleAddMail = () => {
-        const alreadyExists = mailList.some(item => verUser.mail === item.mail);
-        if (!emailValidator.validate(verUser.mail)) {
+        const alreadyExists = mailList.some(item => verUserListElement.mail === item.mail);
+        if (!emailValidator.validate(verUserListElement.mail)) {
             alert('E-Mail does not exist')
             return;
         }
@@ -246,19 +249,23 @@ export function ConfigWebsite() {
             alert('This E-Mail already exists')
             return;
         }
-        if (verUser.name !== '' && verUser.mail !== '') {
+        if (verUserListElement.name !== '' && verUserListElement.mail !== '') {
+            const newVerUser = new VerifiedUser(verUserListElement.mail, verUserListElement.name)
             const newUser = {
-                mail:verUser.mail,
-                name:verUser.name,
+                mail:verUserListElement.mail,
+                name:verUserListElement.name,
+                verUser: newVerUser,
             }
             setMailList(mailList.concat(newUser));
+            announcementPersistence.addVerifiedUser(newUser.verUser);
             return;
         }
         alert('Username and email have to be filled out')
     };
 
-    const handleDeleteUser = (mail) => {
-        setMailList(mailList.filter(item => item.mail !== mail));
+    const handleDeleteUser = (listItem) => {
+        setMailList(mailList.filter(item => item.mail !== listItem.mail));
+        announcementPersistence.removeVerifiedUser(listItem.verUser);
     }
 
     //state variable for log out
@@ -351,7 +358,7 @@ export function ConfigWebsite() {
                     <TabPanel value={pageNumber} index={3}>
                         <AnnouncementsPage
                             mailList={mailList}
-                            verUser={verUser}
+                            verUser={verUserListElement}
                             handleMailChange={handleMailChange}
                             handleNameChange={handleNameChange}
                             handleAddMail={handleAddMail}
