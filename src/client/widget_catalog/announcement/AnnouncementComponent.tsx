@@ -39,8 +39,11 @@ export class AnnouncementComponent extends React.Component<{}, AnnouncementState
     }
 
     render() {
-        if (this.state.announcements.length > 0) {
-            return this.state.announcements.map(announcement => {
+        const sortedAnnouncements = this.state.announcements.sort((ann1, ann2) => {
+            return ann1.timeOfAddition < ann2.timeOfAddition ? 1 : -1; // sort, so newest are at the front
+        })
+        if (sortedAnnouncements.length > 0) {
+            return sortedAnnouncements.slice(0, AnnouncementConfig.DISPLAYED_ANNOUNCEMENTS + 1).map(announcement => {
                 return <div className = {"font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl"}>
                     <b>{announcement.title} - {this.getAuthorForAnnouncement(announcement)} </b> <br />
                         {announcement.text} <br /><br />
