@@ -25,6 +25,7 @@ import {updateConfigSchema} from "./schema/config.schema";
 import {getConfigHandler, updateConfigHandler} from "./controller/config.controller";
 import {updateValuesSchema} from "./schema/values.schema";
 import {getValuesHandler, updateValuesHandler} from "./controller/values.controller";
+import cors from "cors";
 
 serverSetup(process.env.MONGO_URI);
 
@@ -36,7 +37,9 @@ export function serverSetup(dbUri : string) {
 
     app.use(express.json());
 
-//app.use(cors());
+
+
+    app.use(cors());
 
 
     app.use(deserializeAdmin);
