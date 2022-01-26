@@ -2,9 +2,11 @@ import * as React from "react";
 import {Announcement} from "../../../server/announcement_management/Announcement";
 import {AnnouncementPersistence} from "../../../shared/persistence/AnnouncementPersistence";
 import * as AnnouncementConfig from "./AnnouncementComponent.json"
+import {VerifiedUser} from "../../../shared/values/VerifiedUser";
 
 interface AnnouncementState {
     announcements : Announcement[];
+    verifiedUsers : VerifiedUser[]
 }
 
 export class AnnouncementComponent extends React.Component<{}, AnnouncementState> {
@@ -12,15 +14,19 @@ export class AnnouncementComponent extends React.Component<{}, AnnouncementState
     constructor(props) {
         super(props);
         this.state = {
-            announcements: []
+            announcements: [],
+            verifiedUsers: []
         };
     }
 
     async tick() {
         let currentAnnouncements : Announcement[];
         await new AnnouncementPersistence().getAnnouncements().then(data => currentAnnouncements = data);
+        let currentVerifiedUsers : VerifiedUser[];
+        await new AnnouncementPersistence().getVerifiedUsers().then(data => currentVerifiedUsers = data);
         this.setState({
-            announcements: currentAnnouncements
+            announcements: currentAnnouncements,
+            verifiedUsers: currentVerifiedUsers
         });
     }
 
@@ -33,15 +39,25 @@ export class AnnouncementComponent extends React.Component<{}, AnnouncementState
     }
 
     render() {
+
         if (this.state.announcements.length > 0) {
             return this.state.announcements.map(announcement => {
                 return <div>
-                    <b>{announcement.title} - {announcement.author} </b> <br />
+                    <b>{announcement.title} - {this.getAuthorForAnnouncement(announcement)} </b> <br />
                         {announcement.text} <br />
                     </div>
             })
         } else {
-            return <div />
+            return [];
         }
+    }
+
+    private getAuthorForAnnouncement(announcement : Announcement) : string {
+        for (let verifiedUser of this.state.verifiedUsers) {
+            if (verifiedUser.email === announcement.author) {
+                return verifiedUser.name;
+            }
+        }
+        return announcement.author;
     }
 }

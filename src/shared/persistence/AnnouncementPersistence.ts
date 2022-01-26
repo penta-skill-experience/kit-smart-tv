@@ -10,8 +10,8 @@ export class AnnouncementPersistence {
         //todo
         return new Promise<Announcement[]>(resolve => {
             const data = [
-                new Announcement("Hello World", "Bob", "What's going on?"),
-                new Announcement("Wello Horld", "Alice", "That's going on!"),
+                new Announcement("Hello World", "bob@kit.edu", "What's going on?"),
+                new Announcement("Wello Horld", "alice@kit.edu", "That's going on!"),
             ];
             resolve(data);
         });
