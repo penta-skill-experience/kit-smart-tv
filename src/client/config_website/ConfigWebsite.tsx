@@ -13,6 +13,10 @@ import {Button, Grid} from "@mui/material";
 import {AnnouncementsPage} from "./AnnouncementsPage";
 import * as emailValidator from "email-validator";
 import {DesignConfigPersistence} from "../../shared/persistence/DesignConfigPersistence";
+import {Widget} from "../widget/Widget";
+import {WidgetLoader} from "../widget/WidgetLoader";
+import {WidgetData} from "../widget/WidgetData";
+import {WidgetPersistence} from "../../shared/persistence/WidgetPersistence";
 
 
 interface TabPanelProps {
@@ -39,6 +43,8 @@ function TabPanel(props: TabPanelProps) {
 }
 
 const designConfigPersistence = new DesignConfigPersistence();
+const widgetLoader = new WidgetLoader();
+const widgetPersistence = new WidgetPersistence();
 
 export function ConfigWebsite() {
     //state variables and methods for login page
@@ -111,69 +117,86 @@ export function ConfigWebsite() {
         designConfigPersistence.setSelectedColorSchemeId(colorScheme);
         designConfigPersistence.setSelectedFontSize(fontSize);
         //todo
-        // designConfigPersistence.setSelectedBackground();
+        //designConfigPersistence.setSelectedBackground();
     };
 
     //state variables and methods for layout page
-    const initialList = [];
+    const initialWidgetList = [];
+    const initialWidgetDataList = [];
+    const [widgetList, setWidgetList] = React.useState(initialWidgetList);
+    const [widgetDataList, setWidgetDataList] = React.useState(initialWidgetDataList);
     const [counter, setCounter] = useState(1);
-    const [list, setList] = React.useState(initialList);
-    const [widget, setWidget] = React.useState({
-        id:0,
-        name:'',
-        position:'',
-        configurable:false,
-    });
 
-    const incrementCounter = () => setCounter(counter + 1);
+    const [widgetListElement, setWidgetListElement] = React.useState({
+        id:0,
+        position:'',
+        widgetNameText:'',
+        widget: null,
+        widgetData:null,
+    });
 
     const handleWidgetSelection = (event: SelectChangeEvent) => {
         console.log(event.target.value)
         //todo
         //config is not always true
+        const newWidget = widgetLoader.getWidget(event.target.value);
         const updatedValue = {
             id:counter,
-            name:event.target.value,
             position:'',
-            configurable:true,
+            widgetNameText:event.target.value,
+            widget: newWidget,
+            widgetData: new WidgetData(event.target.value, -1, null),
         }
-        setWidget(updatedValue)
+        setWidgetListElement(updatedValue)
     };
 
     const handleAddWidget = () => {
-        if (widget.name !== '') {
+        if (widgetListElement.widget !== null) {
             const newWidget = {
                 //todo
                 //config is not always true
                 id:counter,
-                name:widget.name,
                 position:'',
-                configurable:true,
+                widgetNameText:widgetListElement.widgetNameText,
+                widget: widgetListElement.widget,
+                widgetData: widgetListElement.widgetData
             }
-            setList(list.concat(newWidget));
+            setWidgetList(widgetList.concat(newWidget));
             incrementCounter();
-            console.log('Added widget ' + newWidget.name + ' with id ' + newWidget.id)
+            console.log('Widget ' + newWidget.widget.getTitle() + ' with id ' + newWidget.id + ' and widget id ' + newWidget.widgetData.widgetId)
         }
     };
 
+    const incrementCounter = () => setCounter(counter + 1);
+
     const handleDeleteWidget = (id) => {
         console.log('Widget with id ' + id + ' is removed ')
-        setList(list.filter(item => item.id !== id));
-    }
+        setWidgetList(widgetList.filter(item => item.id !== id));
+    };
 
     const handlePosition = (id, position) => {
-        const newList = list.map((item) => {
+        const newList = widgetList.map((item) => {
             if (item.id === id) {
-                const newWidget = { ...item, position: position }
+                const newWidgetData = new WidgetData(widgetListElement.widgetData.widgetId, position, null)
+                const newWidget = { ...item, widgetData: newWidgetData}
+                //todo
+                //remove
+                console.log('Position of Widget ' + newWidget.widget.getTitle() + 'changed to position ' + newWidget.widgetData.location)
                 return newWidget;
             } else {
                 return item;
             }
         });
+        setWidgetList(newList);
+    };
 
-        setList(newList);
-
-    }
+    const handleLayoutChange = () => {
+        const newWidgetDataList = widgetList.map(item => (
+            item.widgetData
+        ));
+        setWidgetDataList(newWidgetDataList);
+        widgetPersistence.setWidgetDataList(widgetDataList);
+    };
 
     //state variables and methods for admin password page
     const [newPassword, setNewPassword] = useState('')
@@ -305,12 +328,13 @@ export function ConfigWebsite() {
                     </TabPanel>
                     <TabPanel value={pageNumber} index={1}>
                         <LayoutPage
-                            list={list}
-                            widget={widget}
+                            list={widgetList}
+                            widgetListElement={widgetListElement}
                             handleWidgetSelection={(event) => handleWidgetSelection(event)}
                             handleAddWidget={handleAddWidget}
                             handleDeleteWidget={handleDeleteWidget}
                             handlePosition={handlePosition}
+                            handleLayoutChange={handleLayoutChange}
                         >
                         </LayoutPage>
                     </TabPanel>
