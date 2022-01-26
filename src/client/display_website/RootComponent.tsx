@@ -8,6 +8,7 @@ import {WidgetData} from "../widget/WidgetData";
 import {RotatorComponent} from "./RotatorComponent";
 import {DesignValuesPersistence} from "../../shared/persistence/DesignValuesPersistence";
 import {DesignConfigPersistence} from "../../shared/persistence/DesignConfigPersistence";
+import * as RootComponentConfig from "./RootComponent.json";
 
 interface RootComponentState {
     widgetDataByLocation: WidgetData[][];
@@ -77,8 +78,8 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             widgetDataByLocation: [0, 1, 2, 3, 4, 5].map(location => widgetDataList.filter(widgetData => widgetData.location === location))
         }));
         this.loadTheme();
+        setInterval(() => this.loadTheme(), RootComponentConfig.ADMIN_PAGE_REFRESH_RATE);
     }
-
     private renderLocation(location: number) {
         const widgetDataList = this.state.widgetDataByLocation[location];
         if (widgetDataList.length === 0) {
@@ -126,16 +127,16 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             <div className={"flex "} style={{
                 color: this.state.bodyFontColor
             }}>
-                <div className="z-30 absolute left-10 absolute bottom-7">
+                <div className="z-20 absolute left-10 absolute bottom-7">
                     <img className="sm:w-24 lg:w-40 2xl:w-60 4xl:w-80"
                          src="https://www.artwork.de/wp-content/uploads/2015/08/logo_TF_NEU_4c_ai.png" alt="IHKLogo"/>
                 </div>
-                <div className="z-20 sm:w-4/12 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30"
+                <div className="z-10 sm:w-4/12 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30"
                      style={{
                          height: "100vh"
                      }}>
                     <div
-                        className="sm:p-4 lg:p-6 xl:p-8 4xl:p-12 8xl:p-14 grid grid-rows-2 grid-flow-row gap-8 box-border">
+                        className="sm:p-4 lg:p-6 xl:p-8 4xl:p-12 8xl:p-14 grid grid-rows-2 grid-flow-row box-border lg:gap-3 xl:gap-4 4xl:gap-6 8xl:gap-8">
                         <div>
                             <DigitalTime/>
                             <Weather/>
@@ -144,7 +145,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
                     </div>
                 </div>
                 <div
-                    className="z-10 w-2/3 sm:p-4 lg:p-6 xl:p-8 4xl:p-12 8xl:p-14 absolute right-0 grid grid-cols-2 box-border sm:gap-2 lg:gap-3 xl:gap-4 4xl:gap-6 8xl:gap-8">
+                    className="w-2/3 sm:p-4 lg:p-6 xl:p-8 4xl:p-12 8xl:p-14 absolute right-0 grid grid-cols-2 box-border sm:gap-2 lg:gap-3 xl:gap-4 4xl:gap-6 8xl:gap-8">
                     {this.renderLocation(2)}
                     {this.renderLocation(3)}
                     {this.renderLocation(4)}
