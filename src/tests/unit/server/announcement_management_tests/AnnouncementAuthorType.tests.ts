@@ -28,38 +28,70 @@ describe("testing AnnouncementAuthorType.ts", () => {
     // mocking getVerifiedUsers from AnnouncementPersistence
     const mockedGetVerifiedUsers = jest.spyOn(AnnouncementPersistence.prototype, "getVerifiedUsers");
     mockedGetVerifiedUsers.mockImplementation(() => {
-        return [verifiedUser1, verifiedUser2, verifiedUser3];
+        return new Promise<VerifiedUser[]>(resolve => {
+            resolve([verifiedUser1, verifiedUser2, verifiedUser3]);
+        });
     });
 
     test("test ADMIN identifies correct admins", () => {
-        expect(AnnouncementAuthorType.ADMIN.isThisAuthorType(AnnouncementConfig.ADMINS[0].EMAIL)).toBe(true);
-        expect(AnnouncementAuthorType.ADMIN.isThisAuthorType(AnnouncementConfig.ADMINS[1].EMAIL)).toBe(true);
-        expect(AnnouncementAuthorType.ADMIN.isThisAuthorType("notAnAdmin@example.com")).toBe(false);
-    })
+        AnnouncementAuthorType.ADMIN.isThisAuthorType(AnnouncementConfig.ADMINS[0].EMAIL).then(result => {
+            expect(result).toBe(true);
+        });
+        AnnouncementAuthorType.ADMIN.isThisAuthorType(AnnouncementConfig.ADMINS[1].EMAIL).then(result => {
+            expect(result).toBe(true);
+        });
+        AnnouncementAuthorType.ADMIN.isThisAuthorType("notAnAdmin@example.com").then(result => {
+            expect(result).toBe(false);
+        });
+    });
 
     test("test VERIFIED identifies verified users correctly", () => {
-        expect(AnnouncementAuthorType.VERIFIED.isThisAuthorType(verifiedUser1.email)).toBe(true);
-        expect(AnnouncementAuthorType.VERIFIED.isThisAuthorType(verifiedUser2.email)).toBe(true);
-        expect(AnnouncementAuthorType.VERIFIED.isThisAuthorType(verifiedUser3.email)).toBe(true);
+        AnnouncementAuthorType.VERIFIED.isThisAuthorType(verifiedUser1.email).then(result => {
+            expect(result).toBe(true);
+        });
+        AnnouncementAuthorType.VERIFIED.isThisAuthorType(verifiedUser2.email).then(result => {
+            expect(result).toBe(true);
+        });
+        AnnouncementAuthorType.VERIFIED.isThisAuthorType(verifiedUser3.email).then(result => {
+            expect(result).toBe(true);
+        });
 
-        expect(AnnouncementAuthorType.VERIFIED.isThisAuthorType(unverifiedUserEmail1)).toBe(false);
-        expect(AnnouncementAuthorType.VERIFIED.isThisAuthorType(unverifiedUserEmail2)).toBe(false);
+        AnnouncementAuthorType.VERIFIED.isThisAuthorType(unverifiedUserEmail1).then(result => {
+            expect(result).toBe(false);
+        });
+        AnnouncementAuthorType.VERIFIED.isThisAuthorType(unverifiedUserEmail2).then(result => {
+            expect(result).toBe(false);
+        });
     })
 
     test("test UNVERIFIED identifies unverified users correctly", () => {
-        expect(AnnouncementAuthorType.UNVERIFIED.isThisAuthorType(verifiedUser1.email)).toBe(false);
-        expect(AnnouncementAuthorType.UNVERIFIED.isThisAuthorType(verifiedUser2.email)).toBe(false);
-        expect(AnnouncementAuthorType.UNVERIFIED.isThisAuthorType(verifiedUser3.email)).toBe(false);
+        AnnouncementAuthorType.UNVERIFIED.isThisAuthorType(verifiedUser1.email).then(result => {
+            expect(result).toBe(false);
+        });
+        AnnouncementAuthorType.UNVERIFIED.isThisAuthorType(verifiedUser2.email).then(result => {
+            expect(result).toBe(false);
+        });
+        AnnouncementAuthorType.UNVERIFIED.isThisAuthorType(verifiedUser3.email).then(result => {
+            expect(result).toBe(false);
+        });
 
-        expect(AnnouncementAuthorType.UNVERIFIED.isThisAuthorType(unverifiedUserEmail1)).toBe(true);
-        expect(AnnouncementAuthorType.UNVERIFIED.isThisAuthorType(unverifiedUserEmail2)).toBe(true);
+        AnnouncementAuthorType.UNVERIFIED.isThisAuthorType(unverifiedUserEmail1).then(result => {
+            expect(result).toBe(true);
+        });
+        AnnouncementAuthorType.UNVERIFIED.isThisAuthorType(unverifiedUserEmail2).then(result => {
+            expect(result).toBe(true);
+        });
 
         // UNVERIFIED.isThisAuthorType also should return false if the given author is an admin but not a verified user
-        expect(AnnouncementAuthorType.UNVERIFIED.isThisAuthorType(AnnouncementConfig.ADMINS[0].EMAIL)).toBe(false);
-        expect(AnnouncementAuthorType.UNVERIFIED.isThisAuthorType(AnnouncementConfig.ADMINS[1].EMAIL)).toBe(false);
-    })
+        AnnouncementAuthorType.UNVERIFIED.isThisAuthorType(AnnouncementConfig.ADMINS[0].EMAIL).then(result => {
+            expect(result).toBe(false);
+        });
+        AnnouncementAuthorType.UNVERIFIED.isThisAuthorType(AnnouncementConfig.ADMINS[1].EMAIL).then(result => {
+            expect(result).toBe(false);
+        });
+    });
 
     afterAll(() => {
         jest.restoreAllMocks();
-    })
-})
+    });
+});

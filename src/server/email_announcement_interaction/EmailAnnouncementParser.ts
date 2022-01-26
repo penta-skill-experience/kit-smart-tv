@@ -3,7 +3,7 @@ import {Announcement} from "../announcement_management/Announcement";
 import {IMailObject} from "mail-listener-typescript";
 
 /**
- * This class is used to parse IMailObjects parsed from mails to instances of {@Code Announcement}.
+ * This class is used to parse IMailObjects parsed from mails to instances of Announcement.
  */
 export class EmailAnnouncementParser implements AnnouncementParser {
 
