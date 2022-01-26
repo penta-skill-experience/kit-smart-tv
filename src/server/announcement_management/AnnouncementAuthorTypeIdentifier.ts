@@ -6,18 +6,25 @@ import {AnnouncementAuthorType} from "./AnnouncementAuthorType";
 export class AnnouncementAuthorTypeIdentifier {
 
     /**
-     * Gets the author type as an instance of an implementation of {@code AnnouncementAuthorType}
+     * Gets the author type as an instance of an implementation of AnnouncementAuthorType
      *
      * @param author the author as a string. All valid authors as strings are an e-mail address.
      */
-    getAuthorType(author : string) : AnnouncementAuthorType {
-        let authorTypeToReturn : AnnouncementAuthorType;
-        AnnouncementAuthorType.values.forEach(authorType => {
-            // this is fine, because the sets associated with each type must be disjoint
-            if (authorType.isThisAuthorType(author)) {
-                authorTypeToReturn = authorType;
+    async getAuthorType(author : string) : Promise<AnnouncementAuthorType> {
+        return new Promise<AnnouncementAuthorType>(async resolve => {
+            let authorTypeToReturn : AnnouncementAuthorType;
+            for (const authorType of AnnouncementAuthorType.values) {
+                // this is fine, because the sets associated with each type must be disjoint
+                // if (authorType.isThisAuthorType(author)) {
+                //     authorTypeToReturn = authorType;
+                // }
+                await authorType.isThisAuthorType(author).then(result => {
+                    if (result) {
+                        authorTypeToReturn = authorType;
+                    }
+                });
             }
-        });
-        return authorTypeToReturn;
+            resolve(authorTypeToReturn);
+        })
     }
 }

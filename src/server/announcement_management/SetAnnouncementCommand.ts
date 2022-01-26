@@ -46,10 +46,12 @@ export class SetAnnouncementCommand implements AnnouncementCommand {
         this.announcement = announcement;
     }
 
-    executeCommand() {
-        const authorType = new AnnouncementAuthorTypeIdentifier().getAuthorType(this.announcement.author);
+    async executeCommand() {
+        let authorType : AnnouncementAuthorType
+        await new AnnouncementAuthorTypeIdentifier().getAuthorType(this.announcement.author).then(result =>
+            authorType = result);
 
-        const currentAnnouncements = new AnnouncementPersistence().getAnnouncements();
+        const currentAnnouncements = await new AnnouncementPersistence().getAnnouncements();
         const currentAnnouncementTitles = getAnnouncementTitles(currentAnnouncements);
 
         if (currentAnnouncementTitles.includes(this.announcement.title)) {

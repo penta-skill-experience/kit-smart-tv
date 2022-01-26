@@ -3,6 +3,9 @@ import * as SquareHolderConfig from "./SquareHolder.json";
 export class SquareHolder extends React.Component<any, any> {
 
     pageScroll = function() {
+        if(this.state.uniqueID === null || document.getElementById(this.state.uniqueID) === null) {
+            return;
+        }
         document.getElementById(this.state.uniqueID).scrollBy(0,this.state.scroll); // horizontal and vertical scroll increments
         if((document.getElementById(this.state.uniqueID).scrollTop +
             document.getElementById(this.state.uniqueID).clientHeight) >=
@@ -27,8 +30,7 @@ export class SquareHolder extends React.Component<any, any> {
             error: undefined,
             scroll: SquareHolderConfig.SCROLL_SPEED
         };
-        this.pageScroll = this.pageScroll.bind(this);
-        setInterval(() => this.pageScroll(), 50);
+        setInterval(() => this.pageScroll(), SquareHolderConfig.SCROLL_REFRESH);
         //(this.doesOverflow() ? setInterval(() => this.pageScroll(), 50):"");
     }
 
@@ -40,11 +42,8 @@ export class SquareHolder extends React.Component<any, any> {
     }
 
     render() {
-        return <div className="w-fit" style={{
-            height: "44vh"
-        }}>
-            <div className={"shadow-2xl rounded-2xl bg-clip-padding backdrop-filter backdrop-blur-md box-border"
-                + (this.props.fill ? (this.props.darkTheme ? " bg-zinc-900" : " bg-neutral-100") : "")}>
+        return <div className={"shadow-2xl rounded-2xl box-border"
+                 + ((this.props.darkTheme === undefined) ? " bg-clip-padding backdrop-filter backdrop-blur-md" : (this.props.darkTheme ? " bg-zinc-900" : " bg-neutral-100"))}>
                 <div
                     className="sm:px-2 lg:px-3 xl:px-4 4xl:px-5 8xl:px-6 font-light leading-normal text-green-600 sm:text-base md:text-xl lg:text-2xl xl:text-4xl 2xl:text-5xl 8xl:text-6xl">
                     {this.props.title}
@@ -55,7 +54,7 @@ export class SquareHolder extends React.Component<any, any> {
                 </div>
                 <div className={"sm:pl-5 sm:pt-1 sm:pb-2 sm:pr-2 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12 overflow-x-scroll scrollbar-hide scroll-smooth"}
                      id={this.state.uniqueID} style={{
-                    maxHeight: "38vh",
+                    height: "38vh",
                     scrollBehavior: "smooth"
                 }}>
                     {this.state.hasError ?
@@ -63,21 +62,7 @@ export class SquareHolder extends React.Component<any, any> {
                         <p>Error while rendering widget: {this.state.error.message}</p>
                         : this.props.children  // only show children if they didn't produce an error
                     }
-                    <div className="flex space-x-1 justify-center" style={{
-                        opacity: 1
-                    }}>
-                        <a href="#"
-                           className="rounded-full bg-gray-600 rounded-md hover:bg-gray-800 hover:text-white">
-                        </a>
-                        <a href="#"
-                           className="rounded-full bg-gray-600 rounded-md hover:bg-gray-800 hover:text-white">
-                        </a>
-                        <a href="#"
-                           className="rounded-full bg-gray-600 rounded-md hover:bg-gray-800 hover:text-white">
-                        </a>
-                    </div>
                 </div>
-            </div>
-        </div>;
+            </div>;
     }
 }
