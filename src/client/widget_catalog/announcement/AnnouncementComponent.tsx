@@ -39,12 +39,11 @@ export class AnnouncementComponent extends React.Component<{}, AnnouncementState
     }
 
     render() {
-
         if (this.state.announcements.length > 0) {
             return this.state.announcements.map(announcement => {
-                return <div>
+                return <div className = {"font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl"}>
                     <b>{announcement.title} - {this.getAuthorForAnnouncement(announcement)} </b> <br />
-                        {announcement.text} <br />
+                        {announcement.text} <br /><br />
                     </div>
             })
         } else {

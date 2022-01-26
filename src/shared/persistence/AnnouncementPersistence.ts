@@ -10,8 +10,11 @@ export class AnnouncementPersistence {
         //todo
         return new Promise<Announcement[]>(resolve => {
             const data = [
-                new Announcement("Hello World", "bob@kit.edu", "What's going on?"),
-                new Announcement("Wello Horld", "alice@kit.edu", "That's going on!"),
+                new Announcement("Trash", "bob@kit.edu", "Don't forget to take out the trash after class"),
+                new Announcement("Life's Good", "alice@kit.edu", "It's almost time to leave for the day lets not forget that life's good"),
+                new Announcement("Life's toll", "alice@kit.edu", "It's almost time to leave for the day lets not forget that life's good"),
+                new Announcement("Life's very nice", "alice@kit.edu", "It's almost time to leave for the day lets not forget that life's good"),
+                new Announcement("Life's amazing", "alice@kit.edu", "It's almost time to leave for the day lets not forget that life's good"),
             ];
             resolve(data);
         });
@@ -21,8 +24,8 @@ export class AnnouncementPersistence {
         //todo
         return new Promise<VerifiedUser[]>(resolve => {
             const data = [
-                new VerifiedUser("bob@kit.edu", "Bob"),
-                new VerifiedUser("alice@kit.edu", "Alice")
+                new VerifiedUser("bob@kit.edu", "Gertan Vanderwalt"),
+                new VerifiedUser("alice@kit.edu", "Alice May")
             ]
             resolve(data);
         });
