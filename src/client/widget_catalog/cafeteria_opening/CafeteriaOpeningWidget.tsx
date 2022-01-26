@@ -18,6 +18,6 @@ export class CafeteriaOpeningWidget implements Widget {
     }
 
     isConfigurable(): boolean {
-        return true;
+        return false;
     }
 }
