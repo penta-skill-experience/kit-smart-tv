@@ -1,39 +1,30 @@
 import {WidgetData} from "../../client/widget/WidgetData";
+import config from "./persistence.config.json";
+import {TokenHolderSingleton} from "./TokenHolderSingleton";
 
 export class WidgetPersistence {
 
-    setWidgetDataList(list: WidgetData[]) {
-        //todo
+    setWidgetDataList(list: WidgetData[]): Promise<Response> {
+
+        const headers = new Headers();
+        headers.append("x-refresh", TokenHolderSingleton.instance.refreshToken);
+        headers.append("Authorization", `Bearer ${TokenHolderSingleton.instance.accessToken}`);
+        headers.append("Content-Type", "application/json");
+
+        const body = {widgetDataList: list};
+
+        const requestOptions = {
+            method: 'PUT',
+            headers: headers,
+            body: JSON.stringify(body),
+        };
+
+        return fetch(`${config.DOMAIN}/widgets`, requestOptions);
     }
 
     getWidgetDataList(): Promise<WidgetData[]> {
-        //todo: this is just a mock
-        return new Promise<WidgetData[]>(resolve => {
-                // insert data for widgets that you want to test here:
-                const data = [
-                    {
-                        widgetId: "tram-schedule",
-                        location: 1,
-                        rawConfig: {stop: "Durlacher Tor"},
-                    },
-                    {
-                        widgetId: "rss-feed",
-                        location: 2,
-                        rawConfig: {url: "www.example.com"},
-                    },
-                    {
-                        widgetId: "cafeteria-menu",
-                        location: 5,
-                        rawConfig: {},
-                    },
-                    {
-                        widgetId: "rss-feed",
-                        location: 5,
-                        rawConfig: {url: "www.example.com"},
-                    },
-                ];
-                resolve(data);
-            }
-        );
+        return fetch(`${config.DOMAIN}/widgets`)
+            .then((value: Response) => value.json())
+            .then(data => data.widgetDataList);
     }
 }

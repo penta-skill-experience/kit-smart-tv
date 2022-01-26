@@ -5,7 +5,6 @@ import {Weather} from "../widget_catalog/weather/Weather";
 import {WidgetLoader} from "../widget/WidgetLoader";
 import {WidgetPersistence} from "../../shared/persistence/WidgetPersistence";
 import {WidgetData} from "../widget/WidgetData";
-import {RotatorComponent} from "./RotatorComponent";
 
 interface RootComponentState {
     widgetDataByLocation: WidgetData[][];
@@ -31,34 +30,30 @@ export class RootComponent extends React.Component<any, RootComponentState> {
     componentDidMount() {
         // Query a list of all widget data.
         // setState() is called once they are received and will trigger re-rendering.
-        this.widgetPersistence.getWidgetDataList().then(widgetDataList => this.setState({
-            // separate the widgetData by location
-            widgetDataByLocation: [0, 1, 2, 3, 4, 5].map(location => widgetDataList.filter(widgetData => widgetData.location === location))
-        }));
+        this.widgetPersistence.getWidgetDataList().then(widgetDataList => {
+            this.setState({
+                // separate the widgetData by location
+                widgetDataByLocation: [0, 1, 2, 3, 4, 5].map(location => widgetDataList.filter(widgetData => widgetData.location === location))
+            });
+        });
     }
 
     private renderLocation(location: number) {
         const widgetDataList = this.state.widgetDataByLocation[location];
         if (widgetDataList.length === 0) {
-            return <SquareHolder/>;
+            return <SquareHolder />;
         } else {
-            return <RotatorComponent>
-                {
-                    widgetDataList.map((d, index) =>
-                       <div key={index}>
-                           {this.renderWidget(d)}
-                       </div>
-                    )
-                }
-            </RotatorComponent>
+            const widgetData = widgetDataList[0];//todo: rotate dynamically
+            return this.renderWidget(widgetData);
         }
     }
 
     private renderWidget(widgetData: WidgetData) {
         const widget = this.widgetLoader.getWidget(widgetData.widgetId);
+
         try {
             const widgetComponent = widget.createDisplayComponent(widgetData.rawConfig);
-            return <SquareHolder title={widget.getTitle()} darkTheme={this.state.darkTheme}>
+            return <SquareHolder title={widget.getTitle()} fill={true} darkTheme={this.state.darkTheme}>
                 {widgetComponent}
             </SquareHolder>;
         } catch (e) {
@@ -72,12 +67,12 @@ export class RootComponent extends React.Component<any, RootComponentState> {
     render() {
         // go through the list of all widget data and render them in their respective locations
         return <div className="bg-cover bg-no-repeat bg-center" id="mainFrame" style={{
-            backgroundImage: 'url(' + this.state.backgroundImage + ')',
+            backgroundImage: 'url('+this.state.backgroundImage+')',
             width: "100vw",
             height: "100vh",
             overflow: "hidden"
         }}>
-            <div className={"flex" + (this.state.darkTheme ? " text-white" : " text-black")}>
+            <div className={"flex" + (this.state.darkTheme ? " text-white":" text-black")}>
                 <div className="z-30 absolute left-10 absolute bottom-7">
                     <img className="sm:w-24 lg:w-40 2xl:w-60 4xl:w-80"
                          src="https://www.artwork.de/wp-content/uploads/2015/08/logo_TF_NEU_4c_ai.png" alt="IHKLogo"/>
@@ -95,12 +90,11 @@ export class RootComponent extends React.Component<any, RootComponentState> {
                         {this.renderLocation(1)}
                     </div>
                 </div>
-                <div
-                    className="z-10 w-2/3 sm:p-4 lg:p-6 xl:p-8 4xl:p-12 8xl:p-14 absolute right-0 grid grid-cols-2 box-border sm:gap-2 lg:gap-3 xl:gap-4 4xl:gap-6 8xl:gap-8">
-                    {this.renderLocation(2)}
-                    {this.renderLocation(3)}
-                    {this.renderLocation(4)}
-                    {this.renderLocation(5)}
+                <div className="z-10 w-2/3 sm:p-4 lg:p-6 xl:p-8 4xl:p-12 8xl:p-14 absolute right-0 grid grid-cols-2 box-border sm:gap-2 lg:gap-3 xl:gap-4 4xl:gap-6 8xl:gap-8">
+                        {this.renderLocation(2)}
+                        {this.renderLocation(3)}
+                        {this.renderLocation(4)}
+                        {this.renderLocation(5)}
 
                 </div>
             </div>

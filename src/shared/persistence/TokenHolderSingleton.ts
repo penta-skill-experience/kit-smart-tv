@@ -3,7 +3,7 @@
  */
 export class TokenHolderSingleton {
 
-    private _instance : TokenHolderSingleton = new TokenHolderSingleton();
+    private static _instance : TokenHolderSingleton = new TokenHolderSingleton();
 
     accessToken : string;
     refreshToken : string;
@@ -14,7 +14,7 @@ export class TokenHolderSingleton {
     /**
      * Returns the singleton instance.
      */
-    get instance(): TokenHolderSingleton {
+    static get instance(): TokenHolderSingleton {
         return this._instance;
     }
 }
