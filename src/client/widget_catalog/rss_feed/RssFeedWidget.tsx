@@ -31,6 +31,6 @@ export class RssFeedWidget implements Widget {
     }
 
     isConfigurable(): boolean {
-        return false;
+        return true;
     }
 }
