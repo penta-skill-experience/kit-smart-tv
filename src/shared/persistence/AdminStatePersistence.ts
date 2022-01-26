@@ -1,119 +1,120 @@
-import * as https from "https";
+import config from "./persistence.config.json";
+import {TokenHolderSingleton} from "./TokenHolderSingleton";
 
 export class AdminStatePersistence {
-    get refresh_token(): string {
-        return this._refresh_token;
-    }
-    get access_token(): string {
-        return this._access_token;
-    }
-    private _access_token: string;
-    private _refresh_token: string;
-    constructor() {
-    }
 
-    async login(password: string) : Promise<boolean> {
-        const response = await fetch('http://localhost:80/api/sessions', {
-            method: 'POST',
-            body: JSON.stringify(password), // string or object
-            headers: {
-                'Content-Type': 'application/json'
-            }
+
+    login(password: string): Promise<void> {
+
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        const body = {password: password};
+
+        return new Promise<void>((resolve, reject) => {
+            fetch(`${config.DOMAIN}/api/sessions`, {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(body),
+            })
+                .then(response => response.json()
+                    .then(data => {
+                        console.log(data);
+                        TokenHolderSingleton.instance.accessToken = data.accessToken;
+                        TokenHolderSingleton.instance.refreshToken = data.refreshToken;
+                        resolve();
+                    }).catch(() => reject())
+                ).catch(() => reject());
         });
-        try{
-            const myJson = await response.json(); //extract JSON from the http response
-            if(myJson){
-                this._access_token = myJson.accessToken;
-                this._refresh_token = myJson.refreshToken;
-                return true;
-            }
-        }
-        catch(e: any)
-        {
-            return false;
-        }
-        return false;
     }
 
-    async logout(access_token: string, refresh_token: string): Promise<boolean> {
-        const response = await fetch('http://localhost:80/api/sessions', {
-            method: 'DELETE',
-            body: null, // string or object
-            headers: {
-                'Content-Type': 'application/json',
-                'x-refresh': refresh_token,
-                'Authorization': 'Bearer ' + access_token,
-    }
+    async logout(): Promise<void> {
+        const headers = new Headers();
+        headers.append("x-refresh", TokenHolderSingleton.instance.refreshToken);
+        headers.append("Authorization", `Bearer ${TokenHolderSingleton.instance.accessToken}`);
+        headers.append("Content-Type", "application/json");
+
+        return new Promise<void>((resolve, reject) => {
+            fetch(`${config.DOMAIN}/api/sessions`, {
+                method: 'DELETE',
+                headers: headers,
+            })
+                .then(response => response.json()
+                    .then(data => {
+                        if (data.accessToken == null && data.refreshToken == null) {
+                            TokenHolderSingleton.instance.accessToken = undefined;
+                            TokenHolderSingleton.instance.refreshToken = undefined;
+                            resolve();
+                        } else {
+                            reject();
+                        }
+                    }).catch(() => reject())
+                ).catch(() => reject());
         });
-        try{
-            const myJson = await response.json(); //extract JSON from the http response
-            if(myJson){
-                this._access_token = myJson.accessToken;
-                this._refresh_token = myJson.refreshToken;
-                return true;
-            }
-        }
-        catch(e: any)
-        {
-            return false;
-        }
-        return false;
     }
 
-    async getAdminLoginState(access_token: string, refresh_token: string) {
-        var options = {
-        'method': 'GET',
-        'hostname': 'localhost',
-        'port': 80,
-        'path': '/api/sessions',
-        'headers': {
-            'x-refresh': this._refresh_token,
-            'Authorization': 'Bearer ' + this._access_token
-        },
-        'maxRedirects': 20
-    };
+    async getAdminLoginState(): Promise<void> {
+        const headers = new Headers();
+        headers.append("x-refresh", TokenHolderSingleton.instance.refreshToken);
+        headers.append("Authorization", `Bearer ${TokenHolderSingleton.instance.accessToken}`);
+        headers.append("Content-Type", "application/json");
 
-        var req = https.request(options, function (res) {
-            var chunks = [];
+        return new Promise<void>((resolve, reject) => {
+            fetch(`${config.DOMAIN}/api/sessions`, {
+                method: 'GET',
+                headers: headers,
+            })
+                .then(response => {
+                    console.log(response);
+                    const new_accessToken = response.headers.get('x-access-token');
+                    if (new_accessToken) {
+                        //if a new accessToken is provided, update it.
+                        TokenHolderSingleton.instance.accessToken = response.headers.get('x-access-token');
+                    }
+                    return response.json()
+                        .then(data => {
+                            console.log(data);
+                            if (data.valid_until) {
+                                resolve();
+                            } else {
+                                reject();
+                            }
+                        }).catch(() => reject());
 
-            res.on("data", function (chunk) {
-                chunks.push(chunk);
-            });
-
-            res.on("end", function (chunk) {
-                var body = Buffer.concat(chunks);
-                console.log(body.toString());
-                return true;
-            });
-
-            res.on("error", function (error) {
-                console.error(error);
-                return false
-            });
+                }).catch(() => reject());
         });
-
-        req.end();
-
-        //accessToken = res.headers["x-access-token"];
     }
 
-    async setPassword(oldpw: string, newpw: string, access_token: string, refresh_token: string): Promise<boolean> {
-        const response = await fetch('http://localhost:80/admin/update-password', {
-            method: 'PUT',
-            body: JSON.stringify({password: oldpw, new_password: newpw}),
-            headers: {
-                'Content-Type': 'application/json',
-                'x-refresh': refresh_token,
-                'Authorization': 'Bearer ' + access_token,
-            }
+
+    async setPassword(oldpw: string, newpw: string,): Promise<void> {
+        const headers = new Headers();
+        headers.append("x-refresh", TokenHolderSingleton.instance.refreshToken);
+        headers.append("Authorization", `Bearer ${TokenHolderSingleton.instance.accessToken}`);
+        headers.append("Content-Type", "application/json");
+
+        const body = {
+            password: oldpw,
+            new_password: newpw
+        };
+
+        return new Promise<void>((resolve, reject) => {
+            fetch(`${config.DOMAIN}/admin/update-password`, {
+                method: 'PUT',
+                headers: headers,
+                body: JSON.stringify(body),
+            })
+                .then(response => {
+                    const new_accessToken = response.headers.get('x-access-token');
+                    if (new_accessToken) {
+                        //if a new accessToken is provided, update it.
+                        TokenHolderSingleton.instance.accessToken = response.headers.get('x-access-token');
+                    }
+                    if (response.status == 200) {
+                        resolve();
+                    }
+                    reject();
+                })
+                .catch(() => reject());
         });
-        try { //extract JSON from the http response
-            if ( "password updated" === JSON.stringify(response.body)) {
-                return true;
-            }
-        } catch (e: any) {
-            return false;
-        }
-        return false;
     }
 }

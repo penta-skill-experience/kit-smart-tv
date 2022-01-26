@@ -11,6 +11,8 @@ import {SelectChangeEvent} from "@mui/material/Select";
 import {LogInPage} from "./LogInPage";
 import {Button, Grid} from "@mui/material";
 import {AnnouncementsPage} from "./AnnouncementsPage";
+import * as emailValidator from "email-validator";
+import {DesignConfigPersistence} from "../../shared/persistence/DesignConfigPersistence";
 
 
 interface TabPanelProps {
@@ -35,6 +37,8 @@ function TabPanel(props: TabPanelProps) {
         </div>
     );
 }
+
+const designConfigPersistence = new DesignConfigPersistence();
 
 export function ConfigWebsite() {
     //state variables and methods for login page
@@ -73,6 +77,8 @@ export function ConfigWebsite() {
     //state variables and methods for personalization page
     const [colorScheme,setColorScheme] = useState<string | null>(null);
     const [fontSize, setFontSize] = useState<string | null>(null);
+    const [selectedLightImage, setSelectedLightImage] = React.useState('');
+    const [selectedDarkImage, setSelectedDarkImage] = React.useState('');
 
     const handleColorSchemeChange = (
         event: React.MouseEvent<HTMLElement>,
@@ -88,6 +94,26 @@ export function ConfigWebsite() {
         setFontSize(newFontSize);
     };
 
+    const handleLightImageSelect = (event) => {
+        setSelectedLightImage(event.target.value);
+    };
+
+    const handleDarkImageSelect = (event) => {
+        setSelectedDarkImage(event.target.value);
+    };
+
+    const handlePersonalizationChange = () => {
+        if (colorScheme === null || fontSize === null) {
+            alert('Color scheme and font size must be chosen')
+            return;
+        }
+        alert('Changes saved')
+        designConfigPersistence.setSelectedColorSchemeId(colorScheme);
+        designConfigPersistence.setSelectedFontSize(fontSize);
+        //todo
+        // designConfigPersistence.setSelectedBackground();
+    };
+
     //state variables and methods for layout page
     const initialList = [];
     const [counter, setCounter] = useState(1);
@@ -97,12 +123,12 @@ export function ConfigWebsite() {
         name:'',
         position:'',
         configurable:false,
-        colorSolid:false
     });
 
     const incrementCounter = () => setCounter(counter + 1);
 
     const handleWidgetSelection = (event: SelectChangeEvent) => {
+        console.log(event.target.value)
         //todo
         //config is not always true
         const updatedValue = {
@@ -110,7 +136,6 @@ export function ConfigWebsite() {
             name:event.target.value,
             position:'',
             configurable:true,
-            colorSolid:false
         }
         setWidget(updatedValue)
     };
@@ -124,7 +149,6 @@ export function ConfigWebsite() {
                 name:widget.name,
                 position:'',
                 configurable:true,
-                colorSolid:false
             }
             setList(list.concat(newWidget));
             incrementCounter();
@@ -144,23 +168,11 @@ export function ConfigWebsite() {
                 return newWidget;
             } else {
                 return item;
-            };
+            }
         });
 
         setList(newList);
 
-    }
-
-    const handleColorSolid = (id, isChecked) => {
-        const newList = list.map((item) =>{
-            if (item.id === id) {
-                const newWidget = {...item, colorSolid: !isChecked}
-                return newWidget;
-            } else {
-                return item;
-            };
-        });
-        setList(newList)
     }
 
     //state variables and methods for admin password page
@@ -185,11 +197,48 @@ export function ConfigWebsite() {
         alert('Old Password is ' + oldPassword + ' New Password is ' + newPassword)
     };
 
-    const handleChangeSave = () => {
-        if (colorScheme === null || fontSize === null) {
-            alert('Color scheme and font size must be chosen')
-        }
+    //state variables and methods for announcements page
+    const initialMailList = [];
+    const [mailList, setMailList] = React.useState(initialMailList);
+    const [verUser, setVerUser] = React.useState({
+        mail:'',
+        name:'',
+    });
+
+    const handleMailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setVerUser({...verUser, mail:event.target.value});
     };
+
+    const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setVerUser({...verUser, name:event.target.value});
+    };
+
+    const handleAddMail = () => {
+        const alreadyExists = mailList.some(item => verUser.mail === item.mail);
+        if (!emailValidator.validate(verUser.mail)) {
+            alert('E-Mail does not exist')
+            return;
+        }
+        if (alreadyExists === true) {
+            alert('This E-Mail already exists')
+            return;
+        }
+        if (verUser.name !== '' && verUser.mail !== '') {
+            const newUser = {
+                mail:verUser.mail,
+                name:verUser.name,
+            }
+            setMailList(mailList.concat(newUser));
+            return;
+        }
+        alert('Username and email have to be filled out')
+    };
+
+    const handleDeleteUser = (mail) => {
+        setMailList(mailList.filter(item => item.mail !== mail));
+    }
+
+    //state variable for log out
 
     const handleLogout = () => {
         setLoggedInStatus(false);
@@ -215,7 +264,7 @@ export function ConfigWebsite() {
                         backgroundColor:'text.primary',}
                     }>
                         <Grid container spacing={2} direction="row" alignItems="center">
-                            <Grid item xs={2}></Grid>
+                            <Grid item xs={2}>''</Grid>
                             <Grid item container xs={8} alignItems="center" justifyContent="center">
                                 <Grid item container alignItems="center" justifyContent="center">
                                     <Grid item>
@@ -245,6 +294,11 @@ export function ConfigWebsite() {
                             fontSize={fontSize}
                             handleColorSchemeChange={handleColorSchemeChange}
                             handleFontSizeChange={handleFontSizeChange}
+                            selectedLightImage={selectedLightImage}
+                            selectedDarkImage={selectedDarkImage}
+                            handleLightImageSelect={handleLightImageSelect}
+                            handleDarkImageSelect={handleDarkImageSelect}
+                            handlePersonalizationChange={handlePersonalizationChange}
                         >
                         </PersonalizationPage>
 
@@ -253,11 +307,10 @@ export function ConfigWebsite() {
                         <LayoutPage
                             list={list}
                             widget={widget}
-                            handleWidgetSelection={handleWidgetSelection}
+                            handleWidgetSelection={(event) => handleWidgetSelection(event)}
                             handleAddWidget={handleAddWidget}
                             handleDeleteWidget={handleDeleteWidget}
                             handlePosition={handlePosition}
-                            handleColorSolid={handleColorSolid}
                         >
                         </LayoutPage>
                     </TabPanel>
@@ -268,12 +321,19 @@ export function ConfigWebsite() {
                             handleOldPassword={handleOldPassword}
                             handleNewPassword={handleNewPassword}
                             handlePasswordChange={handlePasswordChange}
-                            handleChangeSave={handleChangeSave}
                         >
                         </AdminPage>
                     </TabPanel>
                     <TabPanel value={pageNumber} index={3}>
-                        <AnnouncementsPage/>
+                        <AnnouncementsPage
+                            mailList={mailList}
+                            verUser={verUser}
+                            handleMailChange={handleMailChange}
+                            handleNameChange={handleNameChange}
+                            handleAddMail={handleAddMail}
+                            handleDeleteUser={handleDeleteUser}
+                        >
+                        </AnnouncementsPage>
                     </TabPanel>
                 </div>
             );
@@ -286,8 +346,3 @@ export function ConfigWebsite() {
         </div>
     );
 }
-
-
-
-
-

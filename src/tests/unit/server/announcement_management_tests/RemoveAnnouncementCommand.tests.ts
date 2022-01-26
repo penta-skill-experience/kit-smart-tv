@@ -35,10 +35,14 @@ const setAnnouncementsMock = jest.spyOn(AnnouncementPersistence.prototype, "setA
 const removeAnnouncementText = "";
 
 getAnnouncementsMock.mockImplementation(() => {
-    return announcements;
+    return new Promise<Announcement[]>(resolve => {
+        resolve(announcements);
+    });
 });
 getVerifiedUsersMock.mockImplementation(() => {
-    return verifiedUsers;
+    return new Promise<VerifiedUser[]>(resolve => {
+        resolve(verifiedUsers);
+    });
 });
 setAnnouncementsMock.mockImplementation(announcementsToSet => {
     setAnnouncements = announcementsToSet;
@@ -68,10 +72,8 @@ describe("testing RemoveAnnouncementCommand handles unverified users correctly",
         const removeBobsAnnouncement = new Announcement(bobAnnouncement.title,
             unverifiedUserEmail, removeAnnouncementText);
 
-        expect(() => {
-            new RemoveAnnouncementCommand(removeBobsAnnouncement).executeCommand()
-        }).toThrow(AnnouncementCommandError);
-        expect(setAnnouncements.length).toEqual(0);
+        expect(new RemoveAnnouncementCommand(removeBobsAnnouncement).executeCommand())
+            .rejects.toBeInstanceOf(AnnouncementCommandError);
     });
 });
 
@@ -81,20 +83,18 @@ describe("testing RemoveAnnouncementCommand handles verified users correctly", (
         const removeAliceAnnouncement = new Announcement(aliceAnnouncement.title, alice.email,
             removeAnnouncementText);
 
-        new RemoveAnnouncementCommand(removeAliceAnnouncement).executeCommand();
-
-        expect(setAnnouncements.includes(bobAnnouncement)).toBe(true);
-        expect(setAnnouncements.length).toEqual(1);
+        new RemoveAnnouncementCommand(removeAliceAnnouncement).executeCommand().then(() => {
+            expect(setAnnouncements.includes(bobAnnouncement)).toBe(true);
+            expect(setAnnouncements.length).toEqual(1);
+        });
     });
 
     test("verified user cannot remove announcement from other author", () => {
         const removeAliceAnnouncement = new Announcement(aliceAnnouncement.title, bob.email,
             removeAnnouncementText);
 
-        expect(() => {
-            new RemoveAnnouncementCommand(removeAliceAnnouncement).executeCommand();
-        }).toThrow(AnnouncementCommandError);
-        expect(setAnnouncements.length).toEqual(0);
+        expect(new RemoveAnnouncementCommand(removeAliceAnnouncement).executeCommand())
+            .rejects.toBeInstanceOf(AnnouncementCommandError);
     });
 });
 
@@ -104,22 +104,10 @@ describe("testing RemoveAnnouncementCommand handles admin correctly", () => {
         const removeAliceAnnouncement = new Announcement(aliceAnnouncement.title, AnnouncementConfig.ADMINS[0].EMAIL,
             removeAnnouncementText);
 
-        new RemoveAnnouncementCommand(removeAliceAnnouncement).executeCommand();
-
-        expect(setAnnouncements.includes(bobAnnouncement)).toBe(true);
-        expect(setAnnouncements.length).toEqual(1);
+        new RemoveAnnouncementCommand(removeAliceAnnouncement).executeCommand().then(() => {
+            expect(setAnnouncements.includes(bobAnnouncement)).toBe(true);
+            expect(setAnnouncements.length).toEqual(1);
+        });
     });
 });
-
-describe("miscellaneous", () => {
-
-    test("attempting to remove a non existing announcement does nothing", () => {
-        const nonExistingAnnouncement = new Announcement("not existing", bob.email,
-            "text of not existing announcement");
-
-        new RemoveAnnouncementCommand(nonExistingAnnouncement).executeCommand();
-
-        expect(setAnnouncements.length).toEqual(0);
-    })
-})
 

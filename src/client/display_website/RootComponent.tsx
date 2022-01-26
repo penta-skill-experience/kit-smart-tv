@@ -30,6 +30,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
 
     constructor(props: any) {
         super(props);
+
         this.state = {
             widgetDataByLocation: [[], [], [], [], [], []],  // 6 locations possible
             themeID: "",
@@ -80,6 +81,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
         this.loadTheme();
         setInterval(() => this.loadTheme(), RootComponentConfig.ADMIN_PAGE_REFRESH_RATE);
     }
+
     private renderLocation(location: number) {
         const widgetDataList = this.state.widgetDataByLocation[location];
         if (widgetDataList.length === 0) {
