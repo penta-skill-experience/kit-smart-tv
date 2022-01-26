@@ -20,16 +20,16 @@ export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, chi
     return (
         <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
             <Grid item xs={1}>
-                {item.name}
+                {item.widget.getTitle()}
             </Grid>
             <Grid item>
                 <FormControl>
                     <RadioGroup row>
-                        {renderPosition({item:item, position:"1", handlePosition: handlePosition})}
-                        {renderPosition({item:item, position:"2", handlePosition: handlePosition})}
-                        {renderPosition({item:item, position:"3", handlePosition: handlePosition})}
-                        {renderPosition({item:item, position:"4", handlePosition: handlePosition})}
-                        {renderPosition({item:item, position:"5", handlePosition: handlePosition})}
+                        {renderPosition({item:item, position:1, handlePosition: handlePosition})}
+                        {renderPosition({item:item, position:2, handlePosition: handlePosition})}
+                        {renderPosition({item:item, position:3, handlePosition: handlePosition})}
+                        {renderPosition({item:item, position:4, handlePosition: handlePosition})}
+                        {renderPosition({item:item, position:5, handlePosition: handlePosition})}
                     </RadioGroup>
                 </FormControl>
             </Grid>
@@ -37,7 +37,7 @@ export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, chi
                 <DeleteDialogComponent id={item.id} handleDeleteWidget={handleDeleteWidget}/>
             </Grid>
             <Grid item>
-                {renderConfigButton({name: item.name})}
+                {renderConfigButton({name: item.widget.getTitle()})}
             </Grid>
         </Grid>
 
@@ -50,7 +50,7 @@ function renderPosition({item, position, handlePosition}) {
             label={position}
             control={
                 <Radio
-                    checked={item.position === position}
+                    checked={item.widgetData.location === position}
                     onChange={
                         () => {
                             handlePosition(item.id, position)
@@ -107,7 +107,7 @@ function renderConfigButton({name}) {
         return (
             <TramScheduleConfigPage/>
         );
-    } else if (name === "RSS feed") {
+    } else if (name === "RSS Feed") {
         return (
           <RSSFeedConfigPage/>
         );
