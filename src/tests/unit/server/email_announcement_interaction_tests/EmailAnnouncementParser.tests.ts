@@ -57,16 +57,20 @@ const mail2 : IMailObject = {
     attachments: []
 }
 
-test("testing EmailAnnouncementParse parses mail1 correctly", () => {
-    const parsedAnnouncement = new EmailAnnouncementParser(mail1).parseToAnnouncement();
-    expect(parsedAnnouncement.title).toEqual(mail1Subject);
-    expect(parsedAnnouncement.author).toEqual(mail1address);
-    expect(parsedAnnouncement.text).toEqual(mail1text);
+describe("testing EmailAnnouncementParser parses mails correctly", () => {
+
+    test("testing EmailAnnouncementParser parses mail1 correctly", () => {
+        const parsedAnnouncement = new EmailAnnouncementParser(mail1).parseToAnnouncement();
+        expect(parsedAnnouncement.title).toEqual(mail1Subject);
+        expect(parsedAnnouncement.author).toEqual(mail1address);
+        expect(parsedAnnouncement.text).toEqual(mail1text);
+    });
+
+    test("testing EmailAnnouncementParser parses mail2 correctly", () => {
+        const parsedAnnouncement = new EmailAnnouncementParser(mail2).parseToAnnouncement();
+        expect(parsedAnnouncement.title).toEqual(mail2Subject);
+        expect(parsedAnnouncement.author).toEqual(mail2address);
+        expect(parsedAnnouncement.text).toEqual(mail2text);
+    });
 });
 
-test("testing EmailAnnouncementParse parses mail2 correctly", () => {
-    const parsedAnnouncement = new EmailAnnouncementParser(mail2).parseToAnnouncement();
-    expect(parsedAnnouncement.title).toEqual(mail2Subject);
-    expect(parsedAnnouncement.author).toEqual(mail2address);
-    expect(parsedAnnouncement.text).toEqual(mail2text);
-})
