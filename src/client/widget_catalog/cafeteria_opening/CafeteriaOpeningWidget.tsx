@@ -14,7 +14,7 @@ export class CafeteriaOpeningWidget implements Widget {
     }
 
     getTitle(): string {
-        return "Cafeteria Widget";
+        return "Cafeteria Status";
     }
 
     isConfigurable(): boolean {

@@ -1,36 +1,77 @@
 import * as React from "react";
-import * as CafeteriaMenuConfig from "./CafeteriaOpening.json";
+import * as CafeteriaOpeningConfig from "./CafeteriaOpening.json";
 import axios from "axios"
 
-interface OptionData {
-    food: string;
-    location: string;
+interface CafeteriaOpeningState {
+    dateCafeteria: string;
+
+    openToday: boolean;
+    openRightNow: boolean;
+
+    openingTime: string;
+    closingTime: string;
 }
 
-interface CafeteriaMenuState {
-    menus: OptionData[];
-    date: string;
-}
-
-export class CafeteriaOpening extends React.Component<any, CafeteriaMenuState> {
+export class CafeteriaOpening extends React.Component<any, CafeteriaOpeningState> {
     constructor(props) {
         super(props);
         this.state = {
-            menus: [],
-            date: ""
+            dateCafeteria: "",
+
+            openToday: false,
+            openRightNow: false,
+
+            openingTime: "",
+            closingTime: "",
         };
     }
+    getDate() {
+        axios.get(CafeteriaOpeningConfig.URL_NEXT_MEAL)
+            .then(respOne => {
+                    const year = new Date().getFullYear();
+                    const day = new Date().getDate();
+                    const month = new Date().getMonth() + 1;
+                    const date = year + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
+                    if(date === respOne.data[0].date) {
+                        axios.get(CafeteriaOpeningConfig.URL_OPENING_TIMES)
+                            .then(resp => {
+                                const hours = new Date();
+                                const unparsedString = resp.data.extratags.opening_hours;
+                                const array = [...unparsedString.matchAll('([0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]')];
+                                let openingTime = new Date();
+                                let closingTime = new Date();
+                                if(array.length > 1) {
+                                    openingTime.setHours(array[0][0].split(":")[0]);
+                                    openingTime.setMinutes(array[0][0].split(":")[1]);
+                                    closingTime.setHours(array[1][0].split(":")[0]);
+                                    closingTime.setMinutes(array[1][0].split(":")[1]);
+                                }else {
+                                    throw new Error(`the caferteria opening times API is broken`);
+                                    return;
+                                }
+                                if(openingTime < hours && hours < closingTime) {
+                                    this.setState({
+                                        openRightNow: true,
+                                        openToday: true,
+                                        dateCafeteria: respOne.data[0].date
+                                    });
+                                }else{
+                                    this.setState({
+                                        openRightNow: false,
+                                        openToday: false,
+                                        dateCafeteria: respOne.data[1].date
+                                    });
+                                }
 
-    getMenu() {
-        axios.get(CafeteriaMenuConfig.URL)
-            .then(resp => {
-                this.setState({
-                    date: resp.data[0].date, //check for first day that it's open
-                    menus: resp.data[0].meals.map(d => ({
-                        food: d.name,
-                        location: d.category
-                    })),
-                });
+                                this.setState({
+                                    openingTime: openingTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
+                                    closingTime: closingTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'})
+                                });
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                    }
             })
             .catch(function (error) {
                 console.log(error);
@@ -38,24 +79,33 @@ export class CafeteriaOpening extends React.Component<any, CafeteriaMenuState> {
     }
 
     componentDidMount() {
-        this.getMenu();
-        setInterval(() => this.getMenu(), CafeteriaMenuConfig.REFRESH_RATE);
+        this.getDate();
+        setInterval(() => this.getDate(), CafeteriaOpeningConfig.REFRESH_RATE);
     }
 
     render() {
-        return <div className="grid grid-flow-row sm:g-0.5 xl:gap-1.5 2xl:gap-2 box-border">
+        return <div className="grid grid-flow-row sm:g-0.5 xl:gap-1.5 2xl:gap-2 items-center box-border h-fit">
             {
-                this.state.menus//.slice(1, CafeteriaMenuConfig.ITEM_COUNT)
-                    .map((d, index) =>
-                        <div key = {index}
-                            className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl">
-                            {d.food}:
-                            <div
-                                className="font-light leading-normal sm:text-xs lg:text-sm xl:text-base 2xl:text-lg 4xl:text-xl 8xl:text-2xl sm:text-left">
-                                {d.location}
-                            </div>
-                        </div>
-                    )
+                <div
+                    className="grid grid-flow-col font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl">
+                    <div>
+                        <div>Dining Hall:</div>
+                        <div>[koeri]Werk:</div>
+                        <div>[pizza+pasta]Werk:</div>
+                        <div>Cafeteria:</div>
+                    </div>
+                    <div>
+                    {(this.state.openRightNow ?
+                            <div>
+                                open until
+                                <div>{this.state.closingTime}</div>
+                            </div>:
+                            <div>
+                                closed until <div>{this.state.openingTime} {(this.state.openToday) ? " today" : " on "+ this.state.dateCafeteria}</div>
+                            </div>)
+                    }
+                    </div>
+                </div>
             }
         </div>;
     }

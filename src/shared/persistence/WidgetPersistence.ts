@@ -17,11 +17,6 @@ export class WidgetPersistence {
                         rawConfig: {stop: "Durlacher Tor"},
                     },
                     {
-                        widgetId: "rss-feed",
-                        location: 2,
-                        rawConfig: {url: "www.example.com"},
-                    },
-                    {
                         widgetId: "cafeteria-menu",
                         location: 5,
                         rawConfig: {},
@@ -30,6 +25,11 @@ export class WidgetPersistence {
                         widgetId: "rss-feed",
                         location: 5,
                         rawConfig: {url: "www.example.com"},
+                    },
+                    {
+                        widgetId: "cafeteria-opening",
+                        location: 2,
+                        rawConfig: {},
                     },
                 ];
                 resolve(data);

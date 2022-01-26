@@ -1,5 +1,6 @@
 {
   "REFRESH_RATE": 600000,
-  "URL": "https://openmensa.org/api/v2/canteens/31/meals"
+  "URL_NEXT_MEAL": "https://openmensa.org/api/v2/canteens/31/meals",
+  "URL_OPENING_TIMES": "https://nominatim.openstreetmap.org/details.php?osmtype=N&osmid=442956482&class=amenity&addressdetails=1&hierarchy=0&group_hierarchy=1&format=json"
 }
 

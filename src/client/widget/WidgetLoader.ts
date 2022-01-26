@@ -4,6 +4,7 @@ import {TramScheduleWidget} from "../widget_catalog/tram_schedule/TramScheduleWi
 import {WeatherWidget} from "../widget_catalog/weather/WeatherWidget";
 import {TimeWidget} from "../widget_catalog/time/TimeWidget";
 import {CafeteriaMenuWidget} from "../widget_catalog/cafeteria_menu/CafeteriaMenuWidget";
+import {CafeteriaOpeningWidget} from "../widget_catalog/cafeteria_opening/CafeteriaOpeningWidget";
 
 export class WidgetLoader {
 
@@ -15,6 +16,7 @@ export class WidgetLoader {
         this.widgets.set("weather", new WeatherWidget());
         this.widgets.set("time", new TimeWidget());
         this.widgets.set("cafeteria-menu", new CafeteriaMenuWidget());
+        this.widgets.set("cafeteria-opening", new CafeteriaOpeningWidget());
     }
 
     getWidgetIds(): string[] {
