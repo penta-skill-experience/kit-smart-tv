@@ -18,6 +18,8 @@ import {WidgetData} from "../widget/WidgetData";
 import {WidgetPersistence} from "../../shared/persistence/WidgetPersistence";
 import {VerifiedUser} from "../../shared/values/VerifiedUser";
 import {AnnouncementPersistence} from "../../shared/persistence/AnnouncementPersistence";
+import {AdminStatePersistence} from "../../shared/persistence/AdminStatePersistence";
+import {TokenHolderSingleton} from "../../shared/persistence/TokenHolderSingleton";
 
 
 interface TabPanelProps {
@@ -47,6 +49,7 @@ const designConfigPersistence = new DesignConfigPersistence();
 const widgetLoader = new WidgetLoader();
 const widgetPersistence = new WidgetPersistence();
 const announcementPersistence = new AnnouncementPersistence();
+const adminStatePersistence = new AdminStatePersistence();
 
 export function ConfigWebsite() {
     //state variables and methods for login page
@@ -64,16 +67,17 @@ export function ConfigWebsite() {
     const handleLogIn= () => {
         // todo
         // connect with persistence
-        if (logInInput === password) {
+        /*if (logInInput === password) {
             setLoggedInStatus(true);
         } else {
             alert('password not correct')
-        }
+        }*/
+        adminStatePersistence.login(logInInput).then(() => {setLoggedInStatus(true);}).catch();
     };
 
     const handleClickShowPassword = () => {
         setVisible(!visible)
-    }
+    };
 
     //state variables and methods for tabs
     const [pageNumber, setPageNumber] = React.useState(0);
@@ -219,7 +223,7 @@ export function ConfigWebsite() {
     //todo
     //Connect with persistence
     const handlePasswordChange = () => {
-        alert('Old Password is ' + oldPassword + ' New Password is ' + newPassword)
+        adminStatePersistence.setPassword(oldPassword, newPassword).then(() => {alert('Password saved')});
     };
 
     //state variables and methods for announcements page
@@ -271,8 +275,9 @@ export function ConfigWebsite() {
     //state variable for log out
 
     const handleLogout = () => {
+        adminStatePersistence.logout().then(() => console.log(TokenHolderSingleton.instance.accessToken));
         setLoggedInStatus(false);
-    }
+    };
 
     function renderConfigWebsite() {
         if(loggedInStatus === false) {
