@@ -26,8 +26,8 @@ export class CafeteriaOpening extends React.Component<any, CafeteriaOpeningState
             openingTime: "",
             closingTime: "",
 
-            openColor: "green",
-            closedColor: "black",
+            openColor: "lightseagreen",
+            closedColor: "tomato",
         };
     }
 
@@ -95,43 +95,49 @@ export class CafeteriaOpening extends React.Component<any, CafeteriaOpeningState
 
     render() {
         return <div className="grid grid-flow-row sm:g-0.5 xl:gap-1.5 2xl:gap-2 items-center box-border h-fit">
-            {
-                <div
-                    className="grid grid-flow-row lg:gap-3 xl:gap-4 4xl:gap-6 8xl:gap-8 font-light leading-normal sm:text-xs md:text-sm lg:text-base lg:text-xl 2xl:text-2xl 4xl:text-4xl 8xl:text-5xl sm:text-left">
-                    <div>
+            <div
+                className="grid grid-flow-row lg:gap-3 xl:gap-4 4xl:gap-6 8xl:gap-8 font-light leading-normal sm:text-xs md:text-sm lg:text-base lg:text-xl 2xl:text-2xl 4xl:text-4xl 8xl:text-5xl sm:text-left">
+                <div>
+                    <div className="flex gap-3 box-border items-center">
                         <div>Dining Hall:&nbsp;
-                            <span className="font-medium py-1 px-2 rounded-full" style={{
-                                backgroundColor: (this.state.openRightNow ? this.state.openColor : this.state.closedColor),
-                            }}>{(this.state.openRightNow ? "open" : "closed")}</span>
                         </div>
-                        <div>[koeri]Werk:&nbsp;
-                            <span className="font-medium py-1 px-2 rounded-full" style={{
-                                backgroundColor: (this.state.openRightNow ? this.state.openColor : this.state.closedColor),
-                            }}>{(this.state.openRightNow ? "open" : "closed")}</span>
-                        </div>
-                        <div>[pizza+pasta]Werk:&nbsp;
-                            <span className="font-medium py-1 px-2 rounded-full" style={{
-                                backgroundColor: (this.state.openRightNow ? this.state.openColor : this.state.closedColor),
-                            }}>{(this.state.openRightNow ? "open" : "closed")}</span>
-                        </div>
-                        <div>Cafeteria:&nbsp;
-                            <span className="font-medium py-1 px-2 rounded-full" style={{
-                                backgroundColor: (this.state.openRightNow ? this.state.openColor : this.state.closedColor),
-                            }}>{(this.state.openRightNow ? "open" : "closed")}</span>
-                        </div>
+                        <div className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center" style={{
+                            backgroundColor: (this.state.openRightNow ? this.state.openColor : this.state.closedColor),
+                        }}/>
                     </div>
-                    <div>
-                        {(this.state.openRightNow ?
-                            <div>
-                                until:{this.state.closingTime}
-                            </div> :
-                            <div>
-                                reopens: {this.state.openingTime} {(this.state.openToday) ? " today" : " on " + this.state.dateCafeteria}
-                            </div>)
-                        }
+                    <div className="flex gap-3 box-border items-center">
+                        <div>[koeri]Werk:&nbsp;
+                        </div>
+                        <div className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center" style={{
+                            backgroundColor: (this.state.openRightNow ? this.state.openColor : this.state.closedColor),
+                        }}/>
+                    </div>
+                    <div className="flex gap-3 box-border items-center">
+                        <div>[pizza+pasta]Werk:&nbsp;
+                        </div>
+                        <div className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center" style={{
+                            backgroundColor: (this.state.openRightNow ? this.state.openColor : this.state.closedColor),
+                        }}/>
+                    </div>
+                    <div className="flex gap-3 box-border items-center">
+                        <div>Cafeteria:&nbsp;
+                        </div>
+                        <div className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center" style={{
+                            backgroundColor: (this.state.openRightNow ? this.state.openColor : this.state.closedColor),
+                        }}/>
                     </div>
                 </div>
-            }
+                <div>
+                    {(this.state.openRightNow ?
+                        <div>
+                            until:{this.state.closingTime}
+                        </div> :
+                        <div>
+                            reopens: {this.state.openingTime} {(this.state.openToday) ? " today" : " on " + this.state.dateCafeteria}
+                        </div>)
+                    }
+                </div>
+            </div>
         </div>;
     }
 }
