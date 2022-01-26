@@ -1,9 +1,8 @@
 import {Widget} from "./Widget";
 import {RssFeedWidget} from "../widget_catalog/rss_feed/RssFeedWidget";
 import {TramScheduleWidget} from "../widget_catalog/tram_schedule/TramScheduleWidget";
-import {WeatherWidget} from "../widget_catalog/weather/WeatherWidget";
-import {TimeWidget} from "../widget_catalog/time/TimeWidget";
 import {CafeteriaMenuWidget} from "../widget_catalog/cafeteria_menu/CafeteriaMenuWidget";
+import {AnnouncementWidget} from "../widget_catalog/announcement/AnnouncementWidget";
 import {CafeteriaOpeningWidget} from "../widget_catalog/cafeteria_opening/CafeteriaOpeningWidget";
 
 export class WidgetLoader {
@@ -13,9 +12,8 @@ export class WidgetLoader {
     constructor() {
         this.widgets.set("rss-feed", new RssFeedWidget());
         this.widgets.set("tram-schedule", new TramScheduleWidget());
-        this.widgets.set("weather", new WeatherWidget());
-        this.widgets.set("time", new TimeWidget());
         this.widgets.set("cafeteria-menu", new CafeteriaMenuWidget());
+        this.widgets.set("announcement", new AnnouncementWidget());
         this.widgets.set("cafeteria-opening", new CafeteriaOpeningWidget());
     }
 
