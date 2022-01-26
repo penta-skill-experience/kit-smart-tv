@@ -3,6 +3,7 @@ import {TokenHolderSingleton} from "./TokenHolderSingleton";
 
 export class AdminStatePersistence {
 
+
     login(password: string): Promise<void> {
 
         const headers = new Headers();
@@ -18,8 +19,8 @@ export class AdminStatePersistence {
             })
                 .then(response => response.json()
                     .then(data => {
-                        TokenHolderSingleton.instance.accessToken = data.body.accessToken;
-                        TokenHolderSingleton.instance.refreshToken = data.body.refreshToken;
+                        TokenHolderSingleton.instance.accessToken = data.accessToken;
+                        TokenHolderSingleton.instance.refreshToken = data.refreshToken;
                         resolve();
                     }).catch(() => reject())
                 ).catch(() => reject());
@@ -40,7 +41,7 @@ export class AdminStatePersistence {
             })
                 .then(response => response.json()
                     .then(data => {
-                        if (data.body.accessToken == null && data.body.refreshToken == null) {
+                        if (data.accessToken == null && data.refreshToken == null) {
                             TokenHolderSingleton.instance.accessToken = undefined;
                             TokenHolderSingleton.instance.refreshToken = undefined;
                             resolve();
