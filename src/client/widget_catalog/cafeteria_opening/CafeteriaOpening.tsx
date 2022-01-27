@@ -61,11 +61,20 @@ export class CafeteriaOpening extends React.Component<any, CafeteriaOpeningState
                                 dateCafeteria: respOne.data[0].date
                             });
                         } else {
-                            this.setState({
-                                openRightNow: false,
-                                openToday: false,
-                                dateCafeteria: respOne.data[1].date
-                            });
+                            if ((date === respOne.data[0].date) && (openingTime > hours)) {
+                                this.setState({
+                                    openRightNow: false,
+                                    openToday: false,
+                                    dateCafeteria: respOne.data[0].date
+                                });
+                            }else {
+                                this.setState({
+                                    openRightNow: false,
+                                    openToday: false,
+                                    dateCafeteria: respOne.data[1].date
+                                });
+                            }
+
                         }
 
                         this.setState({
