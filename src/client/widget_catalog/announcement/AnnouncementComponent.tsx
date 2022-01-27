@@ -34,7 +34,7 @@ export class AnnouncementComponent extends React.Component<{}, AnnouncementState
         await this.tick();
     }
 
-    ComponentDidMount() {
+    componentDidMount() {
         setInterval(() => this.tick(), AnnouncementConfig.REFRESH_RATE);
     }
 
@@ -55,7 +55,7 @@ export class AnnouncementComponent extends React.Component<{}, AnnouncementState
     }
 
     private getAuthorForAnnouncement(announcement : Announcement) : string {
-        for (let verifiedUser of this.state.verifiedUsers) {
+        for (const verifiedUser of this.state.verifiedUsers) {
             if (verifiedUser.email === announcement.author) {
                 return verifiedUser.name;
             }
