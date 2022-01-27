@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as TramScheduleConfig from "./TramSchedule.json";
-import axios from "axios"
 import {DisplayComponent} from "../../widget/DisplayComponent";
+import config from "../../../shared/persistence/persistence.config.json";
 
 interface DepartureData {
     route: string;
@@ -40,14 +40,13 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
     private querySchedule() {
         if (this.state.stopId === undefined) {
             // get stopId before querying departure data
-
+            /*
             const stopName = this.getStopName();
 
             let url = TramScheduleConfig.CORS_ANYWHERE + TramScheduleConfig.URL_STOP_SEARCH_BEFORE_STOP
                 + stopName
                 + TramScheduleConfig.URL_STOP_SEARCH_AFTER_STOP
                 + TramScheduleConfig.API_KEY;
-
             axios.get(url)
                 .then(resp => {
                     let checker = resp.data.stops;
@@ -60,6 +59,8 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
                     });
                 });
 
+             */
+            this.queryDepartureData();//remove later
         } else {
             // immediately query departure data
             this.queryDepartureData();
@@ -67,14 +68,24 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
     };
 
     private queryDepartureData() {
-        axios.get(TramScheduleConfig.CORS_ANYWHERE
-            + TramScheduleConfig.URL_BEFORE_STOP
-            + this.state.stopId
-            + TramScheduleConfig.URL_AFTER_STOP
-            + TramScheduleConfig.API_KEY)
-            .then(resp => {
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+
+
+        const urlLink = "https://live.kvv.de/webapp/departures/bystop/MPU?maxInfos=10&key=377d840e54b59adbe53608ba1aad70e8";
+        let body = {url: urlLink};
+        console.log(urlLink);
+        console.log(JSON.stringify(body));
+        const requestOptions = {
+            method: 'PUT',
+            headers: headers,
+            body: JSON.stringify(body)
+        };
+        return fetch(`${config.DOMAIN}/kvv`, requestOptions)
+            .then((value: Response) => value.json()).then(data => {
+                console.log(data);
                 this.setState({
-                    trains: resp.data.departures.map(d => ({
+                    trains: data.departures.map(d => ({
                         route: d.route,
                         destination: d.destination,
                         time: justArrived(d.time)
