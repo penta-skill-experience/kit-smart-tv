@@ -27,8 +27,8 @@ import {updateValuesSchema} from "./schema/values.schema";
 import {getValuesHandler, updateValuesHandler} from "./controller/values.controller";
 import cors from "cors";
 import {AnnouncementMailListener} from "../email_announcement_interaction/AnnouncementMailListener"
-import {getKvvSchema} from "./schema/kvv.schema";
-import { getKvvHandler } from "./controller/kvv.controller";
+import {putKvvSchema} from "./schema/kvv.schema";
+import { putKvvHandler } from "./controller/kvv.controller";
 
 serverSetup(process.env.MONGO_URI);
 
@@ -117,7 +117,7 @@ export function serverSetup(dbUri : string) {
         app.put("/values", requireAdmin, ensureRequestStructure(updateValuesSchema), updateValuesHandler)
         app.get("/values", getValuesHandler)
 
-        app.get("/kvv", ensureRequestStructure(getKvvSchema), getKvvHandler);
+        app.put("/kvv", ensureRequestStructure(putKvvSchema), putKvvHandler);
 
     });
 }
