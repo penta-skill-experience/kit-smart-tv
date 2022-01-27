@@ -50,19 +50,19 @@ const ValuesSchema = new mongoose.Schema({
                 required: true,
                 unique: true,
             },
-            titleColor: {
+            titleFontColor: {
                 type: String,
                 required: true,
             },
-            bodyColor: {
+            bodyFontColor: {
                 type: String,
                 required: true,
             },
-            specialBoldColor: {
+            specialBoldFontColor: {
                 type: String,
                 required: true,
             },
-            specialSubtleColor: {
+            specialSubtleFontColor: {
                 type: String,
                 required: true,
             },
