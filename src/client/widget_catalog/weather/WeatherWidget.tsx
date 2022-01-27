@@ -1,16 +1,17 @@
 import * as React from "react";
 import {Widget} from "../../widget/Widget";
-import {WidgetConfigSaver} from "../../widget/WidgetConfigSaver";
-import {Weather} from "./Weather";
+import {WeatherDisplayComponent} from "./WeatherDisplayComponent";
+import {ConfigComponent} from "../../widget/ConfigComponent";
+import {DisplayComponent} from "../../widget/DisplayComponent";
 
 export class WeatherWidget implements Widget {
 
-    createConfigComponent(rawConfig: Object, saver: WidgetConfigSaver): JSX.Element {
+    createConfigComponent(): typeof ConfigComponent {
         return undefined;
     }
 
-    createDisplayComponent(rawConfig: Object): JSX.Element {
-        return <Weather/>;
+    createDisplayComponent(): typeof DisplayComponent {
+        return WeatherDisplayComponent;
     }
 
     getTitle(): string {
@@ -21,4 +22,7 @@ export class WeatherWidget implements Widget {
         return false;
     }
 
+    getDefaultRawConfig(): Object {
+        return undefined;
+    }
 }

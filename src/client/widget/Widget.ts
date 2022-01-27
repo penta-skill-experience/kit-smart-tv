@@ -1,8 +1,10 @@
-import {WidgetConfigSaver} from "./WidgetConfigSaver";
+import {ConfigComponent} from "./ConfigComponent";
+import {DisplayComponent} from "./DisplayComponent";
 
 export interface Widget {
     getTitle(): string;
     isConfigurable(): boolean;
-    createDisplayComponent(rawConfig: Object): JSX.Element;
-    createConfigComponent(rawConfig: Object, saver: WidgetConfigSaver): JSX.Element;
+    getDefaultRawConfig(): Object;
+    createDisplayComponent(): typeof DisplayComponent;
+    createConfigComponent(): typeof ConfigComponent;
 }

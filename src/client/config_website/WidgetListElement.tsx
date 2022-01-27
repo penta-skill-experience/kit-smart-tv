@@ -10,26 +10,24 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
-import {TramScheduleConfigPage} from "./widget_config_pages/TramScheduleConfigPage";
-import {RSSFeedConfigPage} from "./widget_config_pages/RSSFeedConfigPage";
-import Checkbox from '@mui/material/Checkbox';
+import {WidgetConfigPage} from "./WidgetConfigPage";
 
 
-export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, children}) => {
+export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, handleRawConfigSave, children}) => {
 
     return (
         <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
             <Grid item xs={1}>
-                {item.name}
+                {item.widget.getTitle()}
             </Grid>
             <Grid item>
                 <FormControl>
                     <RadioGroup row>
-                        {renderPosition({item:item, position:"1", handlePosition: handlePosition})}
-                        {renderPosition({item:item, position:"2", handlePosition: handlePosition})}
-                        {renderPosition({item:item, position:"3", handlePosition: handlePosition})}
-                        {renderPosition({item:item, position:"4", handlePosition: handlePosition})}
-                        {renderPosition({item:item, position:"5", handlePosition: handlePosition})}
+                        {renderPosition({item:item, position:1, handlePosition: handlePosition})}
+                        {renderPosition({item:item, position:2, handlePosition: handlePosition})}
+                        {renderPosition({item:item, position:3, handlePosition: handlePosition})}
+                        {renderPosition({item:item, position:4, handlePosition: handlePosition})}
+                        {renderPosition({item:item, position:5, handlePosition: handlePosition})}
                     </RadioGroup>
                 </FormControl>
             </Grid>
@@ -37,7 +35,13 @@ export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, chi
                 <DeleteDialogComponent id={item.id} handleDeleteWidget={handleDeleteWidget}/>
             </Grid>
             <Grid item>
-                {renderConfigButton({name: item.name})}
+                {
+                    item.widget.isConfigurable() &&
+                    <WidgetConfigPage configComponentClass={item.widget.createConfigComponent()}
+                                      save={(rawConfig: Object) => handleRawConfigSave(item.id, rawConfig)}
+                                      rawConfig={item.widgetData.rawConfig}
+                    />
+                }
             </Grid>
         </Grid>
 
@@ -50,7 +54,7 @@ function renderPosition({item, position, handlePosition}) {
             label={position}
             control={
                 <Radio
-                    checked={item.position === position}
+                    checked={item.widgetData.location === position}
                     onChange={
                         () => {
                             handlePosition(item.id, position)
@@ -100,16 +104,4 @@ function DeleteDialogComponent({id ,handleDeleteWidget}) {
             </Dialog>
         </Grid>
     );
-}
-
-function renderConfigButton({name}) {
-    if (name === "Tram Schedule") {
-        return (
-            <TramScheduleConfigPage/>
-        );
-    } else if (name === "RSS feed") {
-        return (
-          <RSSFeedConfigPage/>
-        );
-    }
 }

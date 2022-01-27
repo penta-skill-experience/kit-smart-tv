@@ -1,16 +1,17 @@
 import React from "react";
 import {Widget} from "../../widget/Widget";
-import {WidgetConfigSaver} from "../../widget/WidgetConfigSaver";
 import {AnnouncementComponent} from "./AnnouncementComponent";
+import {ConfigComponent} from "../../widget/ConfigComponent";
+import {DisplayComponent} from "../../widget/DisplayComponent";
 
 export class AnnouncementWidget implements Widget {
 
-    createConfigComponent(rawConfig: Object, saver: WidgetConfigSaver): JSX.Element {
+    createConfigComponent(): typeof ConfigComponent {
         return undefined;
     }
 
-    createDisplayComponent(rawConfig: Object): JSX.Element {
-        return <AnnouncementComponent />;
+    createDisplayComponent(): typeof DisplayComponent {
+        return AnnouncementComponent;
     }
 
     getTitle(): string {
@@ -21,4 +22,7 @@ export class AnnouncementWidget implements Widget {
         return false;
     }
 
+    getDefaultRawConfig(): Object {
+        return undefined;
+    }
 }

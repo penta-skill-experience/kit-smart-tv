@@ -1,7 +1,7 @@
 import * as React from "react";
 import {SquareHolder} from "./SquareHolder";
-import {DigitalTime} from "../widget_catalog/time/DigitalTime";
-import {Weather} from "../widget_catalog/weather/Weather";
+import {TimeDisplayComponent} from "../widget_catalog/time/TimeDisplayComponent";
+import {WeatherDisplayComponent} from "../widget_catalog/weather/WeatherDisplayComponent";
 import {WidgetLoader} from "../widget/WidgetLoader";
 import {WidgetPersistence} from "../../shared/persistence/WidgetPersistence";
 import {WidgetData} from "../widget/WidgetData";
@@ -109,7 +109,10 @@ export class RootComponent extends React.Component<any, RootComponentState> {
     private renderWidget(widgetData: WidgetData) {
         const widget = this.widgetLoader.getWidget(widgetData.widgetId);
         try {
-            const widgetComponent = widget.createDisplayComponent(widgetData.rawConfig);
+
+            // @ts-ignore
+            const widgetComponent = React.createElement(widget.createDisplayComponent(), {config: widgetData.rawConfig}, null);
+
             return <SquareHolder title={widget.getTitle()} accentColor={this.state.accentBarColor}
                                  titleColor={this.state.titleFontColor} specialBoldFontColor={this.state.specialBoldFontColor}
                                  specialSubtleFontColor={this.state.specialSubtleFontColor}>
@@ -131,31 +134,30 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             backgroundImage: 'url(' + this.state.backgroundImage + ')',
             width: "100vw",
             height: "100vh",
-            overflow: "hidden",
             fontSize: this.state.relativeSize + "rem",
         }}>
             <div className={"flex "} style={{
                 color: this.state.bodyFontColor
             }}>
-                <div className="z-20 absolute left-10 absolute bottom-7">
+                <div className="z-30 absolute left-10 absolute bottom-7">
                     <img className="sm:w-24 lg:w-40 2xl:w-60 4xl:w-80"
                          src="https://www.artwork.de/wp-content/uploads/2015/08/logo_TF_NEU_4c_ai.png" alt="IHKLogo"/>
                 </div>
-                <div className="z-10 sm:w-4/12 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30"
+                <div className="z-10 sm:w-1/3 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30"
                      style={{
                          height: "100vh"
                      }}>
-                    <div
-                        className="sm:p-4 lg:p-6 xl:p-8 4xl:p-12 8xl:p-14 grid grid-rows-2 grid-flow-row box-border lg:gap-3 xl:gap-4 4xl:gap-6 8xl:gap-8">
-                        <div>
-                            <DigitalTime/>
-                            <Weather/>
-                        </div>
-                        {this.renderLocation(1)}
-                    </div>
                 </div>
                 <div
-                    className="w-2/3 sm:p-4 lg:p-6 xl:p-8 4xl:p-12 8xl:p-14 absolute right-0 grid grid-cols-2 box-border sm:gap-2 lg:gap-3 xl:gap-4 4xl:gap-6 8xl:gap-8">
+                    className="z-20 grid grid-cols-3 absolute left-0 grid-rows-2 box-border sm:gap-2 md:gap-3 lg:gap-5 xl:gap-7 4xl:gap-10 sm:p-2 md:p-3 lg:p-5 xl:p-7 4xl:p-10" style={{
+                    width:"100vw",
+                    height:"100vh",
+                }}>
+                    <div className = "sm:pl-2 md:pl-3 lg:pl-5 xl:pl-7 4xl:pl-10">
+                        <TimeDisplayComponent/>
+                        <WeatherDisplayComponent/>
+                    </div>
+                    {this.renderLocation(1)}
                     {this.renderLocation(2)}
                     {this.renderLocation(3)}
                     {this.renderLocation(4)}

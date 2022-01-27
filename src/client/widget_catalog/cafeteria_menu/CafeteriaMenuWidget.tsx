@@ -1,16 +1,17 @@
 import * as React from "react";
 import {Widget} from "../../widget/Widget";
-import {WidgetConfigSaver} from "../../widget/WidgetConfigSaver";
-import {CafeteriaMenu} from "./CafeteriaMenu";
+import {CafeteriaMenuDisplayComponent} from "./CafeteriaMenuDisplayComponent";
+import {ConfigComponent} from "../../widget/ConfigComponent";
+import {DisplayComponent} from "../../widget/DisplayComponent";
 
 export class CafeteriaMenuWidget implements Widget {
 
-    createConfigComponent(rawConfig: Object, saver: WidgetConfigSaver): JSX.Element {
+    createConfigComponent(): typeof ConfigComponent {
         return undefined;
     }
 
-    createDisplayComponent(rawConfig: Object): JSX.Element {
-        return <CafeteriaMenu />;
+    createDisplayComponent(): typeof DisplayComponent {
+        return CafeteriaMenuDisplayComponent;
     }
 
     getTitle(): string {
@@ -18,6 +19,10 @@ export class CafeteriaMenuWidget implements Widget {
     }
 
     isConfigurable(): boolean {
-        return true;
+        return false;
+    }
+
+    getDefaultRawConfig(): Object {
+        return undefined;
     }
 }

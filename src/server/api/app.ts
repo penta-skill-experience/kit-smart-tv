@@ -28,7 +28,8 @@ import {getValuesHandler, updateValuesHandler} from "./controller/values.control
 import cors from "cors";
 import {AnnouncementMailListener} from "../email_announcement_interaction/AnnouncementMailListener"
 
-serverSetup(process.env.MONGO_URI_TESTING);
+serverSetup(process.env.MONGO_URI);
+
 
 export function serverSetup(dbUri : string) {
     const mail = new AnnouncementMailListener;

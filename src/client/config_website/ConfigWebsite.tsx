@@ -1,18 +1,25 @@
 import Typography from '@mui/material/Typography';
 import * as React from "react";
+import {useEffect, useState} from "react";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import {PersonalizationPage} from "./PersonalizationPage";
 import {LayoutPage} from "./LayoutPage";
 import {AdminPage} from "./AdminPage";
-import {useState} from "react";
 import {SelectChangeEvent} from "@mui/material/Select";
 import {LogInPage} from "./LogInPage";
 import {Button, Grid} from "@mui/material";
 import {AnnouncementsPage} from "./AnnouncementsPage";
 import * as emailValidator from "email-validator";
 import {DesignConfigPersistence} from "../../shared/persistence/DesignConfigPersistence";
+import {WidgetLoader} from "../widget/WidgetLoader";
+import {WidgetData} from "../widget/WidgetData";
+import {WidgetPersistence} from "../../shared/persistence/WidgetPersistence";
+import {VerifiedUser} from "../../shared/values/VerifiedUser";
+import {AnnouncementPersistence} from "../../shared/persistence/AnnouncementPersistence";
+import {AdminStatePersistence} from "../../shared/persistence/AdminStatePersistence";
+import {TokenHolderSingleton} from "../../shared/persistence/TokenHolderSingleton";
 
 
 interface TabPanelProps {
@@ -39,10 +46,13 @@ function TabPanel(props: TabPanelProps) {
 }
 
 const designConfigPersistence = new DesignConfigPersistence();
+const widgetLoader = new WidgetLoader();
+const widgetPersistence = new WidgetPersistence();
+const announcementPersistence = new AnnouncementPersistence();
+const adminStatePersistence = new AdminStatePersistence();
 
 export function ConfigWebsite() {
     //state variables and methods for login page
-    const password = 'password123';
     const [logInInput, setLogInInput] = useState('');
     const [visible, setVisible] = useState(false);
     const [loggedInStatus, setLoggedInStatus] = useState(false);
@@ -56,16 +66,19 @@ export function ConfigWebsite() {
     const handleLogIn= () => {
         // todo
         // connect with persistence
-        if (logInInput === password) {
+        /*if (logInInput === password) {
             setLoggedInStatus(true);
         } else {
             alert('password not correct')
-        }
+        }*/
+        adminStatePersistence.login(logInInput)
+            .then(() => setLoggedInStatus(true))
+            .catch(() => alert('Password not correct.'));
     };
 
     const handleClickShowPassword = () => {
         setVisible(!visible)
-    }
+    };
 
     //state variables and methods for tabs
     const [pageNumber, setPageNumber] = React.useState(0);
@@ -111,69 +124,122 @@ export function ConfigWebsite() {
         designConfigPersistence.setSelectedColorSchemeId(colorScheme);
         designConfigPersistence.setSelectedFontSize(fontSize);
         //todo
-        // designConfigPersistence.setSelectedBackground();
+        //designConfigPersistence.setSelectedBackground();
     };
 
     //state variables and methods for layout page
-    const initialList = [];
+    const initialWidgetList = [];
+    const initialWidgetDataList = [];
+    const [widgetList, setWidgetList] = React.useState(initialWidgetList);
+    const [widgetDataList, setWidgetDataList] = React.useState(initialWidgetDataList);
     const [counter, setCounter] = useState(1);
-    const [list, setList] = React.useState(initialList);
-    const [widget, setWidget] = React.useState({
+
+    const [widgetListElement, setWidgetListElement] = React.useState({
         id:0,
-        name:'',
         position:'',
-        configurable:false,
+        widgetNameText:'',
+        widget: null,
+        widgetData:null,
     });
 
-    const incrementCounter = () => setCounter(counter + 1);
+    const [needInitialWidgetDataList, setNeedInitialWidgetDataList] = useState(true);  // only query initial data once
+
+    useEffect(() => {
+        if (needInitialWidgetDataList) {
+            widgetPersistence.getWidgetDataList().then(list => {
+
+                const newList = [];
+
+                let c = 0;
+                for (const widgetData of list) {
+                    const widget = widgetLoader.getWidget(widgetData.widgetId);
+                    newList.push({
+                        id: c,
+                        position: '',
+                        widgetNameText: widget.getTitle(),
+                        widget: widget,
+                        widgetData: widgetData,
+                    });
+                    c++;
+                }
+
+                setNeedInitialWidgetDataList(false);
+                setWidgetList(newList);
+                setCounter(c);
+            });
+        }
+    });
 
     const handleWidgetSelection = (event: SelectChangeEvent) => {
         console.log(event.target.value)
         //todo
         //config is not always true
+        const newWidget = widgetLoader.getWidget(event.target.value);
         const updatedValue = {
             id:counter,
-            name:event.target.value,
             position:'',
-            configurable:true,
+            widgetNameText:event.target.value,
+            widget: newWidget,
+            widgetData: new WidgetData(event.target.value, -1, newWidget.isConfigurable() ? newWidget.getDefaultRawConfig() : {}),
         }
-        setWidget(updatedValue)
+        setWidgetListElement(updatedValue)
     };
 
     const handleAddWidget = () => {
-        if (widget.name !== '') {
+        if (widgetListElement.widget !== null) {
             const newWidget = {
                 //todo
                 //config is not always true
                 id:counter,
-                name:widget.name,
                 position:'',
-                configurable:true,
+                widgetNameText:widgetListElement.widgetNameText,
+                widget: widgetListElement.widget,
+                widgetData: widgetListElement.widgetData,
             }
-            setList(list.concat(newWidget));
+            setWidgetList(widgetList.concat(newWidget));
             incrementCounter();
-            console.log('Added widget ' + newWidget.name + ' with id ' + newWidget.id)
+            console.log('Widget ' + newWidget.widget.getTitle() + ' with id ' + newWidget.id + ' and widget id ' + newWidget.widgetData.widgetId)
         }
     };
 
+    const incrementCounter = () => setCounter(counter + 1);
+
     const handleDeleteWidget = (id) => {
         console.log('Widget with id ' + id + ' is removed ')
-        setList(list.filter(item => item.id !== id));
-    }
+        setWidgetList(widgetList.filter(item => item.id !== id));
+    };
 
     const handlePosition = (id, position) => {
-        const newList = list.map((item) => {
+        setWidgetList(widgetList.map((item) => {
             if (item.id === id) {
-                const newWidget = { ...item, position: position }
-                return newWidget;
+                const newWidgetData = new WidgetData(item.widgetData.widgetId, position, item.widgetData.rawConfig);
+                return {...item, widgetData: newWidgetData}
             } else {
                 return item;
             }
-        });
+        }));
+    };
 
-        setList(newList);
+    const handleRawConfigSave = (id, rawConfig) => {
+        setWidgetList(widgetList.map(item => {
+            if (item.id === id) {
+                item.widgetData.rawConfig = rawConfig;
+            }
+            return item;
+        }));
+    };
 
-    }
+    const handleLayoutChange = () => {
+        const newWidgetDataList = widgetList.map(item => (
+            item.widgetData
+        ));
+        setWidgetDataList(newWidgetDataList);
+        console.log(newWidgetDataList[0]);
+        console.log(newWidgetDataList[1]);
+        console.log(newWidgetDataList[2]);
+        console.log(newWidgetDataList[3]);
+        widgetPersistence.setWidgetDataList(newWidgetDataList);
+    };
 
     //state variables and methods for admin password page
     const [newPassword, setNewPassword] = useState('')
@@ -194,28 +260,29 @@ export function ConfigWebsite() {
     //todo
     //Connect with persistence
     const handlePasswordChange = () => {
-        alert('Old Password is ' + oldPassword + ' New Password is ' + newPassword)
+        adminStatePersistence.setPassword(oldPassword, newPassword).then(() => {alert('Password saved')});
     };
 
     //state variables and methods for announcements page
     const initialMailList = [];
     const [mailList, setMailList] = React.useState(initialMailList);
-    const [verUser, setVerUser] = React.useState({
+    const [verUserListElement, setVerUserListElement] = React.useState({
         mail:'',
         name:'',
+        verUser:null,
     });
 
     const handleMailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setVerUser({...verUser, mail:event.target.value});
+        setVerUserListElement({...verUserListElement, mail:event.target.value});
     };
 
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setVerUser({...verUser, name:event.target.value});
+        setVerUserListElement({...verUserListElement, name:event.target.value});
     };
 
     const handleAddMail = () => {
-        const alreadyExists = mailList.some(item => verUser.mail === item.mail);
-        if (!emailValidator.validate(verUser.mail)) {
+        const alreadyExists = mailList.some(item => verUserListElement.mail === item.mail);
+        if (!emailValidator.validate(verUserListElement.mail)) {
             alert('E-Mail does not exist')
             return;
         }
@@ -223,26 +290,31 @@ export function ConfigWebsite() {
             alert('This E-Mail already exists')
             return;
         }
-        if (verUser.name !== '' && verUser.mail !== '') {
+        if (verUserListElement.name !== '' && verUserListElement.mail !== '') {
+            const newVerUser = new VerifiedUser(verUserListElement.mail, verUserListElement.name)
             const newUser = {
-                mail:verUser.mail,
-                name:verUser.name,
+                mail:verUserListElement.mail,
+                name:verUserListElement.name,
+                verUser: newVerUser,
             }
             setMailList(mailList.concat(newUser));
+            announcementPersistence.addVerifiedUser(newUser.verUser);
             return;
         }
         alert('Username and email have to be filled out')
     };
 
-    const handleDeleteUser = (mail) => {
-        setMailList(mailList.filter(item => item.mail !== mail));
+    const handleDeleteUser = (listItem) => {
+        setMailList(mailList.filter(item => item.mail !== listItem.mail));
+        announcementPersistence.removeVerifiedUser(listItem.verUser);
     }
 
     //state variable for log out
 
     const handleLogout = () => {
+        adminStatePersistence.logout().then(() => console.log(TokenHolderSingleton.instance.accessToken));
         setLoggedInStatus(false);
-    }
+    };
 
     function renderConfigWebsite() {
         if(loggedInStatus === false) {
@@ -305,12 +377,14 @@ export function ConfigWebsite() {
                     </TabPanel>
                     <TabPanel value={pageNumber} index={1}>
                         <LayoutPage
-                            list={list}
-                            widget={widget}
+                            list={widgetList}
+                            widgetListElement={widgetListElement}
                             handleWidgetSelection={(event) => handleWidgetSelection(event)}
                             handleAddWidget={handleAddWidget}
                             handleDeleteWidget={handleDeleteWidget}
                             handlePosition={handlePosition}
+                            handleRawConfigSave={handleRawConfigSave}
+                            handleLayoutChange={handleLayoutChange}
                         >
                         </LayoutPage>
                     </TabPanel>
@@ -327,7 +401,7 @@ export function ConfigWebsite() {
                     <TabPanel value={pageNumber} index={3}>
                         <AnnouncementsPage
                             mailList={mailList}
-                            verUser={verUser}
+                            verUser={verUserListElement}
                             handleMailChange={handleMailChange}
                             handleNameChange={handleNameChange}
                             handleAddMail={handleAddMail}
@@ -341,8 +415,5 @@ export function ConfigWebsite() {
 
     }
 
-    return(<div>
-            {renderConfigWebsite()}
-        </div>
-    );
+    return renderConfigWebsite();
 }

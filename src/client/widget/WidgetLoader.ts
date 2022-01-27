@@ -1,9 +1,9 @@
 import {Widget} from "./Widget";
 import {RssFeedWidget} from "../widget_catalog/rss_feed/RssFeedWidget";
-import {TramScheduleWidget} from "../widget_catalog/tram_schedule/TramScheduleWidget";
 import {CafeteriaMenuWidget} from "../widget_catalog/cafeteria_menu/CafeteriaMenuWidget";
 import {AnnouncementWidget} from "../widget_catalog/announcement/AnnouncementWidget";
 import {CafeteriaOpeningWidget} from "../widget_catalog/cafeteria_opening/CafeteriaOpeningWidget";
+import {TramScheduleWidget} from "../widget_catalog/tram_schedule/TramScheduleWidget";
 
 export class WidgetLoader {
 

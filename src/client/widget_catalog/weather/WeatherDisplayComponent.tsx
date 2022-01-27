@@ -1,11 +1,12 @@
 import * as React from "react";
 import axios from "axios";
 import * as WeatherConfig from "./Weather.json";
+import {DisplayComponent} from "../../widget/DisplayComponent";
 let kelvinToCelsiusRounded = x => {
     return Math.round(x - WeatherConfig.KELVIN);
 };
 
-export class Weather extends React.Component<any, any> {
+export class WeatherDisplayComponent extends DisplayComponent<any> {
 
     constructor(props) {
         super(props);

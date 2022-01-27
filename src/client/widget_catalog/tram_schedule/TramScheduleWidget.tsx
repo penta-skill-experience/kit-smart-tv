@@ -1,21 +1,18 @@
 import * as React from "react";
 import {Widget} from "../../widget/Widget";
-import {WidgetConfigSaver} from "../../widget/WidgetConfigSaver";
-import {TramSchedule} from "./TramSchedule";
-import {TramScheduleConfig} from "./TramScheduleConfig";
+import {TramScheduleDisplayComponent} from "./TramScheduleDisplayComponent";
+import {ConfigComponent} from "../../widget/ConfigComponent";
+import {TramScheduleConfigComponent} from "./TramScheduleConfigComponent";
+import {DisplayComponent} from "../../widget/DisplayComponent";
 
 export class TramScheduleWidget implements Widget {
 
-    createConfigComponent(rawConfig: Object, saver: WidgetConfigSaver): JSX.Element {
-        return undefined;
+    createConfigComponent(): typeof ConfigComponent {
+        return TramScheduleConfigComponent;
     }
 
-    createDisplayComponent(rawConfig: Object): JSX.Element {
-        const config = new TramScheduleConfig();
-        config.load(rawConfig);
-        return <TramSchedule
-            stop={config.stop}
-        />;
+    createDisplayComponent(): typeof DisplayComponent {
+        return TramScheduleDisplayComponent;
     }
 
     getTitle(): string {
@@ -24,5 +21,11 @@ export class TramScheduleWidget implements Widget {
 
     isConfigurable(): boolean {
         return true;
+    }
+
+    getDefaultRawConfig(): Object {
+        return {
+            stop: "",
+        };
     }
 }

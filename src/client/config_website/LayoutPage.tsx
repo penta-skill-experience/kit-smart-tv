@@ -14,7 +14,7 @@ const widgetLoader = new WidgetLoader();
 const widgetList = widgetLoader.getWidgetIds();
 
 
-export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget, handleDeleteWidget, handlePosition, children}) => {
+export const LayoutPage = ({list, widgetListElement, handleWidgetSelection, handleAddWidget, handleDeleteWidget, handlePosition, handleRawConfigSave, handleLayoutChange, children}) => {
 
     return(
         <div>
@@ -163,6 +163,7 @@ export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget
                                 item={item}
                                 handlePosition={handlePosition}
                                 handleDeleteWidget={handleDeleteWidget}
+                                handleRawConfigSave={handleRawConfigSave}
                             >
                             </WidgetListElement>
                         ))}
@@ -171,11 +172,11 @@ export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget
                 <Grid item xs={12}>
                     <FormControl sx={{minWidth: 120}}>
                         <Select
-                            value={widget.name}
-                            onChange={event => handleWidgetSelection(event)}
+                            value={widgetListElement.widgetNameText}
+                            onChange={handleWidgetSelection}
                         >
                             {widgetList.map(item => (
-                                <MenuItem value={widgetLoader.getWidget(item).getTitle()}>
+                                <MenuItem value={item}>
                                     {widgetLoader.getWidget(item).getTitle()}
                                 </MenuItem>
                             ))}
@@ -184,6 +185,11 @@ export const LayoutPage = ({list, widget, handleWidgetSelection, handleAddWidget
                 </Grid>
                 <Grid item xs={12}>
                     <Button onClick={handleAddWidget} variant="outlined">Add Widget</Button>
+                </Grid>
+                <Grid item>
+                    <Button variant="contained" onClick={handleLayoutChange}>
+                        Save
+                    </Button>
                 </Grid>
             </Grid>
         </div>

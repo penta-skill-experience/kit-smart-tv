@@ -1,29 +1,18 @@
 import * as React from "react";
 import {Widget} from "../../widget/Widget";
-import {WidgetConfigSaver} from "../../widget/WidgetConfigSaver";
 import {RssFeedDisplayComponent} from "./RssFeedDisplayComponent";
-import {RssFeedConfig} from "./RssFeedConfig";
 import {RssFeedConfigComponent} from "./RssFeedConfigComponent";
+import {ConfigComponent} from "../../widget/ConfigComponent";
+import {DisplayComponent} from "../../widget/DisplayComponent";
 
 export class RssFeedWidget implements Widget {
 
-    createDisplayComponent(rawConfig: JSON): JSX.Element {
-        const config = new RssFeedConfig();
-        config.load(rawConfig);
-
-        return <RssFeedDisplayComponent
-            url={config.url}
-        />;
+    createDisplayComponent(): typeof DisplayComponent {
+        return RssFeedDisplayComponent;
     }
 
-    createConfigComponent(rawConfig: JSON, saver: WidgetConfigSaver): JSX.Element {
-        const config = new RssFeedConfig();
-        config.load(rawConfig);
-
-        return <RssFeedConfigComponent
-            url={config.url}
-            save={() => saver.save(config.save())}
-        />;
+    createConfigComponent(): typeof ConfigComponent {
+        return RssFeedConfigComponent;
     }
 
     getTitle(): string {
@@ -31,6 +20,12 @@ export class RssFeedWidget implements Widget {
     }
 
     isConfigurable(): boolean {
-        return false;
+        return true;
+    }
+
+    getDefaultRawConfig(): Object {
+        return {
+            url: "",
+        }
     }
 }
