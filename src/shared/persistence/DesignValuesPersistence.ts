@@ -23,7 +23,7 @@ export class DesignValuesPersistence {
                     "white",
                     "",
                     "",
-                    "rgba(48, 48, 48, .6)",
+                    "rgba(48, 48, 48, .45)",
                     [new Background("image", "https://images.wallpaperscraft.com/image/single/city_skyscrapers_clouds_rain_road_cars_lights_58563_3840x2160.jpg")]
                 ),
                 "light": new ColorScheme(
@@ -34,7 +34,7 @@ export class DesignValuesPersistence {
                     "",
                     "",
                     "rgba(240, 240, 240, .6)",
-                    [new Background("image", "https://images.wallpaperscraft.com/image/single/city_skyscrapers_clouds_rain_road_cars_lights_58563_3840x2160.jpg")]
+                    [new Background("image", "https://images.wallpapersden.com/image/download/new-york-city-buildings-at-day-sunlight_am5samuUmZqaraWkpJRobWllrWdma2U.jpg")]
                 ),
             };
             const data = mockDatabaseColorSchemes[id];

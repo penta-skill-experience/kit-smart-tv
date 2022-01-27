@@ -131,7 +131,6 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             backgroundImage: 'url(' + this.state.backgroundImage + ')',
             width: "100vw",
             height: "100vh",
-            overflow: "hidden",
             fontSize: this.state.relativeSize + "rem",
         }}>
             <div className={"flex "} style={{
@@ -150,7 +149,6 @@ export class RootComponent extends React.Component<any, RootComponentState> {
                     className="z-20 grid grid-cols-3 absolute left-0 grid-rows-2 box-border sm:gap-2 md:gap-3 lg:gap-5 xl:gap-7 4xl:gap-10 sm:p-2 md:p-3 lg:p-5 xl:p-7 4xl:p-10" style={{
                         width:"100vw",
                         height:"100vh",
-                        overflow: "hidden"
                 }}>
                     <div className = "sm:pl-2 md:pl-3 lg:pl-5 xl:pl-7 4xl:pl-10">
                         <DigitalTime/>

@@ -33,6 +33,10 @@ export class SquareHolder extends React.Component<SquareHolderProps, any> {
         return ("id" + part() + part() + part());
     };
 
+    componentDidMount() {
+        setInterval(() => this.pageScroll(), SquareHolderConfig.SCROLL_REFRESH);
+    }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -41,7 +45,6 @@ export class SquareHolder extends React.Component<SquareHolderProps, any> {
             error: undefined,
             scroll: SquareHolderConfig.SCROLL_SPEED
         };
-        setInterval(() => this.pageScroll(), SquareHolderConfig.SCROLL_REFRESH);
         //(this.doesOverflow() ? setInterval(() => this.pageScroll(), 50):"");
     }
 
@@ -53,7 +56,7 @@ export class SquareHolder extends React.Component<SquareHolderProps, any> {
     }
 
     render() {
-        return <div className = "box-border" style={{
+        return <div className="box-border" style={{
             height: "45vh",
             width: "31vw",
             boxSizing: "border-box"
