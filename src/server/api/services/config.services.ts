@@ -1,8 +1,9 @@
 import {DocumentDefinition} from "mongoose";
 import {omit} from "lodash";
-import {ConfigInput, ConfigModel} from "../models/config.model";
+import {ConfigModel} from "../models/config.model";
+import {ConfigData} from "../../../shared/persistence/data";
 
-export async function createConfig(input: DocumentDefinition<ConfigInput>) {
+export async function createConfig(input: DocumentDefinition<ConfigData>) {
     //before creating a Users, delete all Users in the collection, to guarantee there ist only one stored at a time
     //delete all
     await ConfigModel.remove({});
@@ -10,7 +11,7 @@ export async function createConfig(input: DocumentDefinition<ConfigInput>) {
     return await ConfigModel.findOne({}).then(o => omit(o.toJSON(), ["_id", "createdAt", "updatedAt", "__v"]));
 }
 
-export async function updateConfig(input: DocumentDefinition<ConfigInput>) {
+export async function updateConfig(input: DocumentDefinition<ConfigData>) {
     await ConfigModel.findOneAndUpdate({}, input);
     return await ConfigModel.findOne({}).then(o => omit(o.toJSON(), ["_id", "createdAt", "updatedAt", "__v"]));
 }
