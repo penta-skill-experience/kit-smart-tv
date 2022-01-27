@@ -6,7 +6,7 @@ let kelvinToCelsiusRounded = x => {
     return Math.round(x - WeatherConfig.KELVIN);
 };
 
-export class Weather extends DisplayComponent<any> {
+export class WeatherDisplayComponent extends DisplayComponent<any> {
 
     constructor(props) {
         super(props);

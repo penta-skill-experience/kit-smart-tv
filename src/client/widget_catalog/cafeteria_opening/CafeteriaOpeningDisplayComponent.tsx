@@ -14,7 +14,7 @@ interface CafeteriaOpeningState {
     closedColor: string;
 }
 
-export class CafeteriaOpening extends React.Component<any, CafeteriaOpeningState> {
+export class CafeteriaOpeningDisplayComponent extends React.Component<any, CafeteriaOpeningState> {
     constructor(props) {
         super(props);
         this.state = {

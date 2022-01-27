@@ -12,7 +12,7 @@ interface CafeteriaMenuState {
     date: string;
 }
 
-export class CafeteriaMenu extends React.Component<any, CafeteriaMenuState> {
+export class CafeteriaMenuDisplayComponent extends React.Component<any, CafeteriaMenuState> {
     constructor(props) {
         super(props);
         this.state = {

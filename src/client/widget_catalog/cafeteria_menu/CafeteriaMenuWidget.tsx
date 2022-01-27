@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Widget} from "../../widget/Widget";
-import {CafeteriaMenu} from "./CafeteriaMenu";
+import {CafeteriaMenuDisplayComponent} from "./CafeteriaMenuDisplayComponent";
 import {ConfigComponent} from "../../widget/ConfigComponent";
 import {DisplayComponent} from "../../widget/DisplayComponent";
 
@@ -11,7 +11,7 @@ export class CafeteriaMenuWidget implements Widget {
     }
 
     createDisplayComponent(): typeof DisplayComponent {
-        return CafeteriaMenu;
+        return CafeteriaMenuDisplayComponent;
     }
 
     getTitle(): string {

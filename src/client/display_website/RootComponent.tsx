@@ -1,7 +1,7 @@
 import * as React from "react";
 import {SquareHolder} from "./SquareHolder";
-import {DigitalTime} from "../widget_catalog/time/DigitalTime";
-import {Weather} from "../widget_catalog/weather/Weather";
+import {TimeDisplayComponent} from "../widget_catalog/time/TimeDisplayComponent";
+import {WeatherDisplayComponent} from "../widget_catalog/weather/WeatherDisplayComponent";
 import {WidgetLoader} from "../widget/WidgetLoader";
 import {WidgetPersistence} from "../../shared/persistence/WidgetPersistence";
 import {WidgetData} from "../widget/WidgetData";
@@ -151,8 +151,8 @@ export class RootComponent extends React.Component<any, RootComponentState> {
                     <div
                         className="sm:p-4 lg:p-6 xl:p-8 4xl:p-12 8xl:p-14 grid grid-rows-2 grid-flow-row box-border lg:gap-3 xl:gap-4 4xl:gap-6 8xl:gap-8">
                         <div>
-                            <DigitalTime/>
-                            <Weather/>
+                            <TimeDisplayComponent/>
+                            <WeatherDisplayComponent/>
                         </div>
                         {this.renderLocation(1)}
                     </div>

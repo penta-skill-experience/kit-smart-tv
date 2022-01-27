@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Widget} from "../../widget/Widget";
-import {DigitalTime} from "./DigitalTime";
+import {TimeDisplayComponent} from "./TimeDisplayComponent";
 import {ConfigComponent} from "../../widget/ConfigComponent";
 import {DisplayComponent} from "../../widget/DisplayComponent";
 
@@ -11,7 +11,7 @@ export class TimeWidget implements Widget {
     }
 
     createDisplayComponent(): typeof DisplayComponent {
-        return DigitalTime;
+        return TimeDisplayComponent;
     }
 
     getTitle(): string {

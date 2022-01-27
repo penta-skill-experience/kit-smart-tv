@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Widget} from "../../widget/Widget";
-import {Weather} from "./Weather";
+import {WeatherDisplayComponent} from "./WeatherDisplayComponent";
 import {ConfigComponent} from "../../widget/ConfigComponent";
 import {DisplayComponent} from "../../widget/DisplayComponent";
 
@@ -11,7 +11,7 @@ export class WeatherWidget implements Widget {
     }
 
     createDisplayComponent(): typeof DisplayComponent {
-        return Weather;
+        return WeatherDisplayComponent;
     }
 
     getTitle(): string {
