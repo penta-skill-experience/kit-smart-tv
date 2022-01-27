@@ -44,10 +44,14 @@ getVerifiedUsersMock.mockImplementation(() => {
         resolve(verifiedUsers);
     });
 });
-//todo: uncomment if you can resolve the error
-// setAnnouncementsMock.mockImplementation(announcementsToSet => {
-//     setAnnouncements = announcementsToSet;
-// });
+
+setAnnouncementsMock.mockImplementation(announcementsToSet => {
+    setAnnouncements = announcementsToSet;
+    return new Promise<void>(resolve => {
+        resolve();
+    });
+});
+
 
 afterEach(() => {
     setAnnouncements = [];
