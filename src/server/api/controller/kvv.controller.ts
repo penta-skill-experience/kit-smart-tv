@@ -1,12 +1,12 @@
 import {Request, Response} from "express";
-import {getKvv} from "../services/kvv.services";
+import {putKvv} from "../services/kvv.services";
 
 
 
 
-export async function getKvvHandler(req: Request, res: Response) {
+export async function putKvvHandler(req: Request, res: Response) {
     try{
-        const json = await getKvv(req.body);
+        const json = await putKvv(req.body);
         res.send(json);
     }
     catch (e: any){

@@ -2,7 +2,7 @@ import { z } from "zod";
 
 
 
-export const getKvvSchema = z.object({
+export const putKvvSchema = z.object({
     body: z.object({
         url: z.string(),
     }),
