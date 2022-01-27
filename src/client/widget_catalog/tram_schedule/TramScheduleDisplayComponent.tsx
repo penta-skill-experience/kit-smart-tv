@@ -31,8 +31,6 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
             trains: [],
             stopId: undefined,
         };
-        console.log("TramScheduleDisplayComponent received the following config:");
-        console.log(this.props.config);
     }
 
     private getStopName(): string {
@@ -45,7 +43,7 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
 
             const stopName = this.getStopName();
 
-            let url = "http://localhost:8080/" + TramScheduleConfig.URL_STOP_SEARCH_BEFORE_STOP
+            let url = TramScheduleConfig.CORS_ANYWHERE + TramScheduleConfig.URL_STOP_SEARCH_BEFORE_STOP
                 + stopName
                 + TramScheduleConfig.URL_STOP_SEARCH_AFTER_STOP
                 + TramScheduleConfig.API_KEY;
@@ -75,7 +73,6 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
             + TramScheduleConfig.URL_AFTER_STOP
             + TramScheduleConfig.API_KEY)
             .then(resp => {
-                console.log(this.state.stopId);
                 this.setState({
                     trains: resp.data.departures.map(d => ({
                         route: d.route,
