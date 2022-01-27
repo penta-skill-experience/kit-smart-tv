@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as TramScheduleConfig from "./TramSchedule.json";
 import axios from "axios"
+import {DisplayComponent} from "../../widget/DisplayComponent";
 
 interface DepartureData {
     route: string;
@@ -20,12 +21,12 @@ let justArrived = (x: string): string => {
     return x;
 };
 
-export class TramScheduleDisplayComponent extends React.Component<any, TramScheduleState> {
+export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleState> {
     constructor(props) {
         super(props);
         this.state = {
             trains: [],
-            stop: this.props.stop
+            stop: this.props.config["stop"]
         };
     }
     getSchedule() {

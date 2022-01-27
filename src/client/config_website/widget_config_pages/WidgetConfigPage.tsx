@@ -2,27 +2,56 @@ import * as React from "react";
 import {Button, Grid} from "@mui/material";
 import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices";
 import Dialog from '@mui/material/Dialog';
+import {ConfigComponent} from "../../widget/ConfigComponent";
 
-export function WidgetConfigPage({content}) {
-    const [open, setOpen] = React.useState(false);
+interface WidgetConfigPageProps {
+    configComponentClass: typeof ConfigComponent;
+    save: (rawConfig: Object) => void;
+    rawConfig: Object;
+}
 
-    const handleOpen = () => {
-        setOpen(true);
-    };
+interface WidgetConfigPageState {
+    open: boolean;
+}
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+export class WidgetConfigPage extends React.Component<WidgetConfigPageProps, WidgetConfigPageState> {
 
+    private configComponentRef = React.createRef<ConfigComponent<any>>();
 
-    return(
-        <Grid item>
-            <Button onClick={handleOpen}>
+    constructor(props: Readonly<WidgetConfigPageProps> | WidgetConfigPageProps) {
+        super(props);
+        this.state = {
+            open: false,
+        };
+    }
+
+    private open() {
+        this.setState({open: true});
+    }
+
+    private close() {
+        this.setState({open: false});
+    }
+
+    private save() {
+        this.props.save(this.configComponentRef.current.save());
+        this.close();
+    }
+
+    render() {
+        return<Grid item>
+            <Button onClick={() => this.open()}>
                 <MiscellaneousServicesIcon/>
             </Button>
-            <Dialog onClose={handleClose} open={open} maxWidth={'xl'} PaperProps={{ sx: { width: "30%", height: "100%" } }}>
-                {content}
+            <Dialog onClose={() => this.close()} open={this.state.open} maxWidth={'xl'} PaperProps={{ sx: { width: "30%", height: "100%" } }}>
+                {
+                    // @ts-ignore
+                    React.createElement(this.props.configComponentClass, {config: this.props.rawConfig, ref: this.configComponentRef}, null)
+                }
+                <Button variant="contained" onClick={() => this.save()}>
+                    Save
+                </Button>
             </Dialog>
-        </Grid>
-    );
+        </Grid>;
+    }
 }

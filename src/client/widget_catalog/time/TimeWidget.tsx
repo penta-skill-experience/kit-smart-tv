@@ -1,16 +1,17 @@
 import * as React from "react";
 import {Widget} from "../../widget/Widget";
-import {WidgetConfigSaver} from "../../widget/WidgetConfigSaver";
 import {DigitalTime} from "./DigitalTime";
+import {ConfigComponent} from "../../widget/ConfigComponent";
+import {DisplayComponent} from "../../widget/DisplayComponent";
 
 export class TimeWidget implements Widget {
 
-    createConfigComponent(rawConfig: Object, save: (rawConfig: Object) => void): JSX.Element {
+    createConfigComponent(): typeof ConfigComponent {
         return undefined;
     }
 
-    createDisplayComponent(rawConfig: Object): JSX.Element {
-        return <DigitalTime />;
+    createDisplayComponent(): typeof DisplayComponent {
+        return DigitalTime;
     }
 
     getTitle(): string {

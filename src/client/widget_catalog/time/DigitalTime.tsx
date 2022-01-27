@@ -1,6 +1,8 @@
 import * as React from "react";
+import {DisplayComponent} from "../../widget/DisplayComponent";
 const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-export class DigitalTime extends React.Component<any, any> {
+
+export class DigitalTime extends DisplayComponent<any> {
     private intervalID: NodeJS.Timer;
     constructor(props) {
         super(props);
