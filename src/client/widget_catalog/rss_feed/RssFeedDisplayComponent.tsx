@@ -3,6 +3,7 @@ import {AdminStatePersistence} from "../../../shared/persistence/AdminStatePersi
 import {Button} from "@mui/material";
 import {TokenHolderSingleton} from "../../../shared/persistence/TokenHolderSingleton";
 import {AnnouncementPersistence} from "../../../shared/persistence/AnnouncementPersistence";
+import {Announcement} from "../../../server/announcement_management/Announcement";
 
 interface RssFeedDisplayProps {
     url: string;
@@ -41,6 +42,11 @@ export class RssFeedDisplayComponent extends React.Component<RssFeedDisplayProps
                 const ann = new AnnouncementPersistence();
                 ann.getAnnouncements().then(r => console.log(r)).catch();
             }}>getAnnouncements</Button>
+
+            <Button onClick={() => {
+                const ann = new AnnouncementPersistence();
+                ann.setAnnouncements([new Announcement("Bobs Announcement", "bob@example.com", "This is bobs announcement."), new Announcement("Alices Announcement", "alice@example.com", "This is alice announcement.")]).then(r => console.log(r)).catch();
+            }}>setAnnouncements</Button>
         </div>;
     }
 }
