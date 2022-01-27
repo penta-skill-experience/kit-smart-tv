@@ -5,8 +5,8 @@ import * as AnnouncementConfig from "./AnnouncementComponent.json"
 import {VerifiedUser} from "../../../shared/values/VerifiedUser";
 
 interface AnnouncementState {
-    announcements : Announcement[];
-    verifiedUsers : VerifiedUser[]
+    announcements: Announcement[];
+    verifiedUsers: VerifiedUser[]
 }
 
 export class AnnouncementComponent extends React.Component<{}, AnnouncementState> {
@@ -20,9 +20,9 @@ export class AnnouncementComponent extends React.Component<{}, AnnouncementState
     }
 
     async tick() {
-        let currentAnnouncements : Announcement[];
+        let currentAnnouncements: Announcement[];
         await new AnnouncementPersistence().getAnnouncements().then(data => currentAnnouncements = data);
-        let currentVerifiedUsers : VerifiedUser[];
+        let currentVerifiedUsers: VerifiedUser[];
         await new AnnouncementPersistence().getVerifiedUsers().then(data => currentVerifiedUsers = data);
         this.setState({
             announcements: currentAnnouncements,
@@ -42,19 +42,23 @@ export class AnnouncementComponent extends React.Component<{}, AnnouncementState
         const sortedAnnouncements = this.state.announcements.sort((ann1, ann2) => {
             return ann1.timeOfAddition < ann2.timeOfAddition ? 1 : -1; // sort, so newest are at the front
         })
-        if (sortedAnnouncements.length > 0) {
-            return sortedAnnouncements.slice(0, AnnouncementConfig.DISPLAYED_ANNOUNCEMENTS + 1).map(announcement => {
-                return <div className = {"font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl"}>
-                    <b>{announcement.title} - {this.getAuthorForAnnouncement(announcement)} </b> <br />
-                        {announcement.text} <br /><br />
-                    </div>
-            })
-        } else {
-            return [];
+        if(!(sortedAnnouncements.length > 0)) {
+            return "";
         }
+        return <div className="grid grid-flow-row">
+            {
+                sortedAnnouncements.slice(0, AnnouncementConfig.DISPLAYED_ANNOUNCEMENTS + 1).map(announcement =>
+                    <div className = "font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl">
+                    <b>{announcement.title} - {this.getAuthorForAnnouncement(announcement)} </b><br/>
+                        {announcement.text} <br/><br/>
+                    </div>
+                )
+            }
+
+        </div>
     }
 
-    private getAuthorForAnnouncement(announcement : Announcement) : string {
+    private getAuthorForAnnouncement(announcement: Announcement): string {
         for (let verifiedUser of this.state.verifiedUsers) {
             if (verifiedUser.email === announcement.author) {
                 return verifiedUser.name;

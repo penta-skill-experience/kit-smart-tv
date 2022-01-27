@@ -12,26 +12,27 @@ interface SquareHolderProps {
 
 export class SquareHolder extends React.Component<SquareHolderProps, any> {
 
-    pageScroll = function() {
-        if(this.state.uniqueID === null || document.getElementById(this.state.uniqueID) === null) {
+    pageScroll = function () {
+        if (this.state.uniqueID === null || document.getElementById(this.state.uniqueID) === null) {
             return;
         }
-        document.getElementById(this.state.uniqueID).scrollBy(0,this.state.scroll); // horizontal and vertical scroll increments
-        if((document.getElementById(this.state.uniqueID).scrollTop +
-            document.getElementById(this.state.uniqueID).clientHeight) >=
+        document.getElementById(this.state.uniqueID).scrollBy(0, this.state.scroll); // horizontal and vertical scroll increments
+        if ((document.getElementById(this.state.uniqueID).scrollTop +
+                document.getElementById(this.state.uniqueID).clientHeight) >=
             document.getElementById(this.state.uniqueID).scrollHeight || document.getElementById(this.state.uniqueID).scrollTop == 0) {
             this.state.scroll = -this.state.scroll;
         }
     }
-    doesOverflow = function() {
+    doesOverflow = function () {
         return document.getElementById(this.state.uniqueID).scrollHeight >= document.getElementById(this.state.uniqueID).clientHeight;
     }
-    randomID = function() { //generate random ID to make scrolling behavior unique for each Squareholder
-        let part = function() {
+    randomID = function () { //generate random ID to make scrolling behavior unique for each Squareholder
+        let part = function () {
             return (Math.random().toString(10).substring(2));
         }
-        return ("id" + part()+part()+part());
+        return ("id" + part() + part() + part());
     };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -52,18 +53,26 @@ export class SquareHolder extends React.Component<SquareHolderProps, any> {
     }
 
     render() {
-        return <div className={"shadow-2xl rounded-2xl box-border"} id="squareHeld" style={{
-            backgroundColor: this.props.accentColor
+        return <div className = "box-border" style={{
+            height: "45vh",
+            width: "31vw",
+            boxSizing: "border-box"
         }}>
-            <div
-                    className={"sm:px-2 lg:px-3 xl:px-4 4xl:px-5 8xl:px-6 font-light leading-normal sm:text-base md:text-xl lg:text-2xl xl:text-4xl 2xl:text-5xl 8xl:text-6xl"} style={{
-                    color: this.props.titleColor
-                 }}>
+            <div className={"w-full h-full shadow-2xl rounded-2xl"} id="squareHeld" style={{
+                backgroundColor: this.props.accentColor,
+                boxSizing: "border-box",
+                overflow: "hidden"
+            }}>
+                <div
+                    className={"sm:px-2 lg:px-3 xl:px-4 4xl:px-5 8xl:px-6 font-light leading-normal sm:text-base md:text-xl lg:text-2xl xl:text-4xl 2xl:text-5xl 8xl:text-6xl"}
+                    style={{
+                        color: this.props.titleColor
+                    }}>
                     {this.props.title}
                 </div>
-                <div className={"sm:pl-5 sm:pt-1 sm:pb-2 sm:pr-2 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12 overflow-x-scroll scrollbar-hide scroll-smooth"}
-                     id={this.state.uniqueID} style={{
-                    height: "38vh",
+                <div
+                    className={"w-full h-full sm:pl-5 sm:pt-1 sm:pb-2 sm:pr-2 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12 overflow-x-scroll scrollbar-hide scroll-smooth overflow-hidden"}
+                    id={this.state.uniqueID} style={{
                     scrollBehavior: "smooth"
                 }}>
                     {this.state.hasError ?
@@ -72,6 +81,7 @@ export class SquareHolder extends React.Component<SquareHolderProps, any> {
                         : this.props.children  // only show children if they didn't produce an error
                     }
                 </div>
-            </div>;
+            </div>
+        </div>;
     }
 }
