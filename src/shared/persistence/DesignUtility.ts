@@ -21,7 +21,7 @@ export class DesignUtility {
             return {
                 fontSize: valuesData.fontSizes.find(fontSize => fontSize.id === configData.fontSize),
                 colorScheme: colorScheme,
-                background: colorScheme.backgroundImages.find(b => b.id === configData.background),
+                background: colorScheme.backgrounds.find(b => b.id === configData.background),
             };
         }));
     }

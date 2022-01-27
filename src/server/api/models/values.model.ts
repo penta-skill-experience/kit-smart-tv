@@ -19,22 +19,10 @@ const ValuesSchema = new mongoose.Schema({
                 required: true,
                 unique: true,
             },
-            titleFontSize: {
+            relativeHeight: {
                 type: Number,
                 required: true,
-            },
-            bodyFontSize: {
-                type: Number,
-                required: true,
-            },
-            specialFontSize: {
-                type: Number,
-                required: true,
-            },
-            specialFontSizeAccent: {
-                type: Number,
-                required: true,
-            },
+            }
         })],
         required: true,
     },
@@ -50,19 +38,19 @@ const ValuesSchema = new mongoose.Schema({
                 required: true,
                 unique: true,
             },
-            titleColor: {
+            titleFontColor: {
                 type: String,
                 required: true,
             },
-            bodyColor: {
+            bodyFontColor: {
                 type: String,
                 required: true,
             },
-            specialBoldColor: {
+            specialBoldFontColor: {
                 type: String,
                 required: true,
             },
-            specialSubtleColor: {
+            specialSubtleFontColor: {
                 type: String,
                 required: true,
             },
