@@ -9,6 +9,7 @@ import {RotatorComponent} from "./RotatorComponent";
 import {DesignValuesPersistence} from "../../shared/persistence/DesignValuesPersistence";
 import {DesignConfigPersistence} from "../../shared/persistence/DesignConfigPersistence";
 import * as RootComponentConfig from "./RootComponent.json";
+import {DesignUtility} from "../../shared/persistence/DesignUtility";
 
 interface RootComponentState {
     widgetDataByLocation: WidgetData[][];
@@ -44,30 +45,23 @@ export class RootComponent extends React.Component<any, RootComponentState> {
         };
     }
 
-
     switchFontSizeDocument(relativeSize: number) {
         document.documentElement.style.fontSize =  relativeSize + "rem";
     }
 
     loadTheme() {
-        const theme = this.designConfigPersistence.getSelectedColorSchemeId();
-        const fontSize = this.designConfigPersistence.getSelectedFontSizeId();
-        this.designValuesPersistence.getFontSize(fontSize).then(resp => {
+        DesignUtility.getDesignConfigValues().then(design => {
             this.setState({
-                relativeSize: resp.relativeSize
+                relativeSize: design.fontSize.relativeSize,
+                themeID: design.colorScheme.id,
+                titleFontColor: design.colorScheme.titleFontColor,
+                bodyFontColor: design.colorScheme.bodyFontColor,
+                specialBoldFontColor: design.colorScheme.specialBoldFontColor,
+                specialSubtleFontColor: design.colorScheme.specialSubtleFontColor,
+                accentBarColor: design.colorScheme.accentBarColor,
+                backgroundImage: design.background.url,
             });
-            this.switchFontSizeDocument(resp.relativeSize);
-        });
-        this.designValuesPersistence.getColorScheme(theme).then(resp => {
-            this.setState({
-                themeID: resp.id,
-                titleFontColor: resp.titleFontColor,
-                bodyFontColor: resp.bodyFontColor,
-                specialBoldFontColor: resp.specialBoldFontColor,
-                specialSubtleFontColor: resp.specialSubtleFontColor,
-                accentBarColor: resp.accentBarColor,
-                backgroundImage: this.designConfigPersistence.getSelectedBackground(),
-            });
+            this.switchFontSizeDocument(design.fontSize.relativeSize);
         });
     }
     loadWidget() {
