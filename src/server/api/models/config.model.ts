@@ -1,12 +1,7 @@
 import * as mongoose from "mongoose";
+import {ConfigData} from "../../../shared/persistence/data";
 
-export interface ConfigInput {
-    fontSize: string;
-    colorScheme: string;
-    background: string;
-}
-
-export interface ConfigDocument extends ConfigInput, mongoose.Document {
+export interface ConfigDocument extends ConfigData, mongoose.Document {
     createdAt: Date;
     updatedAt: Date;
 }

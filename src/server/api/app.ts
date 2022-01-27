@@ -32,23 +32,6 @@ serverSetup(process.env.MONGO_URI);
 
 
 export function serverSetup(dbUri : string) {
-//     // Listen on a specific host via the HOST environment variable
-//     var host = process.env.HOST || '0.0.0.0';
-// // Listen on a specific port via the PORT environment variable
-//     var port_cors = process.env.PORT || 8080;
-//
-//     var cors_proxy = require('cors-anywhere');
-//     cors_proxy.createServer({
-//         originWhitelist: [], // Allow all origins
-//         requireHeader: ['origin', 'x-requested-with'],
-//         removeHeaders: ['cookie', 'cookie2']
-//     }).listen(port_cors, host, function() {
-//         console.log('Running CORS Anywhere on ' + host + ':' + port_cors);
-//     });
-
-
-
-
     const mail = new AnnouncementMailListener;
     mail.createMailListener();
 
@@ -56,17 +39,15 @@ export function serverSetup(dbUri : string) {
 
     const app = express();
 
-
+    app.use(cors());
     app.use(express.json());
 
 
 
-    app.use(cors());
+
 
 
     app.use(deserializeAdmin);
-
-// host static files of display_website and config_website
     app.use("/",
         express.static(path.resolve(__dirname, "..", "display_website")));
     app.use("/admin-interface",
@@ -136,4 +117,3 @@ export function serverSetup(dbUri : string) {
 
     });
 }
-
