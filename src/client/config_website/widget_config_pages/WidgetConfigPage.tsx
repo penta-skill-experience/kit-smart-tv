@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Button, Grid} from "@mui/material";
+import {Button, ButtonGroup, Grid} from "@mui/material";
 import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices";
 import Dialog from '@mui/material/Dialog';
 import {ConfigComponent} from "../../widget/ConfigComponent";
@@ -35,22 +35,41 @@ export class WidgetConfigPage extends React.Component<WidgetConfigPageProps, Wid
 
     private save() {
         this.props.save(this.configComponentRef.current.save());
-        this.close();
     }
 
     render() {
-        return<Grid item>
+        return <Grid item>
             <Button onClick={() => this.open()}>
                 <MiscellaneousServicesIcon/>
             </Button>
-            <Dialog onClose={() => this.close()} open={this.state.open} maxWidth={'xl'} PaperProps={{ sx: { width: "30%", height: "100%" } }}>
+            <Dialog onClose={() => this.close()} open={this.state.open} maxWidth={'xl'}
+                    PaperProps={{
+                        sx: {
+                            padding: "24px",
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }
+                    }}>
                 {
                     // @ts-ignore
-                    React.createElement(this.props.configComponentClass, {config: this.props.rawConfig, ref: this.configComponentRef}, null)
+                    React.createElement(this.props.configComponentClass, {
+                        config: this.props.rawConfig,
+                        ref: this.configComponentRef
+                    }, null)
                 }
-                <Button variant="contained" onClick={() => this.save()}>
-                    Save
-                </Button>
+                <ButtonGroup>
+                    <Button variant="outlined" onClick={() => this.close()}>
+                        Cancel
+                    </Button>
+                    <Button variant="contained" onClick={() => {
+                        this.save();
+                        this.close();
+                    }}>
+                        OK
+                    </Button>
+                </ButtonGroup>
             </Dialog>
         </Grid>;
     }

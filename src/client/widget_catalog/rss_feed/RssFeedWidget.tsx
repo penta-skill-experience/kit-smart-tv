@@ -1,7 +1,6 @@
 import * as React from "react";
 import {Widget} from "../../widget/Widget";
 import {RssFeedDisplayComponent} from "./RssFeedDisplayComponent";
-import {RssFeedConfig} from "./RssFeedConfig";
 import {RssFeedConfigComponent} from "./RssFeedConfigComponent";
 import {ConfigComponent} from "../../widget/ConfigComponent";
 import {DisplayComponent} from "../../widget/DisplayComponent";
@@ -25,7 +24,8 @@ export class RssFeedWidget implements Widget {
     }
 
     getDefaultRawConfig(): Object {
-        const config = new RssFeedConfig();
-        return config.save();
+        return {
+            url: "",
+        }
     }
 }

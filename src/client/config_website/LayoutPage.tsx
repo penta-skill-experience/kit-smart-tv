@@ -187,8 +187,8 @@ export const LayoutPage = ({list, widgetListElement, handleWidgetSelection, hand
                     <Button onClick={handleAddWidget} variant="outlined">Add Widget</Button>
                 </Grid>
                 <Grid item>
-                    <Button variant="outlined" onClick={handleLayoutChange}>
-                        Save Changes
+                    <Button variant="contained" onClick={handleLayoutChange}>
+                        Save
                     </Button>
                 </Grid>
             </Grid>
