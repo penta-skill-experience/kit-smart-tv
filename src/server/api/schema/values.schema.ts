@@ -7,10 +7,7 @@ export const updateValuesSchema = z.object({
                 required_error: "id is required",
             }),
             name: z.string(),
-            titleFontSize: z.number(),
-            bodyFontSize: z.number(),
-            specialFontSize: z.number(),
-            specialFontSizeAccent: z.number(),
+            relativeHeight: z.number(),
         })),
         colorSchemes: z.array(z.object({
             id: z.string(),

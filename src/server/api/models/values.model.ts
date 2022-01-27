@@ -19,22 +19,10 @@ const ValuesSchema = new mongoose.Schema({
                 required: true,
                 unique: true,
             },
-            titleFontSize: {
+            relativeHeight: {
                 type: Number,
                 required: true,
-            },
-            bodyFontSize: {
-                type: Number,
-                required: true,
-            },
-            specialFontSize: {
-                type: Number,
-                required: true,
-            },
-            specialFontSizeAccent: {
-                type: Number,
-                required: true,
-            },
+            }
         })],
         required: true,
     },
