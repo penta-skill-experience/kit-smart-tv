@@ -10,7 +10,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
-import {WidgetConfigPage} from "./widget_config_pages/WidgetConfigPage";
+import {WidgetConfigPage} from "./WidgetConfigPage";
 
 
 export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, handleRawConfigSave, children}) => {

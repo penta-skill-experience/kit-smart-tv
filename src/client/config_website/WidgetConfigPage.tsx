@@ -2,7 +2,7 @@ import * as React from "react";
 import {Button, ButtonGroup, Grid} from "@mui/material";
 import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices";
 import Dialog from '@mui/material/Dialog';
-import {ConfigComponent} from "../../widget/ConfigComponent";
+import {ConfigComponent} from "../widget/ConfigComponent";
 
 interface WidgetConfigPageProps {
     configComponentClass: typeof ConfigComponent;
