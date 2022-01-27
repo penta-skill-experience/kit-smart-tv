@@ -3,6 +3,7 @@ import * as EmailInteractionConfig from "./MailInteractionConfig.json"
 import {MailListener} from "mail-listener-typescript";
 import {EmailAnnouncementExecutor} from "./EmailAnnouncementExecutor";
 import * as fs from "fs";
+import "dotenv/config"
 
 /**
  * A class to create a mail listener to listen for announcements.
@@ -17,7 +18,7 @@ export class AnnouncementMailListener {
     createMailListener() {
         const options = { // see https://www.npmjs.com/package/mail-listener-typescript
             username: EmailConfig.USERNAME,
-            password: EmailConfig.PASSWORD,
+            password: process.env.ANNOUNCEMENT_MAIL_ACCOUNT_PW,
             host:  EmailConfig.HOST,
             port:  EmailConfig.PORT,
             tls:  EmailConfig.TLS,
