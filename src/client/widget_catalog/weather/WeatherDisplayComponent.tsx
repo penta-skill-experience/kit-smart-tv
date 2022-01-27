@@ -27,11 +27,12 @@ export class WeatherDisplayComponent extends DisplayComponent<any> {
     getWeather() {
         axios.get(WeatherConfig.URL + WeatherConfig.API_KEY)
             .then(resp => {
+                {console.log(resp)}
                 this.setState({
                     temp: resp.data.current.temp,
                     humidity: resp.data.current.humidity,
                     windSpeed: resp.data.current.wind_speed,
-                    precipitation: resp.data.minutely[0].precipitation,
+                    precipitation: resp.data.hourly[0].pop,
                     icon: resp.data.current.weather[0].icon
                 });
             })
