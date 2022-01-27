@@ -1,17 +1,18 @@
+import {ConfigData} from "./data";
+import config from "./persistence.config.json";
+
 export class DesignConfigPersistence {
-    getSelectedColorSchemeId(): string {
-        //todo
-        return "dark";
+
+    getSelectedColorSchemeId(): Promise<string> {
+        return this.getConfigData().then(configData => configData.colorScheme);
     }
 
-    getSelectedBackground(): string {
-        //todo
-        return "https://images.wallpaperscraft.com/image/single/city_skyscrapers_clouds_rain_road_cars_lights_58563_3840x2160.jpg";
+    getSelectedBackground(): Promise<string> {
+        return this.getConfigData().then(configData => configData.background);
     }
 
-    getSelectedFontSizeId(): string {
-        //todo
-        return "medium";
+    getSelectedFontSizeId(): Promise<string> {
+        return this.getConfigData().then(configData => configData.fontSize);
     }
 
     setSelectedColorSchemeId(id: string) {
@@ -24,5 +25,13 @@ export class DesignConfigPersistence {
 
     setSelectedFontSize(id: string) {
         //todo
+    }
+
+    /* Queries the whole config object.
+       Other getters cherry-pick from this object for utility.
+     */
+    getConfigData(): Promise<ConfigData> {
+        return fetch(`${config.DOMAIN}/config`)
+            .then((value: Response) => value.json());
     }
 }
