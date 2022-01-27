@@ -22,6 +22,9 @@ interface TramScheduleState {
 }
 
 export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleState> {
+
+    private intervalHandle;  // need to keep a reference to the interval in order to clear it when unmounting the component
+
     constructor(props) {
         super(props);
         this.state = {
@@ -86,7 +89,12 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
 
     componentDidMount() {
         this.querySchedule();
-        setInterval(() => this.querySchedule(), TramScheduleConfig.REFRESH_RATE);
+        this.intervalHandle = setInterval(() => this.querySchedule(), TramScheduleConfig.REFRESH_RATE);
+    }
+
+
+    componentWillUnmount() {
+        clearInterval(this.intervalHandle);
     }
 
     render() {
