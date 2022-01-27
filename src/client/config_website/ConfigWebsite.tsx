@@ -1,6 +1,6 @@
 import Typography from '@mui/material/Typography';
 import * as React from "react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
@@ -140,6 +140,34 @@ export function ConfigWebsite() {
         widgetNameText:'',
         widget: null,
         widgetData:null,
+    });
+
+    const [needInitialWidgetDataList, setNeedInitialWidgetDataList] = useState(true);  // only query initial data once
+
+    useEffect(() => {
+        if (needInitialWidgetDataList) {
+            widgetPersistence.getWidgetDataList().then(list => {
+
+                const newList = [];
+
+                let c = 0;
+                for (const widgetData of list) {
+                    const widget = widgetLoader.getWidget(widgetData.widgetId);
+                    newList.push({
+                        id: c,
+                        position: '',
+                        widgetNameText: widget.getTitle(),
+                        widget: widget,
+                        widgetData: widgetData,
+                    });
+                    c++;
+                }
+
+                setNeedInitialWidgetDataList(false);
+                setWidgetList(newList);
+                setCounter(c);
+            });
+        }
     });
 
     const handleWidgetSelection = (event: SelectChangeEvent) => {
