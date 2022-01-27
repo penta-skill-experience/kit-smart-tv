@@ -1,8 +1,4 @@
 import * as React from "react";
-import {AdminStatePersistence} from "../../../shared/persistence/AdminStatePersistence";
-import {Button} from "@mui/material";
-import {TokenHolderSingleton} from "../../../shared/persistence/TokenHolderSingleton";
-import {AnnouncementPersistence} from "../../../shared/persistence/AnnouncementPersistence";
 
 interface RssFeedDisplayProps {
     url: string;
@@ -11,8 +7,8 @@ interface RssFeedDisplayProps {
 export class RssFeedDisplayComponent extends React.Component<RssFeedDisplayProps, any> {
 
     render() {
-        return <div>
-            url: {this.props.url}
-        </div>;
+        return <iframe width="100%" height="100%"
+                       style={{border: "0px"}}
+                       src={`http://rss-world.de/service/show_rss.php?anz=-1&u=${this.props.url}&style=http://www.rss-world.de/service/show_rss_style.css&aufbau[tl]=undefined&aufbau[sl]=1`}/>
     }
 }
