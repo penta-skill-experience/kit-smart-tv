@@ -19,7 +19,7 @@ export class SquareHolder extends React.Component<SquareHolderProps, any> {
         document.getElementById(this.state.uniqueID).scrollBy(0, this.state.scroll); // horizontal and vertical scroll increments
         if ((document.getElementById(this.state.uniqueID).scrollTop +
                 document.getElementById(this.state.uniqueID).clientHeight) >=
-            document.getElementById(this.state.uniqueID).scrollHeight || document.getElementById(this.state.uniqueID).scrollTop == 0) {
+            document.getElementById(this.state.uniqueID).scrollHeight || document.getElementById(this.state.uniqueID).scrollTop <= 0) {
             this.state.scroll = -this.state.scroll;
         }
     }
