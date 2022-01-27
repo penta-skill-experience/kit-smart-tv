@@ -12,20 +12,6 @@ interface SquareHolderProps {
 
 export class SquareHolder extends React.Component<SquareHolderProps, any> {
 
-    pageScroll = function () {
-        if (this.state.uniqueID === null || document.getElementById(this.state.uniqueID) === null) {
-            return;
-        }
-        document.getElementById(this.state.uniqueID).scrollBy(0, this.state.scroll); // horizontal and vertical scroll increments
-        if ((document.getElementById(this.state.uniqueID).scrollTop +
-                document.getElementById(this.state.uniqueID).clientHeight) >=
-            document.getElementById(this.state.uniqueID).scrollHeight || document.getElementById(this.state.uniqueID).scrollTop <= 0) {
-            this.state.scroll = -this.state.scroll;
-        }
-    }
-    doesOverflow = function () {
-        return document.getElementById(this.state.uniqueID).scrollHeight >= document.getElementById(this.state.uniqueID).clientHeight;
-    }
     randomID = function () { //generate random ID to make scrolling behavior unique for each Squareholder
         let part = function () {
             return (Math.random().toString(10).substring(2));
@@ -33,8 +19,8 @@ export class SquareHolder extends React.Component<SquareHolderProps, any> {
         return ("id" + part() + part() + part());
     };
 
-    componentDidMount() {
-        setInterval(() => this.pageScroll(), SquareHolderConfig.SCROLL_REFRESH);
+    doesOverflow = function () {
+        return document.getElementById(this.state.uniqueID).scrollHeight >= document.getElementById(this.state.uniqueID).clientHeight;
     }
 
     constructor(props) {
@@ -45,7 +31,6 @@ export class SquareHolder extends React.Component<SquareHolderProps, any> {
             error: undefined,
             scroll: SquareHolderConfig.SCROLL_SPEED
         };
-        //(this.doesOverflow() ? setInterval(() => this.pageScroll(), 50):"");
     }
 
     static getDerivedStateFromError(error) {
@@ -74,7 +59,7 @@ export class SquareHolder extends React.Component<SquareHolderProps, any> {
                     {this.props.title}
                 </div>
                 <div
-                    className={"w-full h-full sm:pl-5 sm:pt-1 sm:pb-2 sm:pr-2 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12 overflow-x-scroll scrollbar-hide scroll-smooth overflow-hidden"}
+                    className={"w-full h-full sm:pl-5 sm:pt-1 sm:pb-2 sm:pr-2 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12 scrollbar-hide"}
                     id={this.state.uniqueID} style={{
                     scrollBehavior: "smooth"
                 }}>
