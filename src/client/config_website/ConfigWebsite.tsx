@@ -415,8 +415,5 @@ export function ConfigWebsite() {
 
     }
 
-    return(<div>
-            {renderConfigWebsite()}
-        </div>
-    );
+    return renderConfigWebsite();
 }

@@ -30,6 +30,7 @@ export class RssFeedConfigComponent extends ConfigComponent<RssFeedConfigState> 
         return <div>
             <DialogTitle>RSS Feed Settings</DialogTitle>
             <DialogContent>
+                <br/>
                 <TextField
                     label={"RSS Feed URL"}
                     value={this.state.urlText}
