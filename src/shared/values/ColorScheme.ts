@@ -8,5 +8,5 @@ export interface ColorScheme {
     specialBoldFontColor: string;
     specialSubtleFontColor: string;
     accentBarColor: string;
-    backgroundImages: Background[];
+    backgrounds: Background[];
 }
