@@ -1,18 +1,42 @@
 import * as React from "react";
-import {AdminStatePersistence} from "../../../shared/persistence/AdminStatePersistence";
-import {Button} from "@mui/material";
-import {TokenHolderSingleton} from "../../../shared/persistence/TokenHolderSingleton";
-import {AnnouncementPersistence} from "../../../shared/persistence/AnnouncementPersistence";
+import Parser from "rss-parser";
 
 interface RssFeedDisplayProps {
     url: string;
 }
 
-export class RssFeedDisplayComponent extends React.Component<RssFeedDisplayProps, any> {
+interface RssFeedDisplayState {
+    rssFeed: any;
+}
+
+export class RssFeedDisplayComponent extends React.Component<RssFeedDisplayProps, RssFeedDisplayState> {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            rssFeed: undefined
+        };
+    }
+
+    async componentDidMount() {
+        const parser = new Parser();
+        const feed = await parser.parseURL('https://www.reddit.com/.rss');
+        this.setState({
+            rssFeed: feed
+        } );
+    }
 
     render() {
-        return <div>
-            url: {this.props.url}
-        </div>;
+        return (
+            <div>
+                <h1>RSS Feed</h1>
+                {this.state.rssFeed.map((item, i) => {
+                    return <div key={i}>
+                            <h1>item.title</h1>
+                            <a href="">item.link</a>
+                        </div>
+                })}
+            </div>
+        );
     }
 }
