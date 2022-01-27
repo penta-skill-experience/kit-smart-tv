@@ -85,6 +85,8 @@ export function serverSetup(dbUri : string) {
 
         app.put("/admin/update-password", requireAdmin, ensureRequestStructure(updatePasswordSchema), updatePasswordHandler);
 
+
+
         /**
          *   Session Routines
          **/
