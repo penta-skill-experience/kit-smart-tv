@@ -74,7 +74,6 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
         };
         return fetch(`${config.DOMAIN}/kvv`, requestOptions)
             .then((value: Response) => value.json()).then(data => {
-                console.log(data)
                 this.setState({
                     trains: data.departures.map(d => ({
                         route: d.route,
