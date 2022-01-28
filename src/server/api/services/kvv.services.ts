@@ -1,12 +1,54 @@
 import {DocumentDefinition} from "mongoose";
 import {KvvDocument} from "../models/kvv.model";
-import {execSync} from 'child_process';
-import * as fs from 'fs';
+import * as fs from "fs";
+import {exec} from "child_process";
 
+/**
+ * List of all platforms (operating systems)
+ * that this service can run on.
+ */
+const allowedPlatforms = [
+    "darwin",  // macOS
+    "linux",
+];
 
-export async function putKvv(input: DocumentDefinition<KvvDocument>){
-    const command = `rm ../kvv.json | curl -o ../kvv.json "${input.url}"`
-    await execSync(command);
-    let rawData = fs.readFileSync('../kvv.json');
-    return JSON.parse(rawData.toString());
+const runningOnCorrectPlatform: boolean = allowedPlatforms.includes(process.platform);
+
+console.log(`runningOnCorrectPlatform = ${runningOnCorrectPlatform}`);
+
+export function putKvv(input: DocumentDefinition<KvvDocument>): Promise<object> {
+    return runKvvCommand(input.url.toString())
+        .then(() => new Promise<object>((resolve, reject) => {
+            fs.readFile('../kvv.json', (err, data) => {
+                if (err) {
+                    reject(err.message);
+                } else {
+                    try {
+                        const json: any = JSON.parse(data.toString());
+                        const o = json as object;
+                        resolve(o);
+                    } catch (e) {
+                        reject(`Data returned by KVV API could not be parsed to JavaScript object: ${e.message}`);
+                    }
+                }
+            });
+        }));
+}
+
+function runKvvCommand(url: string): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+        if (runningOnCorrectPlatform) {
+            const command = `rm ../kvv.json | curl -o ../kvv.json "${url}"`;
+            exec(command, (error, stdout, stderr) => {
+                if (error) {
+                    reject(stderr);
+                } else {
+                    resolve();
+                }
+            });
+        } else {
+            reject(`Server is running on platform "${process.platform}", `
+                + `but must run on one of ${JSON.stringify(allowedPlatforms)} to support accessing the KVV API.`);
+        }
+    });
 }

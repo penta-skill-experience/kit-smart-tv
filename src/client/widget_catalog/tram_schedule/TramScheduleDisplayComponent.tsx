@@ -50,15 +50,29 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
             body: JSON.stringify(body)
         };
         fetch(`${config.DOMAIN}/kvv`, requestOptions)
-            .then((value: Response) => value.json())
+            .then((resp: Response) => {
+                if (resp.ok) {
+                    return resp.json();
+                } else {
+                    resp.text().then(responseText => {
+                        //todo: show this error on the smart tv
+                        console.error(`Failed to get tram schedule from server (status: ${resp.status} ${resp.statusText}). Reason: ${responseText}`);
+                    });
+                }
+            })
             .then(data => {
                 let checker = data.stops;
                 if (checker.length == 0) {
-                    throw new Error(`The stop ${stopName} does not exist`);
+                    //todo: show this error on the smart tv
+                    console.error(`The stop ${stopName} does not exist`);
+                } else {
+                    return this.queryDepartureData(checker[0].id);
                 }
-                return this.queryDepartureData(checker[0].id);
             })
-            .catch(reason => console.error(`Failed to get tram schedule from server. Reason: ${reason}`));
+            .catch(reason => {
+                //todo: show this error on the smart tv
+                console.error(`Failed to get tram schedule from server. Reason: ${reason}`);
+            });
     };
 
     private queryDepartureData(stopId: string) {
