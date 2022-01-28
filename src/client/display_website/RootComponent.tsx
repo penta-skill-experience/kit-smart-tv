@@ -24,8 +24,6 @@ interface RootComponentState {
 }
 
 export class RootComponent extends React.Component<any, RootComponentState> {
-    private designValuesPersistence = new DesignValuesPersistence();
-    private designConfigPersistence = new DesignConfigPersistence();
     private readonly widgetLoader = new WidgetLoader();
     private readonly widgetPersistence = new WidgetPersistence();
 
@@ -117,7 +115,11 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             return <SquareHolder title={widget.getTitle()} accentColor={this.state.accentBarColor}
                                  titleColor={this.state.titleFontColor} specialBoldFontColor={this.state.specialBoldFontColor}
                                  specialSubtleFontColor={this.state.specialSubtleFontColor}>
-                <p>Error while creating widget: {e.message}</p>
+                <img className="sm:w-24 lg:w-40 2xl:w-60 4xl:w-80 justify-center"
+                     src="https://imgur.com/a/gOWf5ZQ" alt="Error_ROBOT"/>
+                <div className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl">
+                    Error while creating widget: {e.message}
+                </div>
             </SquareHolder>;
         }
     }
