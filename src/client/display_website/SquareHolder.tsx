@@ -52,7 +52,7 @@ export class SquareHolder extends React.Component<SquareHolderProps, any> {
                 overflow: "hidden"
             }}>
                 <div
-                    className={"sm:px-2 lg:px-3 xl:px-4 4xl:px-5 8xl:px-6 font-light leading-normal sm:text-base md:text-xl lg:text-2xl xl:text-4xl 2xl:text-5xl 8xl:text-6xl"}
+                    className={"sm:px-2 lg:px-3 xl:px-4 4xl:px-5 8xl:px-6 font-light leading-loose sm:text-base md:text-xl lg:text-2xl xl:text-4xl 2xl:text-5xl 8xl:text-6xl"}
                     style={{
                         color: this.props.titleColor
                     }}>
