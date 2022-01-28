@@ -16,7 +16,6 @@ export class AnnouncementMailListener {
      * Creates the mail listener using the options supplied from MailAccountConfig.json.
      */
     createMailListener() {
-        const password = process.env.ANNOUNCEMENT_EMAIL_ACCOUNT_PW;
         const options = { // see https://www.npmjs.com/package/mail-listener-typescript
             username: EmailConfig.USERNAME,
             password: process.env.ANNOUNCEMENT_EMAIL_ACCOUNT_PW,
