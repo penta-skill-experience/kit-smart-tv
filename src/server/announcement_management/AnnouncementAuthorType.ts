@@ -1,5 +1,5 @@
 import * as AnnouncementConfig from "./AnnouncementConfig.json";
-import {AnnouncementPersistence} from "../../shared/persistence/AnnouncementPersistence";
+import {VerifiedUser} from "../../shared/values/VerifiedUser";
 
 /**
  * This class contains all AnnouncementAuthorTypes as implementations of this abstract class.
@@ -28,14 +28,13 @@ export abstract class AnnouncementAuthorType {
             return true;
         }
 
-        async isThisAuthorType(author: string): Promise<Boolean> {
-            let returnValue = false;
-            AnnouncementConfig.ADMINS.forEach(admin => {
+        isThisAuthorType(author: string, verifiedUsers : VerifiedUser[]): Boolean {
+            for (const admin of AnnouncementConfig.ADMINS) {
                 if (admin.EMAIL === author) {
-                    returnValue = true;
+                   return true;
                 }
-            })
-            return new Promise<Boolean>(resolve => resolve(returnValue));
+            }
+            return false;
         }
 
     };
@@ -55,20 +54,16 @@ export abstract class AnnouncementAuthorType {
             return false;
         }
 
-        async isThisAuthorType(author: string): Promise<Boolean> {
-            return new Promise<Boolean>(async resolve => {
-                let returnValue = false;
-                await new AnnouncementPersistence().getVerifiedUsers().then(
-                    data => data.filter(async verifiedUser => {
-                         !await AnnouncementAuthorType.ADMIN.isThisAuthorType(verifiedUser.email) // removing admins from list of verifies users to avoid overwriting admin type
-                    }).forEach(verifiedUser => {
-                            if (verifiedUser.email === author) {
-                                returnValue = true;
-                            }
-                        })
-                );
-                resolve(returnValue);
-            });
+        isThisAuthorType(author: string, verifiedUsers : VerifiedUser[]): Boolean {
+            if (AnnouncementAuthorType.ADMIN.isThisAuthorType(author, verifiedUsers)) {
+                return false;
+            }
+            for (const verifiedUser of verifiedUsers) {
+                if (verifiedUser.email === author) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 
@@ -87,10 +82,9 @@ export abstract class AnnouncementAuthorType {
             return false;
         }
 
-        async isThisAuthorType(author: string): Promise<Boolean> {
-            const returnValue = !await AnnouncementAuthorType.VERIFIED.isThisAuthorType(author) &&
-                !await AnnouncementAuthorType.ADMIN.isThisAuthorType(author);
-            return new Promise(resolve => resolve(returnValue));
+        isThisAuthorType(author: string, verifiedUsers : VerifiedUser[]): Boolean {
+            return !AnnouncementAuthorType.VERIFIED.isThisAuthorType(author, verifiedUsers) &&
+                !AnnouncementAuthorType.ADMIN.isThisAuthorType(author, verifiedUsers);
         }
     }
 
@@ -100,8 +94,9 @@ export abstract class AnnouncementAuthorType {
     /**
      * returns true, if the given author is of this author type.
      * @param author the given author
+     * @param verifiedUsers the current verified users as loaded from the persistence
      */
-    abstract isThisAuthorType(author: string): Promise<Boolean>;
+    abstract isThisAuthorType(author: string, verifiedUsers : VerifiedUser[]): Boolean;
 
     /**
      * returns true, if the author type this is called for is allowed to add announcements, otherwise false.
