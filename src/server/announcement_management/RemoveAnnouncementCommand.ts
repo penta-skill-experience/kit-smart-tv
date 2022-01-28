@@ -7,7 +7,6 @@ import {
 import {Announcement} from "./Announcement";
 import {AnnouncementPersistence} from "../../shared/persistence/AnnouncementPersistence";
 import {AnnouncementAuthorTypeIdentifier} from "./AnnouncementAuthorTypeIdentifier";
-import {AnnouncementAuthorType} from "./AnnouncementAuthorType";
 
 /**
  * An implementation of {@link AnnouncementCommand}
@@ -34,10 +33,9 @@ export class RemoveAnnouncementCommand implements AnnouncementCommand {
         }
 
         const announcementToRemoveFromCurrent = getAnnouncementForTitle(currentAnnouncements, this.announcementToRemove.title);
-        let authorType : AnnouncementAuthorType;
-        await new AnnouncementAuthorTypeIdentifier().getAuthorType(this.announcementToRemove.author).then(result => {
-            authorType = result;
-        });
+
+        const currentVerifiedUsers = await new AnnouncementPersistence().getVerifiedUsers();
+        const authorType = new AnnouncementAuthorTypeIdentifier().getAuthorType(this.announcementToRemove.author, currentVerifiedUsers);
 
         if (!(announcementToRemoveFromCurrent.author === this.announcementToRemove.author ||
             authorType.isAllowedToEditAnnouncementsFromOtherAuthors())) {
@@ -49,7 +47,7 @@ export class RemoveAnnouncementCommand implements AnnouncementCommand {
 
         announcementsToSend.splice(indexToRemove, 1);
 
-        new AnnouncementPersistence().setAnnouncements(announcementsToSend);
+        await new AnnouncementPersistence().setAnnouncements(announcementsToSend);
 
     }
 }
