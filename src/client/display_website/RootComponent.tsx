@@ -6,8 +6,6 @@ import {WidgetLoader} from "../widget/WidgetLoader";
 import {WidgetPersistence} from "../../shared/persistence/WidgetPersistence";
 import {WidgetData} from "../widget/WidgetData";
 import {RotatorComponent} from "./RotatorComponent";
-import {DesignValuesPersistence} from "../../shared/persistence/DesignValuesPersistence";
-import {DesignConfigPersistence} from "../../shared/persistence/DesignConfigPersistence";
 import * as RootComponentConfig from "./RootComponent.json";
 import {DesignUtility} from "../../shared/persistence/DesignUtility";
 
@@ -44,7 +42,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
     }
 
     switchFontSizeDocument(relativeSize: number) {
-        document.documentElement.style.fontSize =  relativeSize + "rem";
+        document.documentElement.style.fontSize = relativeSize + "rem";
     }
 
     loadTheme() {
@@ -64,6 +62,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             })
             .catch(reason => console.error(`Failed to get design values from server. Reason: ${reason}`));
     }
+
     loadWidget() {
         this.widgetPersistence.getWidgetDataList()
             .then(widgetDataList => this.setState({
@@ -72,6 +71,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             }))
             .catch(reason => console.error(`Failed to load widgets from server. Reason: ${reason}`));
     }
+
     componentDidMount() {
         // Query a list of all widget data.
         // setState() is called once they are received and will trigger re-rendering.
@@ -87,7 +87,8 @@ export class RootComponent extends React.Component<any, RootComponentState> {
         const widgetDataList = this.state.widgetDataByLocation[location];
         if (widgetDataList.length === 0) {
             return <SquareHolder title={""} accentColor={this.state.accentBarColor}
-                                 titleColor={this.state.titleFontColor} specialBoldFontColor={this.state.specialBoldFontColor}
+                                 titleColor={this.state.titleFontColor}
+                                 specialBoldFontColor={this.state.specialBoldFontColor}
                                  specialSubtleFontColor={this.state.specialSubtleFontColor}/>;
         } else {
             return <RotatorComponent>
@@ -110,19 +111,24 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             const widgetComponent = React.createElement(widget.createDisplayComponent(), {config: widgetData.rawConfig}, null);
 
             return <SquareHolder title={widget.getTitle()} accentColor={this.state.accentBarColor}
-                                 titleColor={this.state.titleFontColor} specialBoldFontColor={this.state.specialBoldFontColor}
+                                 titleColor={this.state.titleFontColor}
+                                 specialBoldFontColor={this.state.specialBoldFontColor}
                                  specialSubtleFontColor={this.state.specialSubtleFontColor}>
                 {widgetComponent}
             </SquareHolder>;
         } catch (e) {
             // todo: make design for error message nicer
             return <SquareHolder title={widget.getTitle()} accentColor={this.state.accentBarColor}
-                                 titleColor={this.state.titleFontColor} specialBoldFontColor={this.state.specialBoldFontColor}
+                                 titleColor={this.state.titleFontColor}
+                                 specialBoldFontColor={this.state.specialBoldFontColor}
                                  specialSubtleFontColor={this.state.specialSubtleFontColor}>
-                <img className="sm:w-24 lg:w-40 2xl:w-60 4xl:w-80 justify-center"
-                     src="https://imgur.com/a/gOWf5ZQ" alt="Error_ROBOT"/>
-                <div className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl">
-                    Error while creating widget: {e.message}
+                <div className="justify-center">
+                    <img className="sm:w-24 lg:w-40 2xl:w-60 4xl:w-80 justify-center"
+                         src="https://imgur.com/a/gOWf5ZQ" alt="Error_ROBOT"/>
+                    <div
+                        className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl">
+                        Error while creating widget: {e.message}
+                    </div>
                 </div>
             </SquareHolder>;
         }
@@ -149,11 +155,12 @@ export class RootComponent extends React.Component<any, RootComponentState> {
                      }}>
                 </div>
                 <div
-                    className="z-20 grid grid-cols-3 absolute left-0 grid-rows-2 box-border sm:gap-2 md:gap-3 lg:gap-5 xl:gap-7 4xl:gap-10 sm:p-2 md:p-3 lg:p-5 xl:p-7 4xl:p-10" style={{
-                    width:"100vw",
-                    height:"100vh",
-                }}>
-                    <div className = "sm:pl-2 md:pl-3 lg:pl-5 xl:pl-7 4xl:pl-10">
+                    className="z-20 grid grid-cols-3 absolute left-0 grid-rows-2 box-border sm:gap-2 md:gap-3 lg:gap-5 xl:gap-7 4xl:gap-10 sm:p-2 md:p-3 lg:p-5 xl:p-7 4xl:p-10"
+                    style={{
+                        width: "100vw",
+                        height: "100vh",
+                    }}>
+                    <div className="sm:pl-2 md:pl-3 lg:pl-5 xl:pl-7 4xl:pl-10">
                         <TimeDisplayComponent/>
                         <WeatherDisplayComponent/>
                     </div>
