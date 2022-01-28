@@ -18,7 +18,6 @@ let justArrived = (x: string): string => {
 
 interface TramScheduleState {
     trains: DepartureData[];
-    stopId: string | undefined;
 }
 
 export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleState> {
@@ -29,7 +28,6 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
         super(props);
         this.state = {
             trains: [],
-            stopId: undefined,
         };
     }
 
@@ -38,44 +36,37 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
     }
 
     private querySchedule() {
-        if (this.state.stopId === undefined) {
-            // get stopId before querying departure data
-            /*
+            const headers = new Headers();
+            headers.append("Content-Type", "application/json");
             const stopName = this.getStopName();
-
-            let url = TramScheduleConfig.CORS_ANYWHERE + TramScheduleConfig.URL_STOP_SEARCH_BEFORE_STOP
-                + stopName
+            let urlLink = TramScheduleConfig.URL_STOP_SEARCH_BEFORE_STOP
+                + encodeURIComponent(stopName)
                 + TramScheduleConfig.URL_STOP_SEARCH_AFTER_STOP
                 + TramScheduleConfig.API_KEY;
-            axios.get(url)
-                .then(resp => {
-                    let checker = resp.data.stops;
+            const body = {url: urlLink};
+            const requestOptions = {
+                method: 'PUT',
+                headers: headers,
+                body: JSON.stringify(body)
+            };
+            return fetch(`${config.DOMAIN}/kvv`, requestOptions)
+                .then((value: Response) => value.json()).then(data => {
+                    let checker = data.stops;
                     if (checker.length == 0) {
                         throw new Error(`The stop ${stopName} does not exist`);
                     }
-                    let stopId = checker[0].id;
-                    this.setState({
-                        stopId: stopId,
-                    });
+                    this.queryDepartureData(checker[0].id);
                 });
+        };
 
-             */
-            this.queryDepartureData();//remove later
-        } else {
-            // immediately query departure data
-            this.queryDepartureData();
-        }
-    };
-
-    private queryDepartureData() {
+    private queryDepartureData(stopId: string) {
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
-
-
-        const urlLink = "https://live.kvv.de/webapp/departures/bystop/MPU?maxInfos=10&key=377d840e54b59adbe53608ba1aad70e8";
-        let body = {url: urlLink};
-        console.log(urlLink);
-        console.log(JSON.stringify(body));
+        const urlLink = TramScheduleConfig.URL_BEFORE_STOP
+            + stopId
+            + TramScheduleConfig.URL_AFTER_STOP
+            + TramScheduleConfig.API_KEY;
+        const body = {url: urlLink};
         const requestOptions = {
             method: 'PUT',
             headers: headers,
@@ -83,14 +74,13 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
         };
         return fetch(`${config.DOMAIN}/kvv`, requestOptions)
             .then((value: Response) => value.json()).then(data => {
-                console.log(data);
+                console.log(data)
                 this.setState({
                     trains: data.departures.map(d => ({
                         route: d.route,
                         destination: d.destination,
                         time: justArrived(d.time)
-                    })),
-                    stop: this.state.stopId
+                    }))
                 });
             });
     }
