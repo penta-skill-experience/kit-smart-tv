@@ -49,14 +49,16 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
             headers: headers,
             body: JSON.stringify(body)
         };
-        return fetch(`${config.DOMAIN}/kvv`, requestOptions)
-            .then((value: Response) => value.json()).then(data => {
+        fetch(`${config.DOMAIN}/kvv`, requestOptions)
+            .then((value: Response) => value.json())
+            .then(data => {
                 let checker = data.stops;
                 if (checker.length == 0) {
                     throw new Error(`The stop ${stopName} does not exist`);
                 }
-                this.queryDepartureData(checker[0].id);
-            });
+                return this.queryDepartureData(checker[0].id);
+            })
+            .catch(reason => console.error(`Failed to get tram schedule from server. Reason: ${reason}`));
     };
 
     private queryDepartureData(stopId: string) {

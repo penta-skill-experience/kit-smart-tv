@@ -48,25 +48,29 @@ export class RootComponent extends React.Component<any, RootComponentState> {
     }
 
     loadTheme() {
-        DesignUtility.getDesignConfigValues().then(design => {
-            this.setState({
-                relativeSize: design.fontSize.relativeSize,
-                themeID: design.colorScheme.id,
-                titleFontColor: design.colorScheme.titleFontColor,
-                bodyFontColor: design.colorScheme.bodyFontColor,
-                specialBoldFontColor: design.colorScheme.specialBoldFontColor,
-                specialSubtleFontColor: design.colorScheme.specialSubtleFontColor,
-                accentBarColor: design.colorScheme.accentBarColor,
-                backgroundImage: design.background.url,
-            });
-            this.switchFontSizeDocument(design.fontSize.relativeSize);
-        });
+        DesignUtility.getDesignConfigValues()
+            .then(design => {
+                this.setState({
+                    relativeSize: design.fontSize.relativeSize,
+                    themeID: design.colorScheme.id,
+                    titleFontColor: design.colorScheme.titleFontColor,
+                    bodyFontColor: design.colorScheme.bodyFontColor,
+                    specialBoldFontColor: design.colorScheme.specialBoldFontColor,
+                    specialSubtleFontColor: design.colorScheme.specialSubtleFontColor,
+                    accentBarColor: design.colorScheme.accentBarColor,
+                    backgroundImage: design.background.url,
+                });
+                this.switchFontSizeDocument(design.fontSize.relativeSize);
+            })
+            .catch(reason => console.error(`Failed to get design values from server. Reason: ${reason}`));
     }
     loadWidget() {
-        this.widgetPersistence.getWidgetDataList().then(widgetDataList => this.setState({
-            // separate the widgetData by location
-            widgetDataByLocation: [0, 1, 2, 3, 4, 5].map(location => widgetDataList.filter(widgetData => widgetData.location === location))
-        }));
+        this.widgetPersistence.getWidgetDataList()
+            .then(widgetDataList => this.setState({
+                // separate the widgetData by location
+                widgetDataByLocation: [0, 1, 2, 3, 4, 5].map(location => widgetDataList.filter(widgetData => widgetData.location === location))
+            }))
+            .catch(reason => console.error(`Failed to load widgets from server. Reason: ${reason}`));
     }
     componentDidMount() {
         // Query a list of all widget data.
