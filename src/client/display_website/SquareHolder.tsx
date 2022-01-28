@@ -41,15 +41,12 @@ export class SquareHolder extends React.Component<SquareHolderProps, any> {
     }
 
     render() {
-        return <div className="box-border" style={{
-            height: "45vh",
-            width: "31vw",
-            boxSizing: "border-box"
+        return <div style={{
+            height: "45.5vh",
+            width: "30.75vw",
         }}>
-            <div className={"w-full h-full shadow-2xl rounded-2xl"} id="squareHeld" style={{
-                backgroundColor: this.props.accentColor,
-                boxSizing: "border-box",
-                overflow: "hidden"
+            <div className={"w-full h-full rounded-2xl"} id="squareHeld" style={{
+                backgroundColor: this.props.accentColor
             }}>
                 <div
                     className={"sm:px-2 lg:px-3 xl:px-4 4xl:px-5 8xl:px-6 font-light leading-loose sm:text-base md:text-xl lg:text-2xl xl:text-4xl 2xl:text-5xl 8xl:text-6xl"}

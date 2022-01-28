@@ -1,5 +1,5 @@
 {
-  "REFRESH_RATE": 10000,
+  "REFRESH_RATE": 20000,
   "API_KEY": "377d840e54b59adbe53608ba1aad70e8",
   "URL_BEFORE_STOP": "https://live.kvv.de/webapp/departures/bystop/",
   "URL_AFTER_STOP": "?maxInfos=10&key=",

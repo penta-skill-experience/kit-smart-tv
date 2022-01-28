@@ -117,7 +117,6 @@ export class RootComponent extends React.Component<any, RootComponentState> {
                 {widgetComponent}
             </SquareHolder>;
         } catch (e) {
-            // todo: make design for error message nicer
             return <SquareHolder title={widget.getTitle()} accentColor={this.state.accentBarColor}
                                  titleColor={this.state.titleFontColor}
                                  specialBoldFontColor={this.state.specialBoldFontColor}
@@ -145,25 +144,27 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             <div className={"flex "} style={{
                 color: this.state.bodyFontColor
             }}>
-                <div className="z-30 absolute left-10 absolute bottom-7">
+                <div className="z-50 absolute left-10 absolute bottom-7">
                     <img className="sm:w-24 lg:w-40 2xl:w-60 4xl:w-80"
                          src="https://www.artwork.de/wp-content/uploads/2015/08/logo_TF_NEU_4c_ai.png" alt="IHKLogo"/>
                 </div>
-                <div className="z-10 sm:w-1/3 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30"
+                <div className="z-20 sm:w-1/3 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30"
                      style={{
                          height: "100vh"
                      }}>
                 </div>
+
                 <div
-                    className="z-20 grid grid-cols-3 absolute left-0 grid-rows-2 box-border sm:gap-2 md:gap-3 lg:gap-5 xl:gap-7 4xl:gap-10 sm:p-2 md:p-3 lg:p-5 xl:p-7 4xl:p-10"
+                    className="z-40 grid grid-cols-3 absolute left-0 grid-rows-2 sm:gap-1 md:gap-2 lg:gap-4 xl:gap-6 4xl:gap-9 sm:p-2 md:p-3 lg:p-5 xl:p-7 4xl:p-10"
                     style={{
                         width: "100vw",
                         height: "100vh",
                     }}>
-                    <div className="sm:pl-2 md:pl-3 lg:pl-5 xl:pl-7 4xl:pl-10">
+                    <div className="sm:pl-1 md:pl-2 lg:pl-4 xl:pl-6 4xl:pl-9">
                         <TimeDisplayComponent/>
                         <WeatherDisplayComponent/>
                     </div>
+
                     {this.renderLocation(1)}
                     {this.renderLocation(2)}
                     {this.renderLocation(3)}
