@@ -93,13 +93,39 @@ export class AnnouncementPersistence {
     }
 
     getVerifiedUsers(): Promise<VerifiedUser[]> {
-        //todo
-        return new Promise<VerifiedUser[]>(resolve => {
-            const data = [
-                new VerifiedUser("bob@kit.edu", "Gertan Vanderwalt"),
-                new VerifiedUser("alice@kit.edu", "Alice May")
-            ]
-            resolve(data);
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+
+        if(TokenHolderSingleton.instance.accessToken !== null){
+            headers.append("x-refresh", TokenHolderSingleton.instance.refreshToken);
+            headers.append("Authorization", `Bearer ${TokenHolderSingleton.instance.accessToken}`);
+        }
+
+        return new Promise<VerifiedUser[]>((resolve, reject) => {
+            fetch(`${config.DOMAIN}/users`, {
+                method: 'GET',
+                headers: headers,
+            })
+                .then(response => {
+                    const new_accessToken = response.headers.get('x-access-token');
+                    if (new_accessToken) {
+                        //if a new accessToken is provided, update it.
+                        TokenHolderSingleton.instance.accessToken = response.headers.get('x-access-token');
+                    }
+                    return response.json()
+                        .then(data => {
+                            let users: VerifiedUser[] = [];
+                            data.usersDataList.forEach(function (user) {
+                                let u = new VerifiedUser(user.email, user.name);
+                                users.push(u);
+                            });
+                            resolve(users);
+
+                        }).catch(() => {
+                            let users: VerifiedUser[] = [];
+                            resolve(users);
+                        });
+                }).catch(() => reject());
         });
     }
 
