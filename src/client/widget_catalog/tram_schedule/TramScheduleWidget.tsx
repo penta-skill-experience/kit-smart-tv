@@ -4,14 +4,15 @@ import {TramScheduleDisplayComponent} from "./TramScheduleDisplayComponent";
 import {ConfigComponent} from "../../widget/ConfigComponent";
 import {TramScheduleConfigComponent} from "./TramScheduleConfigComponent";
 import {DisplayComponent} from "../../widget/DisplayComponent";
+import * as TramScheduleConfig from "./TramSchedule.json";
 
 export class TramScheduleWidget implements Widget {
 
-    createConfigComponent(): typeof ConfigComponent {
+    getConfigComponentClass(): typeof ConfigComponent {
         return TramScheduleConfigComponent;
     }
 
-    createDisplayComponent(): typeof DisplayComponent {
+    getDisplayComponentClass(): typeof DisplayComponent {
         return TramScheduleDisplayComponent;
     }
 
@@ -26,6 +27,7 @@ export class TramScheduleWidget implements Widget {
     getDefaultRawConfig(): Object {
         return {
             stop: "",
+            count: TramScheduleConfig.DEFAULT_ITEM_COUNT,
         };
     }
 }

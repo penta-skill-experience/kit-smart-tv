@@ -7,11 +7,11 @@ import {DisplayComponent} from "../../widget/DisplayComponent";
 
 export class RssFeedWidget implements Widget {
 
-    createDisplayComponent(): typeof DisplayComponent {
+    getDisplayComponentClass(): typeof DisplayComponent {
         return RssFeedDisplayComponent;
     }
 
-    createConfigComponent(): typeof ConfigComponent {
+    getConfigComponentClass(): typeof ConfigComponent {
         return RssFeedConfigComponent;
     }
 

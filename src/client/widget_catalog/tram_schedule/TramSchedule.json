@@ -7,6 +7,5 @@
   "URL_STOP_SEARCH_BEFORE_STOP": "https://live.kvv.de/webapp/stops/byname/",
   "URL_STOP_SEARCH_AFTER_STOP": "?key=",
   "CORS_ANYWHERE": "https://cors-anywhere.herokuapp.com/",
-  "ITEM_COUNT": 4
+  "DEFAULT_ITEM_COUNT": 4
 }
-
