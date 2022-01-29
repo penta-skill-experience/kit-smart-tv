@@ -1,17 +1,17 @@
 import * as React from "react";
-import {CircularProgress, DialogContent} from "@mui/material";
+import {DialogContent, MenuItem, Select} from "@mui/material";
 import DialogTitle from "@mui/material/DialogTitle";
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import {ConfigComponent, ConfigComponentProps} from "../../widget/ConfigComponent";
-import * as TramScheduleConfig from "./TramSchedule.json";
-import config from "../../../shared/persistence/persistence.config.json";
 import {TramScheduleUtility} from "./TramScheduleUtility";
 
 interface TramScheduleConfigState {
     value: string;
     suggestions: string[];
     usedQuery: string;  // the query that the current list of suggestions resulted from
+
+    selectedCount: number;
 }
 
 export class TramScheduleConfigComponent extends ConfigComponent<TramScheduleConfigState> {
@@ -23,12 +23,14 @@ export class TramScheduleConfigComponent extends ConfigComponent<TramScheduleCon
             value: this.props.config["stop"],
             suggestions: [],
             usedQuery: "",
+            selectedCount: this.props.config["count"],
         }
     }
 
     save(): Object {
         return {
             stop: this.state.value,
+            count: this.state.selectedCount,
         };
     }
 
@@ -36,7 +38,6 @@ export class TramScheduleConfigComponent extends ConfigComponent<TramScheduleCon
         TramScheduleUtility.requestStops(text)
             .then(resp => resp.json())
             .then(data => {
-                console.log(data.stops.map(stop => stop.name));
                 this.setState({
                     usedQuery: text,
                     suggestions: data.stops.map(stop => stop.name),
@@ -63,7 +64,7 @@ export class TramScheduleConfigComponent extends ConfigComponent<TramScheduleCon
         return <div>
             <DialogTitle>Tram Schedule Settings</DialogTitle>
             <DialogContent>
-                <div style={{minHeight: "300px", paddingTop: "10px"}}>
+                <div style={{minHeight: "300px", paddingTop: "10px", display: "flex", alignItems: "flex-start"}}>
                     <Autocomplete
                         filterSelectedOptions
                         autoComplete
@@ -85,6 +86,11 @@ export class TramScheduleConfigComponent extends ConfigComponent<TramScheduleCon
                             this.setState({value: newValue || ""});
                         }}
                     />
+                    <Select
+                        value={this.state.selectedCount}
+                        onChange={event => this.setState({selectedCount: event.target.value})}>
+                        {[1,2,3,4,5,6].map(count => <MenuItem value={count}>{count}</MenuItem>)}
+                    </Select>
                 </div>
             </DialogContent>
         </div>;

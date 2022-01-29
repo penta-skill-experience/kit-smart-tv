@@ -32,10 +32,6 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
         };
     }
 
-    private getStopName(): string {
-        return this.props.config["stop"];
-    }
-
     private querySchedule() {
         const stopName = this.getStopName();
         TramScheduleUtility.requestStops(stopName)
@@ -75,6 +71,14 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
             });
     }
 
+    private getStopName(): string {
+        return this.props.config["stop"];
+    }
+
+    private getConfigCount(): number {
+        return this.props.config["count"] || 4;
+    }
+
     componentDidMount() {
         this.querySchedule();
         this.intervalHandle = setInterval(() => this.querySchedule(), TramScheduleConfig.REFRESH_RATE);
@@ -98,7 +102,7 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
                 </div>
             }
             {
-                this.state.trains.slice(1, TramScheduleConfig.ITEM_COUNT).map((d, index) =>
+                this.state.trains.slice(1, this.getConfigCount()).map((d, index) =>
                     <div key={index}
                          className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl">
                         {d.route} {d.destination}: &nbsp;&nbsp;&nbsp;{d.time}
