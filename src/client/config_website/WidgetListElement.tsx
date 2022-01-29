@@ -37,7 +37,7 @@ export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, han
             <Grid item>
                 {
                     item.widget.isConfigurable() &&
-                    <WidgetConfigPage configComponentClass={item.widget.createConfigComponent()}
+                    <WidgetConfigPage configComponentClass={item.widget.getConfigComponentClass()}
                                       save={(rawConfig: Object) => handleRawConfigSave(item.id, rawConfig)}
                                       rawConfig={item.widgetData.rawConfig}
                     />
