@@ -55,7 +55,6 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
                     return resp.json();
                 } else {
                     resp.text().then(responseText => {
-                        //todo: show this error on the smart tv
                         this.props.error(`Failed to get tram schedule from server (status: ${resp.status} ${resp.statusText}). Reason: ${responseText}`);
                     });
                 }
@@ -63,7 +62,6 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
             .then(data => {
                 let checker = data.stops;
                 if (checker.length == 0) {
-                    //todo: show this error on the smart tv
                     this.props.error(`The stop "${stopName}" does not exist.`);
                 } else {
                     return this.queryDepartureData(checker[0].id);
