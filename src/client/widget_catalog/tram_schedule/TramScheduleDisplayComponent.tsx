@@ -2,6 +2,7 @@ import * as React from "react";
 import * as TramScheduleConfig from "./TramSchedule.json";
 import {DisplayComponent} from "../../widget/DisplayComponent";
 import config from "../../../shared/persistence/persistence.config.json";
+import {TramScheduleUtility} from "./TramScheduleUtility";
 
 interface DepartureData {
     route: string;
@@ -36,20 +37,8 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
     }
 
     private querySchedule() {
-        const headers = new Headers();
-        headers.append("Content-Type", "application/json");
         const stopName = this.getStopName();
-        const requestOptions = {
-            method: 'PUT',
-            headers: headers,
-            body: JSON.stringify({
-                url: TramScheduleConfig.URL_STOP_SEARCH_BEFORE_STOP
-                    + encodeURIComponent(`"${stopName}"`)
-                    + TramScheduleConfig.URL_STOP_SEARCH_AFTER_STOP
-                    + TramScheduleConfig.API_KEY
-            })
-        };
-        fetch(`${config.DOMAIN}/kvv`, requestOptions)
+        TramScheduleUtility.requestStops(stopName)
             .then((resp: Response) => {
                 if (resp.ok) {
                     return resp.json()

@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 import {ConfigComponent, ConfigComponentProps} from "../../widget/ConfigComponent";
 import * as TramScheduleConfig from "./TramSchedule.json";
 import config from "../../../shared/persistence/persistence.config.json";
+import {TramScheduleUtility} from "./TramScheduleUtility";
 
 interface TramScheduleConfigState {
     value: string;
@@ -32,19 +33,7 @@ export class TramScheduleConfigComponent extends ConfigComponent<TramScheduleCon
     }
 
     private querySuggestions(text: string) {
-        const headers = new Headers();
-        headers.append("Content-Type", "application/json");
-        const requestOptions = {
-            method: 'PUT',
-            headers: headers,
-            body: JSON.stringify({
-                url: TramScheduleConfig.URL_STOP_SEARCH_BEFORE_STOP
-                    + encodeURIComponent(`"${text}"`)
-                    + TramScheduleConfig.URL_STOP_SEARCH_AFTER_STOP
-                    + TramScheduleConfig.API_KEY
-            })
-        };
-        fetch(`${config.DOMAIN}/kvv`, requestOptions)
+        TramScheduleUtility.requestStops(text)
             .then(resp => resp.json())
             .then(data => {
                 console.log(data.stops.map(stop => stop.name));
