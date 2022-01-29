@@ -27,16 +27,18 @@ interface SquareHolderState {
 
 export class SquareHolder extends React.Component<SquareHolderProps, SquareHolderState> {
 
-    randomID = function () { //generate random ID to make scrolling behavior unique for each Squareholder
+    private randomID = function () { //generate random ID to make scrolling behavior unique for each Squareholder
         let part = function () {
             return (Math.random().toString(10).substring(2));
         }
         return ("id" + part() + part() + part());
     };
 
-    doesOverflow = function () {
+    private doesOverflow = function () {
         return document.getElementById(this.state.uniqueID).scrollHeight >= document.getElementById(this.state.uniqueID).clientHeight;
     }
+
+    private clearErrorIntervalHandle;
 
     constructor(props) {
         super(props);
@@ -48,6 +50,20 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
         };
     }
 
+    componentDidMount(): void {
+        this.clearErrorIntervalHandle = setInterval(() => this.clearError(), 5000);
+    }
+
+    componentWillUnmount(): void {
+        clearInterval(this.clearErrorIntervalHandle);
+    }
+
+    private clearError(): void {
+        this.setState({
+            hasError: false,
+        });
+    }
+
     static getDerivedStateFromError(error) {
         return {
             hasError: true,
@@ -56,7 +72,8 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
     }
 
     renderErrorMessage(): JSX.Element {
-        return <div className={"font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl"}>
+        return <div
+            className={"font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl"}>
             Render error: {this.state.errorMessage}
         </div>;
     }
