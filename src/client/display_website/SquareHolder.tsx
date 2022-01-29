@@ -1,8 +1,16 @@
 import * as React from "react";
 import * as SquareHolderConfig from "./SquareHolder.json";
 import "./SquareHolder.css";
+import {DisplayComponent} from "../widget/DisplayComponent";
 
 interface SquareHolderProps {
+
+    /**
+     * The class of the DisplayComponent that should be instantiated as child inside this component.
+     */
+    displayComponentClass?: typeof DisplayComponent;
+    rawConfig?: Object;
+
     title: string;
     titleColor: string;
     accentColor: string;
@@ -10,7 +18,14 @@ interface SquareHolderProps {
     specialSubtleFontColor: string;
 }
 
-export class SquareHolder extends React.Component<SquareHolderProps, any> {
+interface SquareHolderState {
+    uniqueID: any;
+    hasError: boolean;
+    errorMessage: string;
+    scroll: number;
+}
+
+export class SquareHolder extends React.Component<SquareHolderProps, SquareHolderState> {
 
     randomID = function () { //generate random ID to make scrolling behavior unique for each Squareholder
         let part = function () {
@@ -28,7 +43,7 @@ export class SquareHolder extends React.Component<SquareHolderProps, any> {
         this.state = {
             uniqueID: this.randomID(),
             hasError: false,
-            error: undefined,
+            errorMessage: undefined,
             scroll: SquareHolderConfig.SCROLL_SPEED
         };
     }
@@ -36,11 +51,32 @@ export class SquareHolder extends React.Component<SquareHolderProps, any> {
     static getDerivedStateFromError(error) {
         return {
             hasError: true,
-            error: error,
+            errorMessage: error.message,
         };
     }
 
+    renderErrorMessage(): JSX.Element {
+        return <div className={"font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl"}>
+            Render error: {this.state.errorMessage}
+        </div>;
+    }
+
     render() {
+
+        // only show widget if it didn't produce an error, otherwise show error message
+        let content = undefined;
+        if (this.state.hasError) {
+            content = this.renderErrorMessage();
+        } else {
+            if (this.props.displayComponentClass) {
+                // @ts-ignore
+                content = React.createElement(this.props.displayComponentClass, {
+                    error: msg => this.setState({hasError: true, errorMessage: msg}),
+                    config: this.props.rawConfig
+                }, null);
+            }
+        }
+
         return <div className="box-border" style={{
             height: "45vh",
             width: "31vw",
@@ -63,11 +99,7 @@ export class SquareHolder extends React.Component<SquareHolderProps, any> {
                     id={this.state.uniqueID} style={{
                     scrollBehavior: "smooth"
                 }}>
-                    {this.state.hasError ?
-                        // todo: make design for error message nicer
-                        <p>Error while rendering widget: {this.state.error.message}</p>
-                        : this.props.children  // only show children if they didn't produce an error
-                    }
+                    {content}
                 </div>
             </div>
         </div>;

@@ -14,8 +14,6 @@ const allowedPlatforms = [
 
 const runningOnCorrectPlatform: boolean = allowedPlatforms.includes(process.platform);
 
-console.log(`runningOnCorrectPlatform = ${runningOnCorrectPlatform}`);
-
 export function putKvv(input: DocumentDefinition<KvvDocument>): Promise<object> {
     return runKvvCommand(input.url.toString())
         .then(() => new Promise<object>((resolve, reject) => {
@@ -47,8 +45,8 @@ function runKvvCommand(url: string): Promise<void> {
                 }
             });
         } else {
-            reject(`Server is running on platform "${process.platform}", `
-                + `but must run on one of ${JSON.stringify(allowedPlatforms)} to support accessing the KVV API.`);
+            reject(`Server platform is "${process.platform}", `
+                + `but must be one of ${JSON.stringify(allowedPlatforms)} to support accessing the KVV API.`);
         }
     });
 }

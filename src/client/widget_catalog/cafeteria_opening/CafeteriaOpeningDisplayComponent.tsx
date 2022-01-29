@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as CafeteriaOpeningConfig from "./CafeteriaOpening.json";
 import axios from "axios"
+import {DisplayComponent} from "../../widget/DisplayComponent";
 
 interface CafeteriaOpeningState {
     dateCafeteria: string;
@@ -14,7 +15,7 @@ interface CafeteriaOpeningState {
     closedColor: string;
 }
 
-export class CafeteriaOpeningDisplayComponent extends React.Component<any, CafeteriaOpeningState> {
+export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
     constructor(props) {
         super(props);
         this.state = {

@@ -3,13 +3,14 @@ import {Announcement} from "../../../server/announcement_management/Announcement
 import {AnnouncementPersistence} from "../../../shared/persistence/AnnouncementPersistence";
 import * as AnnouncementConfig from "./AnnouncementComponent.json"
 import {VerifiedUser} from "../../../shared/values/VerifiedUser";
+import {DisplayComponent} from "../../widget/DisplayComponent";
 
 interface AnnouncementState {
     announcements: Announcement[];
     verifiedUsers: VerifiedUser[]
 }
 
-export class AnnouncementComponent extends React.Component<{}, AnnouncementState> {
+export class AnnouncementComponent extends DisplayComponent<any> {
 
     constructor(props) {
         super(props);

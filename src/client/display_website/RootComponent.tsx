@@ -64,6 +64,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             })
             .catch(reason => console.error(`Failed to get design values from server. Reason: ${reason}`));
     }
+
     loadWidget() {
         this.widgetPersistence.getWidgetDataList()
             .then(widgetDataList => this.setState({
@@ -104,28 +105,12 @@ export class RootComponent extends React.Component<any, RootComponentState> {
 
     private renderWidget(widgetData: WidgetData) {
         const widget = this.widgetLoader.getWidget(widgetData.widgetId);
-        try {
-
-            // @ts-ignore
-            const widgetComponent = React.createElement(widget.createDisplayComponent(), {config: widgetData.rawConfig}, null);
-
-            return <SquareHolder title={widget.getTitle()} accentColor={this.state.accentBarColor}
-                                 titleColor={this.state.titleFontColor} specialBoldFontColor={this.state.specialBoldFontColor}
-                                 specialSubtleFontColor={this.state.specialSubtleFontColor}>
-                {widgetComponent}
-            </SquareHolder>;
-        } catch (e) {
-            // todo: make design for error message nicer
-            return <SquareHolder title={widget.getTitle()} accentColor={this.state.accentBarColor}
-                                 titleColor={this.state.titleFontColor} specialBoldFontColor={this.state.specialBoldFontColor}
-                                 specialSubtleFontColor={this.state.specialSubtleFontColor}>
-                <img className="sm:w-24 lg:w-40 2xl:w-60 4xl:w-80 justify-center"
-                     src="https://imgur.com/a/gOWf5ZQ" alt="Error_ROBOT"/>
-                <div className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl">
-                    Error while creating widget: {e.message}
-                </div>
-            </SquareHolder>;
-        }
+        return <SquareHolder displayComponentClass={widget.createDisplayComponent()}
+                             rawConfig={widgetData.rawConfig}
+                             title={widget.getTitle()} accentColor={this.state.accentBarColor}
+                             titleColor={this.state.titleFontColor}
+                             specialBoldFontColor={this.state.specialBoldFontColor}
+                             specialSubtleFontColor={this.state.specialSubtleFontColor}/>;
     }
 
     render() {
@@ -154,8 +139,9 @@ export class RootComponent extends React.Component<any, RootComponentState> {
                     height:"100vh",
                 }}>
                     <div className = "sm:pl-2 md:pl-3 lg:pl-5 xl:pl-7 4xl:pl-10">
-                        <TimeDisplayComponent/>
-                        <WeatherDisplayComponent/>
+                        {/*todo: log errors*/}
+                        <TimeDisplayComponent error={() => {}}/>
+                        <WeatherDisplayComponent error={() => {}}/>
                     </div>
                     {this.renderLocation(1)}
                     {this.renderLocation(2)}
