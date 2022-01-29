@@ -5,6 +5,6 @@ export interface Widget {
     getTitle(): string;
     isConfigurable(): boolean;
     getDefaultRawConfig(): Object;
-    createDisplayComponent(): typeof DisplayComponent;
-    createConfigComponent(): typeof ConfigComponent;
+    getDisplayComponentClass(): typeof DisplayComponent;
+    getConfigComponentClass(): typeof ConfigComponent;
 }

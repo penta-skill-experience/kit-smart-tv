@@ -7,11 +7,11 @@ import {DisplayComponent} from "../../widget/DisplayComponent";
 
 export class TramScheduleWidget implements Widget {
 
-    createConfigComponent(): typeof ConfigComponent {
+    getConfigComponentClass(): typeof ConfigComponent {
         return TramScheduleConfigComponent;
     }
 
-    createDisplayComponent(): typeof DisplayComponent {
+    getDisplayComponentClass(): typeof DisplayComponent {
         return TramScheduleDisplayComponent;
     }
 

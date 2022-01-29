@@ -105,7 +105,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
 
     private renderWidget(widgetData: WidgetData) {
         const widget = this.widgetLoader.getWidget(widgetData.widgetId);
-        return <SquareHolder displayComponentClass={widget.createDisplayComponent()}
+        return <SquareHolder displayComponentClass={widget.getDisplayComponentClass()}
                              rawConfig={widgetData.rawConfig}
                              title={widget.getTitle()} accentColor={this.state.accentBarColor}
                              titleColor={this.state.titleFontColor}
