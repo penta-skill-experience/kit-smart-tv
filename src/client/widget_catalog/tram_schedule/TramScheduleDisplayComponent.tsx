@@ -52,7 +52,8 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
         fetch(`${config.DOMAIN}/kvv`, requestOptions)
             .then((resp: Response) => {
                 if (resp.ok) {
-                    return resp.json();
+                    return resp.json()
+                        .catch(reason => this.props.error(reason));
                 } else {
                     resp.text().then(responseText => {
                         this.props.error(`Failed to get tram schedule from server (status: ${resp.status} ${resp.statusText}). Reason: ${responseText}`);
@@ -86,7 +87,8 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
             body: JSON.stringify(body)
         };
         return fetch(`${config.DOMAIN}/kvv`, requestOptions)
-            .then((value: Response) => value.json()).then(data => {
+            .then((value: Response) => value.json().catch(reason => this.props.error(reason)))
+            .then(data => {
                 this.setState({
                     trains: data.departures.map(d => ({
                         route: d.route,
