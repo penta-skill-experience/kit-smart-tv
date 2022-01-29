@@ -32,22 +32,22 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
     }
 
     private getStopName(): string {
-        return this.props.config["stop"]["label"];
+        return this.props.config["stop"];
     }
 
     private querySchedule() {
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
         const stopName = this.getStopName();
-        let urlLink = TramScheduleConfig.URL_STOP_SEARCH_BEFORE_STOP
-            + encodeURIComponent(stopName)
-            + TramScheduleConfig.URL_STOP_SEARCH_AFTER_STOP
-            + TramScheduleConfig.API_KEY;
-        const body = {url: urlLink};
         const requestOptions = {
             method: 'PUT',
             headers: headers,
-            body: JSON.stringify(body)
+            body: JSON.stringify({
+                url: TramScheduleConfig.URL_STOP_SEARCH_BEFORE_STOP
+                    + encodeURIComponent(`"${stopName}"`)
+                    + TramScheduleConfig.URL_STOP_SEARCH_AFTER_STOP
+                    + TramScheduleConfig.API_KEY
+            })
         };
         fetch(`${config.DOMAIN}/kvv`, requestOptions)
             .then((resp: Response) => {
@@ -61,11 +61,10 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
                 }
             })
             .then(data => {
-                let checker = data.stops;
-                if (checker.length == 0) {
+                if (data.stops.length == 0) {
                     this.props.error(`The stop "${stopName}" does not exist.`);
                 } else {
-                    return this.queryDepartureData(checker[0].id);
+                    return this.queryDepartureData(data.stops[0].id);
                 }
             })
             .catch(reason => {
@@ -76,15 +75,15 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
     private queryDepartureData(stopId: string) {
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
-        const urlLink = TramScheduleConfig.URL_BEFORE_STOP
-            + stopId
-            + TramScheduleConfig.URL_AFTER_STOP
-            + TramScheduleConfig.API_KEY;
-        const body = {url: urlLink};
         const requestOptions = {
             method: 'PUT',
             headers: headers,
-            body: JSON.stringify(body)
+            body: JSON.stringify({
+                url: TramScheduleConfig.URL_BEFORE_STOP
+                    + stopId
+                    + TramScheduleConfig.URL_AFTER_STOP
+                    + TramScheduleConfig.API_KEY
+            })
         };
         return fetch(`${config.DOMAIN}/kvv`, requestOptions)
             .then((value: Response) => value.json().catch(reason => this.props.error(reason)))
@@ -112,7 +111,7 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
     render() {
         return <div className="grid grid-flow-row sm:g-0.5 xl:gap-1.5 2xl:gap-2 box-border">
             <div className="font-light leading-normal sm:text-sm sm:text-center lg:text-base xl:text-xl 2xl:text-2xl
-             4xl:text-3xl 8xl:text-5xl sm:-mt-2 lg:-mt-3 xl:-mt-4 4xl:-mt-5 8xl:-mt-6">  {this.getStopName().toLowerCase().replace(/(?:^|\s|["'([{])+\S/g, match => match.toUpperCase())}
+             4xl:text-3xl 8xl:text-5xl sm:-mt-2 lg:-mt-3 xl:-mt-4 4xl:-mt-5 8xl:-mt-6">  {this.getStopName()}
             </div>
             {
                 this.state.trains.length &&
