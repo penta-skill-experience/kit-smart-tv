@@ -3,7 +3,7 @@ import config from "../../../shared/persistence/persistence.config.json";
 
 export class TramScheduleUtility {
 
-    static requestStops(text: string) {
+    static requestStops(stopNameSearchString: string): Promise<Response> {
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
         const requestOptions = {
@@ -11,8 +11,24 @@ export class TramScheduleUtility {
             headers: headers,
             body: JSON.stringify({
                 url: TramScheduleConfig.URL_STOP_SEARCH_BEFORE_STOP
-                    + encodeURIComponent(`"${text.replace("/", "_")}"`)  // slashes need to be replaced by underscore, everything else can be escaped with encodeURIComponent()
+                    + encodeURIComponent(`"${stopNameSearchString.replace("/", "_")}"`)  // slashes need to be replaced by underscore, everything else can be escaped with encodeURIComponent()
                     + TramScheduleConfig.URL_STOP_SEARCH_AFTER_STOP
+                    + TramScheduleConfig.API_KEY
+            })
+        };
+        return fetch(`${config.DOMAIN}/kvv`, requestOptions);
+    }
+
+    static requestDepartureData(stopId: string): Promise<Response> {
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        const requestOptions = {
+            method: 'PUT',
+            headers: headers,
+            body: JSON.stringify({
+                url: TramScheduleConfig.URL_BEFORE_STOP
+                    + stopId
+                    + TramScheduleConfig.URL_AFTER_STOP
                     + TramScheduleConfig.API_KEY
             })
         };

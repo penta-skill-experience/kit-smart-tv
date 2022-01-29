@@ -62,19 +62,7 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
     };
 
     private queryDepartureData(stopId: string) {
-        const headers = new Headers();
-        headers.append("Content-Type", "application/json");
-        const requestOptions = {
-            method: 'PUT',
-            headers: headers,
-            body: JSON.stringify({
-                url: TramScheduleConfig.URL_BEFORE_STOP
-                    + stopId
-                    + TramScheduleConfig.URL_AFTER_STOP
-                    + TramScheduleConfig.API_KEY
-            })
-        };
-        return fetch(`${config.DOMAIN}/kvv`, requestOptions)
+        TramScheduleUtility.requestDepartureData(stopId)
             .then((value: Response) => value.json().catch(reason => this.props.error(reason)))
             .then(data => {
                 this.setState({
