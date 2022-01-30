@@ -132,7 +132,7 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
             }
         }
 
-        return <div style={{
+        return <div className="xl:py-1 8xl:py-2" style={{
             height: "45.5vh",
             width: "30.75vw",
         }}>
