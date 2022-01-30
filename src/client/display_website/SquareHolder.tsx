@@ -19,7 +19,8 @@ interface SquareHolderProps {
 }
 
 interface SquareHolderState {
-    uniqueID: any;
+    uniqueIdInsideScroll: any,
+    uniqueIdOutsideScroll: any,
     hasError: boolean;
     errorMessage: string;
     scroll: number;
@@ -28,10 +29,10 @@ interface SquareHolderState {
 export class SquareHolder extends React.Component<SquareHolderProps, SquareHolderState> {
 
     private pageScrollToTop = function() {
-        $("html,body, #" + this.state.uniqueID).animate({ scrollTop: 0}, 5000);
+        $("body,html, #" + this.state.uniqueIdOutsideScroll).animate({ scrollTop: 0}, 5000);
     }
     private pageScrollToBottom = function() {
-        $("html,body, #"+this.state.uniqueID).animate({ scrollTop: $("html,body, #" + this.state.uniqueID).height()}, 5000);
+        $("body,html, #"+this.state.uniqueIdOutsideScroll).animate({ scrollTop: document.getElementById(this.state.uniqueIdInsideScroll).scrollHeight - document.getElementById(this.state.uniqueIdOutsideScroll).clientHeight}, 5000);
     }
     private randomID = function () { //generate random ID to make scrolling behavior unique for each Squareholder
         let part = function () {
@@ -45,7 +46,8 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
     constructor(props) {
         super(props);
         this.state = {
-            uniqueID: this.randomID(),
+            uniqueIdOutsideScroll: this.randomID(),
+            uniqueIdInsideScroll: this.randomID(),
             hasError: false,
             errorMessage: undefined,
             scroll: SquareHolderConfig.SCROLL_SPEED
@@ -92,7 +94,6 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
     }
 
     render() {
-
         // only show widget if it didn't produce an error, otherwise show error message
         let content = undefined;
         if (this.state.hasError) {
@@ -107,10 +108,9 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
             }
         }
 
-        return <div className="box-border" style={{
+        return <div style={{
             height: "45.5vh",
             width: "30.75vw",
-            boxSizing: "border-box"
         }}>
             <div className={"w-full h-full rounded-2xl"} id="squareHeld" style={{
                 backgroundColor: this.props.accentColor
@@ -122,12 +122,13 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
                     }}>
                     {this.props.title}
                 </div>
-                <div
-                    className={"w-full h-full sm:pl-5 sm:pt-1 sm:pb-2 sm:pr-2 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12 scrollbar-hide overflow-hidden"}
-                    id={this.state.uniqueID} style={{
-                    scrollBehavior: "smooth"
+                <div className="sm:pl-5 sm:pt-1 sm:pb-2 sm:pr-2 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12" id={this.state.uniqueIdOutsideScroll} style={{
+                    height: "35vh",
+                    overflow: "scroll"
                 }}>
-                    {content}
+                    <div id={this.state.uniqueIdInsideScroll}>
+                        {content}
+                    </div>
                 </div>
             </div>
         </div>;

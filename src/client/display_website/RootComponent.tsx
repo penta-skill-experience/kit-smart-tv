@@ -133,7 +133,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
                      }}>
                 </div>
                 <div
-                    className="z-20 grid grid-cols-3 absolute left-0 grid-rows-2 box-border sm:gap-2 md:gap-3 lg:gap-5 xl:gap-7 4xl:gap-10 sm:p-2 md:p-3 lg:p-5 xl:p-7 4xl:p-10" style={{
+                    className="z-20 grid grid-cols-3 absolute left-0 grid-rows-2 sm:gap-2 md:gap-3 lg:gap-5 xl:gap-7 4xl:gap-10 sm:p-2 md:p-3 lg:p-5 xl:p-7 4xl:p-10" style={{
                     width:"100vw",
                     height:"100vh",
                 }}>
