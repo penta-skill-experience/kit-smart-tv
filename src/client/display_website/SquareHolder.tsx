@@ -2,7 +2,7 @@ import * as React from "react";
 import * as SquareHolderConfig from "./SquareHolder.json";
 import "./SquareHolder.css";
 import {DisplayComponent} from "../widget/DisplayComponent";
-
+import $ from 'jquery';
 interface SquareHolderProps {
 
     /**
@@ -27,16 +27,18 @@ interface SquareHolderState {
 
 export class SquareHolder extends React.Component<SquareHolderProps, SquareHolderState> {
 
+    private pageScrollToTop = function() {
+        $("html,body, #" + this.state.uniqueID).animate({ scrollTop: 0}, 5000);
+    }
+    private pageScrollToBottom = function() {
+        $("html,body, #"+this.state.uniqueID).animate({ scrollTop: $("html,body, #" + this.state.uniqueID).height()}, 5000);
+    }
     private randomID = function () { //generate random ID to make scrolling behavior unique for each Squareholder
         let part = function () {
             return (Math.random().toString(10).substring(2));
         }
         return ("id" + part() + part() + part());
     };
-
-    private doesOverflow = function () {
-        return document.getElementById(this.state.uniqueID).scrollHeight >= document.getElementById(this.state.uniqueID).clientHeight;
-    }
 
     private clearErrorIntervalHandle;
 
@@ -52,6 +54,12 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
 
     componentDidMount(): void {
         this.clearErrorIntervalHandle = setInterval(() => this.clearError(), 5000);
+        this.pageScrollToBottom();
+        this.pageScrollToTop();
+        setInterval(() => {
+            this.pageScrollToBottom();
+            this.pageScrollToTop();
+        },10000);
     }
 
     componentWillUnmount(): void {
@@ -73,8 +81,13 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
 
     renderErrorMessage(): JSX.Element {
         return <div
-            className={"font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl"}>
-            Render error: {this.state.errorMessage}
+            className="font-light leading-normal sm:text-xs lg:text-sm xl:text-base 2xl:text-lg 4xl:text-xl text-center">
+            <div className="xs:w-10 sm:w-12 md:w-14 base:w-18 lg:w-24 xl:w-35 2xl:w-43 4xl:w-50 8xl:w-60">
+                <div/>
+                <img alt="Error_Robot" src="https://upload.wikimedia.org/wikipedia/commons/2/24/094-robot-face-3.svg"/>
+                <div/>
+            </div>
+        <span className="text-left">Render error: {this.state.errorMessage}</span>
         </div>;
     }
 
@@ -110,7 +123,7 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
                     {this.props.title}
                 </div>
                 <div
-                    className={"w-full h-full sm:pl-5 sm:pt-1 sm:pb-2 sm:pr-2 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12 scrollbar-hide"}
+                    className={"w-full h-full sm:pl-5 sm:pt-1 sm:pb-2 sm:pr-2 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12 scrollbar-hide overflow-hidden"}
                     id={this.state.uniqueID} style={{
                     scrollBehavior: "smooth"
                 }}>
