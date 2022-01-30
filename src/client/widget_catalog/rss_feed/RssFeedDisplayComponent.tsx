@@ -1,6 +1,6 @@
 import * as React from "react";
 import Parser from "rss-parser";
-import {DisplayComponent} from "../../widget/DisplayComponent";
+import {DisplayComponent, DisplayComponentProps} from "../../widget/DisplayComponent";
 import config from "../../../shared/persistence/persistence.config.json";
 
 interface RssFeedDisplayState {
@@ -10,7 +10,7 @@ interface RssFeedDisplayState {
     rssFeedFallback: string;
 }
 
-export class RssFeedDisplayComponent extends DisplayComponent<any> {
+export class RssFeedDisplayComponent extends DisplayComponent<RssFeedDisplayState> {
 
     constructor(props) {
         super(props);
@@ -23,16 +23,21 @@ export class RssFeedDisplayComponent extends DisplayComponent<any> {
     }
 
     componentDidMount() {
-        this.fetchRssFeedXmlString("https://www.reddit.com/.rss")
+        this.fetchRssFeed();
+    }
+
+    componentDidUpdate(prevProps: Readonly<DisplayComponentProps>, prevState: Readonly<any>, snapshot?: any) {
+        if (this.props.config["url"] !== prevProps.config["url"]) {
+            this.fetchRssFeed();
+        }
+    }
+
+    private fetchRssFeed(): void {
+        this.fetchRssFeedXmlString(this.props.config["url"])
             .then(xmlString => {
-                console.log(xmlString.slice(0, 200));
+                // console.log(xmlString.slice(0, 200));
                 const parser = new Parser();
-                return parser.parseString(xmlString).catch(reason => this.setState({
-                    loaded: true,
-                    loadedRss: false,
-                    rssFeed: undefined,
-                    rssFeedFallback: xmlString
-                }));
+                return parser.parseString(xmlString)
             })
             .then(feed => {
                 this.setState({
