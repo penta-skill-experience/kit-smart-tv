@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as TramScheduleConfig from "./TramSchedule.json";
 import {DisplayComponent} from "../../widget/DisplayComponent";
-import config from "../../../shared/persistence/persistence.config.json";
 import {TramScheduleUtility} from "./TramScheduleUtility";
 
 interface DepartureData {

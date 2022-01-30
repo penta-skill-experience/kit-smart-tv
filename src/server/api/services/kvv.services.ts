@@ -19,34 +19,19 @@ const allowedPlatforms = [
 
 const runningOnCorrectPlatform: boolean = allowedPlatforms.includes(process.platform);
 
-export function putKvv(input: DocumentDefinition<KvvDocument>): Promise<object> {
-    return runKvvCommand(input.url.toString())
-        .then(() => new Promise<object>((resolve, reject) => {
-            fs.readFile(kvvDataFilePath, (err, data) => {
-                if (err) {
-                    reject(err.message);
-                } else {
-                    try {
-                        const json: any = JSON.parse(data.toString());
-                        const o = json as object;
-                        resolve(o);
-                    } catch (e) {
-                        reject(`Data returned by KVV API could not be parsed to JavaScript object: ${e.message}`);
-                    }
-                }
-            });
-        }));
+export function putKvv(input: DocumentDefinition<KvvDocument>): Promise<string> {
+    return runKvvCommand(input.url.toString());
 }
 
-function runKvvCommand(url: string): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
+function runKvvCommand(url: string): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
         if (runningOnCorrectPlatform) {
-            const command = `rm ${kvvDataFilePath} | curl -o ${kvvDataFilePath} "${url}"`;
+            const command = `curl "${url}"`;
             exec(command, (error, stdout, stderr) => {
                 if (error) {
                     reject(stderr);
                 } else {
-                    resolve();
+                    resolve(stdout);
                 }
             });
         } else {
