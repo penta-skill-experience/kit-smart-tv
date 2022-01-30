@@ -32,17 +32,32 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
         if (this.state.uniqueIdOutsideScroll === null || document.getElementById(this.state.uniqueIdOutsideScroll) === null) {
             return;
         }
-        $("body,html, #" + this.state.uniqueIdOutsideScroll).animate({scrollTop: 0},speed);
+        if(!((document.getElementById(this.state.uniqueIdInsideScroll).scrollHeight
+            - document.getElementById(this.state.uniqueIdOutsideScroll).clientHeight)/document.getElementById(this.state.uniqueIdOutsideScroll).clientHeight > SquareHolderConfig.RATIO)){
+            speed = speed/4;
+            $("body,html, #" + this.state.uniqueIdOutsideScroll).delay(3000).animate({scrollTop: 0}, speed);
+            return;
+        }
+        $("body,html, #" + this.state.uniqueIdOutsideScroll).animate({scrollTop: 0}, speed);
     }
     private pageScrollToBottom = function (speed: number) {
         if (this.state.uniqueIdOutsideScroll === null || document.getElementById(this.state.uniqueIdOutsideScroll) === null ||
             document.getElementById(this.state.uniqueIdInsideScroll) === null) {
             return;
         }
+        if(!((document.getElementById(this.state.uniqueIdInsideScroll).scrollHeight
+            - document.getElementById(this.state.uniqueIdOutsideScroll).clientHeight)/document.getElementById(this.state.uniqueIdOutsideScroll).clientHeight > SquareHolderConfig.RATIO)){
+            speed = speed/4;
+            $("body,html, #" + this.state.uniqueIdOutsideScroll).delay(3000).animate({
+                scrollTop: document.getElementById(this.state.uniqueIdInsideScroll).scrollHeight
+                    - document.getElementById(this.state.uniqueIdOutsideScroll).clientHeight
+            }, speed);
+            return;
+        }
         $("body,html, #" + this.state.uniqueIdOutsideScroll).animate({
             scrollTop: document.getElementById(this.state.uniqueIdInsideScroll).scrollHeight
                 - document.getElementById(this.state.uniqueIdOutsideScroll).clientHeight
-        },speed);
+        }, speed);
     }
     private randomID = function () { //generate random ID to make scrolling behavior unique for each Squareholder
         let part = function () {
@@ -61,28 +76,15 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
             hasError: false,
             errorMessage: undefined,
         };
-        this.pageScrollToTop(SquareHolderConfig.SCROLL_REFRESH);
-        this.pageScrollToBottom(SquareHolderConfig.SCROLL_REFRESH);
     }
 
     componentDidMount(): void {
         this.clearErrorIntervalHandle = setInterval(() => this.clearError(), 5000);
         let speed = SquareHolderConfig.SCROLL_REFRESH;
-        if (!(this.state.uniqueIdOutsideScroll === null || document.getElementById(this.state.uniqueIdOutsideScroll) === null ||
-            document.getElementById(this.state.uniqueIdInsideScroll) === null)) {
-            if((document.getElementById(this.state.uniqueIdOutsideScroll).clientHeight)/document.getElementById(this.state.uniqueIdInsideScroll).scrollHeight > SquareHolderConfig.RATIO){
-                setInterval(() => {
-                    this.pageScrollToBottom(speed);
-                    this.pageScrollToTop(speed);
-                },1000);
-            }else {
-                setInterval(() => {
-                    this.pageScrollToBottom(speed/3);
-                    this.pageScrollToTop(speed/3);
-                },speed);
-            }
-        }
-
+        setInterval(() => {
+            this.pageScrollToBottom(speed);
+            this.pageScrollToTop(speed);
+        }, 1000);
     }
 
     componentWillUnmount(): void {
