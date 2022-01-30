@@ -107,7 +107,7 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
 
     renderErrorMessage(): JSX.Element {
         return <div
-            className="font-light leading-normal sm:text-xs lg:text-sm xl:text-base 2xl:text-lg 4xl:text-xl text-center">
+            className="w-full h-full font-light leading-normal sm:text-xs lg:text-sm xl:text-base 2xl:text-lg 4xl:text-xl text-center">
             <div className="xs:w-10 sm:w-12 md:w-14 base:w-18 lg:w-24 xl:w-35 2xl:w-43 4xl:w-50 8xl:w-60">
                 <div/>
                 <img alt="Error_Robot" src="https://upload.wikimedia.org/wikipedia/commons/2/24/094-robot-face-3.svg"/>
@@ -140,7 +140,7 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
                 backgroundColor: this.props.accentColor
             }}>
                 <div
-                    className={"font-light leading-normal sm:text-base md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl 4xl:text-6xl 8xl:text-7xl"}
+                    className={"font-light leading-normal sm:text-base md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl 8xl:text-7xl"}
                     style={{
                         color: this.props.titleColor
                     }}>
