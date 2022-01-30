@@ -1,4 +1,4 @@
 {
-  "SCROLL_REFRESH": 20000,
+  "SCROLL_REFRESH": 1000,
   "RATIO": 1.6
 }
