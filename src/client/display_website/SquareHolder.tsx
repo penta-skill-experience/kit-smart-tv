@@ -3,6 +3,7 @@ import * as SquareHolderConfig from "./SquareHolder.json";
 import "./SquareHolder.css";
 import {DisplayComponent} from "../widget/DisplayComponent";
 import $ from 'jquery';
+
 interface SquareHolderProps {
 
     /**
@@ -23,16 +24,25 @@ interface SquareHolderState {
     uniqueIdOutsideScroll: any,
     hasError: boolean;
     errorMessage: string;
-    scroll: number;
 }
 
 export class SquareHolder extends React.Component<SquareHolderProps, SquareHolderState> {
 
-    private pageScrollToTop = function() {
-        $("body,html, #" + this.state.uniqueIdOutsideScroll).animate({ scrollTop: 0}, 5000);
+    private pageScrollToTop = function (speed: number) {
+        if (this.state.uniqueIdOutsideScroll === null || document.getElementById(this.state.uniqueIdOutsideScroll) === null) {
+            return;
+        }
+        $("body,html, #" + this.state.uniqueIdOutsideScroll).animate({scrollTop: 0},speed);
     }
-    private pageScrollToBottom = function() {
-        $("body,html, #"+this.state.uniqueIdOutsideScroll).animate({ scrollTop: document.getElementById(this.state.uniqueIdInsideScroll).scrollHeight - document.getElementById(this.state.uniqueIdOutsideScroll).clientHeight}, 5000);
+    private pageScrollToBottom = function (speed: number) {
+        if (this.state.uniqueIdOutsideScroll === null || document.getElementById(this.state.uniqueIdOutsideScroll) === null ||
+            document.getElementById(this.state.uniqueIdInsideScroll) === null) {
+            return;
+        }
+        $("body,html, #" + this.state.uniqueIdOutsideScroll).animate({
+            scrollTop: document.getElementById(this.state.uniqueIdInsideScroll).scrollHeight
+                - document.getElementById(this.state.uniqueIdOutsideScroll).clientHeight
+        },speed);
     }
     private randomID = function () { //generate random ID to make scrolling behavior unique for each Squareholder
         let part = function () {
@@ -50,18 +60,29 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
             uniqueIdInsideScroll: this.randomID(),
             hasError: false,
             errorMessage: undefined,
-            scroll: SquareHolderConfig.SCROLL_SPEED
         };
+        this.pageScrollToTop(SquareHolderConfig.SCROLL_REFRESH);
+        this.pageScrollToBottom(SquareHolderConfig.SCROLL_REFRESH);
     }
 
     componentDidMount(): void {
         this.clearErrorIntervalHandle = setInterval(() => this.clearError(), 5000);
-        this.pageScrollToBottom();
-        this.pageScrollToTop();
-        setInterval(() => {
-            this.pageScrollToBottom();
-            this.pageScrollToTop();
-        },10000);
+        let speed = SquareHolderConfig.SCROLL_REFRESH;
+        if (!(this.state.uniqueIdOutsideScroll === null || document.getElementById(this.state.uniqueIdOutsideScroll) === null ||
+            document.getElementById(this.state.uniqueIdInsideScroll) === null)) {
+            if((document.getElementById(this.state.uniqueIdOutsideScroll).clientHeight)/document.getElementById(this.state.uniqueIdInsideScroll).scrollHeight > SquareHolderConfig.RATIO){
+                setInterval(() => {
+                    this.pageScrollToBottom(speed);
+                    this.pageScrollToTop(speed);
+                },1000);
+            }else {
+                setInterval(() => {
+                    this.pageScrollToBottom(speed/3);
+                    this.pageScrollToTop(speed/3);
+                },speed);
+            }
+        }
+
     }
 
     componentWillUnmount(): void {
@@ -89,7 +110,7 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
                 <img alt="Error_Robot" src="https://upload.wikimedia.org/wikipedia/commons/2/24/094-robot-face-3.svg"/>
                 <div/>
             </div>
-        <span className="text-left">Render error: {this.state.errorMessage}</span>
+            <span className="text-left">Render error: {this.state.errorMessage}</span>
         </div>;
     }
 
@@ -122,7 +143,8 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
                     }}>
                     {this.props.title}
                 </div>
-                <div className="sm:pl-5 sm:pt-1 sm:pb-2 sm:pr-2 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12" id={this.state.uniqueIdOutsideScroll} style={{
+                <div className="sm:pl-5 sm:pt-1 sm:pb-2 sm:pr-2 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12 scrollbar-hide"
+                     id={this.state.uniqueIdOutsideScroll} style={{
                     height: "35vh",
                     overflow: "scroll"
                 }}>
