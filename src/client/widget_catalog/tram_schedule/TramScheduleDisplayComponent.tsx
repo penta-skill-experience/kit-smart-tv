@@ -91,7 +91,7 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
     render() {
         return <div className="grid grid-flow-row sm:g-0.5 xl:gap-1.5 2xl:gap-2 box-border">
             <div className="font-light leading-normal sm:text-sm sm:text-center lg:text-base xl:text-xl 2xl:text-2xl
-             4xl:text-3xl 8xl:text-5xl sm:-mt-2 lg:-mt-3 xl:-mt-4 4xl:-mt-5 8xl:-mt-6">  {this.getStopName()}
+             4xl:text-3xl 8xl:text-5xl sm:-mt-1 lg:-mt-2 xl:-mt-3 4xl:-mt-4 8xl:-mt-5">  {this.getStopName()}
             </div>
             {
                 this.state.trains.length &&
