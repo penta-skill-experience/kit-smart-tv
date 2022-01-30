@@ -34,10 +34,6 @@ export class AnnouncementComponent extends DisplayComponent<AnnouncementState> {
             announcements: currentAnnouncements,
             verifiedUsers: currentVerifiedUsers
         });
-
-        for (const announcement of this.state.announcements) {
-            console.log(announcement.title +  " with timeOfAddition: " + announcement.timeOfAddition + " and timeout: " + announcement.timeout);
-        }
     }
 
     async componentWillMount() {
