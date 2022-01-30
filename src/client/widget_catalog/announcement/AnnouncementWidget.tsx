@@ -1,16 +1,17 @@
 import React from "react";
 import {Widget} from "../../widget/Widget";
-import {WidgetConfigSaver} from "../../widget/WidgetConfigSaver";
 import {AnnouncementComponent} from "./AnnouncementComponent";
+import {ConfigComponent} from "../../widget/ConfigComponent";
+import {DisplayComponent} from "../../widget/DisplayComponent";
 
 export class AnnouncementWidget implements Widget {
 
-    createConfigComponent(rawConfig: Object, save: (rawConfig: Object) => void): JSX.Element {
+    getConfigComponentClass(): typeof ConfigComponent {
         return undefined;
     }
 
-    createDisplayComponent(rawConfig: Object): JSX.Element {
-        return <AnnouncementComponent />;
+    getDisplayComponentClass(): typeof DisplayComponent {
+        return AnnouncementComponent;
     }
 
     getTitle(): string {

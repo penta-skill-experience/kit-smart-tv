@@ -1,16 +1,17 @@
 import * as React from "react";
 import {Widget} from "../../widget/Widget";
-import {WidgetConfigSaver} from "../../widget/WidgetConfigSaver";
-import {CafeteriaOpening} from "./CafeteriaOpening";
+import {CafeteriaOpeningDisplayComponent} from "./CafeteriaOpeningDisplayComponent";
+import {ConfigComponent} from "../../widget/ConfigComponent";
+import {DisplayComponent} from "../../widget/DisplayComponent";
 
 export class CafeteriaOpeningWidget implements Widget {
 
-    createConfigComponent(rawConfig: Object, save: (rawConfig: Object) => void): JSX.Element {
+    getConfigComponentClass(): typeof ConfigComponent {
         return undefined;
     }
 
-    createDisplayComponent(rawConfig: Object): JSX.Element {
-        return <CafeteriaOpening />;
+    getDisplayComponentClass(): typeof DisplayComponent {
+        return CafeteriaOpeningDisplayComponent;
     }
 
     getTitle(): string {

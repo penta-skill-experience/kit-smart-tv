@@ -22,7 +22,7 @@ export class WidgetPersistence {
         return fetch(`${config.DOMAIN}/widgets`, requestOptions);
     }
 
-    getWidgetDataList(): Promise<WidgetData[]> {
+    async getWidgetDataList(): Promise<WidgetData[]> {
         return fetch(`${config.DOMAIN}/widgets`)
             .then((value: Response) => value.json())
             .then(data => data.widgetDataList);

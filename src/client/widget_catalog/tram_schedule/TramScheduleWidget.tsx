@@ -1,21 +1,19 @@
 import * as React from "react";
 import {Widget} from "../../widget/Widget";
 import {TramScheduleDisplayComponent} from "./TramScheduleDisplayComponent";
-import {TramScheduleConfig} from "./TramScheduleConfig";
-import {TramScheduleConfigDialogComponent} from "../../config_website/widget_config_pages/TramScheduleConfigPage";
+import {ConfigComponent} from "../../widget/ConfigComponent";
+import {TramScheduleConfigComponent} from "./TramScheduleConfigComponent";
+import {DisplayComponent} from "../../widget/DisplayComponent";
+import * as TramScheduleConfig from "./TramSchedule.json";
 
 export class TramScheduleWidget implements Widget {
 
-    createConfigComponent(rawConfig: Object, save: (rawConfig: Object) => void): JSX.Element {
-        return <TramScheduleConfigDialogComponent/>;
+    getConfigComponentClass(): typeof ConfigComponent {
+        return TramScheduleConfigComponent;
     }
 
-    createDisplayComponent(rawConfig: Object): JSX.Element {
-        const config = new TramScheduleConfig();
-        config.load(rawConfig);
-        return <TramScheduleDisplayComponent
-            stop={config.stop}
-        />;
+    getDisplayComponentClass(): typeof DisplayComponent {
+        return TramScheduleDisplayComponent;
     }
 
     getTitle(): string {
@@ -27,7 +25,9 @@ export class TramScheduleWidget implements Widget {
     }
 
     getDefaultRawConfig(): Object {
-        const config = new TramScheduleConfig();
-        return config.save();
+        return {
+            stop: "",
+            count: TramScheduleConfig.DEFAULT_ITEM_COUNT,
+        };
     }
 }

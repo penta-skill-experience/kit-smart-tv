@@ -17,33 +17,24 @@ jest.mock('../../../../server/announcement_management/AnnouncementConfig.json', 
 describe("testing AnnouncementAuthorTypeIdentifier", () => {
 
     const verifiedUser = new VerifiedUser("verifieduser1@testing.com", "verified");
+    const verifiedUsers = [verifiedUser];
 
     const unverifiedUserEmail = "unverifieduser@example.com";
 
-    // mocking getVerifiedUsers from AnnouncementPersistence
-    const mockedGetVerifiedUsers = jest.spyOn(AnnouncementPersistence.prototype, "getVerifiedUsers");
-    mockedGetVerifiedUsers.mockImplementation(() => {
-        return new Promise<VerifiedUser[]>(resolve => {
-            resolve([verifiedUser]);
-        });
-    });
 
     test("AnnouncementAuthorTypeIdentifier identifies ADMIN correctly", () => {
-        new AnnouncementAuthorTypeIdentifier().getAuthorType(AnnouncementConfig.ADMINS[0].EMAIL).then(result => {
-            expect(result).toBe(AnnouncementAuthorType.ADMIN);
-        });
+        expect(new AnnouncementAuthorTypeIdentifier().getAuthorType(AnnouncementConfig.ADMINS[0].EMAIL, verifiedUsers))
+            .toBe(AnnouncementAuthorType.ADMIN);
     });
 
     test("AnnouncementAuthorTypeIdentifier identifies VERIFIED correctly", () => {
-        new AnnouncementAuthorTypeIdentifier().getAuthorType(verifiedUser.email).then(result => {
-            expect(result).toBe(AnnouncementAuthorType.VERIFIED);
-        });
+        expect(new AnnouncementAuthorTypeIdentifier().getAuthorType(verifiedUser.email, verifiedUsers))
+            .toBe(AnnouncementAuthorType.VERIFIED);
     });
 
     test("AnnouncementAuthorTypeIdentifier identifies UNVERIFIED correctly", () => {
-        new AnnouncementAuthorTypeIdentifier().getAuthorType(unverifiedUserEmail).then(result => {
-            expect(result).toBe(AnnouncementAuthorType.UNVERIFIED);
-        });
+        expect(new AnnouncementAuthorTypeIdentifier().getAuthorType(unverifiedUserEmail, verifiedUsers))
+            .toBe(AnnouncementAuthorType.UNVERIFIED);
     });
 
     afterAll(() => {

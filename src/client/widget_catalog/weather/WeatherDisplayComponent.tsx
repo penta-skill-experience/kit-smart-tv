@@ -1,11 +1,14 @@
 import * as React from "react";
 import axios from "axios";
 import * as WeatherConfig from "./Weather.json";
+import {DisplayComponent} from "../../widget/DisplayComponent";
 let kelvinToCelsiusRounded = x => {
     return Math.round(x - WeatherConfig.KELVIN);
 };
-
-export class Weather extends React.Component<any, any> {
+let toKMH = x => {
+    return Math.round(x * WeatherConfig.MPS);
+};
+export class WeatherDisplayComponent extends DisplayComponent<any> {
 
     constructor(props) {
         super(props);
@@ -25,15 +28,13 @@ export class Weather extends React.Component<any, any> {
 
     getWeather() {
         axios.get(WeatherConfig.URL + WeatherConfig.API_KEY)
-            .then(resp => {
-                this.setState({
-                    temp: resp.data.current.temp,
-                    humidity: resp.data.current.humidity,
-                    windSpeed: resp.data.current.wind_speed,
-                    precipitation: resp.data.minutely[0].precipitation,
-                    icon: resp.data.current.weather[0].icon
-                });
-            })
+            .then(resp => this.setState({
+                temp: resp.data.current.temp,
+                humidity: resp.data.current.humidity,
+                windSpeed: resp.data.current.wind_speed,
+                precipitation: resp.data.hourly[0].pop,
+                icon: resp.data.current.weather[0].icon
+            }))
             .catch(function (error) {
                 console.log(error);
             });
@@ -59,7 +60,7 @@ export class Weather extends React.Component<any, any> {
                     </div>
                     <div
                         className="font-light leading-normal sm:text-xs xl:text-base 2xl:text-xl 4xl:text-2xl 8xl:text-3xl sm:text-left">
-                        wind: <span className="font-medium sm:text-sm xl:text-lg 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl sm:text-left">{Math.round(this.state.windSpeed)}</span> km/h
+                        wind: <span className="font-medium sm:text-sm xl:text-lg 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl sm:text-left">{toKMH(this.state.windSpeed)}</span> km/h
                     </div>
                 </div>
         </div>;

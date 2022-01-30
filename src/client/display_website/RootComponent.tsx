@@ -1,7 +1,7 @@
 import * as React from "react";
 import {SquareHolder} from "./SquareHolder";
-import {DigitalTime} from "../widget_catalog/time/DigitalTime";
-import {Weather} from "../widget_catalog/weather/Weather";
+import {TimeDisplayComponent} from "../widget_catalog/time/TimeDisplayComponent";
+import {WeatherDisplayComponent} from "../widget_catalog/weather/WeatherDisplayComponent";
 import {WidgetLoader} from "../widget/WidgetLoader";
 import {WidgetPersistence} from "../../shared/persistence/WidgetPersistence";
 import {WidgetData} from "../widget/WidgetData";
@@ -9,6 +9,7 @@ import {RotatorComponent} from "./RotatorComponent";
 import {DesignValuesPersistence} from "../../shared/persistence/DesignValuesPersistence";
 import {DesignConfigPersistence} from "../../shared/persistence/DesignConfigPersistence";
 import * as RootComponentConfig from "./RootComponent.json";
+import {DesignUtility} from "../../shared/persistence/DesignUtility";
 
 interface RootComponentState {
     widgetDataByLocation: WidgetData[][];
@@ -23,8 +24,6 @@ interface RootComponentState {
 }
 
 export class RootComponent extends React.Component<any, RootComponentState> {
-    private designValuesPersistence = new DesignValuesPersistence();
-    private designConfigPersistence = new DesignConfigPersistence();
     private readonly widgetLoader = new WidgetLoader();
     private readonly widgetPersistence = new WidgetPersistence();
 
@@ -44,37 +43,34 @@ export class RootComponent extends React.Component<any, RootComponentState> {
         };
     }
 
-
     switchFontSizeDocument(relativeSize: number) {
-        document.documentElement.style.fontSize =  relativeSize + "rem";
+        document.documentElement.style.fontSize = relativeSize + "rem";
     }
 
     loadTheme() {
-        const theme = this.designConfigPersistence.getSelectedColorSchemeId();
-        const fontSize = this.designConfigPersistence.getSelectedFontSizeId();
-        this.designValuesPersistence.getFontSize(fontSize).then(resp => {
-            this.setState({
-                relativeSize: resp.relativeSize
-            });
-            this.switchFontSizeDocument(resp.relativeSize);
-        });
-        this.designValuesPersistence.getColorScheme(theme).then(resp => {
-            this.setState({
-                themeID: resp.id,
-                titleFontColor: resp.titleFontColor,
-                bodyFontColor: resp.bodyFontColor,
-                specialBoldFontColor: resp.specialBoldFontColor,
-                specialSubtleFontColor: resp.specialSubtleFontColor,
-                accentBarColor: resp.accentBarColor,
-                backgroundImage: this.designConfigPersistence.getSelectedBackground(),
-            });
-        });
+        DesignUtility.getDesignConfigValues()
+            .then(design => {
+                this.setState({
+                    relativeSize: design.fontSize.relativeSize,
+                    themeID: design.colorScheme.id,
+                    titleFontColor: design.colorScheme.titleFontColor,
+                    bodyFontColor: design.colorScheme.bodyFontColor,
+                    specialBoldFontColor: design.colorScheme.specialBoldFontColor,
+                    specialSubtleFontColor: design.colorScheme.specialSubtleFontColor,
+                    accentBarColor: design.colorScheme.accentBarColor,
+                    backgroundImage: design.background.url,
+                });
+                this.switchFontSizeDocument(design.fontSize.relativeSize);
+            })
+            .catch(reason => console.error(`Failed to get design values from server. Reason: ${reason}`));
     }
     loadWidget() {
-        this.widgetPersistence.getWidgetDataList().then(widgetDataList => this.setState({
-            // separate the widgetData by location
-            widgetDataByLocation: [0, 1, 2, 3, 4, 5].map(location => widgetDataList.filter(widgetData => widgetData.location === location))
-        }));
+        this.widgetPersistence.getWidgetDataList()
+            .then(widgetDataList => this.setState({
+                // separate the widgetData by location
+                widgetDataByLocation: [0, 1, 2, 3, 4, 5].map(location => widgetDataList.filter(widgetData => widgetData.location === location))
+            }))
+            .catch(reason => console.error(`Failed to load widgets from server. Reason: ${reason}`));
     }
     componentDidMount() {
         // Query a list of all widget data.
@@ -108,21 +104,12 @@ export class RootComponent extends React.Component<any, RootComponentState> {
 
     private renderWidget(widgetData: WidgetData) {
         const widget = this.widgetLoader.getWidget(widgetData.widgetId);
-        try {
-            const widgetComponent = widget.createDisplayComponent(widgetData.rawConfig);
-            return <SquareHolder title={widget.getTitle()} accentColor={this.state.accentBarColor}
-                                 titleColor={this.state.titleFontColor} specialBoldFontColor={this.state.specialBoldFontColor}
-                                 specialSubtleFontColor={this.state.specialSubtleFontColor}>
-                {widgetComponent}
-            </SquareHolder>;
-        } catch (e) {
-            // todo: make design for error message nicer
-            return <SquareHolder title={widget.getTitle()} accentColor={this.state.accentBarColor}
-                                 titleColor={this.state.titleFontColor} specialBoldFontColor={this.state.specialBoldFontColor}
-                                 specialSubtleFontColor={this.state.specialSubtleFontColor}>
-                <p>Error while creating widget: {e.message}</p>
-            </SquareHolder>;
-        }
+        return <SquareHolder displayComponentClass={widget.getDisplayComponentClass()}
+                             rawConfig={widgetData.rawConfig}
+                             title={widget.getTitle()} accentColor={this.state.accentBarColor}
+                             titleColor={this.state.titleFontColor}
+                             specialBoldFontColor={this.state.specialBoldFontColor}
+                             specialSubtleFontColor={this.state.specialSubtleFontColor}/>;
     }
 
     render() {
@@ -131,31 +118,31 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             backgroundImage: 'url(' + this.state.backgroundImage + ')',
             width: "100vw",
             height: "100vh",
-            overflow: "hidden",
             fontSize: this.state.relativeSize + "rem",
         }}>
             <div className={"flex "} style={{
                 color: this.state.bodyFontColor
             }}>
-                <div className="z-20 absolute left-10 absolute bottom-7">
+                <div className="z-50 absolute left-10 absolute bottom-7">
                     <img className="sm:w-24 lg:w-40 2xl:w-60 4xl:w-80"
                          src="https://www.artwork.de/wp-content/uploads/2015/08/logo_TF_NEU_4c_ai.png" alt="IHKLogo"/>
                 </div>
-                <div className="z-10 sm:w-4/12 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30"
+                <div className="z-20 sm:w-1/3 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30"
                      style={{
                          height: "100vh"
                      }}>
-                    <div
-                        className="sm:p-4 lg:p-6 xl:p-8 4xl:p-12 8xl:p-14 grid grid-rows-2 grid-flow-row box-border lg:gap-3 xl:gap-4 4xl:gap-6 8xl:gap-8">
-                        <div>
-                            <DigitalTime/>
-                            <Weather/>
-                        </div>
-                        {this.renderLocation(1)}
-                    </div>
                 </div>
                 <div
-                    className="w-2/3 sm:p-4 lg:p-6 xl:p-8 4xl:p-12 8xl:p-14 absolute right-0 grid grid-cols-2 box-border sm:gap-2 lg:gap-3 xl:gap-4 4xl:gap-6 8xl:gap-8">
+                    className="z-20 grid grid-cols-3 absolute left-0 grid-rows-2 sm:gap-2 md:gap-3 lg:gap-5 xl:gap-7 4xl:gap-10 sm:p-2 md:p-3 lg:p-5 xl:p-7 4xl:p-10" style={{
+                    width:"100vw",
+                    height:"100vh",
+                }}>
+                    <div className = "sm:pl-2 md:pl-3 lg:pl-5 xl:pl-7 4xl:pl-10">
+                        {/*todo: log errors*/}
+                        <TimeDisplayComponent error={() => {}}/>
+                        <WeatherDisplayComponent error={() => {}}/>
+                    </div>
+                    {this.renderLocation(1)}
                     {this.renderLocation(2)}
                     {this.renderLocation(3)}
                     {this.renderLocation(4)}

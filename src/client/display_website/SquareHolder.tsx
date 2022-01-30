@@ -1,8 +1,17 @@
 import * as React from "react";
 import * as SquareHolderConfig from "./SquareHolder.json";
 import "./SquareHolder.css";
+import {DisplayComponent} from "../widget/DisplayComponent";
+import $ from 'jquery';
 
 interface SquareHolderProps {
+
+    /**
+     * The class of the DisplayComponent that should be instantiated as child inside this component.
+     */
+    displayComponentClass?: typeof DisplayComponent;
+    rawConfig?: Object;
+
     title: string;
     titleColor: string;
     accentColor: string;
@@ -10,68 +19,140 @@ interface SquareHolderProps {
     specialSubtleFontColor: string;
 }
 
-export class SquareHolder extends React.Component<SquareHolderProps, any> {
+interface SquareHolderState {
+    uniqueIdInsideScroll: any,
+    uniqueIdOutsideScroll: any,
+    hasError: boolean;
+    errorMessage: string;
+}
 
-    pageScroll = function() {
-        if(this.state.uniqueID === null || document.getElementById(this.state.uniqueID) === null) {
+export class SquareHolder extends React.Component<SquareHolderProps, SquareHolderState> {
+
+    private pageScrollToTop = function (speed: number) {
+        if (this.state.uniqueIdOutsideScroll === null || document.getElementById(this.state.uniqueIdOutsideScroll) === null) {
             return;
         }
-        document.getElementById(this.state.uniqueID).scrollBy(0,this.state.scroll); // horizontal and vertical scroll increments
-        if((document.getElementById(this.state.uniqueID).scrollTop +
-            document.getElementById(this.state.uniqueID).clientHeight) >=
-            document.getElementById(this.state.uniqueID).scrollHeight || document.getElementById(this.state.uniqueID).scrollTop == 0) {
-            this.state.scroll = -this.state.scroll;
+        $("body,html, #" + this.state.uniqueIdOutsideScroll).animate({scrollTop: 0},speed);
+    }
+    private pageScrollToBottom = function (speed: number) {
+        if (this.state.uniqueIdOutsideScroll === null || document.getElementById(this.state.uniqueIdOutsideScroll) === null ||
+            document.getElementById(this.state.uniqueIdInsideScroll) === null) {
+            return;
         }
+        $("body,html, #" + this.state.uniqueIdOutsideScroll).animate({
+            scrollTop: document.getElementById(this.state.uniqueIdInsideScroll).scrollHeight
+                - document.getElementById(this.state.uniqueIdOutsideScroll).clientHeight
+        },speed);
     }
-    doesOverflow = function() {
-        return document.getElementById(this.state.uniqueID).scrollHeight >= document.getElementById(this.state.uniqueID).clientHeight;
-    }
-    randomID = function() { //generate random ID to make scrolling behavior unique for each Squareholder
-        let part = function() {
+    private randomID = function () { //generate random ID to make scrolling behavior unique for each Squareholder
+        let part = function () {
             return (Math.random().toString(10).substring(2));
         }
-        return ("id" + part()+part()+part());
+        return ("id" + part() + part() + part());
     };
+
+    private clearErrorIntervalHandle;
+
     constructor(props) {
         super(props);
         this.state = {
-            uniqueID: this.randomID(),
+            uniqueIdOutsideScroll: this.randomID(),
+            uniqueIdInsideScroll: this.randomID(),
             hasError: false,
-            error: undefined,
-            scroll: SquareHolderConfig.SCROLL_SPEED
+            errorMessage: undefined,
         };
-        setInterval(() => this.pageScroll(), SquareHolderConfig.SCROLL_REFRESH);
-        //(this.doesOverflow() ? setInterval(() => this.pageScroll(), 50):"");
+        this.pageScrollToTop(SquareHolderConfig.SCROLL_REFRESH);
+        this.pageScrollToBottom(SquareHolderConfig.SCROLL_REFRESH);
+    }
+
+    componentDidMount(): void {
+        this.clearErrorIntervalHandle = setInterval(() => this.clearError(), 5000);
+        let speed = SquareHolderConfig.SCROLL_REFRESH;
+        if (!(this.state.uniqueIdOutsideScroll === null || document.getElementById(this.state.uniqueIdOutsideScroll) === null ||
+            document.getElementById(this.state.uniqueIdInsideScroll) === null)) {
+            if((document.getElementById(this.state.uniqueIdOutsideScroll).clientHeight)/document.getElementById(this.state.uniqueIdInsideScroll).scrollHeight > SquareHolderConfig.RATIO){
+                setInterval(() => {
+                    this.pageScrollToBottom(speed);
+                    this.pageScrollToTop(speed);
+                },1000);
+            }else {
+                setInterval(() => {
+                    this.pageScrollToBottom(speed/3);
+                    this.pageScrollToTop(speed/3);
+                },speed);
+            }
+        }
+
+    }
+
+    componentWillUnmount(): void {
+        clearInterval(this.clearErrorIntervalHandle);
+    }
+
+    private clearError(): void {
+        this.setState({
+            hasError: false,
+        });
     }
 
     static getDerivedStateFromError(error) {
         return {
             hasError: true,
-            error: error,
+            errorMessage: error.message,
         };
     }
 
+    renderErrorMessage(): JSX.Element {
+        return <div
+            className="font-light leading-normal sm:text-xs lg:text-sm xl:text-base 2xl:text-lg 4xl:text-xl text-center">
+            <div className="xs:w-10 sm:w-12 md:w-14 base:w-18 lg:w-24 xl:w-35 2xl:w-43 4xl:w-50 8xl:w-60">
+                <div/>
+                <img alt="Error_Robot" src="https://upload.wikimedia.org/wikipedia/commons/2/24/094-robot-face-3.svg"/>
+                <div/>
+            </div>
+            <span className="text-left">Render error: {this.state.errorMessage}</span>
+        </div>;
+    }
+
     render() {
-        return <div className={"shadow-2xl rounded-2xl box-border"} id="squareHeld" style={{
-            backgroundColor: this.props.accentColor
+        // only show widget if it didn't produce an error, otherwise show error message
+        let content = undefined;
+        if (this.state.hasError) {
+            content = this.renderErrorMessage();
+        } else {
+            if (this.props.displayComponentClass) {
+                // @ts-ignore
+                content = React.createElement(this.props.displayComponentClass, {
+                    error: msg => this.setState({hasError: true, errorMessage: msg}),
+                    config: this.props.rawConfig
+                }, null);
+            }
+        }
+
+        return <div style={{
+            height: "45.5vh",
+            width: "30.75vw",
         }}>
-            <div
-                    className={"sm:px-2 lg:px-3 xl:px-4 4xl:px-5 8xl:px-6 font-light leading-normal sm:text-base md:text-xl lg:text-2xl xl:text-4xl 2xl:text-5xl 8xl:text-6xl"} style={{
-                    color: this.props.titleColor
-                 }}>
+            <div className={"w-full h-full rounded-2xl"} id="squareHeld" style={{
+                backgroundColor: this.props.accentColor
+            }}>
+                <div
+                    className={"sm:px-2 lg:px-3 xl:px-4 4xl:px-5 8xl:px-6 font-light leading-loose sm:text-base md:text-xl lg:text-2xl xl:text-4xl 2xl:text-5xl 8xl:text-6xl"}
+                    style={{
+                        color: this.props.titleColor
+                    }}>
                     {this.props.title}
                 </div>
-                <div className={"sm:pl-5 sm:pt-1 sm:pb-2 sm:pr-2 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12 overflow-x-scroll scrollbar-hide scroll-smooth"}
-                     id={this.state.uniqueID} style={{
-                    height: "38vh",
-                    scrollBehavior: "smooth"
+                <div className="sm:pl-5 sm:pt-1 sm:pb-2 sm:pr-2 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12 scrollbar-hide"
+                     id={this.state.uniqueIdOutsideScroll} style={{
+                    height: "35vh",
+                    overflow: "scroll"
                 }}>
-                    {this.state.hasError ?
-                        // todo: make design for error message nicer
-                        <p>Error while rendering widget: {this.state.error.message}</p>
-                        : this.props.children  // only show children if they didn't produce an error
-                    }
+                    <div id={this.state.uniqueIdInsideScroll}>
+                        {content}
+                    </div>
                 </div>
-            </div>;
+            </div>
+        </div>;
     }
 }

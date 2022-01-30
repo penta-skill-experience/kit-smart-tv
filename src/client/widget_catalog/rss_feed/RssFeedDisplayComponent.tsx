@@ -1,5 +1,7 @@
 import * as React from "react";
 import Parser from "rss-parser";
+import {DisplayComponent} from "../../widget/DisplayComponent";
+
 
 interface RssFeedDisplayProps {
     url: string;
@@ -9,7 +11,7 @@ interface RssFeedDisplayState {
     rssFeed: any;
 }
 
-export class RssFeedDisplayComponent extends React.Component<RssFeedDisplayProps, RssFeedDisplayState> {
+export class RssFeedDisplayComponent extends DisplayComponent<any> {
 
     constructor(props) {
         super(props);

@@ -1,30 +1,7 @@
 import * as mongoose from "mongoose";
+import {ValuesData} from "../../../shared/persistence/data";
 
-export interface ValuesInput {
-    fontSizes: {
-        id: string;
-        name: string;
-        titleFontSize: number;
-        bodyFontSize: number;
-        specialFontSize: number;
-        specialFontSizeAccent: number,
-    }[];
-    colorSchemes: {
-        id: string;
-        name: string;
-        titleColor: string;
-        bodyColor: string;
-        specialBoldColor: string;
-        specialSubtleColor: string;
-        accentBarColor: string;
-        backgrounds: {
-            id: string;
-            url: string;
-        }[];
-    }[] ;
-}
-
-export interface ValuesDocument extends ValuesInput, mongoose.Document {
+export interface ValuesDocument extends ValuesData, mongoose.Document {
     createdAt: Date;
     updatedAt: Date;
 }
@@ -42,22 +19,10 @@ const ValuesSchema = new mongoose.Schema({
                 required: true,
                 unique: true,
             },
-            titleFontSize: {
+            relativeHeight: {
                 type: Number,
                 required: true,
-            },
-            bodyFontSize: {
-                type: Number,
-                required: true,
-            },
-            specialFontSize: {
-                type: Number,
-                required: true,
-            },
-            specialFontSizeAccent: {
-                type: Number,
-                required: true,
-            },
+            }
         })],
         required: true,
     },
@@ -73,19 +38,19 @@ const ValuesSchema = new mongoose.Schema({
                 required: true,
                 unique: true,
             },
-            titleColor: {
+            titleFontColor: {
                 type: String,
                 required: true,
             },
-            bodyColor: {
+            bodyFontColor: {
                 type: String,
                 required: true,
             },
-            specialBoldColor: {
+            specialBoldFontColor: {
                 type: String,
                 required: true,
             },
-            specialSubtleColor: {
+            specialSubtleFontColor: {
                 type: String,
                 required: true,
             },

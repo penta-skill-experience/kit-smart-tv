@@ -10,9 +10,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
-import {TramScheduleConfigDialogComponent} from "./widget_config_pages/TramScheduleConfigPage";
-import {WidgetConfigPage} from "./widget_config_pages/WidgetConfigPage";
-import {ConcreteWidgetConfigSaver} from "./ConcreteWidgetConfigSaver";
+import {WidgetConfigPage} from "./WidgetConfigPage";
 
 
 export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, handleRawConfigSave, children}) => {
@@ -39,10 +37,10 @@ export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, han
             <Grid item>
                 {
                     item.widget.isConfigurable() &&
-                    <WidgetConfigPage content={item.widget.createConfigComponent(
-                        item.widgetData.rawConfig,
-                        (rawConfig: Object) => handleRawConfigSave(item.id, rawConfig))
-                    }/>
+                    <WidgetConfigPage configComponentClass={item.widget.getConfigComponentClass()}
+                                      save={(rawConfig: Object) => handleRawConfigSave(item.id, rawConfig)}
+                                      rawConfig={item.widgetData.rawConfig}
+                    />
                 }
             </Grid>
         </Grid>

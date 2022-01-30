@@ -1,16 +1,13 @@
 import * as React from "react";
 import * as TramScheduleConfig from "./TramSchedule.json";
-import axios from "axios"
+import {DisplayComponent} from "../../widget/DisplayComponent";
+import config from "../../../shared/persistence/persistence.config.json";
+import {TramScheduleUtility} from "./TramScheduleUtility";
 
 interface DepartureData {
     route: string;
     destination: string;
     time: string;
-}
-
-interface TramScheduleState {
-    trains: DepartureData[];
-    stop: string;
 }
 
 let justArrived = (x: string): string => {
@@ -20,52 +17,83 @@ let justArrived = (x: string): string => {
     return x;
 };
 
-export class TramScheduleDisplayComponent extends React.Component<any, TramScheduleState> {
+interface TramScheduleState {
+    trains: DepartureData[];
+}
+
+export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleState> {
+
+    private intervalHandle;  // need to keep a reference to the interval in order to clear it when unmounting the component
+
     constructor(props) {
         super(props);
         this.state = {
             trains: [],
-            stop: this.props.stop
         };
     }
-    getSchedule() {
-        axios.get("http://localhost:8080/" + TramScheduleConfig.URL_STOP_SEARCH_BEFORE_STOP
-            + this.state.stop
-            + TramScheduleConfig.URL_STOP_SEARCH_AFTER_STOP
-            + TramScheduleConfig.API_KEY)
-            .then(resp => {
-                let checker = resp.data.stops;
-                if(checker.length == 0) {
-                    throw new Error(`This stop does not exist`);
-                }
-                axios.get(TramScheduleConfig.CORS_ANYWHERE
-                    + TramScheduleConfig.URL_BEFORE_STOP
-                    + checker[0].id
-                    + TramScheduleConfig.URL_AFTER_STOP
-                    + TramScheduleConfig.API_KEY)
-                    .then(resp => {
-                        console.log(checker[0].id);
-                        this.setState({
-                            trains: resp.data.departures.map(d => ({
-                                route: d.route,
-                                destination: d.destination,
-                                time: justArrived(d.time)
-                            })),
-                            stop: checker[0].id
-                        });
+
+    private querySchedule() {
+        const stopName = this.getStopName();
+        TramScheduleUtility.requestStops(stopName)
+            .then((resp: Response) => {
+                if (resp.ok) {
+                    return resp.json()
+                        .catch(reason => this.props.error(reason));
+                } else {
+                    resp.text().then(responseText => {
+                        this.props.error(`Failed to get tram schedule from server (status: ${resp.status} ${resp.statusText}). Reason: ${responseText}`);
                     });
+                }
             })
-            .catch(function (error) {
-                console.log(error);
+            .then(data => {
+                if (data.stops.length == 0) {
+                    this.props.error(`The stop "${stopName}" does not exist.`);
+                } else {
+                    return this.queryDepartureData(data.stops[0].id);
+                }
+            })
+            .catch(reason => {
+                this.props.error(`Failed to get tram schedule from server. Reason: ${reason}`);
             });
     };
 
-    componentDidMount() {
-        this.getSchedule();
-        setInterval(() => this.getSchedule(), TramScheduleConfig.REFRESH_RATE);
+    private queryDepartureData(stopId: string) {
+        TramScheduleUtility.requestDepartureData(stopId)
+            .then((value: Response) => value.json().catch(reason => this.props.error(reason)))
+            .then(data => {
+                this.setState({
+                    trains: data.departures.map(d => ({
+                        route: d.route,
+                        destination: d.destination,
+                        time: justArrived(d.time)
+                    }))
+                });
+            });
     }
+
+    private getStopName(): string {
+        return this.props.config["stop"];
+    }
+
+    private getConfigCount(): number {
+        return this.props.config["count"] || 4;
+    }
+
+    componentDidMount() {
+        this.querySchedule();
+        this.intervalHandle = setInterval(() => this.querySchedule(), TramScheduleConfig.REFRESH_RATE);
+    }
+
+
+    componentWillUnmount() {
+        clearInterval(this.intervalHandle);
+    }
+
     render() {
         return <div className="grid grid-flow-row sm:g-0.5 xl:gap-1.5 2xl:gap-2 box-border">
+            <div className="font-light leading-normal sm:text-sm sm:text-center lg:text-base xl:text-xl 2xl:text-2xl
+             4xl:text-3xl 8xl:text-5xl sm:-mt-2 lg:-mt-3 xl:-mt-4 4xl:-mt-5 8xl:-mt-6">  {this.getStopName()}
+            </div>
             {
                 this.state.trains.length &&
                 <div
@@ -74,9 +102,9 @@ export class TramScheduleDisplayComponent extends React.Component<any, TramSched
                 </div>
             }
             {
-                this.state.trains.slice(1, TramScheduleConfig.ITEM_COUNT).map((d, index) =>
-                    <div key = {index}
-                        className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl">
+                this.state.trains.slice(1, this.getConfigCount()).map((d, index) =>
+                    <div key={index}
+                         className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl">
                         {d.route} {d.destination}: &nbsp;&nbsp;&nbsp;{d.time}
                     </div>
                 )
