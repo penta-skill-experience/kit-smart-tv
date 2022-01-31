@@ -48,7 +48,7 @@ export class AnnouncementMailListener {
         });
 
         this.mailListener.on("error", async error => {
-            fs.writeFileSync(EmailInteractionConfig.MAIL_LISTENER_ERROR_FILE_NAME, error);
+            fs.appendFileSync(EmailInteractionConfig.MAIL_LISTENER_ERROR_FILE_NAME, error.message);
         });
     }
 
