@@ -56,6 +56,7 @@ export function ConfigWebsite() {
     const [logInInput, setLogInInput] = useState('');
     const [visible, setVisible] = useState(false);
     const [loggedInStatus, setLoggedInStatus] = useState(false);
+    const [adminState, setAdminState] = useState(true);
 
     const handleInput = (
         event: React.ChangeEvent<HTMLInputElement>
@@ -64,13 +65,6 @@ export function ConfigWebsite() {
     };
 
     const handleLogIn= () => {
-        // todo
-        // connect with persistence
-        /*if (logInInput === password) {
-            setLoggedInStatus(true);
-        } else {
-            alert('password not correct')
-        }*/
         adminStatePersistence.login(logInInput)
             .then(() => setLoggedInStatus(true))
             .catch(() => alert('Password not correct.'));
@@ -79,6 +73,16 @@ export function ConfigWebsite() {
     const handleClickShowPassword = () => {
         setVisible(!visible)
     };
+
+    useEffect( () => {
+        if (adminState) {
+            adminStatePersistence.getAdminLoginState()
+                .then(() => setLoggedInStatus(true))
+                .catch(() => console.log('not cool'))
+            ;
+        }
+        setAdminState(false);
+    });
 
     //state variables and methods for tabs
     const [pageNumber, setPageNumber] = React.useState(0);
@@ -120,11 +124,14 @@ export function ConfigWebsite() {
             alert('Color scheme and font size must be chosen')
             return;
         }
-        alert('Changes saved')
         designConfigPersistence.setSelectedColorSchemeId(colorScheme);
         designConfigPersistence.setSelectedFontSize(fontSize);
         //todo
         //designConfigPersistence.setSelectedBackground();
+        adminStatePersistence.getAdminLoginState()
+            .then( () => console.log('hello?'))
+            .catch((reason) => alert('cold not reload: ' + reason))
+        alert('Changes Saved');
     };
 
     //state variables and methods for layout page
@@ -234,11 +241,8 @@ export function ConfigWebsite() {
             item.widgetData
         ));
         setWidgetDataList(newWidgetDataList);
-        console.log(newWidgetDataList[0]);
-        console.log(newWidgetDataList[1]);
-        console.log(newWidgetDataList[2]);
-        console.log(newWidgetDataList[3]);
         widgetPersistence.setWidgetDataList(newWidgetDataList);
+        alert('Changes Saved');
     };
 
     //state variables and methods for admin password page
@@ -260,7 +264,10 @@ export function ConfigWebsite() {
     //todo
     //Connect with persistence
     const handlePasswordChange = () => {
-        adminStatePersistence.setPassword(oldPassword, newPassword).then(() => {alert('Password saved')});
+        adminStatePersistence.setPassword(oldPassword, newPassword)
+            .then(() => {alert('Password saved')})
+            .catch(() => alert('cold not set password: '))
+        ;
     };
 
     //state variables and methods for announcements page
