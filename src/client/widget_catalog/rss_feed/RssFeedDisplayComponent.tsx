@@ -67,7 +67,7 @@ export class RssFeedDisplayComponent extends DisplayComponent<RssFeedDisplayStat
     render() {
         if (this.state.loaded) {
             if (this.state.loadedRss) {
-                return <div className={"sm:text-sm"}>
+                return <div className={"font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl"}>
                     <h1>RSS Feed</h1>
                     {this.state.rssFeed.items.map((item, i) =>
                         <div key={i}>
@@ -76,10 +76,10 @@ export class RssFeedDisplayComponent extends DisplayComponent<RssFeedDisplayStat
                         </div>)}
                 </div>;
             } else {
-                return <div className={"sm:text-sm"} dangerouslySetInnerHTML={{__html: this.state.rssFeedFallback}}/>;
+                return <div className={"font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl"} dangerouslySetInnerHTML={{__html: this.state.rssFeedFallback}}/>;
             }
         } else {
-            return <div className={"sm:text-sm"}>loading...</div>;
+            return <div className={"font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl 8xl:text-4xl"}>loading...</div>;
         }
     }
 }

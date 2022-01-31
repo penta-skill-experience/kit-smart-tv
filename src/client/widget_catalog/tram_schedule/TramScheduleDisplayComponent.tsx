@@ -94,11 +94,15 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
              4xl:text-3xl 8xl:text-5xl sm:-mt-1 lg:-mt-2 xl:-mt-3 4xl:-mt-4 8xl:-mt-5">  {this.getStopName()}
             </div>
             {
-                this.state.trains.length &&
-                <div
-                    className="font-light leading-normal sm:text-sm sm:text-left lg:text-base xl:text-xl 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl">
-                    {this.state.trains[0].route} {this.state.trains[0].destination}: &nbsp;&nbsp;&nbsp;{this.state.trains[0].time}
-                </div>
+                ((!this.state.trains.length) ? <div className="font-light leading-normal sm:text-sm sm:text-left lg:text-base xl:text-xl 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl">
+                No Trains Currently
+                </div>:
+                    <div
+                        className="font-light leading-normal sm:text-sm sm:text-left lg:text-base xl:text-xl 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl">
+                        {this.state.trains[0].route} {this.state.trains[0].destination}: &nbsp;&nbsp;&nbsp;{this.state.trains[0].time}
+                    </div>
+                )
+
             }
             {
                 this.state.trains.slice(1, this.getConfigCount()).map((d, index) =>
