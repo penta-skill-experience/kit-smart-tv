@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as CafeteriaOpeningConfig from "./CafeteriaOpening.json";
 import axios from "axios"
+import {DisplayComponent} from "../../widget/DisplayComponent";
 
 interface CafeteriaOpeningState {
     dateCafeteria: string;
@@ -14,7 +15,7 @@ interface CafeteriaOpeningState {
     closedColor: string;
 }
 
-export class CafeteriaOpeningDisplayComponent extends React.Component<any, CafeteriaOpeningState> {
+export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
     constructor(props) {
         super(props);
         this.state = {
@@ -26,7 +27,7 @@ export class CafeteriaOpeningDisplayComponent extends React.Component<any, Cafet
             openingTime: "",
             closingTime: "",
 
-            openColor: "lightseagreen",
+            openColor: "limeGreen",
             closedColor: "tomato",
         };
     }
@@ -52,7 +53,6 @@ export class CafeteriaOpeningDisplayComponent extends React.Component<any, Cafet
                             closingTime.setMinutes(array[1][0].split(":")[1]);
                         } else {
                             throw new Error(`the caferteria opening times API is broken`);
-                            return;
                         }
                         if ((date === respOne.data[0].date) && (openingTime < hours && hours < closingTime)) {
                             this.setState({
@@ -139,7 +139,7 @@ export class CafeteriaOpeningDisplayComponent extends React.Component<any, Cafet
                 <div>
                     {(this.state.openRightNow ?
                         <div>
-                            until:{this.state.closingTime}
+                            until: {this.state.closingTime}
                         </div> :
                         <div>
                             reopens: {this.state.openingTime} {(this.state.openToday) ? " today" : " on " + this.state.dateCafeteria}

@@ -60,7 +60,14 @@ module.exports = (env, styleLoader) => ({
         ],
     },
     resolve: {
-        extensions: ['*', '.js', ".ts", ".tsx", ".css"]
+        extensions: ['*', '.js', ".ts", ".tsx", ".css"],
+        fallback: {
+            "url": require.resolve("url"),
+            "stream": require.resolve("stream"),
+            "timers": require.resolve("timers-browserify"),
+            "https": require.resolve("https-browserify"),
+            "http": require.resolve("stream-http")
+        }
     },
 
     plugins: [

@@ -361,8 +361,8 @@ export function ConfigWebsite() {
 
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         <Tabs value={pageNumber} onChange={handleChange}>
-                            <Tab label="Personalization"/>
-                            <Tab label="Layout"/>
+                            <Tab label="Look"/>
+                            <Tab label="Widgets"/>
                             <Tab label="Password"/>
                             <Tab label="Announcements"/>
                         </Tabs>

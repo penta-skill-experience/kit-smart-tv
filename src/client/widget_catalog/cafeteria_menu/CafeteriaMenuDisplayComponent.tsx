@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as CafeteriaMenuConfig from "./CafeteriaMenu.json";
 import axios from "axios"
+import {DisplayComponent} from "../../widget/DisplayComponent";
 
 interface OptionData {
     food: string;
@@ -12,7 +13,8 @@ interface CafeteriaMenuState {
     date: string;
 }
 
-export class CafeteriaMenuDisplayComponent extends React.Component<any, CafeteriaMenuState> {
+export class CafeteriaMenuDisplayComponent<CafeteriaMenuState> extends DisplayComponent<any> {
+
     constructor(props) {
         super(props);
         this.state = {

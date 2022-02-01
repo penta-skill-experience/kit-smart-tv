@@ -3,13 +3,14 @@ import {Announcement} from "../../../server/announcement_management/Announcement
 import {AnnouncementPersistence} from "../../../shared/persistence/AnnouncementPersistence";
 import * as AnnouncementConfig from "./AnnouncementComponent.json"
 import {VerifiedUser} from "../../../shared/values/VerifiedUser";
+import {DisplayComponent} from "../../widget/DisplayComponent";
 
 interface AnnouncementState {
     announcements: Announcement[];
     verifiedUsers: VerifiedUser[]
 }
 
-export class AnnouncementComponent extends React.Component<{}, AnnouncementState> {
+export class AnnouncementComponent extends DisplayComponent<AnnouncementState> {
 
     constructor(props) {
         super(props);
@@ -20,10 +21,15 @@ export class AnnouncementComponent extends React.Component<{}, AnnouncementState
     }
 
     async tick() {
-        let currentAnnouncements: Announcement[];
-        await new AnnouncementPersistence().getAnnouncements().then(data => currentAnnouncements = data);
-        let currentVerifiedUsers: VerifiedUser[];
-        await new AnnouncementPersistence().getVerifiedUsers().then(data => currentVerifiedUsers = data);
+        const currentAnnouncements = await new AnnouncementPersistence().getAnnouncements();
+        const currentVerifiedUsers = await new AnnouncementPersistence().getVerifiedUsers();
+
+
+        currentAnnouncements.sort((ann1, ann2) => {
+            return ann1.timeOfAddition < ann2.timeOfAddition ? 1 : -1; // sort, so newest are at the front
+        });
+
+
         this.setState({
             announcements: currentAnnouncements,
             verifiedUsers: currentVerifiedUsers
@@ -34,20 +40,15 @@ export class AnnouncementComponent extends React.Component<{}, AnnouncementState
         await this.tick();
     }
 
-    ComponentDidMount() {
+    componentDidMount() {
         setInterval(() => this.tick(), AnnouncementConfig.REFRESH_RATE);
     }
 
     render() {
-        /*
-        const sortedAnnouncements = this.state.announcements.sort((ann1, ann2) => {
-            return ann1.timeOfAddition < ann2.timeOfAddition ? 1 : -1; // sort, so newest are at the front
-        })
-
-        if(!(sortedAnnouncements.length > 0)) {
-            return "";
+        if (this.state.announcements.isEmpty) {
+            return;
         }
-        */
+
         return <div className="grid grid-flow-row">
             {
                 //sortedAnnouncements
