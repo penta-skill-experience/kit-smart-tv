@@ -269,6 +269,7 @@ export function ConfigWebsite() {
     //state variables and methods for announcements page
     const initialMailList = [];
     const [mailList, setMailList] = React.useState(initialMailList);
+    const [needInitialVerUserList, setNeedInitialVerUserList] = React.useState(true);
     const [verUserListElement, setVerUserListElement] = React.useState({
         mail:'',
         name:'',
@@ -299,7 +300,7 @@ export function ConfigWebsite() {
                 mail:verUserListElement.mail,
                 name:verUserListElement.name,
                 verUser: newVerUser,
-            }
+            };
             setMailList(mailList.concat(newUser));
             return;
         }
@@ -311,8 +312,30 @@ export function ConfigWebsite() {
     }
 
     const handleVerUserList = () => {
-        announcementPersistence.setVerifiedUsers(mailList).then(() => alert('Changes Saved'));
+        const newList: VerifiedUser[] = [];
+        mailList.forEach(item=>{
+            newList.push(item.verUser);
+        });
+        console.log(newList);
+        announcementPersistence.setVerifiedUsers(newList).then(() => alert('Changes Saved'));
     }
+
+    useEffect(() => {
+        if (needInitialVerUserList) {
+            announcementPersistence.getVerifiedUsers().then(list => {
+                const newList = [];
+                for (const verUser of list) {
+                    newList.push({
+                        mail:verUser.email,
+                        name:verUser.name,
+                        verUser:verUser,
+                    })
+                }
+                setNeedInitialVerUserList(false);
+                setMailList(newList);
+            })
+        }
+    })
 
     //state variable for log out
 

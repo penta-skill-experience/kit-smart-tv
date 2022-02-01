@@ -142,7 +142,7 @@ export class AnnouncementPersistence {
         let read_users: ReadableUser[] = [];
         users.forEach(user => read_users.push(new ReadableUser(user)))
         let body = {usersDataList: read_users};
-
+        console.log(body);
         return new Promise<void>((resolve, reject) => {
             fetch(`${config.DOMAIN}/users`, {
                 method: 'PUT',
