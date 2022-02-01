@@ -73,6 +73,7 @@ export class RssFeedDisplayComponent extends DisplayComponent<RssFeedDisplayStat
                         <div key={i}>
                             <h1>{item.title}</h1>
                             <div dangerouslySetInnerHTML={{__html: item.content}}/>
+                            <br/>
                         </div>)}
                 </div>;
             } else {

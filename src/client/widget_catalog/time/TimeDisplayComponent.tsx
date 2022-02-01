@@ -3,16 +3,26 @@ import {DisplayComponent} from "../../widget/DisplayComponent";
 const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
 export class TimeDisplayComponent extends DisplayComponent<any> {
+
     private intervalID: NodeJS.Timer;
+
     constructor(props) {
         super(props);
         this.state = {
-            time: new Date().toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'})
-                .replace(/(:\d{2}| [AP]M)$/, ""),
-            date: new Date().toLocaleDateString(navigator.language, {day: 'numeric', month:'long'}),
+            time: this.getTimeString(),
+            date: this.getDateString(),
             day: new Date().getDay()
         };
     }
+
+    private getTimeString() {
+        return new Date().toLocaleTimeString("de", {hour: '2-digit', minute: '2-digit'});
+    }
+
+    private getDateString() {
+        return new Date().toLocaleDateString("en", {day: 'numeric', month: 'long'});
+    }
+
     componentDidMount() {
         this.intervalID = setInterval(
             () => this.tick(),
@@ -24,11 +34,9 @@ export class TimeDisplayComponent extends DisplayComponent<any> {
     }
     tick() {
         this.setState({
-            time: new Date().toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'}),
-            date: new Date().toLocaleDateString(navigator.language, {day: 'numeric', month:'long'}),
+            time: this.getTimeString(),
+            date: this.getDateString(),
             day: new Date().getDay()
-
-
         });
     }
     render() {
