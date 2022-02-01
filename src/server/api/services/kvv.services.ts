@@ -1,12 +1,6 @@
 import {DocumentDefinition} from "mongoose";
 import {KvvDocument} from "../models/kvv.model";
-import * as fs from "fs";
 import {exec} from "child_process";
-import path from "path";
-
-const kvvDataFilePath = path.resolve(__dirname, "./kvv.json");
-
-console.log(`Location for kvv.json is ${kvvDataFilePath}`);
 
 /**
  * List of all platforms (operating systems)
