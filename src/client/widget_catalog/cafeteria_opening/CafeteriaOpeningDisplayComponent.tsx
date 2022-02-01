@@ -102,6 +102,31 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
         setInterval(() => this.getDate(), CafeteriaOpeningConfig.REFRESH_RATE);
     }
 
+    /**
+     * assume that dateString is of format YYYY-MM-DD
+     */
+    private parseDate(dateString: string): Date {
+        const [year, month, day] = dateString.split("-").map(numberString => parseInt(numberString));
+        const date = new Date(year, month, day);
+        if (date.toString() === "Invalid Date") {
+            throw Error(`could not parse Date from string "${dateString}".`);
+        }
+        return date;
+    }
+
+    private reformatDate(dateString: string): string {
+        try {
+            return this.parseDate(dateString)
+                .toLocaleDateString(["en"], {
+                    day: "numeric",
+                    month: "long",
+                });
+        } catch (e) {
+            //ignore
+        }
+        return dateString;  // fallback if the format of dateString is different than expected
+    }
+
     render() {
         return <div className="grid grid-flow-row sm:g-0.5 xl:gap-1.5 2xl:gap-2 items-center box-border h-fit">
             <div
@@ -142,7 +167,7 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                             until: {this.state.closingTime}
                         </div> :
                         <div>
-                            reopens: {this.state.openingTime} {(this.state.openToday) ? " today" : " on " + this.state.dateCafeteria}
+                            reopens: {this.state.openingTime} {(this.state.openToday) ? " today" : " on " + this.reformatDate(this.state.dateCafeteria)}
                         </div>)
                     }
                 </div>
