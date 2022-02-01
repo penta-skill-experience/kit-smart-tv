@@ -79,7 +79,7 @@ export class AnnouncementPersistence {
                         .then(data => {
                             let announcements: Announcement[] = [];
                             data.announcementDataList.forEach(function (announcement) {
-                                let ann = new Announcement(announcement.title, announcement.author, announcement.text, new Date(announcement.timeOfAddition).valueOf(), (new Date(announcement.timeOut).valueOf()-Date.now()));
+                                let ann = new Announcement(announcement.title, announcement.author, announcement.text, new Date(+announcement.timeOfAddition).valueOf(), new Date(+announcement.timeout).valueOf() - +announcement.timeOfAddition);
                                 announcements.push(ann);
                             });
                             resolve(announcements);

@@ -22,6 +22,8 @@ export class AdminStatePersistence {
                         console.log(data);
                         TokenHolderSingleton.instance.accessToken = data.accessToken;
                         TokenHolderSingleton.instance.refreshToken = data.refreshToken;
+                        sessionStorage.setItem('accessToken', data.accessToken);
+                        sessionStorage.setItem('refreshToken', data.refreshToken);
                         resolve();
                     }).catch(() => reject())
                 ).catch(() => reject());
@@ -33,6 +35,9 @@ export class AdminStatePersistence {
         headers.append("x-refresh", TokenHolderSingleton.instance.refreshToken);
         headers.append("Authorization", `Bearer ${TokenHolderSingleton.instance.accessToken}`);
         headers.append("Content-Type", "application/json");
+
+        sessionStorage.removeItem('accessToken');
+        sessionStorage.removeItem('refreshToken');
 
         return new Promise<void>((resolve, reject) => {
             fetch(`${config.DOMAIN}/api/sessions`, {
@@ -55,8 +60,10 @@ export class AdminStatePersistence {
 
     async getAdminLoginState(): Promise<void> {
         const headers = new Headers();
-        headers.append("x-refresh", TokenHolderSingleton.instance.refreshToken);
-        headers.append("Authorization", `Bearer ${TokenHolderSingleton.instance.accessToken}`);
+        headers.append("x-refresh", sessionStorage.getItem('refreshToken'));
+        headers.append("Authorization", `Bearer ${sessionStorage.getItem('accessToken')}`);
+        /*headers.append("x-refresh", TokenHolderSingleton.instance.refreshToken);
+        headers.append("Authorization", `Bearer ${TokenHolderSingleton.instance.accessToken}`);*/
         headers.append("Content-Type", "application/json");
 
         return new Promise<void>((resolve, reject) => {
@@ -65,6 +72,7 @@ export class AdminStatePersistence {
                 headers: headers,
             })
                 .then(response => {
+                    console.log(headers)
                     console.log(response);
                     const new_accessToken = response.headers.get('x-access-token');
                     if (new_accessToken) {

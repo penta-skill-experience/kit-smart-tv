@@ -1,5 +1,5 @@
 {
-  "REFRESH_RATE": 60000,
+  "REFRESH_RATE": 420000,
   "API_KEY": "b5f142241278dc5e901f7f14f5f618a0",
   "URL": "https://api.openweathermap.org/data/2.5/onecall?lat=49.0047&lon=8.3858&exclude=minutely,daily&appid=",
   "URL_ICONS": "http://openweathermap.org/img/wn/",

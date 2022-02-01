@@ -6,11 +6,11 @@ import {DisplayComponent} from "../../widget/DisplayComponent";
 
 export class WeatherWidget implements Widget {
 
-    createConfigComponent(): typeof ConfigComponent {
+    getConfigComponentClass(): typeof ConfigComponent {
         return undefined;
     }
 
-    createDisplayComponent(): typeof DisplayComponent {
+    getDisplayComponentClass(): typeof DisplayComponent {
         return WeatherDisplayComponent;
     }
 

@@ -24,8 +24,6 @@ interface RootComponentState {
 }
 
 export class RootComponent extends React.Component<any, RootComponentState> {
-    private designValuesPersistence = new DesignValuesPersistence();
-    private designConfigPersistence = new DesignConfigPersistence();
     private readonly widgetLoader = new WidgetLoader();
     private readonly widgetPersistence = new WidgetPersistence();
 
@@ -46,29 +44,33 @@ export class RootComponent extends React.Component<any, RootComponentState> {
     }
 
     switchFontSizeDocument(relativeSize: number) {
-        document.documentElement.style.fontSize =  relativeSize + "rem";
+        document.documentElement.style.fontSize = relativeSize + "rem";
     }
 
     loadTheme() {
-        DesignUtility.getDesignConfigValues().then(design => {
-            this.setState({
-                relativeSize: design.fontSize.relativeSize,
-                themeID: design.colorScheme.id,
-                titleFontColor: design.colorScheme.titleFontColor,
-                bodyFontColor: design.colorScheme.bodyFontColor,
-                specialBoldFontColor: design.colorScheme.specialBoldFontColor,
-                specialSubtleFontColor: design.colorScheme.specialSubtleFontColor,
-                accentBarColor: design.colorScheme.accentBarColor,
-                backgroundImage: design.background.url,
-            });
-            this.switchFontSizeDocument(design.fontSize.relativeSize);
-        });
+        DesignUtility.getDesignConfigValues()
+            .then(design => {
+                this.setState({
+                    relativeSize: design.fontSize.relativeSize,
+                    themeID: design.colorScheme.id,
+                    titleFontColor: design.colorScheme.titleFontColor,
+                    bodyFontColor: design.colorScheme.bodyFontColor,
+                    specialBoldFontColor: design.colorScheme.specialBoldFontColor,
+                    specialSubtleFontColor: design.colorScheme.specialSubtleFontColor,
+                    accentBarColor: design.colorScheme.accentBarColor,
+                    backgroundImage: design.background.url,
+                });
+                this.switchFontSizeDocument(design.fontSize.relativeSize);
+            })
+            .catch(reason => console.error(`Failed to get design values from server. Reason: ${reason}`));
     }
     loadWidget() {
-        this.widgetPersistence.getWidgetDataList().then(widgetDataList => this.setState({
-            // separate the widgetData by location
-            widgetDataByLocation: [0, 1, 2, 3, 4, 5].map(location => widgetDataList.filter(widgetData => widgetData.location === location))
-        }));
+        this.widgetPersistence.getWidgetDataList()
+            .then(widgetDataList => this.setState({
+                // separate the widgetData by location
+                widgetDataByLocation: [0, 1, 2, 3, 4, 5].map(location => widgetDataList.filter(widgetData => widgetData.location === location))
+            }))
+            .catch(reason => console.error(`Failed to load widgets from server. Reason: ${reason}`));
     }
     componentDidMount() {
         // Query a list of all widget data.
@@ -102,24 +104,12 @@ export class RootComponent extends React.Component<any, RootComponentState> {
 
     private renderWidget(widgetData: WidgetData) {
         const widget = this.widgetLoader.getWidget(widgetData.widgetId);
-        try {
-
-            // @ts-ignore
-            const widgetComponent = React.createElement(widget.createDisplayComponent(), {config: widgetData.rawConfig}, null);
-
-            return <SquareHolder title={widget.getTitle()} accentColor={this.state.accentBarColor}
-                                 titleColor={this.state.titleFontColor} specialBoldFontColor={this.state.specialBoldFontColor}
-                                 specialSubtleFontColor={this.state.specialSubtleFontColor}>
-                {widgetComponent}
-            </SquareHolder>;
-        } catch (e) {
-            // todo: make design for error message nicer
-            return <SquareHolder title={widget.getTitle()} accentColor={this.state.accentBarColor}
-                                 titleColor={this.state.titleFontColor} specialBoldFontColor={this.state.specialBoldFontColor}
-                                 specialSubtleFontColor={this.state.specialSubtleFontColor}>
-                <p>Error while creating widget: {e.message}</p>
-            </SquareHolder>;
-        }
+        return <SquareHolder displayComponentClass={widget.getDisplayComponentClass()}
+                             rawConfig={widgetData.rawConfig}
+                             title={widget.getTitle()} accentColor={this.state.accentBarColor}
+                             titleColor={this.state.titleFontColor}
+                             specialBoldFontColor={this.state.specialBoldFontColor}
+                             specialSubtleFontColor={this.state.specialSubtleFontColor}/>;
     }
 
     render() {
@@ -133,23 +123,24 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             <div className={"flex "} style={{
                 color: this.state.bodyFontColor
             }}>
-                <div className="z-30 absolute left-10 absolute bottom-7">
+                <div className="z-50 absolute left-10 absolute bottom-7">
                     <img className="sm:w-24 lg:w-40 2xl:w-60 4xl:w-80"
                          src="https://www.artwork.de/wp-content/uploads/2015/08/logo_TF_NEU_4c_ai.png" alt="IHKLogo"/>
                 </div>
-                <div className="z-10 sm:w-1/3 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30"
+                <div className="z-20 sm:w-1/3 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30"
                      style={{
                          height: "100vh"
                      }}>
                 </div>
                 <div
-                    className="z-20 grid grid-cols-3 absolute left-0 grid-rows-2 box-border sm:gap-2 md:gap-3 lg:gap-5 xl:gap-7 4xl:gap-10 sm:p-2 md:p-3 lg:p-5 xl:p-7 4xl:p-10" style={{
+                    className="z-20 grid grid-cols-3 absolute left-0 grid-rows-2 sm:gap-2 md:gap-3 lg:gap-5 xl:gap-7 4xl:gap-10 sm:p-2 md:p-3 lg:p-5 xl:p-7 4xl:p-10" style={{
                     width:"100vw",
                     height:"100vh",
                 }}>
                     <div className = "sm:pl-2 md:pl-3 lg:pl-5 xl:pl-7 4xl:pl-10">
-                        <TimeDisplayComponent/>
-                        <WeatherDisplayComponent/>
+                        {/*todo: log errors*/}
+                        <TimeDisplayComponent error={() => {}}/>
+                        <WeatherDisplayComponent error={() => {}}/>
                     </div>
                     {this.renderLocation(1)}
                     {this.renderLocation(2)}

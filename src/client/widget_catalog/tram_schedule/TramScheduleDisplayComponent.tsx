@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as TramScheduleConfig from "./TramSchedule.json";
 import {DisplayComponent} from "../../widget/DisplayComponent";
-import config from "../../../shared/persistence/persistence.config.json";
+import {TramScheduleUtility} from "./TramScheduleUtility";
 
 interface DepartureData {
     route: string;
@@ -18,7 +18,6 @@ let justArrived = (x: string): string => {
 
 interface TramScheduleState {
     trains: DepartureData[];
-    stopId: string | undefined;
 }
 
 export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleState> {
@@ -29,70 +28,54 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
         super(props);
         this.state = {
             trains: [],
-            stopId: undefined,
         };
-    }
-
-    private getStopName(): string {
-        return this.props.config["stop"]["label"];
     }
 
     private querySchedule() {
-        if (this.state.stopId === undefined) {
-            // get stopId before querying departure data
-            /*
-            const stopName = this.getStopName();
-
-            let url = TramScheduleConfig.CORS_ANYWHERE + TramScheduleConfig.URL_STOP_SEARCH_BEFORE_STOP
-                + stopName
-                + TramScheduleConfig.URL_STOP_SEARCH_AFTER_STOP
-                + TramScheduleConfig.API_KEY;
-            axios.get(url)
-                .then(resp => {
-                    let checker = resp.data.stops;
-                    if (checker.length == 0) {
-                        throw new Error(`The stop ${stopName} does not exist`);
-                    }
-                    let stopId = checker[0].id;
-                    this.setState({
-                        stopId: stopId,
+        const stopName = this.getStopName();
+        TramScheduleUtility.requestStops(stopName)
+            .then((resp: Response) => {
+                if (resp.ok) {
+                    return resp.json()
+                        .catch(reason => this.props.error(reason));
+                } else {
+                    resp.text().then(responseText => {
+                        this.props.error(`Failed to get tram schedule from server (status: ${resp.status} ${resp.statusText}). Reason: ${responseText}`);
                     });
-                });
-
-             */
-            this.queryDepartureData();//remove later
-        } else {
-            // immediately query departure data
-            this.queryDepartureData();
-        }
+                }
+            })
+            .then(data => {
+                if (data.stops.length == 0) {
+                    this.props.error(`The stop "${stopName}" does not exist.`);
+                } else {
+                    return this.queryDepartureData(data.stops[0].id);
+                }
+            })
+            .catch(reason => {
+                this.props.error(`Failed to get tram schedule from server. Reason: ${reason}`);
+            });
     };
 
-    private queryDepartureData() {
-        const headers = new Headers();
-        headers.append("Content-Type", "application/json");
-
-
-        const urlLink = "https://live.kvv.de/webapp/departures/bystop/MPU?maxInfos=10&key=377d840e54b59adbe53608ba1aad70e8";
-        let body = {url: urlLink};
-        console.log(urlLink);
-        console.log(JSON.stringify(body));
-        const requestOptions = {
-            method: 'PUT',
-            headers: headers,
-            body: JSON.stringify(body)
-        };
-        return fetch(`${config.DOMAIN}/kvv`, requestOptions)
-            .then((value: Response) => value.json()).then(data => {
-                console.log(data);
+    private queryDepartureData(stopId: string) {
+        TramScheduleUtility.requestDepartureData(stopId)
+            .then((value: Response) => value.json().catch(reason => this.props.error(reason)))
+            .then(data => {
                 this.setState({
                     trains: data.departures.map(d => ({
                         route: d.route,
                         destination: d.destination,
                         time: justArrived(d.time)
-                    })),
-                    stop: this.state.stopId
+                    }))
                 });
             });
+    }
+
+    private getStopName(): string {
+        return this.props.config["stop"];
+    }
+
+    private getConfigCount(): number {
+        return this.props.config["count"] || 4;
     }
 
     componentDidMount() {
@@ -107,15 +90,22 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
 
     render() {
         return <div className="grid grid-flow-row sm:g-0.5 xl:gap-1.5 2xl:gap-2 box-border">
+            <div className="font-light leading-normal sm:text-sm sm:text-center lg:text-base xl:text-xl 2xl:text-2xl
+             4xl:text-3xl 8xl:text-5xl sm:-mt-1 lg:-mt-2 xl:-mt-3 4xl:-mt-4 8xl:-mt-5">  {this.getStopName()}
+            </div>
             {
-                this.state.trains.length &&
-                <div
-                    className="font-light leading-normal sm:text-sm sm:text-left lg:text-base xl:text-xl 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl">
-                    {this.state.trains[0].route} {this.state.trains[0].destination}: &nbsp;&nbsp;&nbsp;{this.state.trains[0].time}
-                </div>
+                ((!this.state.trains.length) ? <div className="font-light leading-normal sm:text-sm sm:text-left lg:text-base xl:text-xl 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl">
+                No Trains Currently
+                </div>:
+                    <div
+                        className="font-light leading-normal sm:text-sm sm:text-left lg:text-base xl:text-xl 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl">
+                        {this.state.trains[0].route} {this.state.trains[0].destination}: &nbsp;&nbsp;&nbsp;{this.state.trains[0].time}
+                    </div>
+                )
+
             }
             {
-                this.state.trains.slice(1, TramScheduleConfig.ITEM_COUNT).map((d, index) =>
+                this.state.trains.slice(1, this.getConfigCount()).map((d, index) =>
                     <div key={index}
                          className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl">
                         {d.route} {d.destination}: &nbsp;&nbsp;&nbsp;{d.time}

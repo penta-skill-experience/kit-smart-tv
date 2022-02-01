@@ -17,7 +17,7 @@ import {AnnouncementAuthorType} from "./AnnouncementAuthorType";
  *
  * If an announcement with the title of that announcement already exists, the text of that
  * announcement is set to the text of that announcement. Only the same author or an admin can
- * update the annoucement.
+ * update the announcement.
  *
  * If such an announcement doesn't exist yet, the announcement is stored. Only a verified user or
  * an admin can add an announcement.
@@ -47,9 +47,9 @@ export class SetAnnouncementCommand implements AnnouncementCommand {
     }
 
     async executeCommand() {
-        let authorType : AnnouncementAuthorType
-        await new AnnouncementAuthorTypeIdentifier().getAuthorType(this.announcement.author).then(result =>
-            authorType = result);
+        const currentVerifiedUsers = await new AnnouncementPersistence().getVerifiedUsers();
+        const authorType = new AnnouncementAuthorTypeIdentifier().getAuthorType(this.announcement.author
+            , currentVerifiedUsers)
 
         const currentAnnouncements = await new AnnouncementPersistence().getAnnouncements();
         const currentAnnouncementTitles = getAnnouncementTitles(currentAnnouncements);
