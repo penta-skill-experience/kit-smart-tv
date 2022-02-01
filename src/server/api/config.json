@@ -2,7 +2,7 @@
     "port": 1337,
     "dbUri": "mongodb://localhost:27017/",
     "saltWorkFactor": 9,
-    "accessTokenTtl": "5m",
+    "accessTokenTtl": "1d",
     "refreshTokenTtl": "1y",
     "sessionTtlInMinutes": 11
 }

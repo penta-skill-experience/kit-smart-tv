@@ -98,9 +98,9 @@ export class AnnouncementPersistence {
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
 
-        if(TokenHolderSingleton.instance.accessToken !== null){
-            headers.append("x-refresh", TokenHolderSingleton.instance.refreshToken);
-            headers.append("Authorization", `Bearer ${TokenHolderSingleton.instance.accessToken}`);
+        if(sessionStorage.getItem('accessToken') !== null){
+            headers.append("x-refresh", sessionStorage.getItem('refreshToken'));
+            headers.append("Authorization", `Bearer ${sessionStorage.getItem('accessToken')}`);
         }
 
         return new Promise<VerifiedUser[]>((resolve, reject) => {
@@ -112,7 +112,7 @@ export class AnnouncementPersistence {
                     const new_accessToken = response.headers.get('x-access-token');
                     if (new_accessToken) {
                         //if a new accessToken is provided, update it.
-                        TokenHolderSingleton.instance.accessToken = response.headers.get('x-access-token');
+                        sessionStorage.setItem('accessToken', response.headers.get('x-access-token'));
                     }
                     return response.json()
                         .then(data => {
@@ -135,9 +135,9 @@ export class AnnouncementPersistence {
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
 
-        if(TokenHolderSingleton.instance.accessToken !== null){
-            headers.append("x-refresh", TokenHolderSingleton.instance.refreshToken);
-            headers.append("Authorization", `Bearer ${TokenHolderSingleton.instance.accessToken}`);
+        if(sessionStorage.getItem('accessToken') !== null){
+            headers.append("x-refresh", sessionStorage.getItem('refreshToken'));
+            headers.append("Authorization", `Bearer ${sessionStorage.getItem('accessToken')}`);
         }
         let read_users: ReadableUser[] = [];
         users.forEach(user => read_users.push(new ReadableUser(user)))

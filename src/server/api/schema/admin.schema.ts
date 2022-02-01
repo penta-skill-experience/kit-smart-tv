@@ -17,7 +17,7 @@ export const updatePasswordSchema = object({
         }),
         new_password: string({
             required_error: "new password is required"
-        }).min(6, "New password too short - should be 6 chars minimum"),
+        }).min(1, "New password too short - should be 1 chars minimum"),
     }).refine((data) => data.password !== data.new_password, {
         message: "New passwords has to differ from old password",
         path: ["passwordConfirmation"],

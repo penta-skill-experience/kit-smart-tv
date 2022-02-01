@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import * as emailValidator from "email-validator"
 
-export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNameChange, handleAddMail, handleDeleteUser, children}) => {
+export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNameChange, handleAddMail, handleDeleteUser, handleVerUserList, children}) => {
 
     return(
         <div>
@@ -60,6 +60,11 @@ export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNa
                             </Grid>
                         ))}
                     </ul>
+                </Grid>
+                <Grid xs={12}>
+                    <Button variant='outlined' onClick={handleVerUserList}>
+                        Save Changes
+                    </Button>
                 </Grid>
             </Grid>
         </div>

@@ -1,6 +1,5 @@
 import {ConfigData} from "./data";
 import config from "./persistence.config.json";
-import {TokenHolderSingleton} from "./TokenHolderSingleton";
 
 export class DesignConfigPersistence {
 
@@ -54,7 +53,7 @@ export class DesignConfigPersistence {
     setConfigData(configData : ConfigData) {
 
         const headers = new Headers();
-        headers.append("x-refresh", TokenHolderSingleton.instance.refreshToken);
+        headers.append("x-refresh", sessionStorage.getItem('refreshToken'));
         headers.append("Authorization", `Bearer ${sessionStorage.getItem("accessToken")}`);
         headers.append("Content-Type", "application/json");
 

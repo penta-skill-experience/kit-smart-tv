@@ -301,7 +301,6 @@ export function ConfigWebsite() {
                 verUser: newVerUser,
             }
             setMailList(mailList.concat(newUser));
-            announcementPersistence.addVerifiedUser(newUser.verUser);
             return;
         }
         alert('Username and email have to be filled out')
@@ -309,7 +308,10 @@ export function ConfigWebsite() {
 
     const handleDeleteUser = (listItem) => {
         setMailList(mailList.filter(item => item.mail !== listItem.mail));
-        announcementPersistence.removeVerifiedUser(listItem.verUser);
+    }
+
+    const handleVerUserList = () => {
+        announcementPersistence.setVerifiedUsers(mailList).then(() => alert('Changes Saved'));
     }
 
     //state variable for log out
@@ -408,6 +410,7 @@ export function ConfigWebsite() {
                             handleNameChange={handleNameChange}
                             handleAddMail={handleAddMail}
                             handleDeleteUser={handleDeleteUser}
+                            handleVerUserList={handleVerUserList}
                         >
                         </AnnouncementsPage>
                     </TabPanel>
