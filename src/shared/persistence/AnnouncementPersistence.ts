@@ -129,14 +129,40 @@ export class AnnouncementPersistence {
         });
     }
 
-    addVerifiedUser(verifiedUser: VerifiedUser) {
-        //todo
-        console.log(verifiedUser);
+    setVerifiedUsers(users: VerifiedUser[]): Promise<void> {
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+
+        if(TokenHolderSingleton.instance.accessToken !== null){
+            headers.append("x-refresh", TokenHolderSingleton.instance.refreshToken);
+            headers.append("Authorization", `Bearer ${TokenHolderSingleton.instance.accessToken}`);
+        }
+        let read_users: ReadableUser[] = [];
+        users.forEach(user => read_users.push(new ReadableUser(user)))
+        let body = {usersDataList: read_users};
+
+        return new Promise<void>((resolve, reject) => {
+            fetch(`${config.DOMAIN}/users`, {
+                method: 'PUT',
+                headers: headers,
+                body: JSON.stringify(body),
+            })
+                .then(response => {
+                    const new_accessToken = response.headers.get('x-access-token');
+                    if (new_accessToken) {
+                        //if a new accessToken is provided, update it.
+                        sessionStorage.setItem('accessToken', response.headers.get('x-access-token'));
+                    }
+                    if(response.status == 200){
+                        resolve();
+                    }
+                    else {
+                        reject();
+                    }
+                }).catch(() => reject());
+        });
     }
 
-    removeVerifiedUser(verifiedUser: VerifiedUser) {
-        console.log(verifiedUser);
-    }
 
 
 }
@@ -154,5 +180,15 @@ class ReadableAnnouncement {
         this.text = ann.text;
         this.timeOfAddition = ann.timeOfAddition.toString();
         this.timeout = ann.timeout.toString();
+    }
+}
+
+class ReadableUser {
+    public email: string;
+    public name: string;
+
+    public constructor(user: VerifiedUser) {
+        this.email = user.email;
+        this.name = user.name;
     }
 }
