@@ -33,7 +33,7 @@ export class RssFeedDisplayComponent extends DisplayComponent<RssFeedDisplayStat
     }
 
     private fetchRssFeed(): void {
-        this.fetchRssFeedXmlString(this.props.config["url"])
+        RssFeedDisplayComponent.fetchRssFeedXmlString(this.props.config["url"])
             .then(xmlString => {
                 // console.log(xmlString.slice(0, 200));
                 const parser = new Parser();
