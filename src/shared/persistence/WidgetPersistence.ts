@@ -1,14 +1,13 @@
 import {WidgetData} from "../../client/widget/WidgetData";
 import config from "./persistence.config.json";
-import {TokenHolderSingleton} from "./TokenHolderSingleton";
 
 export class WidgetPersistence {
 
     setWidgetDataList(list: WidgetData[]): Promise<Response> {
 
         const headers = new Headers();
-        headers.append("x-refresh", TokenHolderSingleton.instance.refreshToken);
-        headers.append("Authorization", `Bearer ${TokenHolderSingleton.instance.accessToken}`);
+        headers.append("x-refresh", sessionStorage.getItem('refreshToken'));
+        headers.append("Authorization", `Bearer ${sessionStorage.getItem('accessToken')}`);
         headers.append("Content-Type", "application/json");
 
         const body = {widgetDataList: list};

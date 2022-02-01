@@ -1,6 +1,5 @@
 import {Announcement} from "../../server/announcement_management/Announcement";
 import {VerifiedUser} from "../values/VerifiedUser";
-import {TokenHolderSingleton} from "./TokenHolderSingleton";
 import config from "./persistence.config.json";
 
 
@@ -9,8 +8,8 @@ export class AnnouncementPersistence {
     setAnnouncements(announcements: Announcement[]) {
 
         const headers = new Headers();
-        headers.append("x-refresh", TokenHolderSingleton.instance.refreshToken);
-        headers.append("Authorization", `Bearer ${TokenHolderSingleton.instance.accessToken}`);
+        headers.append("x-refresh", sessionStorage.getItem('refreshToken'));
+        headers.append("Authorization", `Bearer ${sessionStorage.getItem('accessToken')}`);
         headers.append("Content-Type", "application/json");
 
         //create body
@@ -30,7 +29,7 @@ export class AnnouncementPersistence {
                     const new_accessToken = response.headers.get('x-access-token');
                     if (new_accessToken) {
                         //if a new accessToken is provided, update it.
-                        TokenHolderSingleton.instance.accessToken = response.headers.get('x-access-token');
+                        sessionStorage.setItem('accessToken', response.headers.get('x-access-token'));
                     }
                     if (response.status == 200) {
                         response.json()
@@ -59,9 +58,9 @@ export class AnnouncementPersistence {
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
 
-        if(TokenHolderSingleton.instance.accessToken !== null){
-            headers.append("x-refresh", TokenHolderSingleton.instance.refreshToken);
-            headers.append("Authorization", `Bearer ${TokenHolderSingleton.instance.accessToken}`);
+        if(sessionStorage.getItem('accessToken') !== null){
+            headers.append("x-refresh", sessionStorage.getItem('refreshToken'));
+            headers.append("Authorization", `Bearer ${sessionStorage.getItem('accessToken')}`);
         }
 
         return new Promise<Announcement[]>((resolve, reject) => {
@@ -73,7 +72,7 @@ export class AnnouncementPersistence {
                     const new_accessToken = response.headers.get('x-access-token');
                     if (new_accessToken) {
                         //if a new accessToken is provided, update it.
-                        TokenHolderSingleton.instance.accessToken = response.headers.get('x-access-token');
+                        sessionStorage.setItem('accessToken', response.headers.get('x-access-token'));
                     }
                     return response.json()
                         .then(data => {

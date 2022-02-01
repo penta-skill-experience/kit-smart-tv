@@ -19,7 +19,6 @@ import {WidgetPersistence} from "../../shared/persistence/WidgetPersistence";
 import {VerifiedUser} from "../../shared/values/VerifiedUser";
 import {AnnouncementPersistence} from "../../shared/persistence/AnnouncementPersistence";
 import {AdminStatePersistence} from "../../shared/persistence/AdminStatePersistence";
-import {TokenHolderSingleton} from "../../shared/persistence/TokenHolderSingleton";
 
 
 interface TabPanelProps {
@@ -129,7 +128,7 @@ export function ConfigWebsite() {
         //todo
         //designConfigPersistence.setSelectedBackground();
         adminStatePersistence.getAdminLoginState()
-            .then( () => console.log('hello?'))
+            .then( () => console.log('Personalization Saved'))
             .catch((reason) => alert('cold not reload: ' + reason))
         alert('Changes Saved');
     };
@@ -178,7 +177,6 @@ export function ConfigWebsite() {
     });
 
     const handleWidgetSelection = (event: SelectChangeEvent) => {
-        console.log(event.target.value)
         //todo
         //config is not always true
         const newWidget = widgetLoader.getWidget(event.target.value);
@@ -205,14 +203,12 @@ export function ConfigWebsite() {
             }
             setWidgetList(widgetList.concat(newWidget));
             incrementCounter();
-            console.log('Widget ' + newWidget.widget.getTitle() + ' with id ' + newWidget.id + ' and widget id ' + newWidget.widgetData.widgetId)
         }
     };
 
     const incrementCounter = () => setCounter(counter + 1);
 
     const handleDeleteWidget = (id) => {
-        console.log('Widget with id ' + id + ' is removed ')
         setWidgetList(widgetList.filter(item => item.id !== id));
     };
 
@@ -319,8 +315,7 @@ export function ConfigWebsite() {
     //state variable for log out
 
     const handleLogout = () => {
-        adminStatePersistence.logout().then(() => console.log(TokenHolderSingleton.instance.accessToken));
-        setLoggedInStatus(false);
+        adminStatePersistence.logout().then(() => setLoggedInStatus(false));
     };
 
     function renderConfigWebsite() {
