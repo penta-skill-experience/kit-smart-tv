@@ -18,18 +18,16 @@ export class DesignConfigPersistence {
     setSelectedColorSchemeId(id: string) {
         return this.getConfigData()
             .then(configData => {
-                const configToSet = configData;
-                configToSet.colorScheme = id;
-                return this.setConfigData(configToSet)
+                configData.colorScheme = id;
+                return this.setConfigData(configData);
             })
     }
 
     setSelectedBackground(url: string) {
         return this.getConfigData()
             .then(configData => {
-                const configToSet = configData;
-                configToSet.background = url;
-                return this.setConfigData(configToSet)
+                configData.background = url;
+                return this.setConfigData(configData)
             });
     }
 

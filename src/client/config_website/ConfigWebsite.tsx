@@ -95,10 +95,7 @@ export function ConfigWebsite() {
     const [fontSize, setFontSize] = useState<string | null>(null);
     const [selectedBackground, setSelectedBackground] = React.useState('');
 
-    const handleColorSchemeChange = (
-        event: React.MouseEvent<HTMLElement>,
-        newColorScheme: string | null,
-    ) => {
+    const handleColorSchemeChange = (event: React.MouseEvent<HTMLElement>, newColorScheme: string | null) => {
         setColorScheme(newColorScheme);
     };
 
@@ -114,11 +111,12 @@ export function ConfigWebsite() {
             alert('Color scheme and font size must be chosen')
             return;
         }
-        designConfigPersistence.setSelectedColorSchemeId(colorScheme);
-        designConfigPersistence.setSelectedFontSize(fontSize);
-        designConfigPersistence.setSelectedBackground(selectedBackground);
+        designConfigPersistence.setConfigData({
+            colorScheme: colorScheme,
+            fontSize: fontSize,
+            background: selectedBackground,
+        });
         adminStatePersistence.getAdminLoginState()
-            .then( () => console.log('Personalization Saved'))
             .catch((reason) => alert('cold not reload: ' + reason))
         alert('Changes Saved');
     };
@@ -306,7 +304,6 @@ export function ConfigWebsite() {
         mailList.forEach(item=>{
             newList.push(item.verUser);
         });
-        console.log(newList);
         announcementPersistence.setVerifiedUsers(newList).then(() => alert('Changes Saved'));
     }
 
