@@ -129,9 +129,10 @@ export class RootComponent extends React.Component<any, RootComponentState> {
                     <img className="sm:w-24 lg:w-40 2xl:w-60 4xl:w-80"
                          src="https://www.artwork.de/wp-content/uploads/2015/08/logo_TF_NEU_4c_ai.png" alt="IHKLogo"/>
                 </div>
-                <div className="z-20 sm:w-1/3 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30"
+                <div className="z-20 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30"
                      style={{
-                         height: "100vh"
+                         height: "100vh",
+                         width: "33.55vw"
                      }}>
                 </div>
                 <div
