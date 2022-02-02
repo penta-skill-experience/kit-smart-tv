@@ -24,11 +24,11 @@ export class DesignConfigPersistence {
             })
     }
 
-    setSelectedBackground(id: string) {
+    setSelectedBackground(url: string) {
         return this.getConfigData()
             .then(configData => {
                 const configToSet = configData;
-                configToSet.background = id;
+                configToSet.background = url;
                 return this.setConfigData(configToSet)
             });
     }

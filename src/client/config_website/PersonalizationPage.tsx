@@ -22,22 +22,22 @@ import {DesignConfigPersistence} from "../../shared/persistence/DesignConfigPers
 const designValuePersistence = new DesignValuesPersistence();
 //                        = designValuePersistence.getBackgrounds(light);
 const lightBackgroundList = [
-    { img: meme1, id:'1', title:'bild1'},
-    { img: meme1, id:'2', title:'bild2'},
-    { img: meme1, id:'3', title:'bild3'},
-    { img: meme1, id:'4', title:'bild4'},
-    { img: meme1, id:'5', title:'bild5'},
-    { img: meme1, id:'6', title:'bild6'},
+    {img: meme1, id: '1', title: 'bild1'},
+    {img: meme1, id: '2', title: 'bild2'},
+    {img: meme1, id: '3', title: 'bild3'},
+    {img: meme1, id: '4', title: 'bild4'},
+    {img: meme1, id: '5', title: 'bild5'},
+    {img: meme1, id: '6', title: 'bild6'},
 ];
 
 //                        = designValuePersistence.getBackgrounds(dark);
 const darkBackgroundList = [
-    { img: meme2, id:'1', title:'bild1'},
-    { img: meme2, id:'2', title:'bild2'},
-    { img: meme2, id:'3', title:'bild3'},
-    { img: meme2, id:'4', title:'bild4'},
-    { img: meme2, id:'5', title:'bild5'},
-    { img: meme2, id:'6', title:'bild6'},
+    {img: meme2, id: '1', title: 'bild1'},
+    {img: meme2, id: '2', title: 'bild2'},
+    {img: meme2, id: '3', title: 'bild3'},
+    {img: meme2, id: '4', title: 'bild4'},
+    {img: meme2, id: '5', title: 'bild5'},
+    {img: meme2, id: '6', title: 'bild6'},
 ];
 
 interface PersonalizationPageProps {
@@ -45,10 +45,8 @@ interface PersonalizationPageProps {
     fontSize: string;
     handleColorSchemeChange: any;
     handleFontSizeChange: any;
-    selectedLightImage: any;
-    selectedDarkImage: any;
-    handleLightImageSelect: any;
-    handleDarkImageSelect: any;
+    selectedBackground: any;
+    handleBackgroundSelect: any;
     handlePersonalizationChange: any;
     children: any;
 }
@@ -99,7 +97,7 @@ export class PersonalizationPage extends React.Component<PersonalizationPageProp
                                             control={<Radio/>}
                                             label={colorScheme.name}
                                         />
-                                )}
+                                    )}
                             </RadioGroup>
                         </FormControl>
                     </Grid>
@@ -107,20 +105,20 @@ export class PersonalizationPage extends React.Component<PersonalizationPageProp
                         <FormControl>
                             <FormLabel>Choose your preferred font size:</FormLabel>
                             <RadioGroup onChange={this.props.handleFontSizeChange} value={this.props.fontSize}>
-                                <FormControlLabel value="small" control={<Radio/>} label="small"/>
-                                <FormControlLabel value="medium" control={<Radio/>} label="medium"/>
-                                <FormControlLabel value="large" control={<Radio/>} label="large"/>
+                                {this.state.loadedDesignState &&
+                                    this.state.designValues.fontSizes.map(fontSize =>
+                                        <FormControlLabel
+                                            value={fontSize.id}
+                                            control={<Radio/>}
+                                            label={fontSize.name}
+                                        />
+                                    )}
                             </RadioGroup>
                         </FormControl>
                     </Grid>
                     <Grid item xs={12}>
-                        {this.renderBackgroundImages({
-                            colorScheme: this.props.colorScheme,
-                            selectedLightImage: this.props.selectedLightImage,
-                            selectedDarkImage: this.props.selectedDarkImage,
-                            handleLightImageSelect: this.props.handleLightImageSelect,
-                            handleDarkImageSelect: this.props.handleDarkImageSelect,
-                        })}
+                        {this.state.loadedDesignState &&
+                            this.renderBackgroundImages()}
                     </Grid>
                     <Grid item xs={12}>
                         <Button
@@ -134,70 +132,40 @@ export class PersonalizationPage extends React.Component<PersonalizationPageProp
         );
     }
 
-    private renderBackgroundImages({colorScheme, selectedLightImage, selectedDarkImage, handleLightImageSelect, handleDarkImageSelect}) {
+    private renderBackgroundImages() {
 
-        if (colorScheme === "light") {
-            return (
-                <div>
-                    <h1>Available backgrounds for light mode:</h1>
-                    <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
-                        {lightBackgroundList.map((item) => (
-                            <div>
-                                <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center">
-                                    <Grid item>
-                                        <ImageListItem key={item.img}>
-                                            <img
-                                                src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                                                srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                                                loading="lazy"
-                                                alt={item.title}
-                                            />
-                                        </ImageListItem>
-                                    </Grid>
-                                    <Grid item>
-                                        <Radio
-                                            checked={selectedLightImage === item.id}
-                                            onChange={handleLightImageSelect}
-                                            value={item.id}
-                                        />
-                                    </Grid>
-                                </Grid>
-                            </div>
-                        ))}
-                    </ImageList>
-                </div>
-            );
-        } else if (colorScheme === "dark") {
-            return (
-                <div>
-                    <h1>Available backgrounds for dark mode:</h1>
-                    <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
-                        {darkBackgroundList.map((item) => (
-                            <div>
-                                <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center">
-                                    <Grid item>
-                                        <img
-                                            src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                                            srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                                            loading="lazy"
-                                            alt={item.title}
-                                        />
-                                    </Grid>
-                                    <Grid item>
-                                        <Radio
-                                            checked={selectedDarkImage === item.id}
-                                            onChange={handleDarkImageSelect}
-                                            value={item.id}
-                                        />
-                                    </Grid>
-                                </Grid>
-                            </div>
-                        ))}
-                    </ImageList>
-                </div>
-            );
-        } else {
-            return
-        }
+        // selected color scheme:
+        const colorScheme: ColorScheme = this.state.designValues.colorSchemes.find(c => c.id === this.props.colorScheme);
+
+        if (!colorScheme) return <></>;
+
+        return <div>
+            <h1>Available backgrounds for color scheme {colorScheme.name}:</h1>
+            <ImageList sx={{width: 500, height: 450}} cols={3} rowHeight={164}>
+                {colorScheme.backgrounds.map(backgroundUrl => (
+                    <div>
+                        <Grid container spacing={2} direction="column" justifyContent="center"
+                              alignItems="center">
+                            <Grid item>
+                                <ImageListItem key={backgroundUrl}>
+                                    <img
+                                        src={`${backgroundUrl}?w=164&h=164&fit=crop&auto=format`}
+                                        srcSet={`${backgroundUrl}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                                        loading="lazy"
+                                    />
+                                </ImageListItem>
+                            </Grid>
+                            <Grid item>
+                                <Radio
+                                    checked={this.props.selectedBackground === backgroundUrl}
+                                    onChange={event => this.props.handleBackgroundSelect(event.target.value)}
+                                    value={backgroundUrl}
+                                />
+                            </Grid>
+                        </Grid>
+                    </div>
+                ))}
+            </ImageList>
+        </div>;
     }
 }

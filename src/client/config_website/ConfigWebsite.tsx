@@ -93,8 +93,7 @@ export function ConfigWebsite() {
     //state variables and methods for personalization page
     const [colorScheme,setColorScheme] = useState<string | null>(null);
     const [fontSize, setFontSize] = useState<string | null>(null);
-    const [selectedLightImage, setSelectedLightImage] = React.useState('');
-    const [selectedDarkImage, setSelectedDarkImage] = React.useState('');
+    const [selectedBackground, setSelectedBackground] = React.useState('');
 
     const handleColorSchemeChange = (
         event: React.MouseEvent<HTMLElement>,
@@ -110,14 +109,6 @@ export function ConfigWebsite() {
         setFontSize(newFontSize);
     };
 
-    const handleLightImageSelect = (event) => {
-        setSelectedLightImage(event.target.value);
-    };
-
-    const handleDarkImageSelect = (event) => {
-        setSelectedDarkImage(event.target.value);
-    };
-
     const handlePersonalizationChange = () => {
         if (colorScheme === null || fontSize === null) {
             alert('Color scheme and font size must be chosen')
@@ -125,8 +116,7 @@ export function ConfigWebsite() {
         }
         designConfigPersistence.setSelectedColorSchemeId(colorScheme);
         designConfigPersistence.setSelectedFontSize(fontSize);
-        //todo
-        //designConfigPersistence.setSelectedBackground();
+        designConfigPersistence.setSelectedBackground(selectedBackground);
         adminStatePersistence.getAdminLoginState()
             .then( () => console.log('Personalization Saved'))
             .catch((reason) => alert('cold not reload: ' + reason))
@@ -393,10 +383,8 @@ export function ConfigWebsite() {
                             fontSize={fontSize}
                             handleColorSchemeChange={handleColorSchemeChange}
                             handleFontSizeChange={handleFontSizeChange}
-                            selectedLightImage={selectedLightImage}
-                            selectedDarkImage={selectedDarkImage}
-                            handleLightImageSelect={handleLightImageSelect}
-                            handleDarkImageSelect={handleDarkImageSelect}
+                            selectedBackground={selectedBackground}
+                            handleBackgroundSelect={url => setSelectedBackground(url)}
                             handlePersonalizationChange={handlePersonalizationChange}
                         >
                         </PersonalizationPage>
