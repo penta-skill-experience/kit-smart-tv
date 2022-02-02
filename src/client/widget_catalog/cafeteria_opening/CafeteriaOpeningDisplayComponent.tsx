@@ -78,13 +78,14 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
     private isOpen(url: string): Promise<boolean> {
         const current = new Date();
         const currentDay = new Date(current.getFullYear(), current.getMonth(), current.getDate());
+        const hoursNow = new Date(0,0,0, current.getHours(), current.getMinutes())
         current.setFullYear(0);
         current.setMonth(0);
         current.setDate(0);
         return this.getDateOpening(url).then(resp => {
             if(resp.valueOf() === currentDay.valueOf()) {
                         return this.getHourOpening(url).then(respOne => {
-                            return (respOne[0] < current && current < respOne[1]);
+                            return (respOne[0] < hoursNow && hoursNow < respOne[1]);
                         });
                     }else{
                         return false;
