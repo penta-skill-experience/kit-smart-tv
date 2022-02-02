@@ -62,6 +62,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             })
             .catch(reason => console.error(`Failed to get design values from server. Reason: ${reason}`));
     }
+
     loadWidget() {
         this.widgetPersistence.getWidgetDataList()
             .then(widgetDataList => this.setState({
@@ -70,6 +71,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             }))
             .catch(reason => console.error(`Failed to load widgets from server. Reason: ${reason}`));
     }
+
     componentDidMount() {
         // Query a list of all widget data.
         // setState() is called once they are received and will trigger re-rendering.
@@ -84,8 +86,10 @@ export class RootComponent extends React.Component<any, RootComponentState> {
     private renderLocation(location: number) {
         const widgetDataList = this.state.widgetDataByLocation[location];
         if (widgetDataList.length === 0) {
-            return <SquareHolder title={""} accentColor={this.state.accentBarColor}
-                                 titleColor={this.state.titleFontColor} specialBoldFontColor={this.state.specialBoldFontColor}
+            return <SquareHolder title={""}
+                                 accentColor={this.state.accentBarColor}
+                                 titleColor={this.state.titleFontColor}
+                                 specialBoldFontColor={this.state.specialBoldFontColor}
                                  specialSubtleFontColor={this.state.specialSubtleFontColor}/>;
         } else {
             return <RotatorComponent>
@@ -131,14 +135,17 @@ export class RootComponent extends React.Component<any, RootComponentState> {
                      }}>
                 </div>
                 <div
-                    className="z-20 grid grid-cols-3 absolute left-0 grid-rows-2 sm:gap-2 md:gap-3 lg:gap-5 xl:gap-7 4xl:gap-10 sm:p-2 md:p-3 lg:p-5 xl:p-7 4xl:p-10" style={{
-                    width:"100vw",
-                    height:"100vh",
-                }}>
-                    <div className = "sm:pl-2 md:pl-3 lg:pl-5 xl:pl-7 4xl:pl-10">
+                    className="z-20 grid grid-cols-3 absolute left-0 grid-rows-2 sm:gap-2 md:gap-3 lg:gap-5 xl:gap-7 4xl:gap-10 sm:p-2 md:p-3 lg:p-5 xl:p-7 4xl:p-10"
+                    style={{
+                        width: "100vw",
+                        height: "100vh",
+                    }}>
+                    <div className="sm:pl-2 md:pl-3 lg:pl-5 xl:pl-7 4xl:pl-10">
                         {/*todo: log errors*/}
-                        <TimeDisplayComponent error={() => {}}/>
-                        <WeatherDisplayComponent error={() => {}}/>
+                        <TimeDisplayComponent error={() => {
+                        }}/>
+                        <WeatherDisplayComponent error={() => {
+                        }}/>
                     </div>
                     {this.renderLocation(1)}
                     {this.renderLocation(2)}
