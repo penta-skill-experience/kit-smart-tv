@@ -9,6 +9,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import {WidgetListElement} from "./WidgetListElement";
 import {WidgetLoader} from "../widget/WidgetLoader";
 import Snackbar from "@mui/material/Snackbar";
+import InputLabel from '@mui/material/InputLabel';
 
 
 const widgetLoader = new WidgetLoader();
@@ -184,10 +185,12 @@ export const LayoutPage = ({list, widgetListElement, handleWidgetSelection, hand
                     </ul>
                 </Grid>
                 <Grid item xs={12}>
-                    <FormControl sx={{minWidth: 120}}>
+                    <FormControl sx={{minWidth: 150}}>
+                        <InputLabel>Select Widget</InputLabel>
                         <Select
                             value={widgetListElement.widgetNameText}
                             onChange={handleWidgetSelection}
+                            label={"Select Widget"}
                         >
                             {widgetList.map(item => (
                                 <MenuItem value={item}>
