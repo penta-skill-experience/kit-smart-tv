@@ -125,7 +125,11 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             <div className={"flex "} style={{
                 color: this.state.bodyFontColor
             }}>
-                <div className="z-50 absolute left-10 absolute bottom-7">
+                <div className="z-50" style={{
+                    position: "absolute",
+                    left: "4.3vh",
+                    top: "45.7vh"
+                }}>
                     <img className="sm:w-24 lg:w-40 2xl:w-60 4xl:w-80"
                          src="https://www.artwork.de/wp-content/uploads/2015/08/logo_TF_NEU_4c_ai.png" alt="IHKLogo"/>
                 </div>
