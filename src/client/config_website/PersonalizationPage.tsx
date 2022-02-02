@@ -28,10 +28,9 @@ interface PersonalizationPageState {
     loadedDesignState: boolean;
     designValues: ValuesData;
     designConfig: ConfigData;
+    successfulBar:boolean;
+    errorBar:boolean;
 }
-
-let successfulBar:boolean = false;
-let errorBar:boolean = false;
 
 export class PersonalizationPage extends React.Component<PersonalizationPageProps, PersonalizationPageState> {
 
@@ -43,6 +42,8 @@ export class PersonalizationPage extends React.Component<PersonalizationPageProp
             loadedDesignState: false,
             designValues: undefined,
             designConfig: undefined,
+            successfulBar:false,
+            errorBar:false,
         };
     }
 
@@ -60,12 +61,11 @@ export class PersonalizationPage extends React.Component<PersonalizationPageProp
         });
     }
 
-    private handleClose(event: React.SyntheticEvent | Event, reason?: string):void {
+    handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
-        successfulBar = false;
-        errorBar = false;
+        this.setState({successfulBar:false, errorBar:false});
     }
 
     render() {
@@ -108,28 +108,27 @@ export class PersonalizationPage extends React.Component<PersonalizationPageProp
                     </Grid>
                     <Grid item xs={12}>
                         <Button
-                            //todo
-                            //doesnt work properly
                             onClick={() => {
-                                console.log(this.props.handlePersonalizationChange);
-                                if (this.props.handlePersonalizationChange()){
-                                    successfulBar = true;
-                                } else {
-                                    errorBar = true;
-                                }
+                                this.props.handlePersonalizationChange().then(myBoolean => {
+                                    if (myBoolean) {
+                                        this.setState({successfulBar:true})
+                                    } else {
+                                        this.setState({errorBar:true})
+                                    }
+                                })
                             }}
                             variant="outlined"
                         >
                             Save Changes
                         </Button>
                         <Snackbar
-                            open={successfulBar}
+                            open={this.state.successfulBar}
                             autoHideDuration={6000}
                             onClose={this.handleClose}
                             message={'Changes Saved'}
                         />
                         <Snackbar
-                            open={errorBar}
+                            open={this.state.errorBar}
                             autoHideDuration={6000}
                             onClose={this.handleClose}
                             message={'Color scheme, font size and a background must be chosen'}

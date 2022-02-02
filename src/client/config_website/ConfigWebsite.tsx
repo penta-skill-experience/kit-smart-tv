@@ -109,7 +109,7 @@ export function ConfigWebsite() {
     };
 
     const handlePersonalizationChange = () => {
-        designConfigPersistence.setConfigData({
+        return designConfigPersistence.setConfigData({
             colorScheme: colorScheme,
             fontSize: fontSize,
             background: selectedBackground,
