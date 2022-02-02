@@ -1,5 +1,5 @@
 import * as mongoose from "mongoose";
-import {ConfigData} from "../../../shared/persistence/data";
+import {ConfigData} from "../../../shared/interfaces/data";
 
 export interface ConfigDocument extends ConfigData, mongoose.Document {
     createdAt: Date;

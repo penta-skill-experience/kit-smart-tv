@@ -1,5 +1,5 @@
 import * as mongoose from "mongoose";
-import {ValuesData} from "../../../shared/persistence/data";
+import {ValuesData} from "../../../shared/interfaces/data";
 
 export interface ValuesDocument extends ValuesData, mongoose.Document {
     createdAt: Date;
