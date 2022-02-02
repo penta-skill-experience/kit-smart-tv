@@ -46,7 +46,7 @@ export class WeatherDisplayComponent extends DisplayComponent<any> {
         return (this.state.gotIcon ? <div className="grid grid-col-3 grid-flow-col gap-3 box-border items-center h-fit">
                 <img className="sm:w-8 md:w-10 lg:w-16 xl:w-20 4xl:w-28 8xl:w-40 sm:object-left sm:scale-150 lg:scale-150" src={WeatherConfig.URL_ICONS + this.state.icon + WeatherConfig.URL_ICONS_POST} alt="logo"/>
                 <div className="justify-center">
-                    <div className="font-light leading-normal sm:text-base xl:text-xl 2xl:text-3xl 4xl:text-4xl 8xl:text-6xl">
+                    <div className="font-light leading-normal sm:text-lg xl:text-2xl 2xl:text-4xl 4xl:text-5xl 8xl:text-6xl">
                         {kelvinToCelsiusRounded(this.state.temp)}°
                     </div>
                     <div className="font-light leading-normal sm:text-xs xl:text-base 2xl:text-xl 4xl:text-2xl 8xl:text-3xl">
