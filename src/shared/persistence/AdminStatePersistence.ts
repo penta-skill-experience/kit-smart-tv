@@ -63,8 +63,6 @@ export class AdminStatePersistence {
                 headers: headers,
             })
                 .then(response => {
-                    console.log(headers)
-                    console.log(response);
                     const new_accessToken = response.headers.get('x-access-token');
                     if (new_accessToken) {
                         //if a new accessToken is provided, update it.
@@ -72,7 +70,6 @@ export class AdminStatePersistence {
                     }
                     return response.json()
                         .then(data => {
-                            console.log(data);
                             if (data.valid_until) {
                                 resolve();
                             } else {

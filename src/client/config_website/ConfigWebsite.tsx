@@ -77,7 +77,7 @@ export function ConfigWebsite() {
         if (adminState) {
             adminStatePersistence.getAdminLoginState()
                 .then(() => setLoggedInStatus(true))
-                .catch(() => console.log('not cool'))
+                .catch(() => console.log('Not already logged in'))
             ;
         }
         setAdminState(false);
@@ -94,6 +94,7 @@ export function ConfigWebsite() {
     const [colorScheme,setColorScheme] = useState<string | null>(null);
     const [fontSize, setFontSize] = useState<string | null>(null);
     const [selectedBackground, setSelectedBackground] = React.useState('');
+    const [needConfigData, setNeedConfigData] = React.useState(true);
 
     const handleColorSchemeChange = (event: React.MouseEvent<HTMLElement>, newColorScheme: string | null) => {
         setColorScheme(newColorScheme);
@@ -107,8 +108,8 @@ export function ConfigWebsite() {
     };
 
     const handlePersonalizationChange = () => {
-        if (colorScheme === null || fontSize === null) {
-            alert('Color scheme and font size must be chosen')
+        if (colorScheme === null || fontSize === null || selectedBackground === '') {
+            alert('Color scheme, font size and a background must be chosen')
             return;
         }
         designConfigPersistence.setConfigData({
@@ -116,10 +117,19 @@ export function ConfigWebsite() {
             fontSize: fontSize,
             background: selectedBackground,
         });
-        adminStatePersistence.getAdminLoginState()
-            .catch((reason) => alert('cold not reload: ' + reason))
         alert('Changes Saved');
     };
+
+    useEffect(() => {
+        if (needConfigData) {
+            designConfigPersistence.getConfigData().then(configData => {
+                setFontSize(configData.fontSize);
+                setColorScheme(configData.colorScheme);
+                setSelectedBackground(configData.background);
+            });
+            setNeedConfigData(false);
+        }
+    })
 
     //state variables and methods for layout page
     const initialWidgetList = [];
@@ -165,8 +175,6 @@ export function ConfigWebsite() {
     });
 
     const handleWidgetSelection = (event: SelectChangeEvent) => {
-        //todo
-        //config is not always true
         const newWidget = widgetLoader.getWidget(event.target.value);
         const updatedValue = {
             id:counter,
@@ -181,8 +189,6 @@ export function ConfigWebsite() {
     const handleAddWidget = () => {
         if (widgetListElement.widget !== null) {
             const newWidget = {
-                //todo
-                //config is not always true
                 id:counter,
                 position:'',
                 widgetNameText:widgetListElement.widgetNameText,
@@ -245,12 +251,10 @@ export function ConfigWebsite() {
         setNewPassword(event.target.value);
     };
 
-    //todo
-    //Connect with persistence
     const handlePasswordChange = () => {
         adminStatePersistence.setPassword(oldPassword, newPassword)
             .then(() => {alert('Password saved')})
-            .catch(() => alert('cold not set password: '))
+            .catch(() => alert('Could not set password: '))
         ;
     };
 
@@ -425,8 +429,6 @@ export function ConfigWebsite() {
                 </div>
             );
         }
-
     }
-
     return renderConfigWebsite();
 }

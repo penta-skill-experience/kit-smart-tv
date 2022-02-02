@@ -3,7 +3,6 @@ import {Grid} from "@mui/material";
 import TextField from '@mui/material/TextField';
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
-import * as emailValidator from "email-validator"
 
 export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNameChange, handleAddMail, handleDeleteUser, handleVerUserList, children}) => {
 
