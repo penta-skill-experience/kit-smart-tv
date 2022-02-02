@@ -10,7 +10,7 @@ import "dotenv/config"
  */
 export class AnnouncementMailListener {
 
-    private mailListener : MailListener
+    private mailListener: MailListener;
 
     /**
      * Creates the mail listener using the options supplied from MailAccountConfig.json.
@@ -43,11 +43,11 @@ export class AnnouncementMailListener {
 
         this.mailListener.start();
 
-        this.mailListener.on("mail", async mail => {
+        this.mailListener.on("mail", mail => {
             new EmailAnnouncementExecutor().executeEmailCommand(mail);
         });
 
-        this.mailListener.on("error", async error => {
+        this.mailListener.on("error", error => {
             fs.writeFileSync(EmailInteractionConfig.MAIL_LISTENER_ERROR_FILE_NAME, error);
         });
     }

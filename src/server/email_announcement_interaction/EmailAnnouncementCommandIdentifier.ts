@@ -25,7 +25,7 @@ export class EmailAnnouncementCommandIdentifier {
         if (this.announcement.text === MailInteractionConfig.REMOVE_ANNOUNCEMENT_TEXT) {
             return new RemoveAnnouncementCommand(this.announcement);
         } else {
-            return(new SetAnnouncementCommand(this.announcement));
+            return new SetAnnouncementCommand(this.announcement);
         }
     }
 }
