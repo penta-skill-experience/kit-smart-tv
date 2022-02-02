@@ -5,7 +5,7 @@ import {
     getAnnouncementForTitle
 } from "./AnnouncementCommand";
 import {Announcement} from "./Announcement";
-import {AnnouncementPersistence} from "../../shared/persistence/AnnouncementPersistence";
+import {AnnouncementPersistence} from "../../shared/persistence/announcements/AnnouncementPersistence";
 import {AnnouncementAuthorTypeIdentifier} from "./AnnouncementAuthorTypeIdentifier";
 
 /**
@@ -26,7 +26,7 @@ export class RemoveAnnouncementCommand implements AnnouncementCommand {
 
     async executeCommand() {
         let currentAnnouncements : Announcement[]
-        await new AnnouncementPersistence().getAnnouncements().then(result => currentAnnouncements = result);
+        await AnnouncementPersistence.getInstance().getAnnouncements().then(result => currentAnnouncements = result);
         const announcementTitles = getAnnouncementTitles(currentAnnouncements);
         if (!announcementTitles.includes(this.announcementToRemove.title)) {
             return;
@@ -34,7 +34,7 @@ export class RemoveAnnouncementCommand implements AnnouncementCommand {
 
         const announcementToRemoveFromCurrent = getAnnouncementForTitle(currentAnnouncements, this.announcementToRemove.title);
 
-        const currentVerifiedUsers = await new AnnouncementPersistence().getVerifiedUsers();
+        const currentVerifiedUsers = await AnnouncementPersistence.getInstance().getVerifiedUsers();
         const authorType = new AnnouncementAuthorTypeIdentifier().getAuthorType(this.announcementToRemove.author, currentVerifiedUsers);
 
         if (!(announcementToRemoveFromCurrent.author === this.announcementToRemove.author ||
@@ -47,7 +47,7 @@ export class RemoveAnnouncementCommand implements AnnouncementCommand {
 
         announcementsToSend.splice(indexToRemove, 1);
 
-        await new AnnouncementPersistence().setAnnouncements(announcementsToSend);
+        await AnnouncementPersistence.getInstance().setAnnouncements(announcementsToSend);
 
     }
 }

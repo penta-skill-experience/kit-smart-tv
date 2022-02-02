@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Announcement} from "../../../server/announcement_management/Announcement";
-import {AnnouncementPersistence} from "../../../shared/persistence/AnnouncementPersistence";
+import {AnnouncementPersistence} from "../../../shared/persistence/announcements/AnnouncementPersistence";
 import * as AnnouncementConfig from "./AnnouncementComponent.json"
 import {VerifiedUser} from "../../../shared/values/VerifiedUser";
 import {DisplayComponent} from "../../widget/DisplayComponent";
@@ -21,8 +21,8 @@ export class AnnouncementComponent extends DisplayComponent<AnnouncementState> {
     }
 
     async tick() {
-        const currentAnnouncements = await new AnnouncementPersistence().getAnnouncements();
-        const currentVerifiedUsers = await new AnnouncementPersistence().getVerifiedUsers();
+        const currentAnnouncements = await AnnouncementPersistence.getInstance().getAnnouncements();
+        const currentVerifiedUsers = await AnnouncementPersistence.getInstance().getVerifiedUsers();
 
 
         currentAnnouncements.sort((ann1, ann2) => {

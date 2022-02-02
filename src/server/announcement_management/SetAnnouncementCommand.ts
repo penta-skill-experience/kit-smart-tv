@@ -7,7 +7,7 @@ import {
 } from "./AnnouncementCommand";
 import {Announcement} from "./Announcement";
 import {AnnouncementAuthorTypeIdentifier} from "./AnnouncementAuthorTypeIdentifier";
-import {AnnouncementPersistence} from "../../shared/persistence/AnnouncementPersistence";
+import {AnnouncementPersistence} from "../../shared/persistence/announcements/AnnouncementPersistence";
 import {AnnouncementAuthorType} from "./AnnouncementAuthorType";
 
 /**
@@ -47,11 +47,11 @@ export class SetAnnouncementCommand implements AnnouncementCommand {
     }
 
     async executeCommand() {
-        const currentVerifiedUsers = await new AnnouncementPersistence().getVerifiedUsers();
+        const currentVerifiedUsers = await AnnouncementPersistence.getInstance().getVerifiedUsers();
         const authorType = new AnnouncementAuthorTypeIdentifier().getAuthorType(this.announcement.author
             , currentVerifiedUsers)
 
-        const currentAnnouncements = await new AnnouncementPersistence().getAnnouncements();
+        const currentAnnouncements = await AnnouncementPersistence.getInstance().getAnnouncements();
         const currentAnnouncementTitles = getAnnouncementTitles(currentAnnouncements);
 
         if (currentAnnouncementTitles.includes(this.announcement.title)) {
@@ -86,6 +86,6 @@ export class SetAnnouncementCommand implements AnnouncementCommand {
     private pushAnnouncementAndSendToPersistence(announcements : Announcement[]) {
         const announcementsToSend = [...announcements];
         announcementsToSend.push(this.announcement);
-        new AnnouncementPersistence().setAnnouncements(announcementsToSend);
+        AnnouncementPersistence.getInstance().setAnnouncements(announcementsToSend);
     }
 }

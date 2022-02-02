@@ -1,6 +1,6 @@
 import * as AnnouncementConfig from "../../../../server/announcement_management/AnnouncementConfig.json";
 import {VerifiedUser} from "../../../../shared/values/VerifiedUser";
-import {AnnouncementPersistence} from "../../../../shared/persistence/AnnouncementPersistence";
+import {AnnouncementPersistence} from "../../../../shared/persistence/announcements/AnnouncementPersistence";
 import {Announcement} from "../../../../server/announcement_management/Announcement";
 import {SetAnnouncementCommand} from "../../../../server/announcement_management/SetAnnouncementCommand";
 import {

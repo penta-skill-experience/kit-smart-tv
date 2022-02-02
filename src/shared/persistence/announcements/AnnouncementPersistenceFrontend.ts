@@ -1,9 +1,15 @@
-import {Announcement} from "../../server/announcement_management/Announcement";
-import {VerifiedUser} from "../values/VerifiedUser";
-import config from "./persistence.config.json";
+import {AnnouncementPersistence} from "./AnnouncementPersistence";
+import {Announcement} from "../../../server/announcement_management/Announcement";
+import config from "../persistence.config.json";
+import {VerifiedUser} from "../../values/VerifiedUser";
+import {ReadableAnnouncement} from "./ReadableAnnouncement";
+import {ReadableUser} from "./ReadableUser";
 
-
-export class AnnouncementPersistence {
+/**
+ * This implementation of AnnouncementPersistence runs in the browser
+ * and uses the fetch() API to access the database through our REST API.
+ */
+export class AnnouncementPersistenceFrontend extends AnnouncementPersistence {
 
     setAnnouncements(announcements: Announcement[]) {
 
@@ -37,7 +43,7 @@ export class AnnouncementPersistence {
                                 //check if the data wa written correctly
                                 this.getAnnouncements()
                                     .then(o => {
-                                        if (o === announcements){
+                                        if (o === announcements) {
                                             resolve();
                                         } else {
                                             reject();
@@ -58,7 +64,7 @@ export class AnnouncementPersistence {
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
 
-        if(sessionStorage.getItem('accessToken') !== null){
+        if (sessionStorage.getItem('accessToken') !== null) {
             headers.append("x-refresh", sessionStorage.getItem('refreshToken'));
             headers.append("Authorization", `Bearer ${sessionStorage.getItem('accessToken')}`);
         }
@@ -98,7 +104,7 @@ export class AnnouncementPersistence {
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
 
-        if(sessionStorage.getItem('accessToken') !== null){
+        if (sessionStorage.getItem('accessToken') !== null) {
             headers.append("x-refresh", sessionStorage.getItem('refreshToken'));
             headers.append("Authorization", `Bearer ${sessionStorage.getItem('accessToken')}`);
         }
@@ -135,7 +141,7 @@ export class AnnouncementPersistence {
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
 
-        if(sessionStorage.getItem('accessToken') !== null){
+        if (sessionStorage.getItem('accessToken') !== null) {
             headers.append("x-refresh", sessionStorage.getItem('refreshToken'));
             headers.append("Authorization", `Bearer ${sessionStorage.getItem('accessToken')}`);
         }
@@ -155,42 +161,12 @@ export class AnnouncementPersistence {
                         //if a new accessToken is provided, update it.
                         sessionStorage.setItem('accessToken', response.headers.get('x-access-token'));
                     }
-                    if(response.status == 200){
+                    if (response.status == 200) {
                         resolve();
-                    }
-                    else {
+                    } else {
                         reject();
                     }
                 }).catch(() => reject());
         });
-    }
-
-
-
-}
-
-class ReadableAnnouncement {
-    public title: string;
-    public author: string
-    public timeOfAddition: string;
-    public timeout: string;
-    public text: string;
-
-    public constructor(ann: Announcement) {
-        this.title = ann.title;
-        this.author = ann.author;
-        this.text = ann.text;
-        this.timeOfAddition = ann.timeOfAddition.toString();
-        this.timeout = ann.timeout.toString();
-    }
-}
-
-class ReadableUser {
-    public email: string;
-    public name: string;
-
-    public constructor(user: VerifiedUser) {
-        this.email = user.email;
-        this.name = user.name;
     }
 }

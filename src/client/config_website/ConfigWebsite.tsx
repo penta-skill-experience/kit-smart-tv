@@ -17,7 +17,7 @@ import {WidgetLoader} from "../widget/WidgetLoader";
 import {WidgetData} from "../widget/WidgetData";
 import {WidgetPersistence} from "../../shared/persistence/WidgetPersistence";
 import {VerifiedUser} from "../../shared/values/VerifiedUser";
-import {AnnouncementPersistence} from "../../shared/persistence/AnnouncementPersistence";
+import {AnnouncementPersistence} from "../../shared/persistence/announcements/AnnouncementPersistence";
 import {AdminStatePersistence} from "../../shared/persistence/AdminStatePersistence";
 import Snackbar from '@mui/material/Snackbar';
 
@@ -48,7 +48,7 @@ function TabPanel(props: TabPanelProps) {
 const designConfigPersistence = new DesignConfigPersistence();
 const widgetLoader = new WidgetLoader();
 const widgetPersistence = new WidgetPersistence();
-const announcementPersistence = new AnnouncementPersistence();
+const announcementPersistence = AnnouncementPersistence.getInstance();
 const adminStatePersistence = new AdminStatePersistence();
 
 export function ConfigWebsite() {
