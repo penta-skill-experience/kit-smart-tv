@@ -86,11 +86,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
     private renderLocation(location: number) {
         const widgetDataList = this.state.widgetDataByLocation[location];
         if (widgetDataList.length === 0) {
-            return <SquareHolder title={""}
-                                 accentColor={this.state.accentBarColor}
-                                 titleColor={this.state.titleFontColor}
-                                 specialBoldFontColor={this.state.specialBoldFontColor}
-                                 specialSubtleFontColor={this.state.specialSubtleFontColor}/>;
+            return <div/>;
         } else {
             return <RotatorComponent>
                 {
