@@ -48,8 +48,6 @@ export class RootComponent extends React.Component<any, RootComponentState> {
     loadTheme() {
         DesignUtility.getDesignConfigValues()
             .then(design => {
-                console.log("design:");
-                console.log(design);
                 this.setState({
                     relativeSize: design.fontSize.relativeSize,
                     themeID: design.colorScheme.id,
