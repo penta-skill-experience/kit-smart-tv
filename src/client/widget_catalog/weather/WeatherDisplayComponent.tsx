@@ -17,7 +17,8 @@ export class WeatherDisplayComponent extends DisplayComponent<any> {
             humidity: 0,
             windSpeed: 0,
             precipitation: 0,
-            icon: ""
+            icon: "",
+            gotIcon: false,
         };
     }
 
@@ -33,7 +34,8 @@ export class WeatherDisplayComponent extends DisplayComponent<any> {
                 humidity: resp.data.current.humidity,
                 windSpeed: resp.data.current.wind_speed,
                 precipitation: resp.data.hourly[0].pop,
-                icon: resp.data.current.weather[0].icon
+                icon: resp.data.current.weather[0].icon,
+                gotIcon: true,
             }))
             .catch(function (error) {
                 console.log(error);
@@ -41,7 +43,7 @@ export class WeatherDisplayComponent extends DisplayComponent<any> {
     }
 
     render() {
-        return <div className="grid grid-col-3 grid-flow-col gap-3 box-border items-center sm:pt-4 xl:pt-12 2xl:pt-16 8xl:pt-20 h-fit">
+        return (this.state.gotIcon ? <div className="grid grid-col-3 grid-flow-col gap-3 box-border items-center sm:pt-4 xl:pt-12 2xl:pt-16 8xl:pt-20 h-fit">
                 <img className="sm:w-8 md:w-10 lg:w-16 xl:w-20 4xl:w-28 8xl:w-40 sm:object-left sm:scale-150 lg:scale-150" src={WeatherConfig.URL_ICONS + this.state.icon + "@4x.png"} alt="logo"/>
                 <div className="justify-center">
                     <div className="font-light leading-normal sm:text-base xl:text-xl 2xl:text-3xl 4xl:text-4xl 8xl:text-6xl">
@@ -63,6 +65,6 @@ export class WeatherDisplayComponent extends DisplayComponent<any> {
                         wind: <span className="font-medium sm:text-sm xl:text-lg 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl sm:text-left">{toKMH(this.state.windSpeed)}</span> km/h
                     </div>
                 </div>
-        </div>;
+        </div>:<div/>);
     }
 }
