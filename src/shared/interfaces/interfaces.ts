@@ -23,3 +23,13 @@ export interface WidgetDataData {
         rawConfig?: Object;
     }[];
 }
+
+export interface AnnouncementsData {
+    announcementDataList: {
+        title: string;
+        text: string;
+        author: string;
+        timeout: string;
+        timeOfAddition: string,
+    }[];
+}
