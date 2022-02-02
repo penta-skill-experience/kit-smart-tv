@@ -1,4 +1,4 @@
-import {ConfigData} from "../interfaces/data";
+import {ConfigData} from "../interfaces/interfaces";
 import config from "./persistence.config.json";
 
 export class DesignConfigPersistence {

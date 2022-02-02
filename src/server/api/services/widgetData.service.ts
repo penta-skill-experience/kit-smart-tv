@@ -1,7 +1,7 @@
 import {DocumentDefinition} from "mongoose";
 import {WidgetDataModel} from "../models/widgetDataModel";
 import {omit} from "lodash";
-import {WidgetDataData} from "../../../shared/interfaces/data";
+import {WidgetDataData} from "../../../shared/interfaces/interfaces";
 
 export async function createWidgetData(input: DocumentDefinition<WidgetDataData>) {
     //before creating a widget data list, delete all widget data list in the collection top guarantee there ist only one stored at a time

@@ -9,7 +9,7 @@ import ImageListItem from '@mui/material/ImageListItem';
 import Button from "@mui/material/Button";
 import {DesignValuesPersistence} from "../../shared/persistence/DesignValuesPersistence";
 import {ColorScheme} from "../../shared/values/ColorScheme";
-import {ConfigData, ValuesData} from "../../shared/interfaces/data";
+import {ConfigData, ValuesData} from "../../shared/interfaces/interfaces";
 import {DesignConfigPersistence} from "../../shared/persistence/DesignConfigPersistence";
 
 interface PersonalizationPageProps {
