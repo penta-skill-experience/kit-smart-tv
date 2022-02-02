@@ -1,6 +1,9 @@
 {
   "REFRESH_RATE": 600000,
   "URL_NEXT_MEAL": "https://openmensa.org/api/v2/canteens/31/meals",
-  "URL_OPENING_TIMES": "https://nominatim.openstreetmap.org/details.php?osmtype=N&osmid=442956482&class=amenity&addressdetails=1&hierarchy=0&group_hierarchy=1&format=json"
+  "URL_DINNING_OPENING_TIMES": "https://nominatim.openstreetmap.org/details.php?osmtype=N&osmid=442956482&addressdetails=1&hierarchy=0&group_hierarchy=1&format=json",
+  "URL_PIZZA_OPENING_TIMES": "https://nominatim.openstreetmap.org/details.php?osmtype=W&osmid=671051825&addressdetails=1&hierarchy=0&group_hierarchy=1&format=json",
+  "URL_KOERI_OPENING_TIMES": "https://nominatim.openstreetmap.org/details.php?osmtype=W&osmid=263477378&addressdetails=1&hierarchy=0&group_hierarchy=1&format=json",
+  "URL_CAFETERIA_OPENING_TIMES": "https://nominatim.openstreetmap.org/details.php?osmtype=W&osmid=364582531&addressdetails=1&hierarchy=0&group_hierarchy=1&format=json"
 }
 
