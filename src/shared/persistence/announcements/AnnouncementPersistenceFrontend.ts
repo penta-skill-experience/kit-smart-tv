@@ -8,7 +8,7 @@ import {Announcement} from "../../values/Announcement";
  * This implementation of AnnouncementPersistence runs in the browser
  * and uses the fetch() API to access the database through our REST API.
  */
-export class AnnouncementPersistenceFrontend extends AnnouncementPersistence {
+export class AnnouncementPersistenceFrontend implements AnnouncementPersistence {
 
     setAnnouncements(announcements: Announcement[]) {
 
