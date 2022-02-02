@@ -1,5 +1,4 @@
 import config from "./persistence.config.json";
-import {TokenHolderSingleton} from "./TokenHolderSingleton";
 
 export class AdminStatePersistence {
 
@@ -19,9 +18,6 @@ export class AdminStatePersistence {
             })
                 .then(response => response.json()
                     .then(data => {
-                        console.log(data);
-                        TokenHolderSingleton.instance.accessToken = data.accessToken;
-                        TokenHolderSingleton.instance.refreshToken = data.refreshToken;
                         sessionStorage.setItem('accessToken', data.accessToken);
                         sessionStorage.setItem('refreshToken', data.refreshToken);
                         resolve();
@@ -32,12 +28,9 @@ export class AdminStatePersistence {
 
     async logout(): Promise<void> {
         const headers = new Headers();
-        headers.append("x-refresh", TokenHolderSingleton.instance.refreshToken);
-        headers.append("Authorization", `Bearer ${TokenHolderSingleton.instance.accessToken}`);
+        headers.append("x-refresh", sessionStorage.getItem('refreshToken'));
+        headers.append("Authorization", `Bearer ${sessionStorage.getItem('accessToken')}`);
         headers.append("Content-Type", "application/json");
-
-        sessionStorage.removeItem('accessToken');
-        sessionStorage.removeItem('refreshToken');
 
         return new Promise<void>((resolve, reject) => {
             fetch(`${config.DOMAIN}/api/sessions`, {
@@ -47,8 +40,8 @@ export class AdminStatePersistence {
                 .then(response => response.json()
                     .then(data => {
                         if (data.accessToken == null && data.refreshToken == null) {
-                            TokenHolderSingleton.instance.accessToken = undefined;
-                            TokenHolderSingleton.instance.refreshToken = undefined;
+                            sessionStorage.removeItem('accessToken');
+                            sessionStorage.removeItem('refreshToken');
                             resolve();
                         } else {
                             reject();
@@ -62,8 +55,6 @@ export class AdminStatePersistence {
         const headers = new Headers();
         headers.append("x-refresh", sessionStorage.getItem('refreshToken'));
         headers.append("Authorization", `Bearer ${sessionStorage.getItem('accessToken')}`);
-        /*headers.append("x-refresh", TokenHolderSingleton.instance.refreshToken);
-        headers.append("Authorization", `Bearer ${TokenHolderSingleton.instance.accessToken}`);*/
         headers.append("Content-Type", "application/json");
 
         return new Promise<void>((resolve, reject) => {
@@ -77,7 +68,7 @@ export class AdminStatePersistence {
                     const new_accessToken = response.headers.get('x-access-token');
                     if (new_accessToken) {
                         //if a new accessToken is provided, update it.
-                        TokenHolderSingleton.instance.accessToken = response.headers.get('x-access-token');
+                        sessionStorage.setItem('accessToken', response.headers.get('x-access-token'));
                     }
                     return response.json()
                         .then(data => {
@@ -96,8 +87,8 @@ export class AdminStatePersistence {
 
     async setPassword(oldpw: string, newpw: string,): Promise<void> {
         const headers = new Headers();
-        headers.append("x-refresh", TokenHolderSingleton.instance.refreshToken);
-        headers.append("Authorization", `Bearer ${TokenHolderSingleton.instance.accessToken}`);
+        headers.append("x-refresh", sessionStorage.getItem('refreshToken'));
+        headers.append("Authorization", `Bearer ${sessionStorage.getItem('accessToken')}`);
         headers.append("Content-Type", "application/json");
 
         const body = {
@@ -115,7 +106,7 @@ export class AdminStatePersistence {
                     const new_accessToken = response.headers.get('x-access-token');
                     if (new_accessToken) {
                         //if a new accessToken is provided, update it.
-                        TokenHolderSingleton.instance.accessToken = response.headers.get('x-access-token');
+                        sessionStorage.setItem('accessToken', response.headers.get('x-access-token'));
                     }
                     if (response.status == 200) {
                         resolve();

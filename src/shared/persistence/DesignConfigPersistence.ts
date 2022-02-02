@@ -16,15 +16,28 @@ export class DesignConfigPersistence {
     }
 
     setSelectedColorSchemeId(id: string) {
-        //todo
+        return this.getConfigData()
+            .then(configData => {
+                configData.colorScheme = id;
+                return this.setConfigData(configData);
+            })
     }
 
-    setSelectedBackground(id: string) {
-        //todo
+    setSelectedBackground(url: string) {
+        return this.getConfigData()
+            .then(configData => {
+                configData.background = url;
+                return this.setConfigData(configData)
+            });
     }
 
     setSelectedFontSize(id: string) {
-        //todo
+        return this.getConfigData()
+            .then(configData => {
+                const configToSet = configData;
+                configToSet.fontSize = id;
+                return this.setConfigData(configToSet)
+            });
     }
 
     /* Queries the whole config object.
@@ -33,5 +46,37 @@ export class DesignConfigPersistence {
     getConfigData(): Promise<ConfigData> {
         return fetch(`${config.DOMAIN}/config`)
             .then((value: Response) => value.json());
+    }
+
+    setConfigData(configData : ConfigData) {
+
+        const headers = new Headers();
+        headers.append("x-refresh", sessionStorage.getItem('refreshToken'));
+        headers.append("Authorization", `Bearer ${sessionStorage.getItem("accessToken")}`);
+        headers.append("Content-Type", "application/json");
+
+        const requestOptions = {
+            method: 'PUT',
+            headers: headers,
+            body: JSON.stringify(configData),
+        };
+
+        return new Promise<void>((resolve, reject) => {
+            fetch(`${config.DOMAIN}/config`, requestOptions)
+                .then(response => {
+                    const new_accessToken = response.headers.get('x-access-token');
+                    if (new_accessToken) {
+                        //if a new accessToken is provided, update it.
+                        sessionStorage.setItem("accessToken", new_accessToken);
+                    }
+
+                    if (response.status === 200) {
+                        resolve();
+                    } else {
+                        reject();
+                    }
+                })
+                .catch(() => reject());
+        })
     }
 }

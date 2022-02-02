@@ -19,7 +19,6 @@ import {WidgetPersistence} from "../../shared/persistence/WidgetPersistence";
 import {VerifiedUser} from "../../shared/values/VerifiedUser";
 import {AnnouncementPersistence} from "../../shared/persistence/AnnouncementPersistence";
 import {AdminStatePersistence} from "../../shared/persistence/AdminStatePersistence";
-import {TokenHolderSingleton} from "../../shared/persistence/TokenHolderSingleton";
 
 
 interface TabPanelProps {
@@ -94,13 +93,9 @@ export function ConfigWebsite() {
     //state variables and methods for personalization page
     const [colorScheme,setColorScheme] = useState<string | null>(null);
     const [fontSize, setFontSize] = useState<string | null>(null);
-    const [selectedLightImage, setSelectedLightImage] = React.useState('');
-    const [selectedDarkImage, setSelectedDarkImage] = React.useState('');
+    const [selectedBackground, setSelectedBackground] = React.useState('');
 
-    const handleColorSchemeChange = (
-        event: React.MouseEvent<HTMLElement>,
-        newColorScheme: string | null,
-    ) => {
+    const handleColorSchemeChange = (event: React.MouseEvent<HTMLElement>, newColorScheme: string | null) => {
         setColorScheme(newColorScheme);
     };
 
@@ -111,25 +106,17 @@ export function ConfigWebsite() {
         setFontSize(newFontSize);
     };
 
-    const handleLightImageSelect = (event) => {
-        setSelectedLightImage(event.target.value);
-    };
-
-    const handleDarkImageSelect = (event) => {
-        setSelectedDarkImage(event.target.value);
-    };
-
     const handlePersonalizationChange = () => {
         if (colorScheme === null || fontSize === null) {
             alert('Color scheme and font size must be chosen')
             return;
         }
-        designConfigPersistence.setSelectedColorSchemeId(colorScheme);
-        designConfigPersistence.setSelectedFontSize(fontSize);
-        //todo
-        //designConfigPersistence.setSelectedBackground();
+        designConfigPersistence.setConfigData({
+            colorScheme: colorScheme,
+            fontSize: fontSize,
+            background: selectedBackground,
+        });
         adminStatePersistence.getAdminLoginState()
-            .then( () => console.log('hello?'))
             .catch((reason) => alert('cold not reload: ' + reason))
         alert('Changes Saved');
     };
@@ -178,7 +165,6 @@ export function ConfigWebsite() {
     });
 
     const handleWidgetSelection = (event: SelectChangeEvent) => {
-        console.log(event.target.value)
         //todo
         //config is not always true
         const newWidget = widgetLoader.getWidget(event.target.value);
@@ -205,14 +191,12 @@ export function ConfigWebsite() {
             }
             setWidgetList(widgetList.concat(newWidget));
             incrementCounter();
-            console.log('Widget ' + newWidget.widget.getTitle() + ' with id ' + newWidget.id + ' and widget id ' + newWidget.widgetData.widgetId)
         }
     };
 
     const incrementCounter = () => setCounter(counter + 1);
 
     const handleDeleteWidget = (id) => {
-        console.log('Widget with id ' + id + ' is removed ')
         setWidgetList(widgetList.filter(item => item.id !== id));
     };
 
@@ -273,6 +257,7 @@ export function ConfigWebsite() {
     //state variables and methods for announcements page
     const initialMailList = [];
     const [mailList, setMailList] = React.useState(initialMailList);
+    const [needInitialVerUserList, setNeedInitialVerUserList] = React.useState(true);
     const [verUserListElement, setVerUserListElement] = React.useState({
         mail:'',
         name:'',
@@ -303,9 +288,8 @@ export function ConfigWebsite() {
                 mail:verUserListElement.mail,
                 name:verUserListElement.name,
                 verUser: newVerUser,
-            }
+            };
             setMailList(mailList.concat(newUser));
-            announcementPersistence.addVerifiedUser(newUser.verUser);
             return;
         }
         alert('Username and email have to be filled out')
@@ -313,14 +297,37 @@ export function ConfigWebsite() {
 
     const handleDeleteUser = (listItem) => {
         setMailList(mailList.filter(item => item.mail !== listItem.mail));
-        announcementPersistence.removeVerifiedUser(listItem.verUser);
     }
+
+    const handleVerUserList = () => {
+        const newList: VerifiedUser[] = [];
+        mailList.forEach(item=>{
+            newList.push(item.verUser);
+        });
+        announcementPersistence.setVerifiedUsers(newList).then(() => alert('Changes Saved'));
+    }
+
+    useEffect(() => {
+        if (needInitialVerUserList) {
+            announcementPersistence.getVerifiedUsers().then(list => {
+                const newList = [];
+                for (const verUser of list) {
+                    newList.push({
+                        mail:verUser.email,
+                        name:verUser.name,
+                        verUser:verUser,
+                    })
+                }
+                setNeedInitialVerUserList(false);
+                setMailList(newList);
+            })
+        }
+    })
 
     //state variable for log out
 
     const handleLogout = () => {
-        adminStatePersistence.logout().then(() => console.log(TokenHolderSingleton.instance.accessToken));
-        setLoggedInStatus(false);
+        adminStatePersistence.logout().then(() => setLoggedInStatus(false));
     };
 
     function renderConfigWebsite() {
@@ -373,10 +380,8 @@ export function ConfigWebsite() {
                             fontSize={fontSize}
                             handleColorSchemeChange={handleColorSchemeChange}
                             handleFontSizeChange={handleFontSizeChange}
-                            selectedLightImage={selectedLightImage}
-                            selectedDarkImage={selectedDarkImage}
-                            handleLightImageSelect={handleLightImageSelect}
-                            handleDarkImageSelect={handleDarkImageSelect}
+                            selectedBackground={selectedBackground}
+                            handleBackgroundSelect={url => setSelectedBackground(url)}
                             handlePersonalizationChange={handlePersonalizationChange}
                         >
                         </PersonalizationPage>
@@ -413,6 +418,7 @@ export function ConfigWebsite() {
                             handleNameChange={handleNameChange}
                             handleAddMail={handleAddMail}
                             handleDeleteUser={handleDeleteUser}
+                            handleVerUserList={handleVerUserList}
                         >
                         </AnnouncementsPage>
                     </TabPanel>

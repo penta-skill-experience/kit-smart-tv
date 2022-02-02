@@ -33,7 +33,7 @@ export class RssFeedDisplayComponent extends DisplayComponent<RssFeedDisplayStat
     }
 
     private fetchRssFeed(): void {
-        this.fetchRssFeedXmlString(this.props.config["url"])
+        RssFeedDisplayComponent.fetchRssFeedXmlString(this.props.config["url"])
             .then(xmlString => {
                 // console.log(xmlString.slice(0, 200));
                 const parser = new Parser();
@@ -50,7 +50,7 @@ export class RssFeedDisplayComponent extends DisplayComponent<RssFeedDisplayStat
             .catch(reason => this.props.error(`Failed to parse RSS feed. Reason: ${reason}`));
     }
 
-    private fetchRssFeedXmlString(url: string): Promise<string> {
+    private static fetchRssFeedXmlString(url: string): Promise<string> {
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
         const requestOptions = {

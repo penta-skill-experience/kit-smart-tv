@@ -1,4 +1,3 @@
-import {Background} from "../values/Background";
 import {ColorScheme} from "../values/ColorScheme";
 import {FontSize} from "../values/FontSize";
 import {DesignConfigPersistence} from "./DesignConfigPersistence";
@@ -7,7 +6,7 @@ import {DesignValuesPersistence} from "./DesignValuesPersistence";
 export interface DesignConfigValues {
     fontSize: FontSize;
     colorScheme: ColorScheme;
-    background: Background;
+    background: string;
 }
 
 /**
@@ -27,7 +26,7 @@ export class DesignUtility {
                 return {
                     fontSize: valuesData.fontSizes.find(fontSize => fontSize.id === configData.fontSize),
                     colorScheme: colorScheme,
-                    background: colorScheme.backgrounds.find(b => b.id === configData.background),
+                    background: configData.background,
                 };
             }));
     }
