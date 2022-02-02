@@ -252,7 +252,7 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                 <div>
                     {(this.state.openDinningRightNow ? <div/>:
                         <div>
-                            Reopens: {(this.state.openToday) ? " Today" : " on " + this.reformatDate(this.state.dateCafeteria)}
+                            Reopens: {(this.state.openToday) ? " Today" : " " + this.reformatDate(this.state.dateCafeteria)}
                         </div>)
                     }
                 </div>
