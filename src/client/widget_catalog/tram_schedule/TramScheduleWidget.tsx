@@ -26,7 +26,7 @@ export class TramScheduleWidget implements Widget {
 
     getDefaultRawConfig(): Object {
         return {
-            stop: "",
+            stop: TramScheduleConfig.DEFAULT_STOP_NAME,
             count: TramScheduleConfig.DEFAULT_ITEM_COUNT,
         };
     }

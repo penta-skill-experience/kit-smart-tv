@@ -4,6 +4,7 @@ import {RssFeedDisplayComponent} from "./RssFeedDisplayComponent";
 import {RssFeedConfigComponent} from "./RssFeedConfigComponent";
 import {ConfigComponent} from "../../widget/ConfigComponent";
 import {DisplayComponent} from "../../widget/DisplayComponent";
+import * as RSSFeedWidgetConfig from "./RSSFeedWidget.json";
 
 export class RssFeedWidget implements Widget {
 
@@ -25,7 +26,7 @@ export class RssFeedWidget implements Widget {
 
     getDefaultRawConfig(): Object {
         return {
-            url: "",
+            url: RSSFeedWidgetConfig.URL,
         }
     }
 }

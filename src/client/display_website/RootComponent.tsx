@@ -86,11 +86,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
     private renderLocation(location: number) {
         const widgetDataList = this.state.widgetDataByLocation[location];
         if (widgetDataList.length === 0) {
-            return <SquareHolder title={""}
-                                 accentColor={this.state.accentBarColor}
-                                 titleColor={this.state.titleFontColor}
-                                 specialBoldFontColor={this.state.specialBoldFontColor}
-                                 specialSubtleFontColor={this.state.specialSubtleFontColor}/>;
+            return <div/>;
         } else {
             return <RotatorComponent>
                 {
@@ -127,24 +123,25 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             }}>
                 <div className="z-50" style={{
                     position: "absolute",
-                    left: "4.3vh",
+                    left: "4.7vh",
                     top: "45.7vh"
                 }}>
                     <img className="sm:w-24 lg:w-40 2xl:w-60 4xl:w-80"
                          src="https://www.artwork.de/wp-content/uploads/2015/08/logo_TF_NEU_4c_ai.png" alt="IHKLogo"/>
                 </div>
-                <div className="z-20 sm:w-1/3 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30"
+                <div className="z-20 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30"
                      style={{
-                         height: "100vh"
+                         height: "100vh",
+                         width: "33.55vw"
                      }}>
                 </div>
                 <div
-                    className="z-20 grid grid-cols-3 absolute left-0 grid-rows-2 sm:gap-2 md:gap-3 lg:gap-5 xl:gap-7 4xl:gap-10 sm:p-2 md:p-3 lg:p-5 xl:p-7 4xl:p-10"
+                    className="box-border z-20 grid grid-cols-3 absolute left-0 grid-rows-2 sm:gap-2 md:gap-3 lg:gap-5 xl:gap-7 4xl:gap-10 sm:p-2 md:p-3 lg:p-5 xl:p-7 4xl:p-10"
                     style={{
                         width: "100vw",
                         height: "100vh",
                     }}>
-                    <div className="sm:pl-2 md:pl-3 lg:pl-5 xl:pl-7 4xl:pl-10">
+                    <div className="sm:pl-2 md:pl-3 lg:pl-5 xl:pl-7 4xl:pl-10 grid grid-rows-2 h-full sm:gap-2 md:gap-3 lg:gap-4 xl:gap-6 4xl:gap-8">
                         {/*todo: log errors*/}
                         <TimeDisplayComponent error={() => {
                         }} specialBoldFontColor="" specialSubtleFontColor=""/>
