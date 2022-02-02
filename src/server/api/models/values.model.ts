@@ -19,7 +19,7 @@ const ValuesSchema = new mongoose.Schema({
                 required: true,
                 unique: true,
             },
-            relativeHeight: {
+            relativeSize: {
                 type: Number,
                 required: true,
             }
@@ -59,17 +59,7 @@ const ValuesSchema = new mongoose.Schema({
                 required: true,
             },
             backgrounds: {
-                type: [new mongoose.Schema({
-                    id: {
-                        type: String,
-                        required: true,
-                        unique: true,
-                    },
-                    url: {
-                        type: String,
-                        required: true,
-                    }
-                })],
+                type: [String],
                 required: true,
             },
         })],
