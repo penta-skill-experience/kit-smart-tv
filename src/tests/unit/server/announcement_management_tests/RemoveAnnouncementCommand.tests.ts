@@ -4,7 +4,7 @@ import {AnnouncementPersistence} from "../../../../shared/persistence/announceme
 import {RemoveAnnouncementCommand} from "../../../../server/announcement_management/RemoveAnnouncementCommand";
 import {AnnouncementCommandError} from "../../../../server/announcement_management/AnnouncementCommand";
 import {newAnnouncement} from "../util/newAnnouncement";
-import {IAnnouncement} from "../../../../shared/values/IAnnouncement";
+import {Announcement} from "../../../../shared/values/Announcement";
 
 // mocking AnnouncementConfig.json
 jest.mock('../../../../server/announcement_management/AnnouncementConfig.json', () => ({
@@ -26,7 +26,7 @@ const bobAnnouncement = newAnnouncement("Bobs Announcement", bob.email, "This is
 const aliceAnnouncement = newAnnouncement(
     "Announcement from alice", alice.email, "This announcement is from alice");
 const announcements = [bobAnnouncement, aliceAnnouncement];
-let setAnnouncements : IAnnouncement[] = [];
+let setAnnouncements : Announcement[] = [];
 
 //mocking announcementPersistence to return test values for these tests
 const getAnnouncementsMock = jest.spyOn(AnnouncementPersistence.prototype, "getAnnouncements");
@@ -36,7 +36,7 @@ const setAnnouncementsMock = jest.spyOn(AnnouncementPersistence.prototype, "setA
 const removeAnnouncementText = "";
 
 getAnnouncementsMock.mockImplementation(() => {
-    return new Promise<IAnnouncement[]>(resolve => {
+    return new Promise<Announcement[]>(resolve => {
         resolve(announcements);
     });
 });

@@ -1,9 +1,9 @@
 import {DocumentDefinition} from "mongoose";
 import {AnnouncementsModel} from "../models/announcements.model";
 import {AnnouncementsData} from "../../../shared/interfaces/interfaces";
-import {IAnnouncement} from "../../../shared/values/IAnnouncement";
+import {Announcement} from "../../../shared/values/Announcement";
 
-export function createAnnouncements(announcements: IAnnouncement[]): Promise<void> {
+export function createAnnouncements(announcements: Announcement[]): Promise<void> {
 
     const doc: DocumentDefinition<AnnouncementsData> = {
         announcementDataList: announcements,
@@ -28,7 +28,7 @@ export function createAnnouncements(announcements: IAnnouncement[]): Promise<voi
     });
 }
 
-export function updateAnnouncements(announcements: IAnnouncement[]): Promise<void> {
+export function updateAnnouncements(announcements: Announcement[]): Promise<void> {
 
     const doc: DocumentDefinition<AnnouncementsData> = {
         announcementDataList: announcements,
@@ -47,8 +47,8 @@ export function updateAnnouncements(announcements: IAnnouncement[]): Promise<voi
     });
 }
 
-export async function getAnnouncements(): Promise<IAnnouncement[]> {
-    return new Promise<IAnnouncement[]>((resolve, reject) => {
+export async function getAnnouncements(): Promise<Announcement[]> {
+    return new Promise<Announcement[]>((resolve, reject) => {
         AnnouncementsModel.findOne().then(
             document => resolve(document.announcementDataList),
             reason => reject(reason)

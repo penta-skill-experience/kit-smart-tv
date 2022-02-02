@@ -6,7 +6,7 @@ import {
 } from "./AnnouncementCommand";
 import {AnnouncementPersistence} from "../../shared/persistence/announcements/AnnouncementPersistence";
 import {AnnouncementAuthorTypeIdentifier} from "./AnnouncementAuthorTypeIdentifier";
-import {IAnnouncement} from "../../shared/values/IAnnouncement";
+import {Announcement} from "../../shared/values/Announcement";
 
 /**
  * An implementation of {@link AnnouncementCommand}
@@ -20,12 +20,12 @@ export class RemoveAnnouncementCommand implements AnnouncementCommand {
 
     private readonly announcementToRemove;
 
-    constructor(announcement : IAnnouncement) {
+    constructor(announcement : Announcement) {
         this.announcementToRemove = announcement;
     }
 
     async executeCommand() {
-        let currentAnnouncements : IAnnouncement[]
+        let currentAnnouncements : Announcement[]
         await AnnouncementPersistence.getInstance().getAnnouncements().then(result => currentAnnouncements = result);
         const announcementTitles = getAnnouncementTitles(currentAnnouncements);
         if (!announcementTitles.includes(this.announcementToRemove.title)) {

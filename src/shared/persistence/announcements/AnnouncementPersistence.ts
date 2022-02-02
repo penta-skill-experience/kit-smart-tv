@@ -2,7 +2,7 @@ import {VerifiedUser} from "../../values/VerifiedUser";
 import {AnnouncementPersistenceFrontend} from "./AnnouncementPersistenceFrontend";
 import {detectEnvironment, Environment} from "../../util/detectEnvironment";
 import {AnnouncementPersistenceBackend} from "./AnnouncementPersistenceBackend";
-import {IAnnouncement} from "../../values/IAnnouncement";
+import {Announcement} from "../../values/Announcement";
 
 /**
  * Singleton that returns a frontend or backend implementation
@@ -19,9 +19,9 @@ export abstract class AnnouncementPersistence {
         return this.INSTANCE;
     }
 
-    abstract setAnnouncements(announcements: IAnnouncement[]): Promise<void>;
+    abstract setAnnouncements(announcements: Announcement[]): Promise<void>;
 
-    abstract getAnnouncements(): Promise<IAnnouncement[]>;
+    abstract getAnnouncements(): Promise<Announcement[]>;
 
     abstract getVerifiedUsers(): Promise<VerifiedUser[]>;
 

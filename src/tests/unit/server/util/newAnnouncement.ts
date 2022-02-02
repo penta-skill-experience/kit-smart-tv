@@ -1,7 +1,7 @@
 import * as AnnouncementConfig from "../../../../server/announcement_management/AnnouncementConfig.json";
 import {AnnouncementAuthorError} from "../../../../server/announcement_management/AnnouncementAuthorError";
 import * as emailValidator from "email-validator";
-import {IAnnouncement} from "../../../../shared/values/IAnnouncement";
+import {Announcement} from "../../../../shared/values/Announcement";
 
 /**
  * Creates an announcement with the specified parameters.
@@ -15,7 +15,7 @@ import {IAnnouncement} from "../../../../shared/values/IAnnouncement";
  */
 export function newAnnouncement(title: string, author: string, text: string,
                                 timeOfAddition: number = Date.now(),
-                                durationToTimeout: number = AnnouncementConfig.DEFAULT_ANNOUNCEMENT_TIMEOUT): IAnnouncement {
+                                durationToTimeout: number = AnnouncementConfig.DEFAULT_ANNOUNCEMENT_TIMEOUT): Announcement {
 
     if (!emailValidator.validate(author)) {
         throw new AnnouncementAuthorError(

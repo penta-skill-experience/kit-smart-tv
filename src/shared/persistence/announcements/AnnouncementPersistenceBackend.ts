@@ -5,7 +5,7 @@ import {
     getAnnouncements,
     updateAnnouncements
 } from "../../../server/api/services/announcements.services";
-import {IAnnouncement} from "../../values/IAnnouncement";
+import {Announcement} from "../../values/Announcement";
 
 /**
  * This implementation of AnnouncementPersistence runs on Node
@@ -13,12 +13,12 @@ import {IAnnouncement} from "../../values/IAnnouncement";
  */
 export class AnnouncementPersistenceBackend extends AnnouncementPersistence {
 
-    setAnnouncements(announcements: IAnnouncement[]): Promise<void> {
+    setAnnouncements(announcements: Announcement[]): Promise<void> {
         return updateAnnouncements(announcements)
             .catch(() => createAnnouncements(announcements));  // try to create announcements instead
     }
 
-    getAnnouncements(): Promise<IAnnouncement[]> {
+    getAnnouncements(): Promise<Announcement[]> {
         return getAnnouncements();
     }
 

@@ -1,6 +1,6 @@
 import {FontSize} from "../values/FontSize";
 import {ColorScheme} from "../values/ColorScheme";
-import {IAnnouncement} from "../values/IAnnouncement";
+import {Announcement} from "../values/Announcement";
 
 /**
  * This file describes the structure of the objects that are returned by and passed to the database.
@@ -26,5 +26,5 @@ export interface WidgetDataData {
 }
 
 export interface AnnouncementsData {
-    announcementDataList: IAnnouncement[];
+    announcementDataList: Announcement[];
 }

@@ -1,6 +1,6 @@
 import {AnnouncementParser} from "../announcement_management/AnnouncementParser";
 import {IMailObject} from "mail-listener-typescript";
-import {IAnnouncement} from "../../shared/values/IAnnouncement";
+import {Announcement} from "../../shared/values/Announcement";
 import * as AnnouncementConfig from "../announcement_management/AnnouncementConfig.json";
 import * as emailValidator from "email-validator";
 import {AnnouncementAuthorError} from "../announcement_management/AnnouncementAuthorError";
@@ -21,7 +21,7 @@ export class EmailAnnouncementParser implements AnnouncementParser {
      * @returns the created announcement.
      * @throws AnnouncementAuthorError gets thrown, if the author is not a valid e-mail address
      */
-    parseToAnnouncement(): IAnnouncement {
+    parseToAnnouncement(): Announcement {
 
         const author = this.mail.subject;
         if (!emailValidator.validate(author)) {

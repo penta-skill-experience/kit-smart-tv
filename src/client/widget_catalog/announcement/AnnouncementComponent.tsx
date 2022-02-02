@@ -3,10 +3,10 @@ import {AnnouncementPersistence} from "../../../shared/persistence/announcements
 import * as AnnouncementConfig from "./AnnouncementComponent.json"
 import {VerifiedUser} from "../../../shared/values/VerifiedUser";
 import {DisplayComponent} from "../../widget/DisplayComponent";
-import {IAnnouncement} from "../../../shared/values/IAnnouncement";
+import {Announcement} from "../../../shared/values/Announcement";
 
 interface AnnouncementState {
-    announcements: IAnnouncement[];
+    announcements: Announcement[];
     verifiedUsers: VerifiedUser[]
 }
 
@@ -63,7 +63,7 @@ export class AnnouncementComponent extends DisplayComponent<AnnouncementState> {
         </div>
     }
 
-    private getAuthorForAnnouncement(announcement: IAnnouncement): string {
+    private getAuthorForAnnouncement(announcement: Announcement): string {
         for (let verifiedUser of this.state.verifiedUsers) {
             if (verifiedUser.email === announcement.author) {
                 return verifiedUser.name;

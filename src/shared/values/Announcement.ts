@@ -1,7 +1,7 @@
 /**
  * Objects of this interface represent announcements.
  */
-export interface IAnnouncement {
+export interface Announcement {
 
     /**
      * An announcement is identified by its title.

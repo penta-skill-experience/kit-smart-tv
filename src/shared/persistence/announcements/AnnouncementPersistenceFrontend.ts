@@ -2,7 +2,7 @@ import {AnnouncementPersistence} from "./AnnouncementPersistence";
 import config from "../persistence.config.json";
 import {VerifiedUser} from "../../values/VerifiedUser";
 import {ReadableUser} from "./ReadableUser";
-import {IAnnouncement} from "../../values/IAnnouncement";
+import {Announcement} from "../../values/Announcement";
 
 /**
  * This implementation of AnnouncementPersistence runs in the browser
@@ -10,7 +10,7 @@ import {IAnnouncement} from "../../values/IAnnouncement";
  */
 export class AnnouncementPersistenceFrontend extends AnnouncementPersistence {
 
-    setAnnouncements(announcements: IAnnouncement[]) {
+    setAnnouncements(announcements: Announcement[]) {
 
         const headers = new Headers();
         headers.append("x-refresh", sessionStorage.getItem('refreshToken'));
@@ -57,7 +57,7 @@ export class AnnouncementPersistenceFrontend extends AnnouncementPersistence {
 
     }
 
-    getAnnouncements(): Promise<IAnnouncement[]> {
+    getAnnouncements(): Promise<Announcement[]> {
 
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
@@ -66,7 +66,7 @@ export class AnnouncementPersistenceFrontend extends AnnouncementPersistence {
             headers.append("Authorization", `Bearer ${sessionStorage.getItem('accessToken')}`);
         }
 
-        return new Promise<IAnnouncement[]>((resolve, reject) => {
+        return new Promise<Announcement[]>((resolve, reject) => {
             fetch(`${config.DOMAIN}/announcements`, {
                 method: 'GET',
                 headers: headers,
@@ -80,7 +80,7 @@ export class AnnouncementPersistenceFrontend extends AnnouncementPersistence {
                     }
 
                     response.json()
-                        .then((announcements: IAnnouncement[]) => {
+                        .then((announcements: Announcement[]) => {
 
                             resolve(announcements
                                 .map(announcement => ({
