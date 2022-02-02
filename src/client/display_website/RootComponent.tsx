@@ -147,9 +147,9 @@ export class RootComponent extends React.Component<any, RootComponentState> {
                     <div className="sm:pl-2 md:pl-3 lg:pl-5 xl:pl-7 4xl:pl-10">
                         {/*todo: log errors*/}
                         <TimeDisplayComponent error={() => {
-                        }}/>
+                        }} specialBoldFontColor="" specialSubtleFontColor=""/>
                         <WeatherDisplayComponent error={() => {
-                        }}/>
+                        }} specialBoldFontColor="" specialSubtleFontColor=""/>
                     </div>
                     {this.renderLocation(1)}
                     {this.renderLocation(2)}

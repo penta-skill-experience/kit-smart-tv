@@ -125,7 +125,9 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
                 // @ts-ignore
                 content = React.createElement(this.props.displayComponentClass, {
                     error: msg => this.setState({hasError: true, errorMessage: msg}),
-                    config: this.props.rawConfig
+                    config: this.props.rawConfig,
+                    specialBoldFontColor: this.props.specialBoldFontColor,
+                    specialSubtleFontColor: this.props.specialSubtleFontColor,
                 }, null);
             }
         }

@@ -15,6 +15,8 @@ export interface DisplayComponentProps {
      */
     error: (msg: string) => void;
     config?: Object;
+    specialBoldFontColor: string;
+    specialSubtleFontColor: string;
 }
 
 export abstract class DisplayComponent<S> extends React.Component<DisplayComponentProps, any> {
