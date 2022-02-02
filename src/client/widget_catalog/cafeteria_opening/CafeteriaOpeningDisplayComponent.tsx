@@ -45,13 +45,11 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
     private getDateOpening(url: string): Promise<Date>{
         const current = new Date();
         const currentDay = new Date(current.getFullYear(), current.getMonth(), current.getDate());
-        current.setFullYear(0);
-        current.setMonth(0);
-        current.setDate(0);
+        const comparatorDate = new Date(0,0,0,current.getHours(), current.getMinutes(), current.getSeconds());
         return axios.get(CafeteriaOpeningConfig.URL_NEXT_MEAL).then(resp => {
             if(this.parseDate(resp.data[0].date).valueOf() === currentDay.valueOf()){
                 return this.getHourOpening(url).then(respOne => {
-                    if(current < respOne[1]){
+                    if(comparatorDate < respOne[1]){
                         return this.parseDate(resp.data[0].date);
                     }else{
                         return this.parseDate(resp.data[1].date);
@@ -77,9 +75,6 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
         const current = new Date();
         const currentDay = new Date(current.getFullYear(), current.getMonth(), current.getDate());
         const hoursNow = new Date(0,0,0, current.getHours(), current.getMinutes())
-        current.setFullYear(0);
-        current.setMonth(0);
-        current.setDate(0);
         return this.getDateOpening(url).then(resp => {
             if(resp.valueOf() === currentDay.valueOf()) {
                         return this.getHourOpening(url).then(respOne => {
@@ -157,8 +152,12 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
     private openToday(url: string): Promise<boolean> {
         const current = new Date();
         const currentDay= new Date(current.getFullYear(), current.getMonth(), current.getDate());
+        const comparatorDate = new Date(0,0,0,current.getHours(), current.getMinutes(), current.getSeconds());
         return this.getDateOpening(url).then(resp => {
-            return (resp.valueOf() === currentDay.valueOf());
+            //check if current time is after closing time
+            return this.getHourOpening(CafeteriaOpeningConfig.URL_DINNING_OPENING_TIMES).then(resp => {
+                return (resp.valueOf() === currentDay.valueOf()) && comparatorDate < resp[1];
+            });
         });
     }
     componentDidMount() {
@@ -178,17 +177,15 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
         return date;
     }
 
-    private reformatDate(dateString: string): string {
+    private reformatDate(date: Date): string {
         try {
-            return this.parseDate(dateString)
-                .toLocaleDateString(["en"], {
+            return date.toLocaleDateString(["en"], {
                     day: "numeric",
                     month: "long",
                 });
         } catch (e) {
             //ignore
         }
-        return dateString;  // fallback if the format of dateString is different than expected
     }
     private getTime(date: Date) {
         return date.toLocaleTimeString("de", {hour: '2-digit', minute: '2-digit'});
