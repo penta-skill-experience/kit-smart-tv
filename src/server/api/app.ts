@@ -28,12 +28,12 @@ import {getValuesHandler, updateValuesHandler} from "./controller/values.control
 import cors from "cors";
 import {AnnouncementMailListener} from "../email_announcement_interaction/AnnouncementMailListener"
 import {putKvvSchema} from "./schema/kvv.schema";
-import { putKvvHandler } from "./controller/kvv.controller";
+import {putKvvHandler} from "./controller/kvv.controller";
 
 serverSetup(process.env.MONGO_URI);
 
 
-export function serverSetup(dbUri : string) {
+export function serverSetup(dbUri: string) {
     const mail = new AnnouncementMailListener;
     mail.createMailListener();
 
@@ -43,10 +43,6 @@ export function serverSetup(dbUri : string) {
 
     app.use(cors());
     app.use(express.json());
-
-
-
-
 
 
     app.use(deserializeAdmin);
@@ -67,7 +63,6 @@ export function serverSetup(dbUri : string) {
         app.post("/admin/create-admin", ensureRequestStructure(createAdminSchema), createAdminHandler);
 
         app.put("/admin/update-password", requireAdmin, ensureRequestStructure(updatePasswordSchema), updatePasswordHandler);
-
 
 
         /**
@@ -94,28 +89,28 @@ export function serverSetup(dbUri : string) {
          *   Announcement Routines
          **/
 
-        //hier braucht man noch mmiddle ware die nur locale calls zulässt.
-        app.put("/announcements", ensureRequestStructure(updateAnnouncementsSchema), updateAnnouncementsHandler)
-        app.get("/announcements", getAnnouncementsHandler)
+        //todo: add middleware that only allows local calls
+        app.put("/announcements", ensureRequestStructure(updateAnnouncementsSchema), updateAnnouncementsHandler);
+        app.get("/announcements", getAnnouncementsHandler);
 
         /**
          *   verified User Routines
          **/
-        app.put("/users", requireAdmin, ensureRequestStructure(updateUsersSchema), updateUsersHandler)
-        app.get("/users", getUsersHandler)
+        app.put("/users", requireAdmin, ensureRequestStructure(updateUsersSchema), updateUsersHandler);
+        app.get("/users", getUsersHandler);
 
         /**
          *   Config Routines
          **/
-        app.put("/config", requireAdmin, ensureRequestStructure(updateConfigSchema), updateConfigHandler)
-        app.get("/config", getConfigHandler)
+        app.put("/config", requireAdmin, ensureRequestStructure(updateConfigSchema), updateConfigHandler);
+        app.get("/config", getConfigHandler);
 
 
         /**
          *   Values Routines
          **/
-        app.put("/values", requireAdmin, ensureRequestStructure(updateValuesSchema), updateValuesHandler)
-        app.get("/values", getValuesHandler)
+        app.put("/values", requireAdmin, ensureRequestStructure(updateValuesSchema), updateValuesHandler);
+        app.get("/values", getValuesHandler);
 
         app.put("/kvv", ensureRequestStructure(putKvvSchema), putKvvHandler);
 
