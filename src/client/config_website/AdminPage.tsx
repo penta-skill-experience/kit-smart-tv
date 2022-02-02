@@ -1,6 +1,5 @@
 import * as React from "react";
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {Grid} from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
@@ -10,6 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 import FormControl from "@mui/material/FormControl";
+import Snackbar from "@mui/material/Snackbar";
 
 export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNewPassword, handlePasswordChange, children} ) => {
     const [showOldPassword, setShowOldPassword] = React.useState(false);
@@ -21,6 +21,17 @@ export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNe
 
     const handleShowNewPassword  = () => {
         setShowNewPassword(!showNewPassword)
+    }
+
+    const [successfulBar, setSuccessfulBar] = React.useState(false);
+    const [errorBar, setErrorBar] = React.useState(false);
+
+    const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSuccessfulBar(false);
+        setErrorBar(false);
     }
 
     return (
@@ -73,10 +84,29 @@ export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNe
                     </Grid>
                     <Grid item xs={12}>
                         <Button
-                            onClick={handlePasswordChange}
+                            onClick={() => {
+                                if (handlePasswordChange()) {
+                                    setSuccessfulBar(true);
+                                } else{
+                                    setErrorBar(true);
+                                }
+                            }}
                             variant="outlined"
                         >
-                            Save Password</Button>
+                            Save Password
+                        </Button>
+                        <Snackbar
+                            open={successfulBar}
+                            autoHideDuration={6000}
+                            onClose={handleClose}
+                            message={'Password Saved'}
+                        />
+                        <Snackbar
+                            open={errorBar}
+                            autoHideDuration={6000}
+                            onClose={handleClose}
+                            message={'New Password must at least be 1 character long'}
+                        />
                     </Grid>
                     <Grid item xs={12}>
                     </Grid>

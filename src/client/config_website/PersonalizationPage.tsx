@@ -11,6 +11,7 @@ import {DesignValuesPersistence} from "../../shared/persistence/DesignValuesPers
 import {ColorScheme} from "../../shared/values/ColorScheme";
 import {ConfigData, ValuesData} from "../../shared/persistence/data";
 import {DesignConfigPersistence} from "../../shared/persistence/DesignConfigPersistence";
+import Snackbar from "@mui/material/Snackbar";
 
 interface PersonalizationPageProps {
     colorScheme: string;
@@ -29,7 +30,12 @@ interface PersonalizationPageState {
     designConfig: ConfigData;
 }
 
+let successfulBar:boolean = false;
+let errorBar:boolean = false;
+
 export class PersonalizationPage extends React.Component<PersonalizationPageProps, PersonalizationPageState> {
+
+
 
     constructor(props: Readonly<PersonalizationPageProps> | PersonalizationPageProps) {
         super(props);
@@ -52,6 +58,14 @@ export class PersonalizationPage extends React.Component<PersonalizationPageProp
                 designConfig: configData,
             }));
         });
+    }
+
+    private handleClose(event: React.SyntheticEvent | Event, reason?: string):void {
+        if (reason === 'clickaway') {
+            return;
+        }
+        successfulBar = false;
+        errorBar = false;
     }
 
     render() {
@@ -94,10 +108,32 @@ export class PersonalizationPage extends React.Component<PersonalizationPageProp
                     </Grid>
                     <Grid item xs={12}>
                         <Button
-                            onClick={this.props.handlePersonalizationChange}
+                            //todo
+                            //doesnt work properly
+                            onClick={() => {
+                                console.log(this.props.handlePersonalizationChange);
+                                if (this.props.handlePersonalizationChange()){
+                                    successfulBar = true;
+                                } else {
+                                    errorBar = true;
+                                }
+                            }}
                             variant="outlined"
                         >
-                            Save Changes</Button>
+                            Save Changes
+                        </Button>
+                        <Snackbar
+                            open={successfulBar}
+                            autoHideDuration={6000}
+                            onClose={this.handleClose}
+                            message={'Changes Saved'}
+                        />
+                        <Snackbar
+                            open={errorBar}
+                            autoHideDuration={6000}
+                            onClose={this.handleClose}
+                            message={'Color scheme, font size and a background must be chosen'}
+                        />
                     </Grid>
                 </Grid>
             </div>

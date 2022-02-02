@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import LockIcon from '@mui/icons-material/Lock';
 import {WidgetListElement} from "./WidgetListElement";
 import {WidgetLoader} from "../widget/WidgetLoader";
+import Snackbar from "@mui/material/Snackbar";
 
 
 const widgetLoader = new WidgetLoader();
@@ -15,6 +16,19 @@ const widgetList = widgetLoader.getWidgetIds();
 
 
 export const LayoutPage = ({list, widgetListElement, handleWidgetSelection, handleAddWidget, handleDeleteWidget, handlePosition, handleRawConfigSave, handleLayoutChange, children}) => {
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    }
 
     return(
         <div>
@@ -187,9 +201,18 @@ export const LayoutPage = ({list, widgetListElement, handleWidgetSelection, hand
                     <Button onClick={handleAddWidget} variant="outlined">Add Widget</Button>
                 </Grid>
                 <Grid item>
-                    <Button variant="contained" onClick={handleLayoutChange}>
+                    <Button variant="contained" onClick={() => {
+                        handleLayoutChange();
+                        handleClick();
+                    }}>
                         Save
                     </Button>
+                    <Snackbar
+                        open={open}
+                        autoHideDuration={6000}
+                        onClose={handleClose}
+                        message={'Changes Saved'}
+                    />
                 </Grid>
             </Grid>
         </div>

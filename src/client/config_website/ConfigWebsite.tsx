@@ -19,6 +19,7 @@ import {WidgetPersistence} from "../../shared/persistence/WidgetPersistence";
 import {VerifiedUser} from "../../shared/values/VerifiedUser";
 import {AnnouncementPersistence} from "../../shared/persistence/AnnouncementPersistence";
 import {AdminStatePersistence} from "../../shared/persistence/AdminStatePersistence";
+import Snackbar from '@mui/material/Snackbar';
 
 
 interface TabPanelProps {
@@ -108,16 +109,13 @@ export function ConfigWebsite() {
     };
 
     const handlePersonalizationChange = () => {
-        if (colorScheme === null || fontSize === null || selectedBackground === '') {
-            alert('Color scheme, font size and a background must be chosen')
-            return;
-        }
         designConfigPersistence.setConfigData({
             colorScheme: colorScheme,
             fontSize: fontSize,
             background: selectedBackground,
-        });
-        alert('Changes Saved');
+        })
+            .then(() => true)
+            .catch(() => false)
     };
 
     useEffect(() => {
@@ -232,7 +230,6 @@ export function ConfigWebsite() {
         ));
         setWidgetDataList(newWidgetDataList);
         widgetPersistence.setWidgetDataList(newWidgetDataList);
-        alert('Changes Saved');
     };
 
     //state variables and methods for admin password page
@@ -253,8 +250,8 @@ export function ConfigWebsite() {
 
     const handlePasswordChange = () => {
         adminStatePersistence.setPassword(oldPassword, newPassword)
-            .then(() => {alert('Password saved')})
-            .catch(() => alert('Could not set password: '))
+            .then(() => true)
+            .catch(() => false)
         ;
     };
 
@@ -308,7 +305,7 @@ export function ConfigWebsite() {
         mailList.forEach(item=>{
             newList.push(item.verUser);
         });
-        announcementPersistence.setVerifiedUsers(newList).then(() => alert('Changes Saved'));
+        announcementPersistence.setVerifiedUsers(newList).then(() => console.log('VerUsers Saved'));
     }
 
     useEffect(() => {

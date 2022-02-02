@@ -3,8 +3,21 @@ import {Grid} from "@mui/material";
 import TextField from '@mui/material/TextField';
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Snackbar from "@mui/material/Snackbar";
 
 export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNameChange, handleAddMail, handleDeleteUser, handleVerUserList, children}) => {
+    const [open, setOpen] = React.useState(false);
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    }
 
     return(
         <div>
@@ -61,9 +74,18 @@ export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNa
                     </ul>
                 </Grid>
                 <Grid xs={12}>
-                    <Button variant='outlined' onClick={handleVerUserList}>
+                    <Button variant='outlined' onClick={() => {
+                        handleVerUserList();
+                        handleClick();
+                    }}>
                         Save Changes
                     </Button>
+                    <Snackbar
+                        open={open}
+                        autoHideDuration={6000}
+                        onClose={handleClose}
+                        message={'Verified Users Saved'}
+                    />
                 </Grid>
             </Grid>
         </div>
