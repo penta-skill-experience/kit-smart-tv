@@ -78,7 +78,7 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
     }
 
     componentDidMount(): void {
-        this.clearErrorIntervalHandle = setInterval(() => this.clearError(), 5000);
+        this.clearErrorIntervalHandle = setInterval(() => this.clearError(), SquareHolderConfig.ERROR_CLEAR_INTERVAL);
         let speed = SquareHolderConfig.SCROLL_REFRESH;
         setInterval(() => {
             this.pageScrollToBottom(speed);
