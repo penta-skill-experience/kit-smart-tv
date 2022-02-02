@@ -1,4 +1,4 @@
-import {Announcement} from "./Announcement";
+import {IAnnouncement} from "../../shared/values/IAnnouncement";
 
 /**
  * This is an interface to be implemented by announcement commands.
@@ -48,7 +48,7 @@ export class IllegalAnnouncementTextForCommandError extends Error {
  *
  * @param announcements the supplied announcements
  */
-export function getAnnouncementTitles(announcements : Announcement[]) : string[] {
+export function getAnnouncementTitles(announcements: IAnnouncement[]) : string[] {
     return announcements.map(announcement => {
         return announcement.title;
     });
@@ -61,8 +61,8 @@ export function getAnnouncementTitles(announcements : Announcement[]) : string[]
  * @param announcements the supplied announcements
  * @param title the title of the announcement to find
  */
-export function getAnnouncementForTitle(announcements : Announcement[], title : string) : Announcement | undefined {
-    let announcementToReturn : Announcement;
+export function getAnnouncementForTitle(announcements : IAnnouncement[], title : string): IAnnouncement | undefined {
+    let announcementToReturn : IAnnouncement;
     announcements.forEach(currentAnnouncement => {
         // there is only ever one announcement for each title, if it exists That announcement is found and stored.
         if (currentAnnouncement.title === title) {

@@ -1,6 +1,6 @@
-import {Announcement} from "../../../../server/announcement_management/Announcement";
 import * as AnnouncementConfig from "../../../../server/announcement_management/AnnouncementConfig.json";
 import {AnnouncementAuthorError} from "../../../../server/announcement_management/AnnouncementAuthorError";
+import {newAnnouncement} from "../util/newAnnouncement";
 
 const announcementTitle = "HelloWorld";
 const announcementAuthor = "john.smith@example.com";
@@ -10,7 +10,7 @@ describe("testing new announcement for given timeOfAddition and given timeout", 
     const timeOfAddition = 12345
     const durationToTimeout = 5;
 
-    const announcement = new Announcement(announcementTitle, announcementAuthor, announcementText,
+    const announcement = newAnnouncement(announcementTitle, announcementAuthor, announcementText,
         timeOfAddition, durationToTimeout);
 
     test ("testing get timeOfAddition()", () => {
@@ -24,7 +24,7 @@ describe("testing new announcement for given timeOfAddition and given timeout", 
 
 describe("testing getters and setters of Announcement.ts", () => {
 
-    const announcement = new Announcement(announcementTitle, announcementAuthor, announcementText);
+    const announcement = newAnnouncement(announcementTitle, announcementAuthor, announcementText);
 
     test("testing get title()", () => {
         expect(announcement.title).toEqual(announcementTitle);
@@ -55,7 +55,7 @@ describe("testing errors for Announcement.ts", () => {
 
     test("testing error for invalid author", () => {
         expect(() => {
-            new Announcement(announcementTitle, invalidAuthor, announcementText)
+            newAnnouncement(announcementTitle, invalidAuthor, announcementText)
         }).toThrow(AnnouncementAuthorError);
     })
 })

@@ -1,9 +1,8 @@
 import {AnnouncementPersistence} from "./AnnouncementPersistence";
-import {Announcement} from "../../../server/announcement_management/Announcement";
 import config from "../persistence.config.json";
 import {VerifiedUser} from "../../values/VerifiedUser";
-import {ReadableAnnouncement} from "./ReadableAnnouncement";
 import {ReadableUser} from "./ReadableUser";
+import {IAnnouncement} from "../../values/IAnnouncement";
 
 /**
  * This implementation of AnnouncementPersistence runs in the browser
@@ -11,7 +10,7 @@ import {ReadableUser} from "./ReadableUser";
  */
 export class AnnouncementPersistenceFrontend extends AnnouncementPersistence {
 
-    setAnnouncements(announcements: Announcement[]) {
+    setAnnouncements(announcements: IAnnouncement[]) {
 
         const headers = new Headers();
         headers.append("x-refresh", sessionStorage.getItem('refreshToken'));
@@ -19,9 +18,7 @@ export class AnnouncementPersistenceFrontend extends AnnouncementPersistence {
         headers.append("Content-Type", "application/json");
 
         //create body
-        let read_ann: ReadableAnnouncement[] = [];
-        announcements.forEach(announcement => read_ann.push(new ReadableAnnouncement(announcement)))
-        let body = {announcementDataList: read_ann};
+        let body = {announcementDataList: announcements};
 
         const requestOptions = {
             method: 'PUT',
@@ -60,43 +57,50 @@ export class AnnouncementPersistenceFrontend extends AnnouncementPersistence {
 
     }
 
-    getAnnouncements(): Promise<Announcement[]> {
+    getAnnouncements(): Promise<IAnnouncement[]> {
+
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
-
         if (sessionStorage.getItem('accessToken') !== null) {
             headers.append("x-refresh", sessionStorage.getItem('refreshToken'));
             headers.append("Authorization", `Bearer ${sessionStorage.getItem('accessToken')}`);
         }
 
-        return new Promise<Announcement[]>((resolve, reject) => {
+        return new Promise<IAnnouncement[]>((resolve, reject) => {
             fetch(`${config.DOMAIN}/announcements`, {
                 method: 'GET',
                 headers: headers,
             })
                 .then(response => {
+
                     const new_accessToken = response.headers.get('x-access-token');
                     if (new_accessToken) {
                         //if a new accessToken is provided, update it.
                         sessionStorage.setItem('accessToken', response.headers.get('x-access-token'));
                     }
-                    return response.json()
-                        .then(data => {
-                            let announcements: Announcement[] = [];
-                            data.announcementDataList.forEach(function (announcement) {
-                                let ann = new Announcement(announcement.title, announcement.author, announcement.text, new Date(+announcement.timeOfAddition).valueOf(), new Date(+announcement.timeout).valueOf() - +announcement.timeOfAddition);
-                                if (ann.timeout > Date.now()) {
-                                    announcements.push(ann);
-                                }
 
-                            });
-                            resolve(announcements);
+                    response.json()
+                        .then((announcements: IAnnouncement[]) => {
 
-                        }).catch(() => {
-                            let announcements: Announcement[] = [];
-                            resolve(announcements);
+                            resolve(announcements
+                                .map(announcement => ({
+                                    title: announcement.title,
+                                    author: announcement.author,
+                                    text: announcement.text,
+                                    timeOfAddition: new Date(+announcement.timeOfAddition).valueOf(),
+                                    timeout: new Date(+announcement.timeout).valueOf() - +announcement.timeOfAddition,
+                                }))
+                                .filter(announcement => announcement.timeout > Date.now())  // check for expiry
+                            );
+
+                        })
+                        .catch(() => {
+                            resolve([]);
                         });
-                }).catch(() => reject());
+                })
+                .catch(() => {
+                    reject();
+                });
         });
     }
 

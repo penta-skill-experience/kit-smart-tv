@@ -1,12 +1,12 @@
 import * as React from "react";
-import {Announcement} from "../../../server/announcement_management/Announcement";
 import {AnnouncementPersistence} from "../../../shared/persistence/announcements/AnnouncementPersistence";
 import * as AnnouncementConfig from "./AnnouncementComponent.json"
 import {VerifiedUser} from "../../../shared/values/VerifiedUser";
 import {DisplayComponent} from "../../widget/DisplayComponent";
+import {IAnnouncement} from "../../../shared/values/IAnnouncement";
 
 interface AnnouncementState {
-    announcements: Announcement[];
+    announcements: IAnnouncement[];
     verifiedUsers: VerifiedUser[]
 }
 
@@ -63,7 +63,7 @@ export class AnnouncementComponent extends DisplayComponent<AnnouncementState> {
         </div>
     }
 
-    private getAuthorForAnnouncement(announcement: Announcement): string {
+    private getAuthorForAnnouncement(announcement: IAnnouncement): string {
         for (let verifiedUser of this.state.verifiedUsers) {
             if (verifiedUser.email === announcement.author) {
                 return verifiedUser.name;

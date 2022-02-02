@@ -1,9 +1,10 @@
 import * as AnnouncementConfig from "../../../../server/announcement_management/AnnouncementConfig.json";
 import {VerifiedUser} from "../../../../shared/values/VerifiedUser";
 import {AnnouncementPersistence} from "../../../../shared/persistence/announcements/AnnouncementPersistence";
-import {Announcement} from "../../../../server/announcement_management/Announcement";
 import {RemoveAnnouncementCommand} from "../../../../server/announcement_management/RemoveAnnouncementCommand";
 import {AnnouncementCommandError} from "../../../../server/announcement_management/AnnouncementCommand";
+import {newAnnouncement} from "../util/newAnnouncement";
+import {IAnnouncement} from "../../../../shared/values/IAnnouncement";
 
 // mocking AnnouncementConfig.json
 jest.mock('../../../../server/announcement_management/AnnouncementConfig.json', () => ({
@@ -21,11 +22,11 @@ const alice = new VerifiedUser("alice@example.com", "alice");
 const verifiedUsers = [bob, alice];
 const unverifiedUserEmail = "unverifieduser@example.com";
 
-const bobAnnouncement = new Announcement("Bobs Announcement", bob.email, "This is bobs announcement.");
-const aliceAnnouncement = new Announcement(
+const bobAnnouncement = newAnnouncement("Bobs Announcement", bob.email, "This is bobs announcement.");
+const aliceAnnouncement = newAnnouncement(
     "Announcement from alice", alice.email, "This announcement is from alice");
 const announcements = [bobAnnouncement, aliceAnnouncement];
-let setAnnouncements : Announcement[] = [];
+let setAnnouncements : IAnnouncement[] = [];
 
 //mocking announcementPersistence to return test values for these tests
 const getAnnouncementsMock = jest.spyOn(AnnouncementPersistence.prototype, "getAnnouncements");
@@ -35,7 +36,7 @@ const setAnnouncementsMock = jest.spyOn(AnnouncementPersistence.prototype, "setA
 const removeAnnouncementText = "";
 
 getAnnouncementsMock.mockImplementation(() => {
-    return new Promise<Announcement[]>(resolve => {
+    return new Promise<IAnnouncement[]>(resolve => {
         resolve(announcements);
     });
 });
@@ -73,7 +74,7 @@ unverified user attempts to remove announcement
 describe("testing RemoveAnnouncementCommand handles unverified users correctly", () => {
 
     test("unverified user cannot remove an announcement", () => {
-        const removeBobsAnnouncement = new Announcement(bobAnnouncement.title,
+        const removeBobsAnnouncement = newAnnouncement(bobAnnouncement.title,
             unverifiedUserEmail, removeAnnouncementText);
 
         expect(new RemoveAnnouncementCommand(removeBobsAnnouncement).executeCommand())
@@ -84,7 +85,7 @@ describe("testing RemoveAnnouncementCommand handles unverified users correctly",
 describe("testing RemoveAnnouncementCommand handles verified users correctly", () => {
 
     test("verified user can remove his own announcement", () => {
-        const removeAliceAnnouncement = new Announcement(aliceAnnouncement.title, alice.email,
+        const removeAliceAnnouncement = newAnnouncement(aliceAnnouncement.title, alice.email,
             removeAnnouncementText);
 
         new RemoveAnnouncementCommand(removeAliceAnnouncement).executeCommand().then(() => {
@@ -94,7 +95,7 @@ describe("testing RemoveAnnouncementCommand handles verified users correctly", (
     });
 
     test("verified user cannot remove announcement from other author", () => {
-        const removeAliceAnnouncement = new Announcement(aliceAnnouncement.title, bob.email,
+        const removeAliceAnnouncement = newAnnouncement(aliceAnnouncement.title, bob.email,
             removeAnnouncementText);
 
         expect(new RemoveAnnouncementCommand(removeAliceAnnouncement).executeCommand())
@@ -105,7 +106,7 @@ describe("testing RemoveAnnouncementCommand handles verified users correctly", (
 describe("testing RemoveAnnouncementCommand handles admin correctly", () => {
 
     test("admin can remove any announcement", () => {
-        const removeAliceAnnouncement = new Announcement(aliceAnnouncement.title, AnnouncementConfig.ADMINS[0].EMAIL,
+        const removeAliceAnnouncement = newAnnouncement(aliceAnnouncement.title, AnnouncementConfig.ADMINS[0].EMAIL,
             removeAnnouncementText);
 
         new RemoveAnnouncementCommand(removeAliceAnnouncement).executeCommand().then(() => {

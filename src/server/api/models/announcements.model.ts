@@ -1,7 +1,7 @@
 import * as mongoose from "mongoose";
 import {AnnouncementsData} from "../../../shared/interfaces/interfaces";
 
-export interface AnnouncementsDocument extends AnnouncementsData, mongoose.Document {
+interface AnnouncementsDocument extends AnnouncementsData, mongoose.Document {
     createdAt: Date;
     updatedAt: Date;
 }
@@ -22,11 +22,11 @@ const AnnouncementsSchema = new mongoose.Schema({
                 required: true,
             },
             timeout: {
-                type: String,
+                type: Number,
                 required: true,
             },
             timeOfAddition: {
-                type: String,
+                type: Number,
                 required: true,
             },
         })],

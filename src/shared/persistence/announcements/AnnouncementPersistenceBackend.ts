@@ -1,6 +1,11 @@
-import { AnnouncementPersistence } from "./AnnouncementPersistence";
-import {Announcement} from "../../../server/announcement_management/Announcement";
+import {AnnouncementPersistence} from "./AnnouncementPersistence";
 import {VerifiedUser} from "../../values/VerifiedUser";
+import {
+    createAnnouncements,
+    getAnnouncements,
+    updateAnnouncements
+} from "../../../server/api/services/announcements.services";
+import {IAnnouncement} from "../../values/IAnnouncement";
 
 /**
  * This implementation of AnnouncementPersistence runs on Node
@@ -8,19 +13,18 @@ import {VerifiedUser} from "../../values/VerifiedUser";
  */
 export class AnnouncementPersistenceBackend extends AnnouncementPersistence {
 
-    getAnnouncements(): Promise<Announcement[]> {
-        //todo
-        return Promise.resolve([]);
+    setAnnouncements(announcements: IAnnouncement[]): Promise<void> {
+        return updateAnnouncements(announcements)
+            .catch(() => createAnnouncements(announcements));  // try to create announcements instead
+    }
+
+    getAnnouncements(): Promise<IAnnouncement[]> {
+        return getAnnouncements();
     }
 
     getVerifiedUsers(): Promise<VerifiedUser[]> {
         //todo
         return Promise.resolve([]);
-    }
-
-    setAnnouncements(announcements: Announcement[]): Promise<void> {
-        //todo
-        return Promise.resolve(undefined);
     }
 
     setVerifiedUsers(users: VerifiedUser[]): Promise<void> {

@@ -1,17 +1,17 @@
-import {Announcement} from "../announcement_management/Announcement";
 import {AnnouncementCommand} from "../announcement_management/AnnouncementCommand";
 import * as MailInteractionConfig from "./MailInteractionConfig.json";
 import {RemoveAnnouncementCommand} from "../announcement_management/RemoveAnnouncementCommand";
 import {SetAnnouncementCommand} from "../announcement_management/SetAnnouncementCommand";
+import {IAnnouncement} from "../../shared/values/IAnnouncement";
 
 /**
  * This class is used to identify the announcement command for an announcement parsed from a mail.
  */
 export class EmailAnnouncementCommandIdentifier {
 
-    private readonly announcement : Announcement;
+    private readonly announcement : IAnnouncement;
 
-    constructor(announcement : Announcement) {
+    constructor(announcement : IAnnouncement) {
         this.announcement = announcement;
     }
 
