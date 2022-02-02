@@ -1,6 +1,4 @@
 import * as React from "react";
-import meme1 from './mem.jpg'
-import meme2 from './mem2.jpg'
 import {FormLabel, Grid} from "@mui/material";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -11,34 +9,8 @@ import ImageListItem from '@mui/material/ImageListItem';
 import Button from "@mui/material/Button";
 import {DesignValuesPersistence} from "../../shared/persistence/DesignValuesPersistence";
 import {ColorScheme} from "../../shared/values/ColorScheme";
-import {FontSize} from "../../shared/values/FontSize";
-import {DesignConfigValues} from "../../shared/persistence/DesignUtility";
 import {ConfigData, ValuesData} from "../../shared/persistence/data";
 import {DesignConfigPersistence} from "../../shared/persistence/DesignConfigPersistence";
-
-
-//todo
-//get from persistence
-const designValuePersistence = new DesignValuesPersistence();
-//                        = designValuePersistence.getBackgrounds(light);
-const lightBackgroundList = [
-    {img: meme1, id: '1', title: 'bild1'},
-    {img: meme1, id: '2', title: 'bild2'},
-    {img: meme1, id: '3', title: 'bild3'},
-    {img: meme1, id: '4', title: 'bild4'},
-    {img: meme1, id: '5', title: 'bild5'},
-    {img: meme1, id: '6', title: 'bild6'},
-];
-
-//                        = designValuePersistence.getBackgrounds(dark);
-const darkBackgroundList = [
-    {img: meme2, id: '1', title: 'bild1'},
-    {img: meme2, id: '2', title: 'bild2'},
-    {img: meme2, id: '3', title: 'bild3'},
-    {img: meme2, id: '4', title: 'bild4'},
-    {img: meme2, id: '5', title: 'bild5'},
-    {img: meme2, id: '6', title: 'bild6'},
-];
 
 interface PersonalizationPageProps {
     colorScheme: string;
