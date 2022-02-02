@@ -1,7 +1,7 @@
 import {ColorScheme} from "../values/ColorScheme";
 import {FontSize} from "../values/FontSize";
 import config from "./persistence.config.json";
-import {ValuesData} from "./data";
+import {ValuesData} from "../interfaces/interfaces";
 
 export class DesignValuesPersistence {
 

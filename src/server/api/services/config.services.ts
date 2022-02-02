@@ -1,7 +1,7 @@
 import {DocumentDefinition} from "mongoose";
 import {omit} from "lodash";
 import {ConfigModel} from "../models/config.model";
-import {ConfigData} from "../../../shared/persistence/data";
+import {ConfigData} from "../../../shared/interfaces/interfaces";
 
 export async function createConfig(input: DocumentDefinition<ConfigData>) {
     //before creating a Users, delete all Users in the collection, to guarantee there ist only one stored at a time

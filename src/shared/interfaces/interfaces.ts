@@ -16,4 +16,20 @@ export interface ConfigData {
     background: string;
 }
 
-//todo: add the same thing for widget data here
+export interface WidgetDataData {
+    widgetDataList: {
+        widgetId: string;
+        location: number;
+        rawConfig?: Object;
+    }[];
+}
+
+export interface AnnouncementsData {
+    announcementDataList: {
+        title: string;
+        text: string;
+        author: string;
+        timeout: string;
+        timeOfAddition: string,
+    }[];
+}

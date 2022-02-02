@@ -1,7 +1,7 @@
 import {DocumentDefinition} from "mongoose";
 import {omit} from "lodash";
 import {ValuesModel} from "../models/values.model";
-import {ValuesData} from "../../../shared/persistence/data";
+import {ValuesData} from "../../../shared/interfaces/interfaces";
 
 export async function createValues(input: DocumentDefinition<ValuesData>) {
     //before creating a Users, delete all Users in the collection, to guarantee there ist only one stored at a time

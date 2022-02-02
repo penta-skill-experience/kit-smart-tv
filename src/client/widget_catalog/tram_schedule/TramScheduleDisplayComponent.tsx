@@ -90,8 +90,8 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
 
     render() {
         return <div className="grid grid-flow-row sm:g-0.5 xl:gap-1.5 2xl:gap-2 box-border">
-            <div className="font-light leading-normal sm:text-sm sm:text-center lg:text-base xl:text-xl 2xl:text-2xl
-             4xl:text-3xl 8xl:text-5xl sm:-mt-1 lg:-mt-2 xl:-mt-3 4xl:-mt-4 8xl:-mt-5">  {this.getStopName()}
+            <div className="font-light leading-none sm:text-sm sm:text-center lg:text-base xl:text-xl 2xl:text-2xl
+             4xl:text-3xl 8xl:text-5xl sm:pb-1 lg:pb-2 xl:pb-3 4xl:pb-4">  {this.getStopName()}
             </div>
             {
                 ((!this.state.trains.length) ? <div className="font-light leading-normal sm:text-sm sm:text-left lg:text-base xl:text-xl 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl">

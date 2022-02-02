@@ -40,20 +40,16 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
             loadedCafeteria: false,
 
             openToday: false,
-            openColor: "limeGreen",
-            closedColor: "tomato",
         };
     }
     private getDateOpening(url: string): Promise<Date>{
         const current = new Date();
         const currentDay = new Date(current.getFullYear(), current.getMonth(), current.getDate());
-        current.setFullYear(0);
-        current.setMonth(0);
-        current.setDate(0);
+        const comparatorDate = new Date(0,0,0,current.getHours(), current.getMinutes(), current.getSeconds());
         return axios.get(CafeteriaOpeningConfig.URL_NEXT_MEAL).then(resp => {
             if(this.parseDate(resp.data[0].date).valueOf() === currentDay.valueOf()){
                 return this.getHourOpening(url).then(respOne => {
-                    if(current < respOne[1]){
+                    if(comparatorDate < respOne[1]){
                         return this.parseDate(resp.data[0].date);
                     }else{
                         return this.parseDate(resp.data[1].date);
@@ -78,13 +74,11 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
     private isOpen(url: string): Promise<boolean> {
         const current = new Date();
         const currentDay = new Date(current.getFullYear(), current.getMonth(), current.getDate());
-        current.setFullYear(0);
-        current.setMonth(0);
-        current.setDate(0);
+        const hoursNow = new Date(0,0,0, current.getHours(), current.getMinutes())
         return this.getDateOpening(url).then(resp => {
             if(resp.valueOf() === currentDay.valueOf()) {
                         return this.getHourOpening(url).then(respOne => {
-                            return (respOne[0] < current && current < respOne[1]);
+                            return (respOne[0] < hoursNow && hoursNow < respOne[1]);
                         });
                     }else{
                         return false;
@@ -158,8 +152,12 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
     private openToday(url: string): Promise<boolean> {
         const current = new Date();
         const currentDay= new Date(current.getFullYear(), current.getMonth(), current.getDate());
+        const comparatorDate = new Date(0,0,0,current.getHours(), current.getMinutes(), current.getSeconds());
         return this.getDateOpening(url).then(resp => {
-            return (resp.valueOf() === currentDay.valueOf());
+            //check if current time is after closing time
+            return this.getHourOpening(CafeteriaOpeningConfig.URL_DINNING_OPENING_TIMES).then(resp => {
+                return (resp.valueOf() === currentDay.valueOf()) && comparatorDate < resp[1];
+            });
         });
     }
     componentDidMount() {
@@ -179,17 +177,15 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
         return date;
     }
 
-    private reformatDate(dateString: string): string {
+    private reformatDate(date: Date): string {
         try {
-            return this.parseDate(dateString)
-                .toLocaleDateString(["en"], {
+            return date.toLocaleDateString(["en"], {
                     day: "numeric",
                     month: "long",
                 });
         } catch (e) {
             //ignore
         }
-        return dateString;  // fallback if the format of dateString is different than expected
     }
     private getTime(date: Date) {
         return date.toLocaleTimeString("de", {hour: '2-digit', minute: '2-digit'});
@@ -204,7 +200,7 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                         <div>Dining Hall:&nbsp;
                         </div>
                         <div className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center" style={{
-                            backgroundColor: (this.state.openDinningRightNow ? this.state.openColor : this.state.closedColor),
+                            backgroundColor: (this.state.openDinningRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
                         }}/>
                         {(this.state.openDinningRightNow ? <div>
                             {this.getTime(this.state.timesDinning[1])}
@@ -216,7 +212,7 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                         <div>[koeri]Werk:&nbsp;
                         </div>
                         <div className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center" style={{
-                            backgroundColor: (this.state.openKoeriRightNow ? this.state.openColor : this.state.closedColor),
+                            backgroundColor: (this.state.openKoeriRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
                         }}/>
                         {(this.state.openKoeriRightNow ? <div>
                             {this.getTime(this.state.timesKoeri[1])}
@@ -228,7 +224,7 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                         <div>[pizza+pasta]Werk:&nbsp;
                         </div>
                         <div className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center" style={{
-                            backgroundColor: (this.state.openPizzaRightNow ? this.state.openColor : this.state.closedColor),
+                            backgroundColor: (this.state.openPizzaRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
                         }}/>
                         {(this.state.openPizzaRightNow ? <div>
                             {this.getTime(this.state.timesPizza[1])}
@@ -240,7 +236,7 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                         <div>Cafeteria:&nbsp;
                         </div>
                         <div className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center" style={{
-                            backgroundColor: (this.state.openCafeteriaRightNow ? this.state.openColor : this.state.closedColor),
+                            backgroundColor: (this.state.openCafeteriaRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
                         }}/>
                         {(this.state.openCafeteriaRightNow ? <div>
                             {this.getTime(this.state.timesCafeteria[1])}

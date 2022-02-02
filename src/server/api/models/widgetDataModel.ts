@@ -1,13 +1,5 @@
 import * as mongoose from "mongoose";
 
-export interface WidgetDataInput {
-    widgetDataList: {
-        widgetId: string;
-        location: number;
-        rawConfig?: Object;
-    }[];
-}
-
 export interface WidgetDataDocument {
     createdAt: Date;
     updatedAt: Date;
