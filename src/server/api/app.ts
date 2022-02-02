@@ -34,8 +34,9 @@ serverSetup(process.env.MONGO_URI);
 
 
 export function serverSetup(dbUri : string) {
-    const mail = new AnnouncementMailListener;
-    mail.createMailListener();
+    //todo uncomment before committing
+    //const mail = new AnnouncementMailListener;
+    //mail.createMailListener();
 
     const port = config.port;
 

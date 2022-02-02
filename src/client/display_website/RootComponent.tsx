@@ -6,8 +6,6 @@ import {WidgetLoader} from "../widget/WidgetLoader";
 import {WidgetPersistence} from "../../shared/persistence/WidgetPersistence";
 import {WidgetData} from "../widget/WidgetData";
 import {RotatorComponent} from "./RotatorComponent";
-import {DesignValuesPersistence} from "../../shared/persistence/DesignValuesPersistence";
-import {DesignConfigPersistence} from "../../shared/persistence/DesignConfigPersistence";
 import * as RootComponentConfig from "./RootComponent.json";
 import {DesignUtility} from "../../shared/persistence/DesignUtility";
 
@@ -50,6 +48,8 @@ export class RootComponent extends React.Component<any, RootComponentState> {
     loadTheme() {
         DesignUtility.getDesignConfigValues()
             .then(design => {
+                console.log("design:");
+                console.log(design);
                 this.setState({
                     relativeSize: design.fontSize.relativeSize,
                     themeID: design.colorScheme.id,
@@ -58,7 +58,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
                     specialBoldFontColor: design.colorScheme.specialBoldFontColor,
                     specialSubtleFontColor: design.colorScheme.specialSubtleFontColor,
                     accentBarColor: design.colorScheme.accentBarColor,
-                    backgroundImage: design.background.url,
+                    backgroundImage: design.background,
                 });
                 this.switchFontSizeDocument(design.fontSize.relativeSize);
             })

@@ -1,5 +1,3 @@
-import {Background} from "./Background";
-
 export interface ColorScheme {
     id: string;
     name: string;
@@ -8,5 +6,5 @@ export interface ColorScheme {
     specialBoldFontColor: string;
     specialSubtleFontColor: string;
     accentBarColor: string;
-    backgrounds: Background[];
+    backgrounds: string[];  // URLs
 }
