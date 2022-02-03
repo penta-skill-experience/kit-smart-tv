@@ -110,3 +110,8 @@ The announcement gets deleted.
 This is only possible, if the sent announcement is from the same Verified User as the original announcement or if the sent announcemnt is from
 an announcement admin.
 
+# RSSFeed Warning
+
+!!!Only enter trusted rss feeds into an rss-feed widget!!!
+The rss feed embeds foreign HTML. This is a potential system.
+
