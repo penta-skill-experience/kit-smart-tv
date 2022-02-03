@@ -1,9 +1,8 @@
 import {Request, Response} from "express";
-import {getUsers} from "../services/users.services";
-import {updateOrCreateAnnouncements} from "../services/announcements.services";
+import {getUsers, updateOrCreateUsers} from "../services/users.services";
 
 export function updateUsersHandler(req: Request, res: Response): void {
-    updateOrCreateAnnouncements(req.body)
+    updateOrCreateUsers(req.body)
         .then(() => {
             res.send();
         })
