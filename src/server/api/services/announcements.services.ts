@@ -1,9 +1,13 @@
 import {DocumentDefinition} from "mongoose";
-import {AnnouncementsModel} from "../models/announcements.model";
-import {AnnouncementsData} from "../../../shared/interfaces/interfaces";
+import {AnnouncementsData, AnnouncementsDocument, AnnouncementsModel} from "../models/announcements.model";
 import {Announcement} from "../../../shared/values/Announcement";
 
-export function createAnnouncements(announcements: Announcement[]): Promise<void> {
+export function updateOrCreateAnnouncements(announcements: Announcement[]): Promise<void> {
+    return updateAnnouncements(announcements)
+        .catch(() => createAnnouncements(announcements));  // try to create announcements instead
+}
+
+function createAnnouncements(announcements: Announcement[]): Promise<void> {
 
     const doc: DocumentDefinition<AnnouncementsData> = {
         announcementDataList: announcements,
@@ -28,7 +32,7 @@ export function createAnnouncements(announcements: Announcement[]): Promise<void
     });
 }
 
-export function updateAnnouncements(announcements: Announcement[]): Promise<void> {
+function updateAnnouncements(announcements: Announcement[]): Promise<void> {
 
     const doc: DocumentDefinition<AnnouncementsData> = {
         announcementDataList: announcements,
@@ -47,10 +51,10 @@ export function updateAnnouncements(announcements: Announcement[]): Promise<void
     });
 }
 
-export async function getAnnouncements(): Promise<Announcement[]> {
+export function getAnnouncements(): Promise<Announcement[]> {
     return new Promise<Announcement[]>((resolve, reject) => {
         AnnouncementsModel.findOne().then(
-            document => resolve(document.announcementDataList),
+            (document: AnnouncementsDocument) => resolve(document.announcementDataList),
             reason => reject(reason)
         );
     });

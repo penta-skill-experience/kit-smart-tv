@@ -1,7 +1,11 @@
 import * as mongoose from "mongoose";
-import {AnnouncementsData} from "../../../shared/interfaces/interfaces";
+import {Announcement} from "../../../shared/values/Announcement";
 
-interface AnnouncementsDocument extends AnnouncementsData, mongoose.Document {
+export interface AnnouncementsData {
+    announcementDataList: Announcement[];
+}
+
+export interface AnnouncementsDocument extends AnnouncementsData, mongoose.Document {
     createdAt: Date;
     updatedAt: Date;
 }

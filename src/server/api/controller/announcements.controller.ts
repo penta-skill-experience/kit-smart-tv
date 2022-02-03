@@ -1,19 +1,13 @@
 import {Request, Response} from "express";
-import {createAnnouncements, getAnnouncements, updateAnnouncements} from "../services/announcements.services";
+import {getAnnouncements, updateOrCreateAnnouncements} from "../services/announcements.services";
 
 export function updateAnnouncementsHandler(req: Request, res: Response): void {
-    updateAnnouncements(req.body)
+    updateOrCreateAnnouncements(req.body)
         .then(() => {
             res.send();
         })
-        .catch(() => {
-            createAnnouncements(req.body)
-                .then(() => {
-                    res.send();
-                })
-                .catch(reason => {
-                    res.status(400).send(`could not create announcement data: ${reason}`);
-                });
+        .catch(reason => {
+            res.status(400).send(`could not create announcement data: ${reason}`);
         });
 }
 

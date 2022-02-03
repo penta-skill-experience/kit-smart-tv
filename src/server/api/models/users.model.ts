@@ -1,13 +1,11 @@
 import * as mongoose from "mongoose";
+import {IVerifiedUser} from "../../../shared/values/IVerifiedUser";
 
-export interface UsersInput {
-    usersDataList: {
-        email: string;
-        author: string;
-    }[];
+export interface VerifiedUsersData {
+    usersDataList: IVerifiedUser[];
 }
 
-export interface UsersDocument extends UsersInput, mongoose.Document {
+export interface UsersDocument extends VerifiedUsersData, mongoose.Document {
     createdAt: Date;
     updatedAt: Date;
 }

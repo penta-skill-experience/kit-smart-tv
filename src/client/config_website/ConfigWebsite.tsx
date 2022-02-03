@@ -288,8 +288,8 @@ export function ConfigWebsite() {
         if (verUserListElement.name !== '' && verUserListElement.mail !== '') {
             const newVerUser = new VerifiedUser(verUserListElement.mail, verUserListElement.name)
             const newUser = {
-                mail:verUserListElement.mail,
-                name:verUserListElement.name,
+                mail: verUserListElement.mail,
+                name: verUserListElement.name,
                 verUser: newVerUser,
             };
             setMailList(mailList.concat(newUser));
@@ -302,10 +302,7 @@ export function ConfigWebsite() {
     }
 
     const handleVerUserList = () => {
-        const newList: VerifiedUser[] = [];
-        mailList.forEach(item=>{
-            newList.push(item.verUser);
-        });
+        const newList: VerifiedUser[] = mailList.map(item => item.verUser);
         announcementPersistence.setVerifiedUsers(newList).then(() => console.log('VerUsers Saved'));
     }
 

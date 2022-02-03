@@ -1,20 +1,50 @@
 import {DocumentDefinition} from "mongoose";
-import {omit} from "lodash";
-import {UsersInput, UsersModel} from "../models/users.model";
+import {UsersDocument, UsersModel, VerifiedUsersData} from "../models/users.model";
+import {IVerifiedUser} from "../../../shared/values/IVerifiedUser";
 
-export async function createUsers(input: DocumentDefinition<UsersInput>) {
+export function updateOrCreateUsers(users: IVerifiedUser[]) {
+    return updateUsers(users)
+        .catch(() => createUsers(users));  // try to create users instead
+}
+
+function createUsers(users: IVerifiedUser[]): Promise<void> {
     //before creating a Users, delete all Users in the collection, to guarantee there ist only one stored at a time
-    //delete all
-    await UsersModel.remove({});
-    await UsersModel.create(input);
-    return await UsersModel.findOne({}).then(o => omit(o.toJSON(), ["_id", "createdAt", "updatedAt", "__v"]));
+
+    const doc: DocumentDefinition<VerifiedUsersData> = {
+        usersDataList: users,
+    };
+
+    return new Promise<void>((resolve, reject) => {
+        UsersModel.remove().then(
+            () => {
+                UsersModel.create(doc).then(
+                    () => resolve(),
+                    reason => reject(reason),
+                )
+            },
+            reason => reject(reason),
+        );
+    });
 }
 
-export async function updateUsers(input: DocumentDefinition<UsersInput>) {
-    await UsersModel.findOneAndUpdate({}, input);
-    return await UsersModel.findOne({}).then(o => omit(o.toJSON(), ["_id", "createdAt", "updatedAt", "__v"]))
+function updateUsers(users: IVerifiedUser[]): Promise<void> {
+
+    const doc: DocumentDefinition<VerifiedUsersData> = {
+        usersDataList: users,
+    };
+
+    return new Promise<void>((resolve, reject) => {
+        UsersModel.findOneAndUpdate(undefined, doc).then(
+            () => resolve(),
+            reason => reject(reason)
+        );
+    });
 }
 
-export async function getUsers() {
-    return await UsersModel.findOne({}).then(o => omit(o.toJSON(), ["_id", "createdAt", "updatedAt", "__v"]));
+export function getUsers(): Promise<IVerifiedUser[]> {
+    return new Promise<IVerifiedUser[]>((resolve, reject) => {
+        UsersModel.findOne().then(
+            (document: UsersDocument) => resolve(document.usersDataList),
+            reason => reject(reason));
+    });
 }
