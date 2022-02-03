@@ -22,7 +22,7 @@ export class EmailAnnouncementCommandIdentifier {
      * @returns the created instance of AnnouncementCommand
      */
     identifyCommand() : AnnouncementCommand {
-        if (this.announcement.text === MailInteractionConfig.REMOVE_ANNOUNCEMENT_TEXT) {
+        if (this.announcement.text.trim() === MailInteractionConfig.REMOVE_ANNOUNCEMENT_TEXT) {
             return new RemoveAnnouncementCommand(this.announcement);
         } else {
             return new SetAnnouncementCommand(this.announcement);
