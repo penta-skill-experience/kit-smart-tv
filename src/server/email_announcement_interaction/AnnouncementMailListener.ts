@@ -27,7 +27,7 @@ export class AnnouncementMailListener {
             debug: console.log(),
             tlsOptions: { rejectUnauthorized: EmailConfig.TLS_OPTIONS.REJECT_UNAUTHORIZED },
             mailbox: EmailConfig.MAILBOX,
-            searchFilter: EmailConfig.SEARCH_FILTER,
+            searchFilter: ["NEW"],
             markSeen: EmailConfig.MARK_SEEN,
             fetchUnreadOnStart: EmailConfig.FETCH_UNREAD_ON_START,
             mailParserOptions: { streamAttachments: false },

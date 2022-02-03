@@ -7,7 +7,6 @@
   "AUTH_TIMEOUT": 5000,
   "TLS_OPTIONS": { "REJECT_UNAUTHORIZED": false },
   "MAILBOX": "INBOX",
-  "SEARCH_FILTER": ["NEW"],
   "MARK_SEEN": true,
   "FETCH_UNREAD_ON_START": true
 }
