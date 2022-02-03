@@ -69,6 +69,24 @@ To remove an admin, remove the corresponding entry from the field.
 
 Verified Users can interact with announcements. They are added and removed by an admin in the admin interface.
 
+# Configuring the e-mail address for announcements
+
+The e-mail address is configured in ./src/server/email_announcement_interaction/MailAccountConfig.json. with the password being entered in
+the .env file with the key "ANNOUNCEMENT_EMAIL_ACCOUNT_PW".
+
+This is an example for the MailAccountConfig.json
+{
+  "USERNAME": "kit-smart-tv.testing@outlook.de",    This is the e-mail address the announcements must be sent to
+  "HOST": "outlook.office365.com",                  The host of that e-mail address
+  "PORT": 993,                                      The corresponding port
+  "TLS": true,                                      Whether to use tls
+  "CONN_TIMEOUT": 10000,                            the connection timeout
+  "AUTH_TIMEOUT": 5000,                             the authentication timeout
+  "TLS_OPTIONS": { "REJECT_UNAUTHORIZED": false },  whether to use the tls option "rejectUnauthorized"
+  "MAILBOX": "INBOX",                               In which folder to look for new mails
+  "FETCH_UNREAD_ON_START": true                     Whether to fetch all unread mails on startup
+}
+
 # How to send announcements
 
 To send an announcement, send an e-mail to the USERNAME specified in ./src/server/email_announcement_interaction/MailAccountConfig.json.
