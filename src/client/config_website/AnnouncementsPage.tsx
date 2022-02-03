@@ -11,6 +11,10 @@ const adminStatePersistence = new AdminStatePersistence();
 export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNameChange, handleAddMail, handleDeleteUser, handleVerUserList, children}) => {
     const [open, setOpen] = React.useState(false);
     const [sessionBar, setSessionBar] = React.useState(false);
+    const [invalidMailBar, setInvalidMailBar] = React.useState(false);
+    const [doubleMailBar, setDoubleMailBar] = React.useState(false);
+    const [emptyErrorBar, setEmptyErrorBar] = React.useState(false);
+
 
     const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
@@ -18,6 +22,9 @@ export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNa
         }
         setOpen(false);
         setSessionBar(false);
+        setInvalidMailBar(false);
+        setDoubleMailBar(false);
+        setEmptyErrorBar(false);
     }
 
     return(
@@ -41,9 +48,39 @@ export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNa
                     />
                 </Grid>
                 <Grid item>
-                    <Button variant="outlined" onClick={handleAddMail}>
+                    <Button variant="outlined" onClick={() => {
+                        const errorType = handleAddMail();
+                        console.log(errorType);
+                        if (errorType === 0) {
+                            setInvalidMailBar(true);
+                        }
+                        if (errorType === 1) {
+                            setDoubleMailBar(true);
+                        }
+                        if (errorType === 2) {
+                            setEmptyErrorBar(true);
+                        }
+                    }}>
                         Add
                     </Button>
+                    <Snackbar
+                        open={invalidMailBar}
+                        autoHideDuration={6000}
+                        onClose={handleClose}
+                        message={'E-Mail does not exist'}
+                    />
+                    <Snackbar
+                        open={doubleMailBar}
+                        autoHideDuration={6000}
+                        onClose={handleClose}
+                        message={'This E-Mail already exists'}
+                    />
+                    <Snackbar
+                        open={emptyErrorBar}
+                        autoHideDuration={6000}
+                        onClose={handleClose}
+                        message={'Username and email have to be filled out'}
+                    />
                 </Grid>
                 <Grid item xs={12}>
                     <h1>Currently verified accounts:</h1>

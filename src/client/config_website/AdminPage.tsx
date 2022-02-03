@@ -114,7 +114,7 @@ export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNe
                             open={errorBar}
                             autoHideDuration={6000}
                             onClose={handleClose}
-                            message={'New Password must at least be 1 character long'}
+                            message={'Changing Password failed'}
                         />
                         <Snackbar
                             open={sessionErrorBar}

@@ -275,13 +275,14 @@ export function ConfigWebsite() {
 
     const handleAddMail = () => {
         const alreadyExists = mailList.some(item => verUserListElement.mail === item.mail);
+        if (verUserListElement.name === '' && verUserListElement.mail === '') {
+            return 2
+        }
         if (!emailValidator.validate(verUserListElement.mail)) {
-            alert('E-Mail does not exist')
-            return;
+            return 0;
         }
         if (alreadyExists === true) {
-            alert('This E-Mail already exists')
-            return;
+            return 1;
         }
         if (verUserListElement.name !== '' && verUserListElement.mail !== '') {
             const newVerUser = new VerifiedUser(verUserListElement.mail, verUserListElement.name)
@@ -291,9 +292,8 @@ export function ConfigWebsite() {
                 verUser: newVerUser,
             };
             setMailList(mailList.concat(newUser));
-            return;
+            return 3;
         }
-        alert('Username and email have to be filled out')
     };
 
     const handleDeleteUser = (listItem) => {
