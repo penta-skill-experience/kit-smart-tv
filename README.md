@@ -59,7 +59,36 @@ curl --location --request POST 'https://localhost:1337/admin/create-admin' \
 ```
 
 
-#How to send announcements
+# Announcement Admins
 
+The announcement admins are specified in the field "ADMINS" in ./src/server/announcement_management/AnnouncementConfig.json-
+To add an admin, add an entry with the e-mail address of the admin to this field.
+To remove an admin, remove the corresponding entry from the field.
 
+# Verified Users
+
+Verified Users can interact with announcements. They are added and removed by an admin in the admin interface.
+
+# How to send announcements
+
+To send an announcement, send an e-mail to the USERNAME specified in ./src/server/email_announcement_interaction/MailAccountConfig.json.
+The subject of the e-mail becomes the title of the announcement.
+The text of the e-mail becomes the text of the announcement.
+If the announcement title already exists, see "How to change announcements".
+This functionality is limited to Verified Users and the announcement admins.
+
+# How to change announcements
+
+To change an announcement, send an announcement with the same title as the announcement you wish to change.
+The original text of the announcement gets deleted and is replaced with the text from the sent announcement.
+This is only possible, if the sent announcement is from the same Verified User as the original announcement or if the sent announcemnt is from
+an announcement admin.
+
+# How to remove announcements
+
+To remove an announcement, send an announcement with the same title as the announcement you wish to change. Additionally, the sent 
+announcement must have an empty text.
+The announcement gets deleted.
+This is only possible, if the sent announcement is from the same Verified User as the original announcement or if the sent announcemnt is from
+an announcement admin.
 
