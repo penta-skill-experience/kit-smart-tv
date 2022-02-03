@@ -161,7 +161,7 @@ export class PersonalizationPage extends React.Component<PersonalizationPageProp
 
         return <div>
             <h1>Available backgrounds for color scheme {colorScheme.name}:</h1>
-            <ImageList sx={{width: 500, height: 450}} cols={3} rowHeight={164}>
+            <ImageList sx={{width: 680, height: 450}} cols={4} rowHeight={164}>
                 {colorScheme.backgrounds.map(backgroundUrl => (
                     <div>
                         <Grid container spacing={2} direction="column" justifyContent="center"
