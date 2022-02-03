@@ -49,7 +49,9 @@ The admin interface fr configuration is acessable via `https://localhost:1337/ad
 
 If you need your own MongoDB instance, you need to preset an admin before you can use the dashboard and the admin interface properly.
 use the following in the console to create a admin with your own password
-```curl --location --request POST 'https://localhost:1337/admin/create-admin' \
+
+```
+curl --location --request POST 'https://localhost:1337/admin/create-admin' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "password": {{yourpassword}}
