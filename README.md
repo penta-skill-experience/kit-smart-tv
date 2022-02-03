@@ -2,22 +2,18 @@
 
 This is a server application hosting a dashboard with (to KIT ITEC) relevant information on localhost. The dashboard is meant to be dispalyed on big screens. People passing by the screen should read the information while passign by.
 
-# Server Requirements
-The host server has to be a linux or darwin system. (Windows is possible, but some widgets will not fetch the data correctly, if the server is hosted on windows)
+# System Requirements
+The server has to run on a linux or darwin (macOS) system. (Windows is possible, but some widgets will not fetch the data correctly if the server is hosted on windows.)
 You need either a locally running instance of mongoDB or a cloud based one.
 To run the server you need "node" and "npm" installed on the machine.
 
+# How To Run This Project Locally
+Checkout the project using `git clone penta-skill-experience/kit-smart-tv`.
 
+Navigate to the root directory of the project and run `npm install` once to install all dependencies.
 
-# Git Install
-you need git installed to do this.
-Open a console and navigate to the directory you want to store the project. Then clone this project.
-`git clone penta-skill-experience/kit-smart-tv`
-
-
-To set the non public configuration of the project you need a file called `.env` in your project root directory.
-This file must contain the following parameters in the respective `.env` notation
-
+You also need to add a file called `.env` in your project root directory.
+This file must contain the following parameters:
 ```
 ACCESS_TOKEN_PUBLIC_KEY=""
 ACCESS_TOKEN_PRIVATE_KEY=""
@@ -29,23 +25,16 @@ HTTPS_KEY=""
 HTTPS_CERT=""
 ```
 
+Build the project with `npm run build`. This generates a `dist` folder with executable JavaScript under the project root.
 
-After cloning the project and adding `.env` you need to install the used packages. Therefore type in the console in the root directory of the project.
-`npm install`
+Start the server with `node ./dist/server/server.js`.
+This will print a URL to the console under which the dashboard is hosted.
 
-To build the server type in next.
-`npm run build`
+The dashboard is accessible via `https://localhost:1337`.
 
-After the build is finished use `node ./dist/server/server.js`to run the server
+The admin interface is accessible via `https://localhost:1337/admin-interface`.
 
-
-# Call Dashboard
-The dashboard is accessable via `https://localhost:1337`
-
-# Call Settings
-The admin interface fr configuration is acessable via `https://localhost:1337/admin-interface`
-
-# Use own MongoDB instance
+# Optional: Use Own MongoDB Instance
 
 If you need your own MongoDB instance, you need to preset an admin before you can use the dashboard and the admin interface properly.
 After running the server, use the following in the console to create a admin with your own password. This command will only succeed once.
@@ -75,6 +64,7 @@ The e-mail address is configured in ./src/server/email_announcement_interaction/
 the .env file with the key "ANNOUNCEMENT_EMAIL_ACCOUNT_PW".
 
 This is an example for the MailAccountConfig.json
+```
 {
   "USERNAME": "kit-smart-tv.testing@outlook.de",    This is the e-mail address the announcements must be sent to
   "HOST": "outlook.office365.com",                  The host of that e-mail address
@@ -86,6 +76,7 @@ This is an example for the MailAccountConfig.json
   "MAILBOX": "INBOX",                               In which folder to look for new mails
   "FETCH_UNREAD_ON_START": true                     Whether to fetch all unread mails on startup
 }
+```
 
 # How to send announcements
 
