@@ -25,14 +25,21 @@ HTTPS_KEY=""
 HTTPS_CERT=""
 ```
 
-Build the project with `npm run build`. This generates a `dist` folder with executable JavaScript under the project root.
+Build the project:
+```sh
+npm run build
+```
+This generates a `dist` folder with executable JavaScript under the project root.
 
-Start the server with `node ./dist/server/server.js`.
+Start the server:
+```sh
+node ./dist/server/server.js
+```
 This will print a URL to the console under which the dashboard is hosted.
 
-The dashboard is accessible via `https://localhost:1337`.
+The dashboard is accessible via <https://localhost:1337>.
 
-The admin interface is accessible via `https://localhost:1337/admin-interface`.
+The admin interface is accessible via <https://localhost:1337/admin-interface>.
 
 # Optional: Use Own MongoDB Instance
 
