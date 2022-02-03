@@ -249,7 +249,7 @@ export function ConfigWebsite() {
     };
 
     const handlePasswordChange = () => {
-        adminStatePersistence.setPassword(oldPassword, newPassword)
+        return adminStatePersistence.setPassword(oldPassword, newPassword)
             .then(() => true)
             .catch(() => false)
         ;

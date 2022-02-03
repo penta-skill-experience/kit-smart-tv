@@ -85,11 +85,13 @@ export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNe
                     <Grid item xs={12}>
                         <Button
                             onClick={() => {
-                                if (handlePasswordChange()) {
-                                    setSuccessfulBar(true);
-                                } else{
-                                    setErrorBar(true);
-                                }
+                                handlePasswordChange().then(myBoolean => {
+                                    if(myBoolean) {
+                                        setSuccessfulBar(true);
+                                    } else {
+                                        setErrorBar(true);
+                                    }
+                                })
                             }}
                             variant="outlined"
                         >
