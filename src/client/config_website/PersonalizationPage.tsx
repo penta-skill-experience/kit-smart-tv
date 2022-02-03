@@ -156,10 +156,14 @@ export class PersonalizationPage extends React.Component<PersonalizationPageProp
                             <Grid item>
                                 <ImageListItem key={backgroundUrl}>
                                     <img
-                                        src={`${backgroundUrl}?w=164&h=164&fit=crop&auto=format`}
-                                        srcSet={`${backgroundUrl}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                                        src={`${backgroundUrl}`}
                                         loading="lazy"
-                                    />
+                                        alt = "background image"
+                                    style = {{
+                                        width: "164px",
+                                        height:"164px",
+                                        objectFit: "cover"
+                                    }}/>
                                 </ImageListItem>
                             </Grid>
                             <Grid item>
