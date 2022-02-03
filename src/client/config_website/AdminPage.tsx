@@ -29,6 +29,7 @@ export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNe
     const [successfulBar, setSuccessfulBar] = React.useState(false);
     const [errorBar, setErrorBar] = React.useState(false);
     const [sessionErrorBar, setSessionErrorBar] = React.useState(false);
+    const [emptyErrorBar, setEmptyErrorBar] = React.useState(false);
 
     const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
@@ -37,6 +38,7 @@ export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNe
         setSuccessfulBar(false);
         setErrorBar(false);
         setSessionErrorBar(false);
+        setEmptyErrorBar(false);
     }
 
     return (
@@ -94,9 +96,13 @@ export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNe
                                     if(myBoolean) {
                                         setSuccessfulBar(true);
                                     } else {
-                                        adminStatePersistence.getAdminLoginState()
-                                            .then(() => setErrorBar(true))
-                                            .catch(() => setSessionErrorBar(true));
+                                        if (oldPassword === '' || newPassword === '') {
+                                            setEmptyErrorBar(true);
+                                        } else {
+                                            adminStatePersistence.getAdminLoginState()
+                                                .then(() => setErrorBar(true))
+                                                .catch(() => setSessionErrorBar(true));
+                                        }
                                     }
                                 })
                             }}
@@ -121,6 +127,12 @@ export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNe
                             autoHideDuration={6000}
                             onClose={handleClose}
                             message={'Session expired'}
+                        />
+                        <Snackbar
+                            open={emptyErrorBar}
+                            autoHideDuration={6000}
+                            onClose={handleClose}
+                            message={'Old and new password must not be empty'}
                         />
                     </Grid>
                     <Grid item xs={12}>
