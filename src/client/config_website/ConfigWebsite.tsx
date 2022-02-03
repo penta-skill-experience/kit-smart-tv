@@ -303,7 +303,9 @@ export function ConfigWebsite() {
 
     const handleVerUserList = () => {
         const newList: VerifiedUser[] = mailList.map(item => item.verUser);
-        announcementPersistence.setVerifiedUsers(newList).then(() => console.log('VerUsers Saved'));
+        announcementPersistence.setVerifiedUsers(newList)
+            .then(() => console.log('VerUsers Saved'))
+            .catch(reason => console.warn(`could not save verified users list: ${reason}`));
     }
 
     useEffect(() => {
