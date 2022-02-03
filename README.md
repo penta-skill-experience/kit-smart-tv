@@ -59,4 +59,7 @@ curl --location --request POST 'https://localhost:1337/admin/create-admin' \
 ```
 
 
+#How to send announcements
+
+
 
