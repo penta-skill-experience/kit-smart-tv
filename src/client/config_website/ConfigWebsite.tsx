@@ -99,6 +99,7 @@ export function ConfigWebsite() {
 
     const handleColorSchemeChange = (event: React.MouseEvent<HTMLElement>, newColorScheme: string | null) => {
         setColorScheme(newColorScheme);
+        setSelectedBackground('');
     };
 
     const handleFontSizeChange = (
