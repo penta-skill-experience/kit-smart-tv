@@ -83,23 +83,17 @@ export class AnnouncementPersistenceFrontend implements AnnouncementPersistence 
                         .then((announcements: Announcement[]) => {
 
                             resolve(announcements
-                                .map(announcement => ({
-                                    title: announcement.title,
-                                    author: announcement.author,
-                                    text: announcement.text,
-                                    timeOfAddition: new Date(+announcement.timeOfAddition).valueOf(),
-                                    timeout: new Date(+announcement.timeout).valueOf() - +announcement.timeOfAddition,
-                                }))
                                 .filter(announcement => announcement.timeout > Date.now())  // check for expiry
                             );
 
                         })
-                        .catch(() => {
+                        .catch(reason => {
+                            console.warn(reason);
                             resolve([]);
                         });
                 })
-                .catch(() => {
-                    reject();
+                .catch(reason => {
+                    reject(reason);
                 });
         });
     }

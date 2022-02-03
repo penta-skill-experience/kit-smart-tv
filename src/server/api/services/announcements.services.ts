@@ -47,7 +47,7 @@ export function updateAnnouncements(announcements: Announcement[]): Promise<void
     });
 }
 
-export async function getAnnouncements(): Promise<Announcement[]> {
+export function getAnnouncements(): Promise<Announcement[]> {
     return new Promise<Announcement[]>((resolve, reject) => {
         AnnouncementsModel.findOne().then(
             document => resolve(document.announcementDataList),
