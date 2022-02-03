@@ -28,7 +28,7 @@ export class AnnouncementMailListener {
             tlsOptions: { rejectUnauthorized: EmailConfig.TLS_OPTIONS.REJECT_UNAUTHORIZED },
             mailbox: EmailConfig.MAILBOX,
             searchFilter: ["NEW"],
-            markSeen: EmailConfig.MARK_SEEN,
+            markSeen: true,
             fetchUnreadOnStart: EmailConfig.FETCH_UNREAD_ON_START,
             mailParserOptions: { streamAttachments: false },
             attachments: false,
