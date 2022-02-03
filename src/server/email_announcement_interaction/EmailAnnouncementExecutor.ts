@@ -16,10 +16,7 @@ export class EmailAnnouncementExecutor {
         const parsedAnnouncement = new EmailAnnouncementParser(mail).parseToAnnouncement();
 
         try {
-            new EmailAnnouncementCommandIdentifier(parsedAnnouncement).identifyCommand().executeCommand()
-                .catch(reason => {
-                    console.error(reason);
-                });
+            new EmailAnnouncementCommandIdentifier(parsedAnnouncement).identifyCommand().executeCommand();
         } catch(e) {
             if (e instanceof AnnouncementCommandError) {
                 // can later be used to send feedback
