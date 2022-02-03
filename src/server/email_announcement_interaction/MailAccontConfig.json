@@ -9,5 +9,5 @@
   "MAILBOX": "INBOX",
   "SEARCH_FILTER": ["NEW"],
   "MARK_SEEN": true,
-  "FETCH_UNREAD_ON_START": true,
+  "FETCH_UNREAD_ON_START": true
 }
