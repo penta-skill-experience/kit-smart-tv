@@ -4,7 +4,7 @@ export const createAdminSchema = object({
     body: object({
         password: string({
             required_error: "Password is required",
-        }).min(6, "Password too short - should be 6 chars minimum"),
+        }).min(1, "Password too short - should be one chars minimum"),
     })
 });
 

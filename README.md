@@ -3,7 +3,7 @@
 This is a server application hosting a dashboard with (to KIT ITEC) relevant information on localhost. The dashboard is meant to be dispalyed on big screens. People passing by the screen should read the information while passign by.
 
 # Server Requirements
-The host server has to be a linux or darwin system. (Windows is possible but some widgets will not fetch the data correctly, if the server is hosted on windows)
+The host server has to be a linux or darwin system. (Windows is possible, but some widgets will not fetch the data correctly, if the server is hosted on windows)
 You need either a locally running instance of mongoDB or a cloud based one.
 To run the server you need "node" and "npm" installed on the machine.
 
@@ -48,7 +48,7 @@ The admin interface fr configuration is acessable via `https://localhost:1337/ad
 # Use own MongoDB instance
 
 If you need your own MongoDB instance, you need to preset an admin before you can use the dashboard and the admin interface properly.
-use the following in the console to create a admin with your own password
+After running the server, use the following in the console to create a admin with your own password. This command will only succeed once.
 
 ```
 curl --location --request POST 'https://localhost:1337/admin/create-admin' \

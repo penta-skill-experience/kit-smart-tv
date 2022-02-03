@@ -1,6 +1,6 @@
 import * as AnnouncementConfig from "../../../../server/announcement_management/AnnouncementConfig.json";
 import {VerifiedUser} from "../../../../shared/values/VerifiedUser";
-import {AnnouncementPersistence} from "../../../../shared/persistence/announcements/AnnouncementPersistence";
+import {AnnouncementPersistenceBackend} from "../../../../shared/persistence/announcements/AnnouncementPersistenceBackend";
 import {SetAnnouncementCommand} from "../../../../server/announcement_management/SetAnnouncementCommand";
 import {
     AnnouncementCommandError,
@@ -31,9 +31,9 @@ const announcements = [bobAnnouncement, aliceAnnouncement];
 let setAnnouncements: Announcement[] = [];
 
 //mocking announcementPersistence to return test values for these tests
-const getAnnouncementsMock = jest.spyOn(AnnouncementPersistence.prototype, "getAnnouncements");
-const getVerifiedUsersMock = jest.spyOn(AnnouncementPersistence.prototype, "getVerifiedUsers");
-const setAnnouncementsMock = jest.spyOn(AnnouncementPersistence.prototype, "setAnnouncements");
+const getAnnouncementsMock = jest.spyOn(AnnouncementPersistenceBackend.prototype, "getAnnouncements");
+const getVerifiedUsersMock = jest.spyOn(AnnouncementPersistenceBackend.prototype, "getVerifiedUsers");
+const setAnnouncementsMock = jest.spyOn(AnnouncementPersistenceBackend.prototype, "setAnnouncements");
 
 getAnnouncementsMock.mockImplementation(() => {
     return new Promise<Announcement[]>(resolve => {
