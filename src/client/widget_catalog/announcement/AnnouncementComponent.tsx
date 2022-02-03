@@ -36,11 +36,8 @@ export class AnnouncementComponent extends DisplayComponent<AnnouncementState> {
         });
     }
 
-    async componentWillMount() {
-        await this.tick();
-    }
-
     componentDidMount() {
+        this.tick();
         setInterval(() => this.tick(), AnnouncementConfig.REFRESH_RATE);
     }
 
