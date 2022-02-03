@@ -5,9 +5,12 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 export class RotatorComponent extends React.Component<any, any> {
 
+    private intervalHandle;
+
     private pageSwitch() {
-        const newIndex = (this.state.index + 1) % React.Children.count(this.props.children);
-        this.setState({index: newIndex});
+        this.setState({
+            index: (this.state.index + 1) % React.Children.count(this.props.children)
+        });
     }
 
     constructor(props) {
@@ -15,19 +18,33 @@ export class RotatorComponent extends React.Component<any, any> {
         this.state = {
             index: 0,
         };
-        setInterval(() => this.pageSwitch(), RotatorComponentConfig.SWITCH_SPEED);
+    }
+
+    componentDidMount() {
+        this.intervalHandle = setInterval(() => this.pageSwitch(), RotatorComponentConfig.SWITCH_SPEED);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.intervalHandle);
     }
 
     render() {
-        return <div className="w-full h-full">
-            <Carousel showIndicators={React.Children.count(this.props.children) > 1} showStatus={false} showArrows={false} autoPlay showThumbs={false} transitionTime={RotatorComponentConfig.SWITCH_SPEED} interval={RotatorComponentConfig.SWITCH_RATE} infiniteLoop={true} dynamicHeight={false}>
-                {
-                    React.Children.map(this.props.children, child =>
-                        <div>
-                            {child}
-                        </div>)
-                }
-            </Carousel>
+        const multipleChildren = React.Children.count(this.props.children) > 1;
+        return <div className="w-full h-full text-center">
+            {
+                multipleChildren ?
+                    <Carousel showIndicators={true} showStatus={false} showArrows={false} autoPlay
+                              showThumbs={false} transitionTime={RotatorComponentConfig.SWITCH_SPEED}
+                              interval={RotatorComponentConfig.SWITCH_RATE} infiniteLoop={true} dynamicHeight={false}>
+                        {
+                            React.Children.map(this.props.children, child =>
+                                <div>
+                                    {child}
+                                </div>)
+                        }
+                    </Carousel>
+                    : <div>{this.props.children}</div>
+            }
         </div>
     }
 }
