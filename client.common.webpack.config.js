@@ -74,6 +74,7 @@ module.exports = (env, styleLoader) => ({
         new HtmlWebpackPlugin({
             // a template is needed in order to provide a root component with the id "root" to ReactDOM
             template: path.join(__dirname, "src", "client", env.client_dir, "index.html"),
+            favicon: path.join(__dirname, "src", "client", env.client_dir, "favicon.ico"),  //todo: make this a parameter of the webpack config
         }),
     ],
 
