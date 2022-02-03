@@ -329,8 +329,14 @@ export function ConfigWebsite() {
 
     const handleLogout = () => {
         adminStatePersistence.logout()
-            .then(() => setLoggedInStatus(false))
-            .catch(() => setLoggedInStatus(false));
+            .then(() => {
+                setLoggedInStatus(false);
+                setLogInInput('');
+            })
+            .catch(() => {
+                setLoggedInStatus(false);
+                setLogInInput('');
+            });
     };
 
     function renderConfigWebsite() {

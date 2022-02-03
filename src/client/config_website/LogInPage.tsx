@@ -10,6 +10,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 export const LogInPage = ({logInInput, handleInput, visible, handleLogIn, handleClickShowPassword, children}) => {
 
+
     return (
         <div style={{
             display: "flex",
