@@ -33,35 +33,43 @@ export class SetAnnouncementCommand implements AnnouncementCommand {
         "allowed to add announcements";
 
 
-    private readonly announcement : Announcement;
+    private readonly announcement: Announcement;
 
     /**
      * Constructs a SetAnnouncementCommand.
      * @param announcement the announcement to execute this command for.
      */
-    constructor(announcement : Announcement) {
+    constructor(announcement: Announcement) {
         if (announcement.text === SetAnnouncementCommand.INVALID_ANNOUNCEMENT_TEXT) {
             throw new IllegalAnnouncementTextForCommandError(SetAnnouncementCommand.INVALID_ANNOUNCEMENT_TEXT_ERROR_MSG);
         }
         this.announcement = announcement;
     }
 
-    async executeCommand() {
-        const currentVerifiedUsers = await AnnouncementPersistence.getInstance().getVerifiedUsers();
-        const authorType = new AnnouncementAuthorTypeIdentifier().getAuthorType(this.announcement.author
-            , currentVerifiedUsers)
+    executeCommand(): Promise<void> {
+        return Promise.all([
+            AnnouncementPersistence.getInstance().getVerifiedUsers(),
+            AnnouncementPersistence.getInstance().getAnnouncements()
+        ])
+            .then(values => {
+                const [currentVerifiedUsers, currentAnnouncements] = values;
 
-        const currentAnnouncements = await AnnouncementPersistence.getInstance().getAnnouncements();
-        const currentAnnouncementTitles = getAnnouncementTitles(currentAnnouncements);
+                const authorType = new AnnouncementAuthorTypeIdentifier().getAuthorType(this.announcement.author, currentVerifiedUsers);
+                const currentAnnouncementTitles = getAnnouncementTitles(currentAnnouncements);
 
-        if (currentAnnouncementTitles.includes(this.announcement.title)) {
-            this.editAnnouncement(authorType, currentAnnouncements);
-        } else {
-            this.addAnnouncement(authorType, currentAnnouncements);
-        }
+                try {
+                    if (currentAnnouncementTitles.includes(this.announcement.title)) {
+                        this.editAnnouncement(authorType, currentAnnouncements);
+                    } else {
+                        this.addAnnouncement(authorType, currentAnnouncements);
+                    }
+                } catch (e) {
+                    console.warn(`Failed to process announcement: ${e.message}`);
+                }
+            });
     }
 
-    private editAnnouncement(authorType : AnnouncementAuthorType, currentAnnouncements : Announcement[]) {
+    private editAnnouncement(authorType: AnnouncementAuthorType, currentAnnouncements: Announcement[]) {
         const announcementToEdit = getAnnouncementForTitle(currentAnnouncements, this.announcement.title);
 
         if (!(announcementToEdit.author === this.announcement.author
@@ -76,7 +84,7 @@ export class SetAnnouncementCommand implements AnnouncementCommand {
         this.pushAnnouncementAndSendToPersistence(announcementsToSend);
     }
 
-    private addAnnouncement(authorType : AnnouncementAuthorType, currentAnnouncements: Announcement[]) {
+    private addAnnouncement(authorType: AnnouncementAuthorType, currentAnnouncements: Announcement[]) {
         if (!authorType.isAllowedToAddAnnouncement()) {
             throw new AnnouncementCommandError(SetAnnouncementCommand.THIS_AUTHOR_NOT_ALLOWED_TO_ADD_ANN_ERROR_MSG);
         }
@@ -84,8 +92,13 @@ export class SetAnnouncementCommand implements AnnouncementCommand {
     }
 
     private pushAnnouncementAndSendToPersistence(announcements: Announcement[]) {
-        const announcementsToSend = [...announcements];
-        announcementsToSend.push(this.announcement);
-        AnnouncementPersistence.getInstance().setAnnouncements(announcementsToSend);
+        try {
+            const announcementsToSend = [...announcements];
+            announcementsToSend.push(this.announcement);
+            AnnouncementPersistence.getInstance().setAnnouncements(announcementsToSend)
+                .catch(reason => console.error(`Failed to set announcements: ${reason}`));
+        } catch (e) {
+            console.error(e.message);
+        }
     }
 }

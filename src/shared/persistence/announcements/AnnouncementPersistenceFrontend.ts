@@ -1,8 +1,8 @@
 import {AnnouncementPersistence} from "./AnnouncementPersistence";
 import config from "../persistence.config.json";
 import {VerifiedUser} from "../../values/VerifiedUser";
-import {ReadableUser} from "./ReadableUser";
 import {Announcement} from "../../values/Announcement";
+import {IVerifiedUser} from "../../values/IVerifiedUser";
 
 /**
  * This implementation of AnnouncementPersistence runs in the browser
@@ -119,17 +119,11 @@ export class AnnouncementPersistenceFrontend implements AnnouncementPersistence 
                         sessionStorage.setItem('accessToken', response.headers.get('x-access-token'));
                     }
                     return response.json()
-                        .then(data => {
-                            let users: VerifiedUser[] = [];
-                            data.usersDataList.forEach(function (user) {
-                                let u = new VerifiedUser(user.email, user.name);
-                                users.push(u);
-                            });
-                            resolve(users);
-
-                        }).catch(() => {
-                            let users: VerifiedUser[] = [];
-                            resolve(users);
+                        .then(users => {
+                            resolve(users.map(user => new VerifiedUser(user.email, user.name)));
+                        }).catch(reason => {
+                            console.warn(reason);
+                            resolve([]);
                         });
                 }).catch(() => reject());
         });
@@ -143,15 +137,17 @@ export class AnnouncementPersistenceFrontend implements AnnouncementPersistence 
             headers.append("x-refresh", sessionStorage.getItem('refreshToken'));
             headers.append("Authorization", `Bearer ${sessionStorage.getItem('accessToken')}`);
         }
-        let read_users: ReadableUser[] = [];
-        users.forEach(user => read_users.push(new ReadableUser(user)))
-        let body = {usersDataList: read_users};
-        console.log(body);
+
+        const readableUsers: IVerifiedUser[] = users.map(user => ({
+            email: user.email,
+            name: user.name,
+        }));
+
         return new Promise<void>((resolve, reject) => {
             fetch(`${config.DOMAIN}/users`, {
                 method: 'PUT',
                 headers: headers,
-                body: JSON.stringify(body),
+                body: JSON.stringify(readableUsers),
             })
                 .then(response => {
                     const new_accessToken = response.headers.get('x-access-token');

@@ -1,11 +1,9 @@
 import {AnnouncementPersistence} from "./AnnouncementPersistence";
 import {VerifiedUser} from "../../values/VerifiedUser";
-import {
-    createAnnouncements,
-    getAnnouncements,
-    updateAnnouncements
-} from "../../../server/api/services/announcements.services";
+import {getAnnouncements, updateOrCreateAnnouncements} from "../../../server/api/services/announcements.services";
 import {Announcement} from "../../values/Announcement";
+import {getUsers, updateOrCreateUsers} from "../../../server/api/services/users.services";
+import {IVerifiedUser} from "../../values/IVerifiedUser";
 
 /**
  * This implementation of AnnouncementPersistence runs on Node
@@ -14,8 +12,7 @@ import {Announcement} from "../../values/Announcement";
 export class AnnouncementPersistenceBackend implements AnnouncementPersistence {
 
     setAnnouncements(announcements: Announcement[]): Promise<void> {
-        return updateAnnouncements(announcements)
-            .catch(() => createAnnouncements(announcements));  // try to create announcements instead
+        return updateOrCreateAnnouncements(announcements);
     }
 
     getAnnouncements(): Promise<Announcement[]> {
@@ -23,13 +20,15 @@ export class AnnouncementPersistenceBackend implements AnnouncementPersistence {
     }
 
     getVerifiedUsers(): Promise<VerifiedUser[]> {
-        //todo
-        return Promise.resolve([]);
+        return getUsers()
+            .then((users: IVerifiedUser[]) => users.map(u => new VerifiedUser(u.email, u.name)));
     }
 
     setVerifiedUsers(users: VerifiedUser[]): Promise<void> {
-        //todo
-        return Promise.resolve(undefined);
+        return updateOrCreateUsers(users.map(u => ({
+            email: u.email,
+            name: u.name,
+        })));
     }
 
 }
