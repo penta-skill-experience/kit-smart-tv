@@ -44,11 +44,21 @@ export class AnnouncementMailListener {
         this.mailListener.start();
 
         this.mailListener.on("mail", mail => {
-            new EmailAnnouncementExecutor().executeEmailCommand(mail);
+            // catch errors here, otherwise the package "mail-listener-typescript" will cause the universe to collapse
+            // (irreversibly ruptures the space-time continuum, see https://en.wikipedia.org/wiki/Gravitational_singularity for details)
+            try {
+                new EmailAnnouncementExecutor().executeEmailCommand(mail);
+            } catch (e) {
+                console.error(e.message);
+            }
         });
 
         this.mailListener.on("error", error => {
-            fs.writeFileSync(EmailInteractionConfig.MAIL_LISTENER_ERROR_FILE_NAME, error);
+            try {
+                fs.writeFileSync(EmailInteractionConfig.MAIL_LISTENER_ERROR_FILE_NAME, error);
+            } catch (e) {
+                console.error(e.message);
+            }
         });
     }
 
