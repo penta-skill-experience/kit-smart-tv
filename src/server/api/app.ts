@@ -29,6 +29,7 @@ import cors from "cors";
 import {AnnouncementMailListener} from "../email_announcement_interaction/AnnouncementMailListener"
 import {putKvvSchema} from "./schema/kvv.schema";
 import {putKvvHandler} from "./controller/kvv.controller";
+import https from 'https';
 
 serverSetup(process.env.MONGO_URI);
 
@@ -50,69 +51,76 @@ export function serverSetup(dbUri: string) {
         express.static(path.resolve(__dirname, "..", "display_website")));
     app.use("/admin-interface",
         express.static(path.resolve(__dirname, "..", "config_website")));
+    app.get("/healthcheck", (req: Request, res: Response) => res.sendStatus(200));
 
-    app.listen(port, async () => {
-        console.log(`this app is running at http://localhost:${port}`);
+    /**
+     *   Admin Routes
+     **/
+    app.post("/admin/create-admin", ensureRequestStructure(createAdminSchema), createAdminHandler);
+
+    app.put("/admin/update-password", requireAdmin, ensureRequestStructure(updatePasswordSchema), updatePasswordHandler);
+
+
+    /**
+     *   Session Routines
+     **/
+    app.post(
+        "/api/sessions",
+        ensureRequestStructure(createSessionSchema),
+        createAdminSessionHandler
+    );
+
+    app.get("/api/sessions", requireAdmin, getSessionHandler);
+
+    app.delete("/api/sessions", requireAdmin, deleteSessionHandler);
+
+    /**
+     *   Widget Routines
+     **/
+    app.get("/widgets", getWidgetDataHandler);
+
+    app.put("/widgets", requireAdmin, ensureRequestStructure(updateWidgetSchema), updateWidgetDataHandler);
+
+    /**
+     *   Announcement Routines
+     **/
+
+    //todo: add middleware that only allows local calls
+    app.put("/announcements", ensureRequestStructure(updateAnnouncementsSchema), updateAnnouncementsHandler);
+    app.get("/announcements", getAnnouncementsHandler);
+
+    /**
+     *   verified User Routines
+     **/
+    app.put("/users", requireAdmin, ensureRequestStructure(updateUsersSchema), updateUsersHandler);
+    app.get("/users", getUsersHandler);
+
+    /**
+     *   Config Routines
+     **/
+    app.put("/config", requireAdmin, ensureRequestStructure(updateConfigSchema), updateConfigHandler);
+    app.get("/config", getConfigHandler);
+
+
+    /**
+     *   Values Routines
+     **/
+    app.put("/values", requireAdmin, ensureRequestStructure(updateValuesSchema), updateValuesHandler);
+    app.get("/values", getValuesHandler);
+
+    app.put("/kvv", ensureRequestStructure(putKvvSchema), putKvvHandler);
+
+
+    const sslServer = https.createServer(
+        {
+            key: process.env.HTTPS_KEY,
+            cert: process.env.HTTPS_CERT,
+        },
+        app
+    )
+
+    sslServer.listen(port, async () => {
         await connect(dbUri);
-
-        app.get("/healthcheck", (req: Request, res: Response) => res.sendStatus(200));
-
-        /**
-         *   Admin Routes
-         **/
-        app.post("/admin/create-admin", ensureRequestStructure(createAdminSchema), createAdminHandler);
-
-        app.put("/admin/update-password", requireAdmin, ensureRequestStructure(updatePasswordSchema), updatePasswordHandler);
-
-
-        /**
-         *   Session Routines
-         **/
-        app.post(
-            "/api/sessions",
-            ensureRequestStructure(createSessionSchema),
-            createAdminSessionHandler
-        );
-
-        app.get("/api/sessions", requireAdmin, getSessionHandler);
-
-        app.delete("/api/sessions", requireAdmin, deleteSessionHandler);
-
-        /**
-         *   Widget Routines
-         **/
-        app.get("/widgets", getWidgetDataHandler);
-
-        app.put("/widgets", requireAdmin, ensureRequestStructure(updateWidgetSchema), updateWidgetDataHandler);
-
-        /**
-         *   Announcement Routines
-         **/
-
-        //todo: add middleware that only allows local calls
-        app.put("/announcements", ensureRequestStructure(updateAnnouncementsSchema), updateAnnouncementsHandler);
-        app.get("/announcements", getAnnouncementsHandler);
-
-        /**
-         *   verified User Routines
-         **/
-        app.put("/users", requireAdmin, ensureRequestStructure(updateUsersSchema), updateUsersHandler);
-        app.get("/users", getUsersHandler);
-
-        /**
-         *   Config Routines
-         **/
-        app.put("/config", requireAdmin, ensureRequestStructure(updateConfigSchema), updateConfigHandler);
-        app.get("/config", getConfigHandler);
-
-
-        /**
-         *   Values Routines
-         **/
-        app.put("/values", requireAdmin, ensureRequestStructure(updateValuesSchema), updateValuesHandler);
-        app.get("/values", getValuesHandler);
-
-        app.put("/kvv", ensureRequestStructure(putKvvSchema), putKvvHandler);
-
-    });
+        console.log(`this app is running at https://localhost:${port}`)
+    })
 }
