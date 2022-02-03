@@ -3,7 +3,7 @@
 This is a server application hosting a dashboard with (to KIT ITEC) relevant information on localhost. The dashboard is meant to be dispalyed on big screens. People passing by the screen should read the information while passign by.
 
 # Server Requirements
-The host server has to be a linux or darwin system. (Windows is possible but some widgets will not fetch the data correctly, if the server is hosted on windows)
+The host server has to be a linux or darwin system. (Windows is possible, but some widgets will not fetch the data correctly, if the server is hosted on windows)
 You need either a locally running instance of mongoDB or a cloud based one.
 To run the server you need "node" and "npm" installed on the machine.
 
