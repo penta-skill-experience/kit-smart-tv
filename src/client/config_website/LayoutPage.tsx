@@ -10,25 +10,24 @@ import {WidgetListElement} from "./WidgetListElement";
 import {WidgetLoader} from "../widget/WidgetLoader";
 import Snackbar from "@mui/material/Snackbar";
 import InputLabel from '@mui/material/InputLabel';
+import {AdminStatePersistence} from "../../shared/persistence/AdminStatePersistence";
 
 
 const widgetLoader = new WidgetLoader();
 const widgetList = widgetLoader.getWidgetIds();
-
+const adminStatePersistence = new AdminStatePersistence();
 
 export const LayoutPage = ({list, widgetListElement, handleWidgetSelection, handleAddWidget, handleDeleteWidget, handlePosition, handleRawConfigSave, handleLayoutChange, children}) => {
 
     const [open, setOpen] = React.useState(false);
-
-    const handleClick = () => {
-        setOpen(true);
-    };
+    const [sessionBar, setSessionBar] = React.useState(false);
 
     const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
         setOpen(false);
+        setSessionBar(false);
     }
 
     return(
@@ -206,7 +205,9 @@ export const LayoutPage = ({list, widgetListElement, handleWidgetSelection, hand
                 <Grid item>
                     <Button variant="contained" onClick={() => {
                         handleLayoutChange();
-                        handleClick();
+                        adminStatePersistence.getAdminLoginState()
+                            .then(() => setOpen(true))
+                            .catch(() => setSessionBar(true))
                     }}>
                         Save
                     </Button>
@@ -215,6 +216,12 @@ export const LayoutPage = ({list, widgetListElement, handleWidgetSelection, hand
                         autoHideDuration={6000}
                         onClose={handleClose}
                         message={'Changes Saved'}
+                    />
+                    <Snackbar
+                        open={sessionBar}
+                        autoHideDuration={6000}
+                        onClose={handleClose}
+                        message={'Session expired'}
                     />
                 </Grid>
             </Grid>

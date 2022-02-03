@@ -12,6 +12,7 @@ import {ColorScheme} from "../../shared/values/ColorScheme";
 import {ConfigData, ValuesData} from "../../shared/interfaces/interfaces";
 import {DesignConfigPersistence} from "../../shared/persistence/DesignConfigPersistence";
 import Snackbar from "@mui/material/Snackbar";
+import {AdminStatePersistence} from "../../shared/persistence/AdminStatePersistence";
 
 interface PersonalizationPageProps {
     colorScheme: string;
@@ -30,7 +31,10 @@ interface PersonalizationPageState {
     designConfig: ConfigData;
     successfulBar:boolean;
     errorBar:boolean;
+    sessionErrorBar:boolean;
 }
+
+const adminStatePersistence = new AdminStatePersistence();
 
 export class PersonalizationPage extends React.Component<PersonalizationPageProps, PersonalizationPageState> {
 
@@ -44,6 +48,7 @@ export class PersonalizationPage extends React.Component<PersonalizationPageProp
             designConfig: undefined,
             successfulBar:false,
             errorBar:false,
+            sessionErrorBar:false,
         };
     }
 
@@ -65,7 +70,7 @@ export class PersonalizationPage extends React.Component<PersonalizationPageProp
         if (reason === 'clickaway') {
             return;
         }
-        this.setState({successfulBar:false, errorBar:false});
+        this.setState({successfulBar:false, errorBar:false, sessionErrorBar:false});
     }
 
     render() {
@@ -113,7 +118,9 @@ export class PersonalizationPage extends React.Component<PersonalizationPageProp
                                     if (myBoolean) {
                                         this.setState({successfulBar:true})
                                     } else {
-                                        this.setState({errorBar:true})
+                                        adminStatePersistence.getAdminLoginState()
+                                            .then(() => this.setState({errorBar:true}))
+                                            .catch(() => this.setState({sessionErrorBar:true}))
                                     }
                                 })
                             }}
@@ -132,6 +139,12 @@ export class PersonalizationPage extends React.Component<PersonalizationPageProp
                             autoHideDuration={6000}
                             onClose={this.handleClose}
                             message={'Color scheme, font size and a background must be chosen'}
+                        />
+                        <Snackbar
+                            open={this.state.sessionErrorBar}
+                            autoHideDuration={6000}
+                            onClose={this.handleClose}
+                            message={'Session expired'}
                         />
                     </Grid>
                 </Grid>

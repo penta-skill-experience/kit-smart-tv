@@ -10,6 +10,9 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 import FormControl from "@mui/material/FormControl";
 import Snackbar from "@mui/material/Snackbar";
+import {AdminStatePersistence} from "../../shared/persistence/AdminStatePersistence";
+
+const adminStatePersistence = new AdminStatePersistence()
 
 export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNewPassword, handlePasswordChange, children} ) => {
     const [showOldPassword, setShowOldPassword] = React.useState(false);
@@ -25,6 +28,7 @@ export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNe
 
     const [successfulBar, setSuccessfulBar] = React.useState(false);
     const [errorBar, setErrorBar] = React.useState(false);
+    const [sessionErrorBar, setSessionErrorBar] = React.useState(false);
 
     const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
@@ -32,6 +36,7 @@ export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNe
         }
         setSuccessfulBar(false);
         setErrorBar(false);
+        setSessionErrorBar(false);
     }
 
     return (
@@ -89,7 +94,9 @@ export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNe
                                     if(myBoolean) {
                                         setSuccessfulBar(true);
                                     } else {
-                                        setErrorBar(true);
+                                        adminStatePersistence.getAdminLoginState()
+                                            .then(() => setErrorBar(true))
+                                            .catch(() => setSessionErrorBar(true));
                                     }
                                 })
                             }}
@@ -108,6 +115,12 @@ export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNe
                             autoHideDuration={6000}
                             onClose={handleClose}
                             message={'New Password must at least be 1 character long'}
+                        />
+                        <Snackbar
+                            open={sessionErrorBar}
+                            autoHideDuration={6000}
+                            onClose={handleClose}
+                            message={'Session expired'}
                         />
                     </Grid>
                     <Grid item xs={12}>

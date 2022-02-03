@@ -4,19 +4,20 @@ import TextField from '@mui/material/TextField';
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Snackbar from "@mui/material/Snackbar";
+import {AdminStatePersistence} from "../../shared/persistence/AdminStatePersistence";
+
+const adminStatePersistence = new AdminStatePersistence();
 
 export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNameChange, handleAddMail, handleDeleteUser, handleVerUserList, children}) => {
     const [open, setOpen] = React.useState(false);
-
-    const handleClick = () => {
-        setOpen(true);
-    };
+    const [sessionBar, setSessionBar] = React.useState(false);
 
     const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
         setOpen(false);
+        setSessionBar(false);
     }
 
     return(
@@ -76,7 +77,9 @@ export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNa
                 <Grid xs={12}>
                     <Button variant='outlined' onClick={() => {
                         handleVerUserList();
-                        handleClick();
+                        adminStatePersistence.getAdminLoginState()
+                            .then(() => setOpen(true))
+                            .catch(() => setSessionBar(true));
                     }}>
                         Save Changes
                     </Button>
@@ -85,6 +88,12 @@ export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNa
                         autoHideDuration={6000}
                         onClose={handleClose}
                         message={'Verified Users Saved'}
+                    />
+                    <Snackbar
+                        open={sessionBar}
+                        autoHideDuration={6000}
+                        onClose={handleClose}
+                        message={'Session expired'}
                     />
                 </Grid>
             </Grid>
