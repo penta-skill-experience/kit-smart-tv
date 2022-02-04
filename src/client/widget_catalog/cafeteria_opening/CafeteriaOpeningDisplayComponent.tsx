@@ -47,15 +47,14 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
         const currentDay = new Date(current.getFullYear(), current.getMonth(), current.getDate());
         const comparatorDate = new Date(0,0,0,current.getHours(), current.getMinutes(), current.getSeconds());
         return axios.get(CafeteriaOpeningConfig.URL_NEXT_MEAL).then(resp => {
-            if(this.parseDate(resp.data[0].date).valueOf() === currentDay.valueOf()){
                 return this.getHourOpening(url).then(respOne => {
-                    if(comparatorDate < respOne[1]){
+                    if((this.parseDate(resp.data[0].date).valueOf() === currentDay.valueOf() && comparatorDate < respOne[1]) || this.parseDate(resp.data[0].date).valueOf() > currentDay.valueOf()){
                         return this.parseDate(resp.data[0].date);
                     }else{
                         return this.parseDate(resp.data[1].date);
                     }
                         });
-            }
+
             });
     }
     private getHourOpening(url: string): Promise<Date[]>{
