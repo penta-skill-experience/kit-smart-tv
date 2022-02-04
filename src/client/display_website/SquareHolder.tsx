@@ -137,7 +137,8 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
             width: "30.5vw",
         }}>
             <div className={"w-full h-full rounded-2xl"} id="squareHeld" style={{
-                backgroundColor: this.props.accentColor
+                backgroundColor: this.props.accentColor,
+                overflow: "hidden",
             }}>
                 <div
                     className={"z-20 sm:pb-1 lg:pb-2 xl:pb-3 4xl:pb-4 font-light leading-normal sm:text-base md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl 8xl:text-7xl"}

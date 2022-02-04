@@ -153,10 +153,10 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
         const current = new Date();
         const currentDay= new Date(current.getFullYear(), current.getMonth(), current.getDate());
         const comparatorDate = new Date(0,0,0,current.getHours(), current.getMinutes(), current.getSeconds());
-        return this.getDateOpening(url).then(resp => {
+        return this.getDateOpening(url).then(respOne => {
             //check if current time is after closing time
             return this.getHourOpening(CafeteriaOpeningConfig.URL_DINNING_OPENING_TIMES).then(resp => {
-                return (resp.valueOf() === currentDay.valueOf()) && comparatorDate < resp[1];
+                return (respOne.valueOf() === currentDay.valueOf()) && comparatorDate < resp[1];
             });
         });
     }
