@@ -6,6 +6,7 @@ const config: Config.InitialOptions = {
         '^.+\\.ts?$': 'ts-jest',
     },
     testMatch: ["**/?(*.)+(tests).[t]s?(x)"],
-
+    collectCoverage: true,
+    collectCoverageFrom:  ['src/**/*.{ts,tsx}']
 };
 export default config;
