@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`announcementComponent Snapshots announcementComponent Snapshot with announcements 1`] = `
+<div
+  className="grid grid-flow-row"
+>
+  <div
+    className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl"
+    key="0"
+  >
+    <b>
+      Announcement from alice
+       - 
+      alice
+       
+    </b>
+    <br />
+    This announcement is from alice
+     
+    <br />
+    <br />
+  </div>
+  <div
+    className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl"
+    key="1"
+  >
+    <b>
+      Bobs Announcement
+       - 
+      bob
+       
+    </b>
+    <br />
+    This is bobs announcement.
+     
+    <br />
+  </div>
+</div>
+`;
+
+exports[`announcementComponent Snapshots announcementComponent Snapshot without announcements 1`] = `
+<div
+  className="grid grid-flow-row"
+/>
+`;
