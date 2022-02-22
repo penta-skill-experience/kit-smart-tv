@@ -39,7 +39,7 @@ export class RemoveAnnouncementCommand implements AnnouncementCommand {
 
         if (!(announcementToRemoveFromCurrent.author === this.announcementToRemove.author ||
             authorType.isAllowedToEditAnnouncementsFromOtherAuthors())) {
-            throw new AnnouncementCommandError(RemoveAnnouncementCommand.AUTHOR_CANNOT_REMOVE_THIS_ANNOUNCEMENT_ERROR_MSG);
+            return;
         }
 
         const announcementsToSend = [...currentAnnouncements];
