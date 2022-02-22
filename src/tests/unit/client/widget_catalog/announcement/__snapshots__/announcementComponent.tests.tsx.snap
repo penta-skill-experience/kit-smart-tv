@@ -11,7 +11,7 @@ exports[`announcementComponent Snapshots announcementComponent Snapshot with ann
     <b>
       Announcement from alice
        - 
-      alice
+      alice@example.com
        
     </b>
     <br />

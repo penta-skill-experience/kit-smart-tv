@@ -12,12 +12,11 @@ import toJson from "enzyme-to-json";
 
 // setting up test values
 const bob = new VerifiedUser("bob@example.com", "bob");
-const alice = new VerifiedUser("alice@example.com", "alice");
-const verifiedUsers = [bob, alice];
+const verifiedUsers = [bob];
 
 const bobAnnouncement = newAnnouncement("Bobs Announcement", bob.email, "This is bobs announcement.");
 const aliceAnnouncement = newAnnouncement(
-    "Announcement from alice", alice.email, "This announcement is from alice");
+    "Announcement from alice", "alice@example.com", "This announcement is from alice");
 const announcements = [bobAnnouncement, aliceAnnouncement];
 
 //mocking announcementPersistence to return test values for these tests
