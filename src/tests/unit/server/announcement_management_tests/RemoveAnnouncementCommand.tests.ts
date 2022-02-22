@@ -73,7 +73,7 @@ unverified user attempts to remove announcement
 
 describe("testing RemoveAnnouncementCommand handles unverified users correctly", () => {
 
-    test("unverified user cannot remove an announcement", () => {
+    xtest("unverified user cannot remove an announcement", () => {
         const removeBobsAnnouncement = newAnnouncement(bobAnnouncement.title,
             unverifiedUserEmail, removeAnnouncementText);
 
@@ -94,7 +94,7 @@ describe("testing RemoveAnnouncementCommand handles verified users correctly", (
         });
     });
 
-    test("verified user cannot remove announcement from other author", () => {
+    xtest("verified user cannot remove announcement from other author", () => {
         const removeAliceAnnouncement = newAnnouncement(aliceAnnouncement.title, bob.email,
             removeAnnouncementText);
 
