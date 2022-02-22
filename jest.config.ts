@@ -7,6 +7,6 @@ const config: Config.InitialOptions = {
     },
     testMatch: ["**/?(*.)+(tests).[t]s?(x)"],
     collectCoverage: true,
-    collectCoverageFrom:  ['src/**/*.{ts,tsx}']
+    collectCoverageFrom:  ['src/server/**/*.{ts,tsx}', 'src/client/**/*.{ts,tsx}', 'src/shared/**/*.{ts,tsx}']
 };
 export default config;
