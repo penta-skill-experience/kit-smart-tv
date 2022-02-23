@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`hanlde methods test handle old password text field 1`] = `
+<LogInPage
+  handleClickShowPassword={[Function]}
+  handleInput={[Function]}
+  handleLogIn={[Function]}
+  logInInput=""
+  visible={false}
+/>
+`;
