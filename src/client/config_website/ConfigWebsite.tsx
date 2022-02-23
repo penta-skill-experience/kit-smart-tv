@@ -256,6 +256,8 @@ export function ConfigWebsite() {
         ;
     };
 
+
+
     //state variables and methods for announcements page
     const initialMailList = [];
     const [mailList, setMailList] = React.useState(initialMailList);
