@@ -1,8 +1,6 @@
 import * as EmailConfig from "./MailAccontConfig.json";
-import * as EmailInteractionConfig from "./MailInteractionConfig.json"
 import {MailListener} from "mail-listener-typescript";
 import {EmailAnnouncementExecutor} from "./EmailAnnouncementExecutor";
-import * as fs from "fs";
 import "dotenv/config"
 
 /**
@@ -48,14 +46,6 @@ export class AnnouncementMailListener {
             // (irreversibly ruptures the space-time continuum, see https://en.wikipedia.org/wiki/Gravitational_singularity for details)
             try {
                 new EmailAnnouncementExecutor().executeEmailCommand(mail);
-            } catch (e) {
-                console.error(e.message);
-            }
-        });
-
-        this.mailListener.on("error", error => {
-            try {
-                fs.writeFileSync(EmailInteractionConfig.MAIL_LISTENER_ERROR_FILE_NAME, error);
             } catch (e) {
                 console.error(e.message);
             }

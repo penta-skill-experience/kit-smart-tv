@@ -1,6 +1,7 @@
 import { IMailObject } from "mail-listener-typescript";
 import {IMailAttachment} from "mail-listener-typescript/dist/types/config";
 import {EmailAnnouncementParser} from "../../../../server/email_announcement_interaction/EmailAnnouncementParser";
+import {AnnouncementAuthorError} from "../../../../server/announcement_management/AnnouncementAuthorError";
 
 const mail1Subject = "HelloWorld";
 const mail1address = "bob@example.com";
@@ -31,7 +32,7 @@ const mail1 : IMailObject = {
 }
 
 const mail2Subject = "Another test";
-const mail2address = "alice.smith@gmail.com";
+const mail2addressInvalidEmail = "alice.smithgmail.com"; // although this isn't possible
 const mail2text = "Greetings from alice smith."
 
 const mail2 : IMailObject = {
@@ -39,7 +40,7 @@ const mail2 : IMailObject = {
     subject: mail2Subject,
     from: {
         value: [{
-            address: mail2address,
+            address: mail2addressInvalidEmail,
             name: "",
         }],
         html: "",
@@ -66,11 +67,10 @@ describe("testing EmailAnnouncementParser parses mails correctly", () => {
         expect(parsedAnnouncement.text).toEqual(mail1text);
     });
 
-    test("testing EmailAnnouncementParser parses mail2 correctly", () => {
-        const parsedAnnouncement = new EmailAnnouncementParser(mail2).parseToAnnouncement();
-        expect(parsedAnnouncement.title).toEqual(mail2Subject);
-        expect(parsedAnnouncement.author).toEqual(mail2address);
-        expect(parsedAnnouncement.text).toEqual(mail2text);
+    test("testing EmailAnnouncementParser throws exception for mail2 because of invalid author", () => {
+        expect(() => {
+            new EmailAnnouncementParser(mail2).parseToAnnouncement();
+        }).toThrow(AnnouncementAuthorError);
     });
 });
 
