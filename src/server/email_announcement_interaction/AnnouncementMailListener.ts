@@ -52,14 +52,6 @@ export class AnnouncementMailListener {
                 console.error(e.message);
             }
         });
-
-        this.mailListener.on("error", error => {
-            try {
-                fs.writeFileSync(EmailInteractionConfig.MAIL_LISTENER_ERROR_FILE_NAME, error);
-            } catch (e) {
-                console.error(e.message);
-            }
-        });
     }
 
     /**
