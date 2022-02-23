@@ -46,15 +46,18 @@ getVerifiedUsersMock.mockImplementation(() => {
     });
 });
 
-setAnnouncementsMock.mockImplementation(announcementsToSet => {
-    setAnnouncements = announcementsToSet;
-     return new Promise<void>(resolve => {
-         resolve();
-     });
+beforeEach(() => {
+    setAnnouncementsMock.mockImplementation(announcementsToSet => {
+        setAnnouncements = announcementsToSet;
+        return new Promise<void>(resolve => {
+            resolve();
+        });
+    });
 });
 
 afterEach(() => {
     setAnnouncements = [];
+    setAnnouncementsMock.mockClear();
 })
 
 afterAll(() => {
@@ -73,12 +76,13 @@ unverified user attempts to remove announcement
 
 describe("testing RemoveAnnouncementCommand handles unverified users correctly", () => {
 
-    xtest("unverified user cannot remove an announcement", () => {
+    test("unverified user cannot remove an announcement", async () => {
         const removeBobsAnnouncement = newAnnouncement(bobAnnouncement.title,
             unverifiedUserEmail, removeAnnouncementText);
 
-        expect(new RemoveAnnouncementCommand(removeBobsAnnouncement).executeCommand())
-            .rejects.toBeInstanceOf(AnnouncementCommandError);
+        await new RemoveAnnouncementCommand(removeBobsAnnouncement).executeCommand();
+
+        expect(setAnnouncementsMock).toHaveBeenCalledTimes(0);
     });
 });
 
@@ -94,12 +98,13 @@ describe("testing RemoveAnnouncementCommand handles verified users correctly", (
         });
     });
 
-    xtest("verified user cannot remove announcement from other author", () => {
+    test("verified user cannot remove announcement from other author", async () => {
         const removeAliceAnnouncement = newAnnouncement(aliceAnnouncement.title, bob.email,
             removeAnnouncementText);
 
-        expect(new RemoveAnnouncementCommand(removeAliceAnnouncement).executeCommand())
-            .rejects.toBeInstanceOf(AnnouncementCommandError);
+        await new RemoveAnnouncementCommand(removeAliceAnnouncement).executeCommand();
+
+        expect(setAnnouncementsMock).toHaveBeenCalledTimes(0);
     });
 });
 

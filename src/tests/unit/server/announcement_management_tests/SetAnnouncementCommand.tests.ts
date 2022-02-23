@@ -40,22 +40,25 @@ getAnnouncementsMock.mockImplementation(() => {
         resolve(announcements);
     });
 });
+
 getVerifiedUsersMock.mockImplementation(() => {
     return new Promise<VerifiedUser[]>(resolve => {
         resolve(verifiedUsers);
     });
 });
 
-setAnnouncementsMock.mockImplementation(announcementsToSet => {
-    setAnnouncements = announcementsToSet;
-    return new Promise<void>(resolve => {
-        resolve();
+beforeEach(() => {
+    setAnnouncementsMock.mockImplementation(announcementsToSet => {
+        setAnnouncements = announcementsToSet;
+        return new Promise<void>(resolve => {
+            resolve();
+        });
     });
 });
 
-
 afterEach(() => {
     setAnnouncements = [];
+    setAnnouncementsMock.mockClear();
 })
 
 afterAll(() => {
@@ -88,12 +91,13 @@ describe("SetAnnouncementCommand.ts handles verified users correctly", () => {
         });
     });
 
-    xtest ("verified user cannot edit announcements from others", () => { // disabled because this error must currently be caught
+    test ("verified user cannot edit announcements from others", async () => {
         const bobUpdatesAliceAnnouncement = newAnnouncement(aliceAnnouncement.title, bob.email,
             "This announcement from alice was updated by bob.");
 
-        expect(new SetAnnouncementCommand(bobUpdatesAliceAnnouncement).executeCommand())
-            .rejects.toBeInstanceOf(AnnouncementCommandError);
+        await new SetAnnouncementCommand(bobUpdatesAliceAnnouncement).executeCommand();
+
+        expect(setAnnouncementsMock).toHaveBeenCalledTimes(0);
     });
 
     test("an announcement with an empty text cannot be added", () => {
@@ -106,20 +110,22 @@ describe("SetAnnouncementCommand.ts handles verified users correctly", () => {
 describe("SetAnnouncementCommand.ts handles unverified users correctly", () => {
     const unverifiedUserEmail = "unverifieduser@example.com";
 
-    xtest("an unverified user cannot add an announcement", () => { // disabled because this error must currently be caught
+    test("an unverified user cannot add an announcement", async () => {
         const newAnn = newAnnouncement("new Announcement", unverifiedUserEmail,
             "This is a new announcement");
 
-        expect(new SetAnnouncementCommand(newAnn).executeCommand())
-            .rejects.toBeInstanceOf(AnnouncementCommandError);
+        await new SetAnnouncementCommand(newAnn).executeCommand();
+
+        expect(setAnnouncementsMock).toHaveBeenCalledTimes(0);
     });
 
-    xtest("an unverified user cannot edit an existing announcement", () => { // disabled because this error must currently be caught
+    test("an unverified user cannot edit an existing announcement", async () => {
         const editedAnnouncementByUnverified = newAnnouncement(bobAnnouncement.title, unverifiedUserEmail,
             "This Announcement was edited by an unverified user");
 
-        expect(new SetAnnouncementCommand(editedAnnouncementByUnverified).executeCommand())
-            .rejects.toBeInstanceOf(AnnouncementCommandError);
+        await new SetAnnouncementCommand(editedAnnouncementByUnverified).executeCommand();
+
+        expect(setAnnouncementsMock).toHaveBeenCalledTimes(0);
     });
 });
 
