@@ -59,7 +59,7 @@ describe("announcementComponent Snapshots", () => {
         const wrapper = shallow(<AnnouncementComponent error={(msg => {})} specialBoldFontColor={"ForestGreen"} specialSubtleFontColor={"DarkOrange"} />);
         await new Promise(process.nextTick);
         expect(toJson(wrapper)).toMatchSnapshot();
-    })
+    });
 
     afterEach(() => {
         jest.restoreAllMocks();
