@@ -35,19 +35,6 @@ export class AnnouncementPersistenceFrontend implements AnnouncementPersistence 
                         sessionStorage.setItem('accessToken', response.headers.get('x-access-token'));
                     }
                     if (response.status == 200) {
-                        response.json()
-                            .then(() => {
-                                //check if the data wa written correctly
-                                this.getAnnouncements()
-                                    .then(o => {
-                                        if (o === announcements) {
-                                            resolve();
-                                        } else {
-                                            reject();
-                                        }
-                                    })
-                            })
-                            .catch(() => reject());
                         resolve();
                     }
                     reject();
