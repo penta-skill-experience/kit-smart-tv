@@ -123,4 +123,6 @@ export function serverSetup(dbUri: string) {
         await connect(dbUri);
         console.log(`this app is running at https://localhost:${port}`)
     })
+
+    return sslServer;
 }
