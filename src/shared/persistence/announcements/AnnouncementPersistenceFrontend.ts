@@ -39,7 +39,7 @@ export class AnnouncementPersistenceFrontend implements AnnouncementPersistence 
                     }
                     reject();
                 })
-                .catch(() => reject());
+                .catch(reason => reject(reason));
         });
 
     }
@@ -142,10 +142,10 @@ export class AnnouncementPersistenceFrontend implements AnnouncementPersistence 
                     }
                     if (response.status == 200) {
                         resolve();
-                    } else {
-                        reject();
                     }
-                }).catch(() => reject());
+                    reject("response status was not 200, response status:" + response.status);
+
+                }).catch(reason => reject(reason));
         });
     }
 }

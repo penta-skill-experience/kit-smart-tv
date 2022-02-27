@@ -2,7 +2,6 @@ import {
     AnnouncementPersistenceFrontend
 } from "../../../../shared/persistence/announcements/AnnouncementPersistenceFrontend";
 import fetchMock from "jest-fetch-mock";
-import {toNumber} from "lodash";
 import {newAnnouncement} from "../../server/util/newAnnouncement";
 import {VerifiedUser} from "../../../../shared/values/VerifiedUser";
 import {IVerifiedUser} from "../../../../shared/values/IVerifiedUser";
@@ -13,6 +12,8 @@ global.Headers = class {
 
     append(var1 : string, var2 : string) {};
 } as jest.Mock;
+
+const responseMock = jest.spyOn(Response.prototype, "json");
 
 
 describe("announcementPersistenceFrontend tests", () => {
@@ -95,6 +96,73 @@ describe("announcementPersistenceFrontend tests", () => {
         expect(fetchMock.mock.calls.length).toEqual(1);
         expect(fetchMock.mock.calls[0][1].method).toEqual("PUT");
         expect(fetchMock.mock.calls[0][1].body).toEqual(JSON.stringify(body));
+    });
+
+    test("getAnnouncements rejected", () => {
+        const testError = new Error("testReason");
+        fetchMock.mockReject(testError);
+
+        new AnnouncementPersistenceFrontend().getAnnouncements().catch(e => {
+            expect(e).toEqual(testError);
+        });
+    });
+
+    test("getVerifiedUsers rejected", () => {
+        const testError = new Error("testReason");
+        fetchMock.mockReject(testError);
+
+        new AnnouncementPersistenceFrontend().getVerifiedUsers().catch(e => {
+            expect(e).toEqual(testError);
+        });
+    });
+
+    test("setAnnouncements rejected", () => {
+        const testError = new Error("testReason");
+        fetchMock.mockReject(testError);
+
+        new AnnouncementPersistenceFrontend().setAnnouncements([]).catch(e => {
+            expect(e).toEqual(testError);
+        });
+    });
+
+    test("setVerifiedUsers rejected", () => {
+        const testError = new Error("testReason");
+        fetchMock.mockReject(testError);
+
+        new AnnouncementPersistenceFrontend().setVerifiedUsers([]).catch(e => {
+            expect(e).toEqual(testError);
+        });
+    });
+
+    test("setVerifiedUsers rejects for wrong response status", () => {
+        fetchMock.mockResponse(JSON.stringify({status: 400}));
+        new AnnouncementPersistenceFrontend().setVerifiedUsers([]).then(() => {throw Error("resolved with invalid status")}).catch(() => {});
+    });
+
+    test("setAnnouncements rejects for wrong response status", () => {
+        fetchMock.mockResponse(JSON.stringify({status: 400}));
+
+        new AnnouncementPersistenceFrontend().setAnnouncements([]).then(() => {throw Error("resolved with invalid status")}).catch(() => {});
+    });
+
+    test("getAnnouncements rejects if response could not be parsed to json", () => {
+        fetchMock.mockResponse(JSON.stringify({status: 200}));
+
+        responseMock.mockImplementation(() => {
+            return new Promise((resolve, reject) => reject());
+        });
+
+        new AnnouncementPersistenceFrontend().getAnnouncements().then(() => {fail()}).catch(() => {});
+    });
+
+    test("getAnnouncements rejects if response could not be parsed to json", () => {
+        fetchMock.mockResponse(JSON.stringify({status: 200}));
+
+        responseMock.mockImplementation(() => {
+            return new Promise((resolve, reject) => reject());
+        });
+
+        new AnnouncementPersistenceFrontend().getVerifiedUsers().then(() => {fail()}).catch(() => {});
     });
 
     afterEach(() => {
