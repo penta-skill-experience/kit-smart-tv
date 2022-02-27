@@ -98,7 +98,7 @@ describe("announcementPersistenceFrontend tests", () => {
         expect(fetchMock.mock.calls[0][1].body).toEqual(JSON.stringify(body));
     });
 
-    test("getAnnouncements rejected", () => {
+    test("getAnnouncements rejects if fetch rejects", () => {
         const testError = new Error("testReason");
         fetchMock.mockReject(testError);
 
@@ -107,7 +107,7 @@ describe("announcementPersistenceFrontend tests", () => {
         });
     });
 
-    test("getVerifiedUsers rejected", () => {
+    test("getVerifiedUsers rejects if fetch rejects", () => {
         const testError = new Error("testReason");
         fetchMock.mockReject(testError);
 
@@ -116,7 +116,7 @@ describe("announcementPersistenceFrontend tests", () => {
         });
     });
 
-    test("setAnnouncements rejected", () => {
+    test("setAnnouncements rejects if fetch rejects", () => {
         const testError = new Error("testReason");
         fetchMock.mockReject(testError);
 
@@ -125,7 +125,7 @@ describe("announcementPersistenceFrontend tests", () => {
         });
     });
 
-    test("setVerifiedUsers rejected", () => {
+    test("setVerifiedUsers rejects if fetch rejects", () => {
         const testError = new Error("testReason");
         fetchMock.mockReject(testError);
 
