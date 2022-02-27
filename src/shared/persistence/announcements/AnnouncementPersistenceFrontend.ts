@@ -75,8 +75,7 @@ export class AnnouncementPersistenceFrontend implements AnnouncementPersistence 
 
                         })
                         .catch(reason => {
-                            console.warn(reason);
-                            resolve([]);
+                            reject(reason);
                         });
                 })
                 .catch(reason => {
@@ -109,10 +108,9 @@ export class AnnouncementPersistenceFrontend implements AnnouncementPersistence 
                         .then(users => {
                             resolve(users.map(user => new VerifiedUser(user.email, user.name)));
                         }).catch(reason => {
-                            console.warn(reason);
-                            resolve([]);
+                            reject(reason);
                         });
-                }).catch(() => reject());
+                }).catch((reason) => reject(reason));
         });
     }
 

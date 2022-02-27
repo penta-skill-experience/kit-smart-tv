@@ -17,7 +17,7 @@ global.Headers = class {
 
 describe("announcementPersistenceFrontend tests", () => {
 
-    test("testing getVerifiedUsers", async () => {
+    test("testing getVerifiedUsers successful", async () => {
         fetchMock.mockResponse(JSON.stringify([
                 {
                     email: "tom-mohr@gmx.de",
@@ -30,6 +30,8 @@ describe("announcementPersistenceFrontend tests", () => {
             ]
         ));
 
+        sessionStorage.setItem("accessToken", "currentAccessToken");
+
         new AnnouncementPersistenceFrontend().getVerifiedUsers().then(verifiedUsers => {
             expect(verifiedUsers[0].email).toEqual("tom-mohr@gmx.de");
             expect(verifiedUsers[0].name).toEqual("Tom Mohr");
@@ -39,7 +41,7 @@ describe("announcementPersistenceFrontend tests", () => {
         });
     });
 
-    test(" testing getAnnouncements", async () => {
+    test(" testing getAnnouncements successful", async () => {
         const titleValue = "Hello";
         const textValue = "Hello World";
         const authorValue = "bob.smith@example.com";
@@ -51,11 +53,12 @@ describe("announcementPersistenceFrontend tests", () => {
                 text: textValue,
                 author: authorValue,
                 timeout: timeoutValue,
-                timeOfAddition: timeOfAdditionValue
+                timeOfAddition: timeOfAdditionValue,
             }
             ]
         ));
         jest.useFakeTimers().setSystemTime(new Date("2022-01-01"));
+        sessionStorage.setItem("accessToken", "currentAccessToken");
 
         const announcements = await new AnnouncementPersistenceFrontend().getAnnouncements();
         expect(announcements[0].title).toEqual(titleValue);
@@ -65,7 +68,7 @@ describe("announcementPersistenceFrontend tests", () => {
         expect(announcements[0].timeOfAddition).toEqual(timeOfAdditionValue);
     });
 
-    test("testing setAnnouncements", async () => {
+    test("testing setAnnouncements successful", async () => {
         const announcements = [newAnnouncement("Hello", "bob.smith@example.com", "Hello World",0)];
         const body = {announcementDataList: announcements};
         fetchMock.mockResponse(JSON.stringify({status: 200}));
@@ -77,7 +80,7 @@ describe("announcementPersistenceFrontend tests", () => {
         expect(fetchMock.mock.calls[0][1].body).toEqual(JSON.stringify(body));
     });
 
-    test("testing setVerifiedUsers", async () => {
+    test("testing setVerifiedUsers successful", async () => {
         const verifiedUsers = [new VerifiedUser("bob.smith@example.com", "Bob Smith")];
         const body: IVerifiedUser[] = verifiedUsers.map(user => ({
             email: user.email,
@@ -85,6 +88,7 @@ describe("announcementPersistenceFrontend tests", () => {
         }));
 
         fetchMock.mockResponse(JSON.stringify({status: 200}));
+        sessionStorage.setItem("accessToken", "currentAccessToken");
 
         await new AnnouncementPersistenceFrontend().setVerifiedUsers(verifiedUsers);
 
@@ -97,5 +101,6 @@ describe("announcementPersistenceFrontend tests", () => {
        jest.restoreAllMocks();
        fetchMock.mockClear();
        jest.useRealTimers();
+       sessionStorage.clear();
    });
 });

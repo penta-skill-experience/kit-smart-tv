@@ -6,7 +6,8 @@ const config: Config.InitialOptions = {
     transform: {
         '^.+\\.tsx?$': 'ts-jest',
     },
-    setupFilesAfterEnv: ["mock-local-storage"],
+    resetMocks: false,
+    setupFiles: ["jest-localstorage-mock"],
     testMatch: ["**/?(*.)+(tests).[t]s?(x)"],
     collectCoverage: true,
     collectCoverageFrom:  ['src/server/**/*.{ts,tsx}', 'src/client/**/*.{ts,tsx}', 'src/shared/**/*.{ts,tsx}']
