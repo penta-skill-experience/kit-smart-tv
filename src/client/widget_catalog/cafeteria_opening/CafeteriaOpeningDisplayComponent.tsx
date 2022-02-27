@@ -201,6 +201,7 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                         <div className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center" style={{
                             backgroundColor: (this.state.openDinningRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
                         }}/>
+                        until
                         {(this.state.openDinningRightNow ? <div>
                             {this.getTime(this.state.timesDinning[1])}
                         </div> : <div>
@@ -213,6 +214,7 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                         <div className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center" style={{
                             backgroundColor: (this.state.openKoeriRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
                         }}/>
+                        until
                         {(this.state.openKoeriRightNow ? <div>
                             {this.getTime(this.state.timesKoeri[1])}
                         </div> : <div>
@@ -225,6 +227,7 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                         <div className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center" style={{
                             backgroundColor: (this.state.openPizzaRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
                         }}/>
+                        until
                         {(this.state.openPizzaRightNow ? <div>
                             {this.getTime(this.state.timesPizza[1])}
                         </div> : <div>
@@ -237,6 +240,7 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                         <div className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center" style={{
                             backgroundColor: (this.state.openCafeteriaRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
                         }}/>
+                        until
                         {(this.state.openCafeteriaRightNow ? <div>
                             {this.getTime(this.state.timesCafeteria[1])}
                         </div> : <div>

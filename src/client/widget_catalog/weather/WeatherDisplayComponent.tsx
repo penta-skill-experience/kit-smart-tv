@@ -55,14 +55,14 @@ export class WeatherDisplayComponent extends DisplayComponent<any> {
                 </div>
                 <div className="grid grid-rows-3 sm:gap-0 xl:gap-1">
                     <div className="font-light leading-normal sm:text-xs xl:text-base 2xl:text-xl 4xl:text-2xl 8xl:text-3xl sm:text-left">
-                        precipitation: <span className="font-medium sm:text-sm xl:text-lg 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl sm:text-left">{this.state.precipitation}</span>%
+                        Precipitation: <span className="font-medium sm:text-sm xl:text-lg 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl sm:text-left">{this.state.precipitation}</span>%
                     </div>
                     <div className="font-light leading-normal sm:text-xs xl:text-base 2xl:text-xl 4xl:text-2xl 8xl:text-3xl sm:text-left">
-                        humidity: <span className="font-medium sm:text-sm xl:text-lg 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl sm:text-left">{this.state.humidity}</span>%
+                        Humidity: <span className="font-medium sm:text-sm xl:text-lg 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl sm:text-left">{this.state.humidity}</span>%
                     </div>
                     <div
                         className="font-light leading-normal sm:text-xs xl:text-base 2xl:text-xl 4xl:text-2xl 8xl:text-3xl sm:text-left">
-                        wind: <span className="font-medium sm:text-sm xl:text-lg 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl sm:text-left">{this.state.windSpeed}</span> km/h
+                        Wind: <span className="font-medium sm:text-sm xl:text-lg 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl sm:text-left">{this.state.windSpeed}</span> km/h
                     </div>
                 </div>
         </div>:<div/>);
