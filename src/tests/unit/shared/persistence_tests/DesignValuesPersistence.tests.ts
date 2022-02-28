@@ -25,7 +25,7 @@ const testColorSchemeDark = {
     titleFontColor: "white",
     bodyFontColor: "white",
     specialBoldFontColor: "ForestGreen",
-    specialSubteFontColor: "DarkOrange",
+    specialSubtleFontColor: "DarkOrange",
     accentBarColor: "rgba(0, 0, 0, 0.5)",
     backgrounds: [
         "https://wallpaperaccess.com/full/1379469.jpg",
@@ -39,7 +39,7 @@ const testColorSchemeLight = {
     titleFontColor: "black",
     bodyFontColor: "black",
     specialBoldFontColor: "green",
-    specialSubteFontColor: "FireBrick",
+    specialSubtleFontColor: "FireBrick",
     accentBarColor: "rgba(255, 255, 255, 0.5)",
     backgrounds: [
         "https://images.pexels.com/photos/2101187/pexels-photo-2101187.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
