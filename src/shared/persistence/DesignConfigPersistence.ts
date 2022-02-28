@@ -72,9 +72,8 @@ export class DesignConfigPersistence {
 
                     if (response.status === 200) {
                         resolve();
-                    } else {
-                        reject();
                     }
+                    reject();
                 })
                 .catch(() => reject());
         })
