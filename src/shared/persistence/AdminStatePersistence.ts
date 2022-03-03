@@ -21,7 +21,9 @@ export class AdminStatePersistence {
                         sessionStorage.setItem('accessToken', data.accessToken);
                         sessionStorage.setItem('refreshToken', data.refreshToken);
                         resolve();
-                    }).catch(() => reject())
+                    }).catch(() => {
+                        reject();
+                    })
                 ).catch(() => reject());
         });
     }
@@ -43,9 +45,9 @@ export class AdminStatePersistence {
                             sessionStorage.removeItem('accessToken');
                             sessionStorage.removeItem('refreshToken');
                             resolve();
-                        } else {
-                            reject();
                         }
+                        reject();
+
                     }).catch(() => reject())
                 ).catch(() => reject());
         });
@@ -75,7 +77,9 @@ export class AdminStatePersistence {
                             } else {
                                 reject();
                             }
-                        }).catch(() => reject());
+                        }).catch(() => {
+                            reject()
+                        });
 
                 }).catch(() => reject());
         });
