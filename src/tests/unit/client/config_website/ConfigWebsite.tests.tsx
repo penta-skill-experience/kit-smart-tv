@@ -29,4 +29,6 @@ describe("hanlde methods test", () => {
         wrapper.update();
         expect(wrapper.find("LogInPage").at(0).prop("logInInput")).toBe("password123");
     });
+
+
 });
