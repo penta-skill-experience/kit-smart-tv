@@ -11,6 +11,9 @@ import {FontSize} from "../../../../shared/values/FontSize";
 import {WidgetData} from "../../../../client/widget/WidgetData";
 import {RssFeedWidget} from "../../../../client/widget_catalog/rss_feed/RssFeedWidget";
 import {CafeteriaMenuWidget} from "../../../../client/widget_catalog/cafeteria_menu/CafeteriaMenuWidget";
+import {TramScheduleWidget} from "../../../../client/widget_catalog/tram_schedule/TramScheduleWidget";
+import {AnnouncementWidget} from "../../../../client/widget_catalog/announcement/AnnouncementWidget";
+import {CafeteriaOpeningWidget} from "../../../../client/widget_catalog/cafeteria_opening/CafeteriaOpeningWidget";
 
 const colorScheme: ColorScheme = {
     id: "dark",
@@ -34,7 +37,11 @@ const values: DesignConfigValues = {
 };
 const widgetOne = new WidgetData("cafeteria-menu", 2, {});
 const widgetTwo = new WidgetData("cafeteria-opening", 2, {});
-const widgetDataList = [widgetOne, widgetTwo];
+const widgetThree = new WidgetData("announcement", 2, {});
+const widgetFour = new WidgetData("tram-schedule", 2, {});
+const widgetFive = new WidgetData("cafeteria-menu", 2, {});
+const widgetSix = new WidgetData("announcement", 2, {});
+const widgetDataList = [widgetOne, widgetTwo, widgetThree, widgetFour, widgetFive, widgetSix];
 
 //mocking display website persistence to return test values for these tests
 //no prototype for static methods
@@ -58,11 +65,34 @@ describe("rootComponent Snapshots", () => {
             });
         });
         getWidgetMock.mockImplementation((widgetId: string) => {
+            let filler = null;
             if(widgetId == "cafeteria-menu") {
-                return new CafeteriaMenuWidget();
-            } else {
-                return new RssFeedWidget();
+                filler = new CafeteriaMenuWidget();
             }
+            if(widgetId == "tram-schedule") {
+                filler = new TramScheduleWidget();
+            }
+            if(widgetId == "cafeteria-menu") {
+                filler = new CafeteriaMenuWidget();
+            }
+            if(widgetId == "announcement") {
+                filler = new AnnouncementWidget();
+            }
+            if(widgetId == "cafeteria-opening") {
+                filler = new CafeteriaOpeningWidget();
+            }
+            if(widgetId == "cafeteria-opening") {
+                filler = new RssFeedWidget();
+            }
+            if(filler == null) {
+                filler = new RssFeedWidget();
+            }
+            filler.getTitle();
+            filler.isConfigurable();
+            filler.getDefaultRawConfig();
+            filler.getDefaultRawConfig();
+            filler.getConfigComponentClass();
+            return filler;
         });
         const wrapper = shallow(<RootComponent/>);
         await new Promise(process.nextTick);
