@@ -1,0 +1,121 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Announcement page tests snapshot test for announcement page 1`] = `
+<div>
+  <ForwardRef(Grid)
+    alignItems="center"
+    container={true}
+    direction="row"
+    justifyContent="flex-start"
+    spacing={2}
+  >
+    <ForwardRef(Grid)
+      item={true}
+      xs={12}
+    >
+      <h1>
+        Add e-mail as verified: 
+      </h1>
+    </ForwardRef(Grid)>
+    <ForwardRef(Grid)
+      item={true}
+    >
+      <ForwardRef(TextField)
+        label="E-Mail"
+        onChange={[Function]}
+        value=""
+      />
+    </ForwardRef(Grid)>
+    <ForwardRef(Grid)
+      item={true}
+    >
+      <ForwardRef(TextField)
+        label="Name"
+        onChange={[Function]}
+        value=""
+      />
+    </ForwardRef(Grid)>
+    <ForwardRef(Grid)
+      item={true}
+    >
+      <ForwardRef(Button)
+        onClick={[Function]}
+        variant="outlined"
+      >
+        Add
+      </ForwardRef(Button)>
+      <ForwardRef(Snackbar)
+        autoHideDuration={6000}
+        message="E-Mail does not exist"
+        onClose={[Function]}
+        open={false}
+      />
+      <ForwardRef(Snackbar)
+        autoHideDuration={6000}
+        message="This E-Mail already exists"
+        onClose={[Function]}
+        open={false}
+      />
+      <ForwardRef(Snackbar)
+        autoHideDuration={6000}
+        message="Username and email have to be filled out"
+        onClose={[Function]}
+        open={false}
+      />
+    </ForwardRef(Grid)>
+    <ForwardRef(Grid)
+      item={true}
+      xs={12}
+    >
+      <h1>
+        Currently verified accounts:
+      </h1>
+    </ForwardRef(Grid)>
+    <ForwardRef(Grid)
+      item={true}
+      xs={4}
+    >
+      Email
+    </ForwardRef(Grid)>
+    <ForwardRef(Grid)
+      item={true}
+      xs={2}
+    >
+      Name
+    </ForwardRef(Grid)>
+    <ForwardRef(Grid)
+      item={true}
+      xs={6}
+    />
+    <ForwardRef(Grid)
+      item={true}
+      xs={12}
+    >
+      <ul />
+    </ForwardRef(Grid)>
+    <ForwardRef(Grid)
+      item={true}
+      xs={12}
+    >
+      <ForwardRef(Button)
+        onClick={[Function]}
+        variant="outlined"
+      >
+        Save Changes
+      </ForwardRef(Button)>
+      <ForwardRef(Snackbar)
+        autoHideDuration={6000}
+        message="Verified Users Saved"
+        onClose={[Function]}
+        open={false}
+      />
+      <ForwardRef(Snackbar)
+        autoHideDuration={6000}
+        message="Session expired"
+        onClose={[Function]}
+        open={false}
+      />
+    </ForwardRef(Grid)>
+  </ForwardRef(Grid)>
+</div>
+`;

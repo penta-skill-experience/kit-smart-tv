@@ -111,7 +111,7 @@ export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNa
                         ))}
                     </ul>
                 </Grid>
-                <Grid xs={12}>
+                <Grid item xs={12}>
                     <Button variant='outlined' onClick={() => {
                         handleVerUserList();
                         adminStatePersistence.getAdminLoginState()
