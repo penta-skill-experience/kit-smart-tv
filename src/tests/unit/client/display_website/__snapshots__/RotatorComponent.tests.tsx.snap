@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`rotatorComponent Snapshots rotatorComponent Snapshots with design values and widget info 1`] = `
+<div
+  className="w-full h-full text-center"
+>
+  <div />
+</div>
+`;
+
+exports[`rotatorComponent Snapshots rotatorComponent Snapshots without children 1`] = `
+<div
+  className="w-full h-full text-center"
+>
+  <div />
+</div>
+`;
+
+exports[`rotatorComponent Snapshots rotatorComponent with children 1`] = `
+<div
+  className="w-full h-full text-center"
+>
+  <Carousel
+    animationHandler="slide"
+    autoPlay={true}
+    axis="horizontal"
+    centerSlidePercentage={80}
+    dynamicHeight={false}
+    infiniteLoop={true}
+    interval={15000}
+    labels={
+      Object {
+        "item": "slide item",
+        "leftArrow": "previous slide / item",
+        "rightArrow": "next slide / item",
+      }
+    }
+    onChange={[Function]}
+    onClickItem={[Function]}
+    onClickThumb={[Function]}
+    onSwipeEnd={[Function]}
+    onSwipeMove={[Function]}
+    onSwipeStart={[Function]}
+    preventMovementUntilSwipeScrollTolerance={false}
+    renderArrowNext={[Function]}
+    renderArrowPrev={[Function]}
+    renderIndicator={[Function]}
+    renderItem={[Function]}
+    renderThumbs={[Function]}
+    selectedItem={0}
+    showArrows={false}
+    showIndicators={true}
+    showStatus={false}
+    showThumbs={false}
+    statusFormatter={[Function]}
+    stopOnHover={true}
+    stopSwipingHandler={[Function]}
+    swipeAnimationHandler={[Function]}
+    swipeScrollTolerance={5}
+    swipeable={true}
+    transitionTime={1000}
+    verticalSwipe="standard"
+    width="100%"
+  >
+    <div
+      key=".0"
+    >
+      <SquareHolder
+        accentColor="black"
+        displayComponentClass={[Function]}
+        rawConfig={Object {}}
+        specialBoldFontColor="black"
+        specialSubtleFontColor="black"
+        title="cafeteria-menu"
+        titleColor="black"
+      />
+    </div>
+    <div
+      key=".1"
+    >
+      <SquareHolder
+        accentColor="black"
+        displayComponentClass={[Function]}
+        rawConfig=""
+        specialBoldFontColor="black"
+        specialSubtleFontColor="black"
+        title="cafeteria-menu"
+        titleColor="black"
+      />
+    </div>
+  </Carousel>
+</div>
+`;
