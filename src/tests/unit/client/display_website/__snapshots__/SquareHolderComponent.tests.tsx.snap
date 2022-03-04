@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Square Holder Snapshots Square holder Snapshots with design values and widget info 1`] = `
+<div
+  className="xl:py-1 8xl:py-2"
+  style={
+    Object {
+      "height": "45.5vh",
+      "width": "30.5vw",
+    }
+  }
+>
+  <div
+    className="w-full h-full rounded-2xl"
+    id="squareHeld"
+    style={
+      Object {
+        "backgroundColor": "black",
+        "overflow": "hidden",
+      }
+    }
+  >
+    <div
+      className="z-20 sm:pb-1 lg:pb-2 xl:pb-3 4xl:pb-4 font-light leading-normal sm:text-base md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl 8xl:text-7xl"
+      style={
+        Object {
+          "color": "black",
+        }
+      }
+    >
+      cafeteria-menu
+    </div>
+    <div
+      className="z-10 sm:pl-5 sm:pb-2 sm:pr-2 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12 scrollbar-hide"
+      id="id555"
+      style={
+        Object {
+          "height": "35vh",
+          "overflow": "scroll",
+        }
+      }
+    >
+      <div
+        id="id555"
+      >
+        <CafeteriaOpeningDisplayComponent
+          config=""
+          error={[Function]}
+          specialBoldFontColor="black"
+          specialSubtleFontColor="black"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

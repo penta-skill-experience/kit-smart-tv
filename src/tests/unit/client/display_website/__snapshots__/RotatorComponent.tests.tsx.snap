@@ -1,13 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`rotatorComponent Snapshots rotatorComponent Snapshots with design values and widget info 1`] = `
-<div
-  className="w-full h-full text-center"
->
-  <div />
-</div>
-`;
-
 exports[`rotatorComponent Snapshots rotatorComponent Snapshots without children 1`] = `
 <div
   className="w-full h-full text-center"
@@ -84,7 +76,7 @@ exports[`rotatorComponent Snapshots rotatorComponent with children 1`] = `
         rawConfig=""
         specialBoldFontColor="black"
         specialSubtleFontColor="black"
-        title="cafeteria-menu"
+        title="cafeteria-opening"
         titleColor="black"
       />
     </div>

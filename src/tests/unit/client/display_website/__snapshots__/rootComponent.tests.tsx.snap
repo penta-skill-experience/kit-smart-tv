@@ -97,6 +97,58 @@ exports[`rootComponent Snapshots rootComponent Snapshots with design values and 
             titleColor="black"
           />
         </div>
+        <div
+          key="2"
+        >
+          <SquareHolder
+            accentColor="black"
+            displayComponentClass={[Function]}
+            rawConfig={Object {}}
+            specialBoldFontColor="red"
+            specialSubtleFontColor="green"
+            title="Announcements"
+            titleColor="black"
+          />
+        </div>
+        <div
+          key="3"
+        >
+          <SquareHolder
+            accentColor="black"
+            displayComponentClass={[Function]}
+            rawConfig={Object {}}
+            specialBoldFontColor="red"
+            specialSubtleFontColor="green"
+            title="Tram Schedule"
+            titleColor="black"
+          />
+        </div>
+        <div
+          key="4"
+        >
+          <SquareHolder
+            accentColor="black"
+            displayComponentClass={[Function]}
+            rawConfig={Object {}}
+            specialBoldFontColor="red"
+            specialSubtleFontColor="green"
+            title="Cafeteria"
+            titleColor="black"
+          />
+        </div>
+        <div
+          key="5"
+        >
+          <SquareHolder
+            accentColor="black"
+            displayComponentClass={[Function]}
+            rawConfig={Object {}}
+            specialBoldFontColor="red"
+            specialSubtleFontColor="green"
+            title="Announcements"
+            titleColor="black"
+          />
+        </div>
       </RotatorComponent>
       <div />
       <div />

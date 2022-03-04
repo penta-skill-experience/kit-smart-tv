@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import React from "react";
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import {configure, shallow} from "enzyme";
@@ -7,7 +10,6 @@ import {SquareHolder} from "../../../../client/display_website/SquareHolder";
 import {
     CafeteriaOpeningDisplayComponent
 } from "../../../../client/widget_catalog/cafeteria_opening/CafeteriaOpeningDisplayComponent";
-import '@testing-library/jest-dom'
 
 const widgetOne = new WidgetData("cafeteria-menu", 2, {});
 
@@ -32,11 +34,17 @@ describe("Square Holder Snapshots", () => {
                                               specialBoldFontColor="black"
                                               specialSubtleFontColor="black">
         </SquareHolder>);
+
+        jest.useFakeTimers("legacy");
+        await new Promise(process.nextTick);
+        jest.runAllTimers();
         await new Promise(process.nextTick);
         expect(toJson(wrapper)).toMatchSnapshot();
+
     });
 
     afterEach(() => {
+        jest.useRealTimers();
         jest.restoreAllMocks();
     });
 });
