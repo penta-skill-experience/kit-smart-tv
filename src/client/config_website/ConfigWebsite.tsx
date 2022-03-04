@@ -182,7 +182,7 @@ export function ConfigWebsite() {
             widget: newWidget,
             widgetData: new WidgetData(event.target.value, -1, newWidget.isConfigurable() ? newWidget.getDefaultRawConfig() : {}),
         }
-        setWidgetListElement(updatedValue)
+        setWidgetListElement(updatedValue);
     };
 
     const handleAddWidget = () => {

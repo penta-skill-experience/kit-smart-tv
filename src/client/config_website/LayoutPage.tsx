@@ -187,6 +187,7 @@ export const LayoutPage = ({list, widgetListElement, handleWidgetSelection, hand
                     <FormControl sx={{minWidth: 150}}>
                         <InputLabel>Select Widget</InputLabel>
                         <Select
+                            key = {widgetListElement.id}
                             value={widgetListElement.widgetNameText}
                             onChange={handleWidgetSelection}
                             label={"Select Widget"}
