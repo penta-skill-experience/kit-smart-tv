@@ -75,108 +75,13 @@ exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all cl
           className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center"
           style={
             Object {
-              "backgroundColor": "DarkOrange",
+              "backgroundColor": "ForestGreen",
             }
           }
         />
         until
         <div>
-          07:30
-        </div>
-      </div>
-    </div>
-    <div>
-      <div>
-        Reopens: 
-         Today
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all open 1`] = `
-<div
-  className="grid grid-flow-row sm:g-0.5 xl:gap-1.5 2xl:gap-2 items-center box-border h-fit"
->
-  <div
-    className="grid grid-flow-row lg:gap-3 xl:gap-4 4xl:gap-6 8xl:gap-8 font-light leading-normal sm:text-xs md:text-sm lg:text-base lg:text-xl 2xl:text-2xl 4xl:text-4xl 8xl:text-5xl sm:text-left"
-  >
-    <div>
-      <div
-        className="flex gap-3 box-border items-center"
-      >
-        <div>
-          Dining Hall: 
-        </div>
-        <div
-          className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center"
-          style={
-            Object {
-              "backgroundColor": "DarkOrange",
-            }
-          }
-        />
-        until
-        <div>
-          11:00
-        </div>
-      </div>
-      <div
-        className="flex gap-3 box-border items-center"
-      >
-        <div>
-          [koeri]Werk: 
-        </div>
-        <div
-          className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center"
-          style={
-            Object {
-              "backgroundColor": "DarkOrange",
-            }
-          }
-        />
-        until
-        <div>
-          11:00
-        </div>
-      </div>
-      <div
-        className="flex gap-3 box-border items-center"
-      >
-        <div>
-          [pizza+pasta]Werk: 
-        </div>
-        <div
-          className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center"
-          style={
-            Object {
-              "backgroundColor": "DarkOrange",
-            }
-          }
-        />
-        until
-        <div>
-          11:00
-        </div>
-      </div>
-      <div
-        className="flex gap-3 box-border items-center"
-      >
-        <div>
-          Cafeteria: 
-        </div>
-        <div
-          className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center"
-          style={
-            Object {
-              "backgroundColor": "DarkOrange",
-            }
-          }
-        />
-        until
-        <div>
-          07:30
+          17:00
         </div>
       </div>
     </div>
