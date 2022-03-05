@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WidgetConfigPage tests snapshot test for WidgetConfigPage 1`] = `
+<ForwardRef(Grid)
+  item={true}
+>
+  <ForwardRef(Button)
+    onClick={[Function]}
+  >
+    <Memo(ForwardRef(MiscellaneousServicesIcon)) />
+  </ForwardRef(Button)>
+  <ForwardRef(Dialog)
+    PaperProps={
+      Object {
+        "sx": Object {
+          "alignItems": "center",
+          "display": "flex",
+          "flexDirection": "column",
+          "justifyContent": "center",
+          "padding": "24px",
+        },
+      }
+    }
+    maxWidth="xl"
+    onClose={[Function]}
+    open={false}
+  >
+    <Component />
+    <ForwardRef(ButtonGroup)>
+      <ForwardRef(Button)
+        onClick={[Function]}
+        variant="outlined"
+      >
+        Cancel
+      </ForwardRef(Button)>
+      <ForwardRef(Button)
+        onClick={[Function]}
+        variant="contained"
+      >
+        OK
+      </ForwardRef(Button)>
+    </ForwardRef(ButtonGroup)>
+  </ForwardRef(Dialog)>
+</ForwardRef(Grid)>
+`;
