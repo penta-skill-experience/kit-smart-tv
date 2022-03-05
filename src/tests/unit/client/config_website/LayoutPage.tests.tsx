@@ -42,10 +42,6 @@ describe("Layout page tests", () => {
        );
     });
 
-    afterEach(() => {
-        jest.restoreAllMocks();
-    });
-
     test("snapshot test for layout page", async () => {
         expect(toJson(wrapper)).toMatchSnapshot();
     });
