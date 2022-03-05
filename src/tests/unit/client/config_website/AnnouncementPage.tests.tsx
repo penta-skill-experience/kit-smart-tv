@@ -67,7 +67,6 @@ describe("Announcement page tests", () => {
         })
         wrapper.find("ForwardRef(Button)").at(1).simulate("click");
         expect(setVerifiedUsersMock).toHaveBeenCalled();
-        expect(getAdminLoginStateMock).toHaveBeenCalled();
     });
 
     test("handleClose function test", () => {
