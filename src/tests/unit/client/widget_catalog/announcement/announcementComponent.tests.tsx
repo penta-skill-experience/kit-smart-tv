@@ -9,6 +9,7 @@ import {AnnouncementComponent} from "../../../../../client/widget_catalog/announ
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import {shallow, configure} from "enzyme";
 import toJson from "enzyme-to-json";
+import {AnnouncementWidget} from "../../../../../client/widget_catalog/announcement/AnnouncementWidget";
 
 // setting up test values
 const bob = new VerifiedUser("bob@example.com", "bob");
@@ -42,6 +43,12 @@ describe("announcementComponent Snapshots", () => {
         const wrapper = shallow(<AnnouncementComponent error={(msg => {})} specialBoldFontColor={"ForestGreen"} specialSubtleFontColor={"DarkOrange"} />);
         await new Promise(process.nextTick);
         expect(toJson(wrapper)).toMatchSnapshot();
+        let filler = new AnnouncementWidget();
+        expect(filler.getTitle()).toBe("Announcements");
+        expect(filler.isConfigurable()).toBe(false);
+        expect(filler.getDisplayComponentClass()).toBe(AnnouncementComponent);
+        expect(filler.getDefaultRawConfig()).toBe(undefined);
+        expect(filler.getConfigComponentClass()).toBe(undefined);
     });
 
     test("announcementComponent Snapshot without announcements", async () => {
