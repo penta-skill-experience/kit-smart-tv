@@ -2,95 +2,213 @@
 
 exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all closed 1`] = `
 <div
-  className="grid grid-flow-row sm:g-0.5 xl:gap-1.5 2xl:gap-2 items-center box-border h-fit"
+  className="grid grid-flow-row sm:gap-1 lg:gap-2 xl:gap-3 4xl:gap-4 8xl:gap-5"
 >
   <div
-    className="grid grid-flow-row lg:gap-3 xl:gap-4 4xl:gap-6 8xl:gap-8 font-light leading-normal sm:text-xs md:text-sm lg:text-base lg:text-xl 2xl:text-2xl 4xl:text-4xl 8xl:text-5xl sm:text-left"
+    className="grid grid-flow-row sm:gap-1 lg:gap-2 xl:gap-3 4xl:gap-4 8xl:gap-5 items-center box-border h-fit font-light leading-normal
+                    sm:text-xs md:text-sm lg:text-baselg xl:text-xl 2xl:text-1.5xl 4xl:text-3xl 8xl:text-4.5xl sm:text-left"
+  >
+    <div
+      className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center"
+    >
+      <div>
+        Dining Hall: 
+      </div>
+      <div
+        className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+        style={
+          Object {
+            "backgroundColor": "Tomato",
+            "borderRadius": "500px",
+          }
+        }
+      >
+        closed
+      </div>
+      until
+      <div>
+        11:00
+      </div>
+    </div>
+    <div
+      className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center"
+    >
+      <div>
+        Cafeteria: 
+      </div>
+      <div
+        className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+        style={
+          Object {
+            "backgroundColor": "Tomato",
+            "borderRadius": "500px",
+          }
+        }
+      >
+        closed
+      </div>
+      until
+      <div>
+        07:30
+      </div>
+    </div>
+    <div
+      className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center"
+    >
+      <div>
+        [koeri]Werk: 
+      </div>
+      <div
+        className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+        style={
+          Object {
+            "backgroundColor": "Tomato",
+            "borderRadius": "500px",
+          }
+        }
+      >
+        closed
+      </div>
+      until
+      <div>
+        11:00
+      </div>
+    </div>
+    <div
+      className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center"
+    >
+      <div>
+        [pizza]Werk: 
+      </div>
+      <div
+        className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+        style={
+          Object {
+            "backgroundColor": "Tomato",
+            "borderRadius": "500px",
+          }
+        }
+      >
+        closed
+      </div>
+      until
+      <div>
+        11:00
+      </div>
+    </div>
+  </div>
+  <div
+    className="font-extralight leading-normal sm:text-xs md:text-sm lg:text-baselg xl:text-xl 2xl:text-1.5xl 4xl:text-3xl 8xl:text-4.5xl sm:text-left"
   >
     <div>
-      <div
-        className="flex gap-3 box-border items-center"
-      >
-        <div>
-          Dining Hall: 
-        </div>
-        <div
-          className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center"
-          style={
-            Object {
-              "backgroundColor": "DarkOrange",
-            }
-          }
-        />
-        until
-        <div>
-          11:00
-        </div>
-      </div>
-      <div
-        className="flex gap-3 box-border items-center"
-      >
-        <div>
-          [koeri]Werk: 
-        </div>
-        <div
-          className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center"
-          style={
-            Object {
-              "backgroundColor": "DarkOrange",
-            }
-          }
-        />
-        until
-        <div>
-          11:00
-        </div>
-      </div>
-      <div
-        className="flex gap-3 box-border items-center"
-      >
-        <div>
-          [pizza+pasta]Werk: 
-        </div>
-        <div
-          className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center"
-          style={
-            Object {
-              "backgroundColor": "DarkOrange",
-            }
-          }
-        />
-        until
-        <div>
-          11:00
-        </div>
-      </div>
-      <div
-        className="flex gap-3 box-border items-center"
-      >
-        <div>
-          Cafeteria: 
-        </div>
-        <div
-          className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center"
-          style={
-            Object {
-              "backgroundColor": "ForestGreen",
-            }
-          }
-        />
-        until
-        <div>
-          17:00
-        </div>
-      </div>
+      Reopens: 
+       March 4
     </div>
-    <div>
+  </div>
+</div>
+`;
+
+exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all open 1`] = `
+<div
+  className="grid grid-flow-row sm:gap-1 lg:gap-2 xl:gap-3 4xl:gap-4 8xl:gap-5"
+>
+  <div
+    className="grid grid-flow-row sm:gap-1 lg:gap-2 xl:gap-3 4xl:gap-4 8xl:gap-5 items-center box-border h-fit font-light leading-normal
+                    sm:text-xs md:text-sm lg:text-baselg xl:text-xl 2xl:text-1.5xl 4xl:text-3xl 8xl:text-4.5xl sm:text-left"
+  >
+    <div
+      className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center"
+    >
       <div>
-        Reopens: 
-         Today
+        Dining Hall: 
+      </div>
+      <div
+        className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+        style={
+          Object {
+            "backgroundColor": "ForestGreen",
+            "borderRadius": "500px",
+          }
+        }
+      >
+        open
+      </div>
+      until
+      <div>
+        14:00
       </div>
     </div>
+    <div
+      className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center"
+    >
+      <div>
+        Cafeteria: 
+      </div>
+      <div
+        className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+        style={
+          Object {
+            "backgroundColor": "ForestGreen",
+            "borderRadius": "500px",
+          }
+        }
+      >
+        open
+      </div>
+      until
+      <div>
+        17:00
+      </div>
+    </div>
+    <div
+      className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center"
+    >
+      <div>
+        [koeri]Werk: 
+      </div>
+      <div
+        className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+        style={
+          Object {
+            "backgroundColor": "ForestGreen",
+            "borderRadius": "500px",
+          }
+        }
+      >
+        open
+      </div>
+      until
+      <div>
+        14:00
+      </div>
+    </div>
+    <div
+      className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center"
+    >
+      <div>
+        [pizza]Werk: 
+      </div>
+      <div
+        className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+        style={
+          Object {
+            "backgroundColor": "ForestGreen",
+            "borderRadius": "500px",
+          }
+        }
+      >
+        open
+      </div>
+      until
+      <div>
+        15:00
+      </div>
+    </div>
+  </div>
+  <div
+    className="font-extralight leading-normal sm:text-xs md:text-sm lg:text-baselg xl:text-xl 2xl:text-1.5xl 4xl:text-3xl 8xl:text-4.5xl sm:text-left"
+  >
+    <div />
   </div>
 </div>
 `;

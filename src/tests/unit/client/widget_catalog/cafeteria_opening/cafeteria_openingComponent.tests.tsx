@@ -6,6 +6,7 @@ import * as CafeteriaOpeningConfig from "../../../../../client/widget_catalog/ca
 import {
     CafeteriaOpeningDisplayComponent
 } from "../../../../../client/widget_catalog/cafeteria_opening/CafeteriaOpeningDisplayComponent";
+import * as MockDate from "mockdate";
 
 const axios = require("axios");
 const MockAdapter = require("axios-mock-adapter");
@@ -13,11 +14,6 @@ const MockAdapter = require("axios-mock-adapter");
 // This sets the mock adapter on the default instance
 const mock = new MockAdapter(axios);
 configure({adapter: new Adapter()});
-
-beforeAll(() => {
-    jest.useFakeTimers().setSystemTime(new Date(2022, 0O3, 0O0, 19, 23, 42, 11).getTime());
-})
-
 describe("cafeteria_opening Component Snapshots", () => {
     beforeAll(() => {
         mock.onGet(CafeteriaOpeningConfig.URL_CAFETERIA_OPENING_TIMES).reply(200,
@@ -39,25 +35,20 @@ describe("cafeteria_opening Component Snapshots", () => {
             [{"date":"2022-03-03","closed":false,"meals":[{"id":9797493,"name":"Pasta Broccoli - Schinkensoße, geriebener Gouda","category":"Linie 1Gut \u0026 Günstig","prices":{"students":2.6,"employees":3.6,"pupils":2.95,"others":4.0},"notes":["mit Faarbstoff ","mit Konservierungsstoff ","mit Antioxidationsmittel","Milch/Laktose","Sellerie","Weizen"]}]},{"date":"2022-03-04","closed":false,"meals":[{"id":10243169,"name":"Pazifik Schlemmerfilet Bordelaise, Schnittlauchsoße, Petersilienkartoffeln","category":"Linie 1Gut \u0026 Günstig","prices":{"students":2.6,"employees":3.6,"pupils":2.95,"others":4.0},"notes":["mit Farbstoff ","Fisch","Milch/Laktose","Weizen","MSC aus zertifizierter Fischerei"]}]}],
         );
     });
-    test("cafeteria-opening Snapshot all open", () => {
-        const wrapper = shallow(<CafeteriaOpeningDisplayComponent error={(msg => {})} specialBoldFontColor={"ForestGreen"} specialSubtleFontColor={"DarkOrange"} />);
-        new Promise(process.nextTick).then(()=>{
-            expect(toJson(wrapper)).toMatchSnapshot();
-        });
-
+    test("cafeteria-opening Snapshot all open", async () => {
+        MockDate.set(new Date(2022, 0O2, 0O3, 11, 23, 42, 11));
+        const wrapper = shallow(<CafeteriaOpeningDisplayComponent error={(msg => {})} specialBoldFontColor={"ForestGreen"} specialSubtleFontColor={"Tomato"} />);
+        await new Promise(process.nextTick);
+        expect(toJson(wrapper)).toMatchSnapshot();
     });
-
-    test("cafeteria-opening Snapshot all closed",  () => {
-        const wrapper = shallow(<CafeteriaOpeningDisplayComponent error={(msg => {})} specialBoldFontColor={"ForestGreen"} specialSubtleFontColor={"DarkOrange"} />);
-        new Promise(process.nextTick).then(()=>{
-            expect(toJson(wrapper)).toMatchSnapshot();
-        });
+    test("cafeteria-opening Snapshot all closed",  async () => {
+        MockDate.set(new Date(2022, 0O3, 0O3, 19, 23, 42, 11));
+        const wrapper = shallow(<CafeteriaOpeningDisplayComponent error={(msg => {})} specialBoldFontColor={"ForestGreen"} specialSubtleFontColor={"Tomato"} />);
+        await new Promise(process.nextTick);
+        expect(toJson(wrapper)).toMatchSnapshot();
     });
-
-});
-
-
-afterAll(() => {
-    jest.useRealTimers();
-    jest.restoreAllMocks();
+    afterAll(() => {
+        MockDate.reset();
+        jest.restoreAllMocks();
+    });
 });
