@@ -35,24 +35,11 @@ export class AnnouncementPersistenceFrontend implements AnnouncementPersistence 
                         sessionStorage.setItem('accessToken', response.headers.get('x-access-token'));
                     }
                     if (response.status == 200) {
-                        response.json()
-                            .then(() => {
-                                //check if the data wa written correctly
-                                this.getAnnouncements()
-                                    .then(o => {
-                                        if (o === announcements) {
-                                            resolve();
-                                        } else {
-                                            reject();
-                                        }
-                                    })
-                            })
-                            .catch(() => reject());
                         resolve();
                     }
                     reject();
                 })
-                .catch(() => reject());
+                .catch(reason => reject(reason));
         });
 
     }
@@ -88,8 +75,7 @@ export class AnnouncementPersistenceFrontend implements AnnouncementPersistence 
 
                         })
                         .catch(reason => {
-                            console.warn(reason);
-                            resolve([]);
+                            reject(reason);
                         });
                 })
                 .catch(reason => {
@@ -122,10 +108,9 @@ export class AnnouncementPersistenceFrontend implements AnnouncementPersistence 
                         .then(users => {
                             resolve(users.map(user => new VerifiedUser(user.email, user.name)));
                         }).catch(reason => {
-                            console.warn(reason);
-                            resolve([]);
+                            reject(reason);
                         });
-                }).catch(() => reject());
+                }).catch((reason) => reject(reason));
         });
     }
 
@@ -157,10 +142,10 @@ export class AnnouncementPersistenceFrontend implements AnnouncementPersistence 
                     }
                     if (response.status == 200) {
                         resolve();
-                    } else {
-                        reject();
                     }
-                }).catch(() => reject());
+                    reject("response status was not 200, response status:" + response.status);
+
+                }).catch(reason => reject(reason));
         });
     }
 }
