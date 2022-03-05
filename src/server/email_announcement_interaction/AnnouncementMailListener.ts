@@ -1,8 +1,6 @@
 import * as EmailConfig from "./MailAccontConfig.json";
-import * as EmailInteractionConfig from "./MailInteractionConfig.json"
 import {MailListener} from "mail-listener-typescript";
 import {EmailAnnouncementExecutor} from "./EmailAnnouncementExecutor";
-import * as fs from "fs";
 import "dotenv/config"
 
 /**
