@@ -17,6 +17,12 @@ interface CafeteriaOpeningState {
     loadedPizza: boolean,
     loadedKoeri: boolean,
     loadedCafeteria: boolean,
+    loadedDiningOpen: boolean,
+    loadedPizzaOpen: boolean,
+    loadedKoeriOpen: boolean,
+    loadedCafeteriaOpen: boolean,
+    loadedDiningOpenDate: boolean,
+    loadedOpen: boolean,
     openToday: boolean,
     openColor: string,
     closedColor: string,
@@ -39,6 +45,13 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
             loadedPizza: false,
             loadedKoeri: false,
             loadedCafeteria: false,
+
+            loadedDiningOpen: false,
+            loadedPizzaOpen: false,
+            loadedKoeriOpen: false,
+            loadedCafeteriaOpen: false,
+            loadedDiningOpenDate: false,
+            loadedOpen: false,
 
             openToday: false,
         };
@@ -93,32 +106,50 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
         this.getHourOpening(CafeteriaOpeningConfig.URL_DINNING_OPENING_TIMES).then(resp => {
             this.setState({
                 timesDinning: resp,
-            })
+            });
+            this.setState({
+                loadedDiningOpen: true,
+            });
         });
         this.getDateOpening(CafeteriaOpeningConfig.URL_DINNING_OPENING_TIMES).then(resp => {
             this.setState({
                 dateCafeteria: resp,
-            })
+            });
+            this.setState({
+                loadedDiningOpenDate: true,
+            });
         });
         this.getHourOpening(CafeteriaOpeningConfig.URL_KOERI_OPENING_TIMES).then(resp => {
             this.setState({
                 timesKoeri: resp,
-            })
+            });
+            this.setState({
+                loadedKoeriOpen: true,
+            });
         });
         this.getHourOpening(CafeteriaOpeningConfig.URL_PIZZA_OPENING_TIMES).then(resp => {
             this.setState({
                 timesPizza: resp,
             })
+            this.setState({
+                loadedPizzaOpen: true,
+            });
         });
         this.getHourOpening(CafeteriaOpeningConfig.URL_CAFETERIA_OPENING_TIMES).then(resp => {
             this.setState({
                 timesCafeteria: resp,
             })
+            this.setState({
+                loadedCafeteriaOpen: true,
+            });
         });
         this.openToday(CafeteriaOpeningConfig.URL_DINNING_OPENING_TIMES).then(resp => {
             this.setState({
                 openToday: resp,
-            })
+            });
+            this.setState({
+                loadedOpen: true,
+            });
         });
         this.isOpen(CafeteriaOpeningConfig.URL_DINNING_OPENING_TIMES).then(resp => {
             this.setState({
@@ -199,7 +230,8 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
     }
 
     render() {
-        return ((this.state.loadedDinning && this.state.loadedPizza && this.state.loadedKoeri && this.state.loadedCafeteria) ?
+        return ((this.state.loadedDinning && this.state.loadedPizza && this.state.loadedKoeri && this.state.loadedCafeteria && this.state.loadedDiningOpen &&
+            this.state.loadedPizzaOpen && this.state.loadedKoeriOpen && this.state.loadedCafeteriaOpen && this.state.loadedDiningOpenDate &&  this.state.loadedOpen) ?
             <div className = "grid grid-flow-row sm:gap-1 lg:gap-2 xl:gap-3 4xl:gap-4 8xl:gap-5">
                 <div
                     className="grid grid-flow-row sm:gap-1 lg:gap-2 xl:gap-3 4xl:gap-4 8xl:gap-5 items-center box-border h-fit font-light leading-normal
