@@ -4,6 +4,7 @@ import {configure, shallow} from "enzyme";
 import toJson from "enzyme-to-json";
 import * as WeatherConfig from "../../../../../client/widget_catalog/weather/Weather.json";
 import {WeatherDisplayComponent} from "../../../../../client/widget_catalog/weather/WeatherDisplayComponent";
+import {WeatherWidget} from "../../../../../client/widget_catalog/weather/WeatherWidget";
 
 const axios = require("axios");
 const MockAdapter = require("axios-mock-adapter");
@@ -19,6 +20,12 @@ describe("Weather widget Snapshots", () => {+
         const wrapper = shallow(<WeatherDisplayComponent error={(msg => {})} specialBoldFontColor={"ForestGreen"} specialSubtleFontColor={"DarkOrange"} />);
         await new Promise(process.nextTick);
         expect(toJson(wrapper)).toMatchSnapshot();
+        let filler = new WeatherWidget();
+        expect(filler.getTitle()).toBe("Weather");
+        expect(filler.isConfigurable()).toBe(false);
+        expect(filler.getDisplayComponentClass()).toBe(WeatherDisplayComponent);
+        expect(filler.getDefaultRawConfig()).toBe(undefined);
+        expect(filler.getConfigComponentClass()).toBe(undefined);
     });
     afterEach(() => {
         jest.restoreAllMocks();
