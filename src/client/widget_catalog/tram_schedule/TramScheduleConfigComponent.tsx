@@ -89,7 +89,7 @@ export class TramScheduleConfigComponent extends ConfigComponent<TramScheduleCon
                     <Select
                         value={this.state.selectedCount}
                         onChange={event => this.setState({selectedCount: event.target.value})}>
-                        {[1,2,3,4,5,6].map(count => <MenuItem value={count}>{count}</MenuItem>)}
+                        {[1,2,3,4,5].map(count => <MenuItem value={count}>{count}</MenuItem>)}
                     </Select>
                 </div>
             </DialogContent>
