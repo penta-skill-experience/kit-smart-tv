@@ -1,6 +1,239 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Square Holder Snapshots Square holder Snapshots with design values and widget info 1`] = `
+exports[`Square Holder Snapshots Square holder Snapshots with error 1`] = `
+<div
+  className="xl:py-1 8xl:py-2"
+  style={
+    Object {
+      "height": "45.5vh",
+      "width": "30.5vw",
+    }
+  }
+>
+  <div
+    className="w-full h-full rounded-2xl"
+    id="squareHeld"
+    style={
+      Object {
+        "backgroundColor": "black",
+        "overflow": "hidden",
+      }
+    }
+  >
+    <div
+      className="z-20 sm:pb-1 lg:pb-2 xl:pb-3 4xl:pb-4 font-light leading-normal sm:text-base md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl 8xl:text-7xl"
+      style={
+        Object {
+          "color": "black",
+        }
+      }
+    >
+      cafeteria-menu
+    </div>
+    <div
+      className="z-10 sm:pl-5 sm:pb-2 sm:pr-2 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12 scrollbar-hide"
+      id="id555"
+      style={
+        Object {
+          "height": "35vh",
+          "overflow": "scroll",
+        }
+      }
+    >
+      <div
+        id="id555"
+      >
+        <div
+          className="w-full h-full font-light leading-normal sm:text-xs lg:text-sm xl:text-base 2xl:text-lg 4xl:text-xl text-center"
+        >
+          <div
+            className="xs:w-10 sm:w-12 md:w-14 base:w-18 lg:w-24 xl:w-35 2xl:w-43 4xl:w-50 8xl:w-60"
+          >
+            <div />
+            <img
+              alt="Error_Robot"
+              src="https://upload.wikimedia.org/wikipedia/commons/2/24/094-robot-face-3.svg"
+            />
+            <div />
+          </div>
+          <span
+            className="text-left"
+          >
+            Render error: 
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Square Holder Snapshots Square holder Snapshots with large overflow 1`] = `
+<div
+  className="xl:py-1 8xl:py-2"
+  style={
+    Object {
+      "height": "45.5vh",
+      "width": "30.5vw",
+    }
+  }
+>
+  <div
+    className="w-full h-full rounded-2xl"
+    id="squareHeld"
+    style={
+      Object {
+        "backgroundColor": "black",
+        "overflow": "hidden",
+      }
+    }
+  >
+    <div
+      className="z-20 sm:pb-1 lg:pb-2 xl:pb-3 4xl:pb-4 font-light leading-normal sm:text-base md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl 8xl:text-7xl"
+      style={
+        Object {
+          "color": "black",
+        }
+      }
+    >
+      cafeteria-menu
+    </div>
+    <div
+      className="z-10 sm:pl-5 sm:pb-2 sm:pr-2 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12 scrollbar-hide"
+      id="id555"
+      style={
+        Object {
+          "height": "35vh",
+          "overflow": "scroll",
+        }
+      }
+    >
+      <div
+        id="id555"
+      >
+        <CafeteriaOpeningDisplayComponent
+          config=""
+          error={[Function]}
+          specialBoldFontColor="black"
+          specialSubtleFontColor="black"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Square Holder Snapshots Square holder Snapshots with no element 1`] = `
+<div
+  className="xl:py-1 8xl:py-2"
+  style={
+    Object {
+      "height": "45.5vh",
+      "width": "30.5vw",
+    }
+  }
+>
+  <div
+    className="w-full h-full rounded-2xl"
+    id="squareHeld"
+    style={
+      Object {
+        "backgroundColor": "black",
+        "overflow": "hidden",
+      }
+    }
+  >
+    <div
+      className="z-20 sm:pb-1 lg:pb-2 xl:pb-3 4xl:pb-4 font-light leading-normal sm:text-base md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl 8xl:text-7xl"
+      style={
+        Object {
+          "color": "black",
+        }
+      }
+    >
+      cafeteria-menu
+    </div>
+    <div
+      className="z-10 sm:pl-5 sm:pb-2 sm:pr-2 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12 scrollbar-hide"
+      id="id555"
+      style={
+        Object {
+          "height": "35vh",
+          "overflow": "scroll",
+        }
+      }
+    >
+      <div
+        id="id555"
+      >
+        <CafeteriaOpeningDisplayComponent
+          config=""
+          error={[Function]}
+          specialBoldFontColor="black"
+          specialSubtleFontColor="black"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Square Holder Snapshots Square holder Snapshots with small overflow 1`] = `
+<div
+  className="xl:py-1 8xl:py-2"
+  style={
+    Object {
+      "height": "45.5vh",
+      "width": "30.5vw",
+    }
+  }
+>
+  <div
+    className="w-full h-full rounded-2xl"
+    id="squareHeld"
+    style={
+      Object {
+        "backgroundColor": "black",
+        "overflow": "hidden",
+      }
+    }
+  >
+    <div
+      className="z-20 sm:pb-1 lg:pb-2 xl:pb-3 4xl:pb-4 font-light leading-normal sm:text-base md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl 8xl:text-7xl"
+      style={
+        Object {
+          "color": "black",
+        }
+      }
+    >
+      cafeteria-menu
+    </div>
+    <div
+      className="z-10 sm:pl-5 sm:pb-2 sm:pr-2 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12 scrollbar-hide"
+      id="id555"
+      style={
+        Object {
+          "height": "35vh",
+          "overflow": "scroll",
+        }
+      }
+    >
+      <div
+        id="id555"
+      >
+        <CafeteriaOpeningDisplayComponent
+          config=""
+          error={[Function]}
+          specialBoldFontColor="black"
+          specialSubtleFontColor="black"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Square Holder Snapshots Square holder Snapshots with small overflow 2`] = `
 <div
   className="xl:py-1 8xl:py-2"
   style={
