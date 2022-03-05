@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Layout page tests snapshot test for personalization page 1`] = `
+exports[`Personalization page tests snapshot test for personalization page 1`] = `
 <div>
   <ForwardRef(Grid)
     alignItems="center"
@@ -20,7 +20,13 @@ exports[`Layout page tests snapshot test for personalization page 1`] = `
         <ForwardRef(RadioGroup)
           onChange={[Function]}
           value=""
-        />
+        >
+          <ForwardRef(FormControlLabel)
+            control={<ForwardRef(Radio) />}
+            label="light"
+            value="1"
+          />
+        </ForwardRef(RadioGroup)>
       </ForwardRef(FormControl)>
     </ForwardRef(Grid)>
     <ForwardRef(Grid)
@@ -34,7 +40,13 @@ exports[`Layout page tests snapshot test for personalization page 1`] = `
         <ForwardRef(RadioGroup)
           onChange={[Function]}
           value=""
-        />
+        >
+          <ForwardRef(FormControlLabel)
+            control={<ForwardRef(Radio) />}
+            label="arial"
+            value="1"
+          />
+        </ForwardRef(RadioGroup)>
       </ForwardRef(FormControl)>
     </ForwardRef(Grid)>
     <ForwardRef(Grid)
