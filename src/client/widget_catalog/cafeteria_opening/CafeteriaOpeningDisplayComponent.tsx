@@ -85,14 +85,14 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                 });
     }
     private setter() {
-        this.getDateOpening(CafeteriaOpeningConfig.URL_DINNING_OPENING_TIMES).then(resp => {
-            this.setState({
-                dateCafeteria: resp,
-            })
-        });
         this.getHourOpening(CafeteriaOpeningConfig.URL_DINNING_OPENING_TIMES).then(resp => {
             this.setState({
                 timesDinning: resp,
+            })
+        });
+        this.getDateOpening(CafeteriaOpeningConfig.URL_DINNING_OPENING_TIMES).then(resp => {
+            this.setState({
+                dateCafeteria: resp,
             })
         });
         this.getHourOpening(CafeteriaOpeningConfig.URL_KOERI_OPENING_TIMES).then(resp => {
@@ -191,16 +191,20 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
     }
     render() {
         return ((this.state.loadedDinning && this.state.loadedPizza && this.state.loadedKoeri && this.state.loadedCafeteria) ?
-        <div className="grid grid-flow-row sm:g-0.5 xl:gap-1.5 2xl:gap-2 items-center box-border h-fit">
+        <div className="grid grid-flow-row sm:gap-0.5 xl:gap-1.5 2xl:gap-2 items-center box-border h-fit">
             <div
-                className="grid grid-flow-row lg:gap-3 xl:gap-4 4xl:gap-6 8xl:gap-8 font-light leading-normal sm:text-xs md:text-sm lg:text-base lg:text-xl 2xl:text-2xl 4xl:text-4xl 8xl:text-5xl sm:text-left">
-                <div>
-                    <div className="flex gap-3 box-border items-center">
+                className="grid grid-flow-row sm:gap-1 lg:gap-4 xl:gap-6 4xl:gap-7 8xl:gap-9 font-light leading-normal sm:text-xs md:text-sm lg:text-base lg:text-xl 2xl:text-2xl 4xl:text-4xl 8xl:text-5xl sm:text-left">
+                <div className="grid grid-flow-row sm:gap-1 lg:gap-2 xl:gap-3 4xl:gap-4 8xl:gap-5">
+                    <div className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center">
                         <div>Dining Hall:&nbsp;
                         </div>
-                        <div className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center" style={{
+                        <div
+                            className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3" style={{
                             backgroundColor: (this.state.openDinningRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
-                        }}/>
+                            borderRadius: "500px"
+                        }}>
+                            {(this.state.openDinningRightNow ? "open" : "closed")}
+                        </div>
                         until
                         {(this.state.openDinningRightNow ? <div>
                             {this.getTime(this.state.timesDinning[1])}
@@ -208,12 +212,16 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                             {this.getTime(this.state.timesDinning[0])}
                         </div>)}
                     </div>
-                    <div className="flex gap-3 box-border items-center">
+                    <div className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center">
                         <div>[koeri]Werk:&nbsp;
                         </div>
-                        <div className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center" style={{
+                        <div
+                            className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3" style={{
                             backgroundColor: (this.state.openKoeriRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
-                        }}/>
+                            borderRadius: "500px"
+                        }}>
+                            {(this.state.openKoeriRightNow ? "open" : "closed")}
+                        </div>
                         until
                         {(this.state.openKoeriRightNow ? <div>
                             {this.getTime(this.state.timesKoeri[1])}
@@ -221,12 +229,16 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                             {this.getTime(this.state.timesKoeri[0])}
                         </div>)}
                     </div>
-                    <div className="flex gap-3 box-border items-center">
+                    <div className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center">
                         <div>[pizza+pasta]Werk:&nbsp;
                         </div>
-                        <div className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center" style={{
+                        <div
+                            className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3" style={{
                             backgroundColor: (this.state.openPizzaRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
-                        }}/>
+                            borderRadius: "500px"
+                        }}>
+                            {(this.state.openPizzaRightNow ? "open" : "closed")}
+                        </div>
                         until
                         {(this.state.openPizzaRightNow ? <div>
                             {this.getTime(this.state.timesPizza[1])}
@@ -234,12 +246,16 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                             {this.getTime(this.state.timesPizza[0])}
                         </div>)}
                     </div>
-                    <div className="flex gap-3 box-border items-center">
+                    <div className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center">
                         <div>Cafeteria:&nbsp;
                         </div>
-                        <div className="font-medium sm:w-3 lg:w-5 xl:w-8 4xl:w-12 8xl:w-15 sm:h-3 lg:h-5 xl:h-8 4xl:h-12 8xl:h-15 rounded-full items-center justify-center" style={{
+                        <div
+                            className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3" style={{
                             backgroundColor: (this.state.openCafeteriaRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
-                        }}/>
+                            borderRadius: "500px"
+                        }}>
+                            {(this.state.openCafeteriaRightNow ? "open" : "closed")}
+                        </div>
                         until
                         {(this.state.openCafeteriaRightNow ? <div>
                             {this.getTime(this.state.timesCafeteria[1])}
