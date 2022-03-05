@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LogInPage tests snapshot test for login page 1`] = `
+<div
+  style={
+    Object {
+      "alignItems": "center",
+      "display": "flex",
+      "flexDirection": "column",
+      "height": "70%",
+      "justifyContent": "center",
+      "width": "100%",
+    }
+  }
+>
+  <h1
+    className="text-lg"
+  >
+    Admin Interface
+  </h1>
+  <ForwardRef(FormControl)
+    sx={
+      Object {
+        "m": 1,
+        "width": "25ch",
+      }
+    }
+    variant="standard"
+  >
+    <ForwardRef(InputLabel)>
+      Password
+    </ForwardRef(InputLabel)>
+    <ForwardRef(Input)
+      endAdornment={
+        <ForwardRef(InputAdornment)
+          position="end"
+        >
+          <ForwardRef(IconButton)
+            onClick={[Function]}
+          >
+            <Memo />
+          </ForwardRef(IconButton)>
+        </ForwardRef(InputAdornment)>
+      }
+      onChange={[Function]}
+      onKeyDown={[Function]}
+      type="password"
+      value=""
+    />
+  </ForwardRef(FormControl)>
+  <ForwardRef(Button)
+    onClick={[Function]}
+    variant="contained"
+  >
+    Log In
+  </ForwardRef(Button)>
+</div>
+`;
