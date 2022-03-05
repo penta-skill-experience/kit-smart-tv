@@ -54,6 +54,9 @@ configure({adapter: new Adapter()});
 describe("rootComponent Snapshots", () => {
 
     test("rootComponent Snapshots with design values and widget info", async () => {
+        jest.useFakeTimers("legacy");
+        Promise.resolve().then(() => jest.advanceTimersByTime(16000));
+        jest.runOnlyPendingTimers();
         getDesignConfigValuesMock.mockImplementation(() => {
             return new Promise<DesignConfigValues>(resolve => {
                 resolve(values);
@@ -98,8 +101,10 @@ describe("rootComponent Snapshots", () => {
         await new Promise(process.nextTick);
         expect(toJson(wrapper)).toMatchSnapshot();
     });
-
     afterEach(() => {
+        jest.useRealTimers();
+    });
+    afterAll(() => {
         jest.restoreAllMocks();
     });
 });
