@@ -66,7 +66,7 @@ function renderPosition({item, position, handlePosition}) {
     );
 }
 
-function DeleteDialogComponent({id ,handleDeleteWidget}) {
+export function DeleteDialogComponent({id ,handleDeleteWidget}) {
     const [open, setOpen] = React.useState(false);
 
 
