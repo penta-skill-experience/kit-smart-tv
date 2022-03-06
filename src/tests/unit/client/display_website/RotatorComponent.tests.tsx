@@ -20,12 +20,18 @@ const widgetTwo = new WidgetData("cafeteria-opening", 2, {});
 describe("rotatorComponent Snapshots", () => {
 
     test("rotatorComponent Snapshots without children", async () => {
+        jest.useFakeTimers('legacy');
+        Promise.resolve().then(() => jest.advanceTimersByTime(15000));
+        jest.runOnlyPendingTimers();
         const wrapper = shallow(<RotatorComponent/>);
         await new Promise(process.nextTick);
         expect(toJson(wrapper)).toMatchSnapshot();
     });
 
     test("rotatorComponent with children", async () => {
+        jest.useFakeTimers('legacy');
+        Promise.resolve().then(() => jest.advanceTimersByTime(15000));
+        jest.runOnlyPendingTimers();
         const wrapper = shallow(<RotatorComponent>
             <SquareHolder displayComponentClass={CafeteriaMenuDisplayComponent}
                               rawConfig={widgetOne.rawConfig}
@@ -50,6 +56,9 @@ describe("rotatorComponent Snapshots", () => {
     });
 
     afterEach(() => {
+        jest.useRealTimers();
+    });
+    afterAll(() => {
         jest.restoreAllMocks();
     });
 });

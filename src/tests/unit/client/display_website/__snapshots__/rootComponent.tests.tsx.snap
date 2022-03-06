@@ -93,7 +93,7 @@ exports[`rootComponent Snapshots rootComponent Snapshots with design values and 
             rawConfig={Object {}}
             specialBoldFontColor="red"
             specialSubtleFontColor="green"
-            title="RSS Feed"
+            title="Cafeteria Status"
             titleColor="black"
           />
         </div>
@@ -106,7 +106,7 @@ exports[`rootComponent Snapshots rootComponent Snapshots with design values and 
             rawConfig={Object {}}
             specialBoldFontColor="red"
             specialSubtleFontColor="green"
-            title="Announcements"
+            title="Tram Schedule"
             titleColor="black"
           />
         </div>
@@ -119,33 +119,7 @@ exports[`rootComponent Snapshots rootComponent Snapshots with design values and 
             rawConfig={Object {}}
             specialBoldFontColor="red"
             specialSubtleFontColor="green"
-            title="Tram Schedule"
-            titleColor="black"
-          />
-        </div>
-        <div
-          key="4"
-        >
-          <SquareHolder
-            accentColor="black"
-            displayComponentClass={[Function]}
-            rawConfig={Object {}}
-            specialBoldFontColor="red"
-            specialSubtleFontColor="green"
-            title="Cafeteria"
-            titleColor="black"
-          />
-        </div>
-        <div
-          key="5"
-        >
-          <SquareHolder
-            accentColor="black"
-            displayComponentClass={[Function]}
-            rawConfig={Object {}}
-            specialBoldFontColor="red"
-            specialSubtleFontColor="green"
-            title="Announcements"
+            title="RSS Feed"
             titleColor="black"
           />
         </div>

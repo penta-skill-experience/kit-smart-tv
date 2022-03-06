@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RSS-Feed Snapshots RSS-Feed Snapshot 1`] = `
+<div
+  className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl 8xl:text-4xl"
+>
+  loading...
+</div>
+`;
