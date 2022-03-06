@@ -22,28 +22,6 @@ exports[`cafeteria_menuComponent Snapshots cafeteria-menu Snapshot 1`] = `
 </div>
 `;
 
-exports[`cafeteria_menuComponent Snapshots cafeteria-menu Snapshot with announcements 1`] = `
-<div
-  className="grid grid-flow-row box-border"
->
-  <div
-    className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl"
-    key="0"
-  >
-    <b>
-      Pasta Broccoli - Schinkensoße, geriebener Gouda
-    </b>
-    :
-    <div
-      className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl"
-    >
-      Linie 1Gut & Günstig
-    </div>
-    <br />
-  </div>
-</div>
-`;
-
 exports[`cafeteria_menuComponent Snapshots cafeteria-menu Snapshot without proper data causing error 1`] = `
 <div
   className="grid grid-flow-row box-border"

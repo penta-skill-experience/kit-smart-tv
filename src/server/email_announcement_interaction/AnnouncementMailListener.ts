@@ -14,7 +14,7 @@ export class AnnouncementMailListener {
      * Creates the mail listener using the options supplied from MailAccountConfig.json.
      */
     createMailListener() {
-        const options = { // see https://www.npmjs.com/package/mail-listener-typescript
+        const options = {
             username: EmailConfig.USERNAME,
             password: process.env.ANNOUNCEMENT_EMAIL_ACCOUNT_PW,
             host:  EmailConfig.HOST,
@@ -49,6 +49,12 @@ export class AnnouncementMailListener {
             } catch (e) {
                 console.error(e.message);
             }
+        });
+
+        this.mailListener.on("error", async (error : any) =>  {
+            this.stopMailListener();
+            await new Promise(resolve => setTimeout(resolve, EmailConfig.ON_ERROR_TIME_TO_RECONNECTION_ATTEMPT));
+            this.createMailListener();
         });
     }
 

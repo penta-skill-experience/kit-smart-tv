@@ -2,6 +2,7 @@ import * as React from "react";
 import Parser from "rss-parser";
 import {DisplayComponent, DisplayComponentProps} from "../../widget/DisplayComponent";
 import config from "../../../shared/persistence/persistence.config.json";
+import * as RSSFeedWidgetConfig from "./RSSFeedWidget.json";
 
 interface RssFeedDisplayState {
     loaded: boolean;
@@ -11,6 +12,8 @@ interface RssFeedDisplayState {
 }
 
 export class RssFeedDisplayComponent extends DisplayComponent<RssFeedDisplayState> {
+
+    private intervalHandle;
 
     constructor(props) {
         super(props);
@@ -24,6 +27,12 @@ export class RssFeedDisplayComponent extends DisplayComponent<RssFeedDisplayStat
 
     componentDidMount() {
         this.fetchRssFeed();
+
+        this.intervalHandle = setInterval(() => this.fetchRssFeed(), RSSFeedWidgetConfig.REFRESH_RATE)
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.intervalHandle);
     }
 
     componentDidUpdate(prevProps: Readonly<DisplayComponentProps>, prevState: Readonly<any>, snapshot?: any) {
