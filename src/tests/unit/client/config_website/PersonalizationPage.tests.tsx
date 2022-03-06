@@ -5,6 +5,7 @@ import toJson from "enzyme-to-json";
 import {PersonalizationPage} from "../../../../client/config_website/PersonalizationPage";
 import {DesignValuesPersistence} from "../../../../shared/persistence/DesignValuesPersistence";
 import {ConfigData, ValuesData} from "../../../../shared/interfaces/interfaces";
+import testImage  from "./test.jpg";
 import {FontSize} from "../../../../shared/values/FontSize";
 import {ColorScheme} from "../../../../shared/values/ColorScheme";
 import {DesignConfigPersistence} from "../../../../shared/persistence/DesignConfigPersistence";
@@ -13,7 +14,7 @@ configure({adapter: new Adapter()});
 
 const componentDidMountMock = jest.spyOn(DesignValuesPersistence.prototype,"getValuesData");
 const setConfigDataMock = jest.spyOn(DesignConfigPersistence.prototype, "setConfigData");
-const handlePersonalizationChangeCatchMock = jest.fn(() => Promise.resolve(false));
+
 
 const testConfigData = {
     fontSize: "small",
@@ -30,7 +31,7 @@ let colorSchemeList : ColorScheme[] = [{
     specialBoldFontColor: "black",
     specialSubtleFontColor: "green",
     accentBarColor: "pink",
-    backgrounds: ["image.jpg"],
+    backgrounds: [testImage],
 
 }];
 
@@ -73,6 +74,7 @@ describe("Personalization page tests", () => {
         );
     });
 
+
     test("snapshot test for personalization page", async () => {
         wrapper.setState({
             loadedDesignState: true,
@@ -83,6 +85,22 @@ describe("Personalization page tests", () => {
             sessionErrorBar:false,
         });
         expect(toJson(wrapper)).toMatchSnapshot();
+    });
+
+    test("snapshot for render background function", async () => {
+        const backgroundWrapper = shallow(
+            <PersonalizationPage
+                colorScheme={'1'}
+                fontSize={''}
+                handleColorSchemeChange={method}
+                handleFontSizeChange={method}
+                selectedBackground={method}
+                handleBackgroundSelect={method}
+                handlePersonalizationChange={method}
+            >
+            </PersonalizationPage>
+        )
+        expect(toJson(backgroundWrapper)).toMatchSnapshot();
     });
 
     test("handleClose function test", () => {
@@ -99,9 +117,7 @@ describe("Personalization page tests", () => {
 describe("snack bar test", () => {
 
     test("handlePersonalization change test", () => {
-        const handlePersonalizationChangeThenMock = jest.fn(() => {
-            Promise.resolve(true);
-        });
+        const handlePersonalizationChangeThenMock = jest.fn(() => Promise.resolve(true));
         wrapper = shallow(
             <PersonalizationPage
                 colorScheme={''}
@@ -117,7 +133,44 @@ describe("snack bar test", () => {
 
         wrapper.find("ForwardRef(Button)").at(0).simulate("click");
         expect(handlePersonalizationChangeThenMock).toHaveBeenCalled();
-        //expect(wrapper.find("ForwardRef(Button)").at(0).prop("open")).toEqual(true);
     });
 
+    test("handlePersonalization change test", () => {
+        const handlePersonalizationChangeCatchMock = jest.fn(() => Promise.resolve(false));
+        wrapper = shallow(
+            <PersonalizationPage
+                colorScheme={''}
+                fontSize={''}
+                handleColorSchemeChange={method}
+                handleFontSizeChange={method}
+                selectedBackground={method}
+                handleBackgroundSelect={method}
+                handlePersonalizationChange={handlePersonalizationChangeCatchMock}
+            >
+            </PersonalizationPage>
+        );
+
+        wrapper.find("ForwardRef(Button)").at(0).simulate("click");
+        expect(handlePersonalizationChangeCatchMock).toHaveBeenCalled();
+    });
+
+});
+
+describe("background image render test", () => {
+
+    test("snapshot for render background function", async () => {
+        const backgroundWrapper = shallow(
+            <PersonalizationPage
+                colorScheme={'1'}
+                fontSize={''}
+                handleColorSchemeChange={method}
+                handleFontSizeChange={method}
+                selectedBackground={method}
+                handleBackgroundSelect={method}
+                handlePersonalizationChange={method}
+            >
+            </PersonalizationPage>
+        )
+        expect(toJson(backgroundWrapper)).toMatchSnapshot();
+    });
 });
