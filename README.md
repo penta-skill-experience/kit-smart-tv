@@ -82,6 +82,7 @@ This is an example for the MailAccountConfig.json
   "TLS_OPTIONS": { "REJECT_UNAUTHORIZED": false },  whether to use the tls option "rejectUnauthorized"
   "MAILBOX": "INBOX",                               In which folder to look for new mails
   "FETCH_UNREAD_ON_START": true                     Whether to fetch all unread mails on startup
+  "ON_ERROR_TIME_TO_RECONNECTION_ATTEMPT": 1000     The time interval to start a reconnection attempt if an error occured in ms
 }
 ```
 
