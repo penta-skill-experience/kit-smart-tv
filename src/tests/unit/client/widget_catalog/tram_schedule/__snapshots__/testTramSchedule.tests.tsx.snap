@@ -66,59 +66,6 @@ exports[`Tram Schedule Snapshots Tram schedule config without content 1`] = `
 </div>
 `;
 
-exports[`Tram Schedule Snapshots Tram schedule testing 1`] = `
-<div
-  className="grid grid-flow-row sm:g-0.5 xl:gap-1.5 2xl:gap-2 box-border"
->
-  <div
-    className="font-light leading-none sm:text-sm sm:text-center lg:text-base xl:text-xl 2xl:text-2xl
-             4xl:text-3xl 8xl:text-5xl sm:pb-1 lg:pb-2 xl:pb-3 4xl:pb-4"
-  >
-      
-    Hauptfriedhof
-  </div>
-  <div
-    className="font-light leading-normal sm:text-sm sm:text-left lg:text-base xl:text-xl 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl"
-  >
-    4
-     
-    Waldstadt
-    :    
-    6 min
-  </div>
-  <div
-    className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl"
-    key="0"
-  >
-    3
-     
-    Rappenwört über Hbf
-    :    
-    7 min
-  </div>
-  <div
-    className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl"
-    key="1"
-  >
-    30
-     
-    Elbinger Straße
-    :    
-    16:30
-  </div>
-  <div
-    className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl"
-    key="2"
-  >
-    3
-     
-    Rintheim
-    :    
-    16:31
-  </div>
-</div>
-`;
-
 exports[`Tram Schedule Snapshots Tram schedule testing with content 1`] = `
 <div
   className="grid grid-flow-row sm:g-0.5 xl:gap-1.5 2xl:gap-2 box-border"
