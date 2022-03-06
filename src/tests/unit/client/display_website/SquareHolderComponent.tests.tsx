@@ -66,12 +66,11 @@ describe("Square Holder Snapshots", () => {
             return overflowing;
         });
         clientHeight.mockImplementation(() => {
-            return 3000;
+            return 54;
         });
         scrollHeight.mockImplementation(() => {
             return 100;
         });
-
         jest.useFakeTimers("legacy");
         Promise.resolve().then(() => jest.advanceTimersByTime(16000));
         jest.runOnlyPendingTimers();
@@ -83,8 +82,10 @@ describe("Square Holder Snapshots", () => {
                                               specialBoldFontColor="black"
                                               specialSubtleFontColor="black">
         </SquareHolder>);
+        SquareHolder.getDerivedStateFromError(new Error);
         await new Promise(process.nextTick);
         expect(toJson(wrapper)).toMatchSnapshot();
+        wrapper.unmount()
     });
     test("Square holder Snapshots with no element", async () => {
         documentMock.mockImplementation((id: string) => {
@@ -125,9 +126,9 @@ describe("Square Holder Snapshots", () => {
     });
     afterEach(() => {
         jest.useRealTimers();
+        jest.clearAllMocks();
     });
     afterAll(() => {
         $.fx.off = true;
-        jest.restoreAllMocks();
     });
 });

@@ -119,8 +119,7 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
         if (this.state.uniqueIdOutsideScroll === null || document.getElementById(this.state.uniqueIdOutsideScroll) === null) {
             return;
         }
-        if (!((document.getElementById(this.state.uniqueIdInsideScroll).scrollHeight
-            - document.getElementById(this.state.uniqueIdOutsideScroll).clientHeight) / document.getElementById(this.state.uniqueIdOutsideScroll).clientHeight > SquareHolderConfig.RATIO)) {
+        if (!(document.getElementById(this.state.uniqueIdInsideScroll).scrollHeight > (document.getElementById(this.state.uniqueIdOutsideScroll).clientHeight * SquareHolderConfig.RATIO))) {
             $("body,html, #" + this.state.uniqueIdOutsideScroll).delay(SquareHolderConfig.SMALL_WIDGET_WAIT).animate({scrollTop: 0}, speed * (document.getElementById(this.state.uniqueIdInsideScroll).scrollHeight) / 65, 'linear');
             return;
         }
@@ -132,8 +131,7 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
             document.getElementById(this.state.uniqueIdInsideScroll) === null) {
             return;
         }
-        if (!((document.getElementById(this.state.uniqueIdInsideScroll).scrollHeight
-            - document.getElementById(this.state.uniqueIdOutsideScroll).clientHeight) / document.getElementById(this.state.uniqueIdOutsideScroll).clientHeight > SquareHolderConfig.RATIO)) {
+        if (!(document.getElementById(this.state.uniqueIdInsideScroll).scrollHeight > (document.getElementById(this.state.uniqueIdOutsideScroll).clientHeight * SquareHolderConfig.RATIO))) {
             $("body,html, #" + this.state.uniqueIdOutsideScroll).delay(SquareHolderConfig.SMALL_WIDGET_WAIT).animate({
                 scrollTop: document.getElementById(this.state.uniqueIdInsideScroll).scrollHeight
                     - document.getElementById(this.state.uniqueIdOutsideScroll).clientHeight
