@@ -70,7 +70,7 @@ Verified Users can interact with announcements. They are added and removed by an
 The e-mail address is configured in ./src/server/email_announcement_interaction/MailAccountConfig.json. with the password being entered in
 the .env file with the key "ANNOUNCEMENT_EMAIL_ACCOUNT_PW".
 
-This is an example for the MailAccountConfig.json
+This is an example for the MailAccountConfig.json:
 ```
 {
   "USERNAME": "kit-smart-tv.testing@outlook.de",    This is the e-mail address the announcements must be sent to
@@ -83,6 +83,15 @@ This is an example for the MailAccountConfig.json
   "MAILBOX": "INBOX",                               In which folder to look for new mails
   "FETCH_UNREAD_ON_START": true                     Whether to fetch all unread mails on startup
   "ON_ERROR_TIME_TO_RECONNECTION_ATTEMPT": 1000     The time interval to start a reconnection attempt if an error occured in ms
+}
+```
+
+Addidtionally, the text to remove an announcement can be altered in MailInteractionConfig.json
+
+This is an example for the MailInteractionConfig.json:
+```
+{
+    "REMOVE_ANNOUNCEMENT_TEXT": ""                  The text of an Announcement to signal, that this announcement should be removed.
 }
 ```
 
