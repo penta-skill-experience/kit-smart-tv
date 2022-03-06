@@ -1,0 +1,128 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Delete Dialog Component tests snapshot test for DeleteDialogComponent 1`] = `
+<ForwardRef(Grid)
+  item={true}
+>
+  <ForwardRef(Button)
+    onClick={[Function]}
+  >
+    <Memo(ForwardRef(DeleteIcon)) />
+  </ForwardRef(Button)>
+  <ForwardRef(Dialog)
+    onClose={[Function]}
+    open={false}
+  >
+    <ForwardRef(DialogTitle)>
+      Delete this widget?
+    </ForwardRef(DialogTitle)>
+    <ForwardRef(DialogContent)>
+      <ForwardRef(DialogContentText)>
+        The changes can't be restored and have to be manually recreated.
+      </ForwardRef(DialogContentText)>
+    </ForwardRef(DialogContent)>
+    <ForwardRef(DialogActions)>
+      <ForwardRef(Button)
+        onClick={[Function]}
+        variant="outlined"
+      >
+        Disagree
+      </ForwardRef(Button)>
+      <ForwardRef(Button)
+        onClick={[Function]}
+        variant="outlined"
+      >
+        Agree
+      </ForwardRef(Button)>
+    </ForwardRef(DialogActions)>
+  </ForwardRef(Dialog)>
+</ForwardRef(Grid)>
+`;
+
+exports[`Widget list element tests snapshot test for widget list element 1`] = `
+<ForwardRef(Grid)
+  alignItems="center"
+  container={true}
+  direction="row"
+  justifyContent="flex-start"
+  spacing={2}
+>
+  <ForwardRef(Grid)
+    item={true}
+    xs={1}
+  >
+    Tram Schedule
+  </ForwardRef(Grid)>
+  <ForwardRef(Grid)
+    item={true}
+  >
+    <ForwardRef(FormControl)>
+      <ForwardRef(RadioGroup)
+        row={true}
+      >
+        <ForwardRef(FormControlLabel)
+          control={
+            <ForwardRef(Radio)
+              checked={false}
+              onChange={[Function]}
+            />
+          }
+          label={1}
+        />
+        <ForwardRef(FormControlLabel)
+          control={
+            <ForwardRef(Radio)
+              checked={true}
+              onChange={[Function]}
+            />
+          }
+          label={2}
+        />
+        <ForwardRef(FormControlLabel)
+          control={
+            <ForwardRef(Radio)
+              checked={false}
+              onChange={[Function]}
+            />
+          }
+          label={3}
+        />
+        <ForwardRef(FormControlLabel)
+          control={
+            <ForwardRef(Radio)
+              checked={false}
+              onChange={[Function]}
+            />
+          }
+          label={4}
+        />
+        <ForwardRef(FormControlLabel)
+          control={
+            <ForwardRef(Radio)
+              checked={false}
+              onChange={[Function]}
+            />
+          }
+          label={5}
+        />
+      </ForwardRef(RadioGroup)>
+    </ForwardRef(FormControl)>
+  </ForwardRef(Grid)>
+  <ForwardRef(Grid)
+    item={true}
+  >
+    <DeleteDialogComponent
+      handleDeleteWidget={[MockFunction]}
+      id={0}
+    />
+  </ForwardRef(Grid)>
+  <ForwardRef(Grid)
+    item={true}
+  >
+    <WidgetConfigPage
+      configComponentClass={[Function]}
+      save={[Function]}
+    />
+  </ForwardRef(Grid)>
+</ForwardRef(Grid)>
+`;
