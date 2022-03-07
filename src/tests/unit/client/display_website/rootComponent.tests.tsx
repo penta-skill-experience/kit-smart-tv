@@ -121,10 +121,13 @@ describe("rootComponent Snapshots", () => {
         jest.useFakeTimers("legacy");
         Promise.resolve().then(() => jest.advanceTimersByTime(16000));
         jest.runOnlyPendingTimers();
+        jest.mock('react-dom', () => ({ render: jest.fn() }));
+        require('../../../../client/display_website/index.tsx');
         const wrapper = shallow(<RootComponent/>);
         await new Promise(process.nextTick);
         expect(toJson(wrapper)).toMatchSnapshot();
     });
+
     afterEach(() => {
         jest.useRealTimers();
     });
