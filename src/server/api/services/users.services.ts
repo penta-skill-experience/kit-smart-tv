@@ -15,7 +15,7 @@ function createUsers(users: IVerifiedUser[]): Promise<void> {
     };
 
     return new Promise<void>((resolve, reject) => {
-        UsersModel.remove().then(
+        UsersModel.deleteMany().then(
             () => {
                 UsersModel.create(doc).then(
                     () => resolve(),
