@@ -51,11 +51,11 @@ const widgetPersistence = new WidgetPersistence();
 const announcementPersistence = AnnouncementPersistence.getInstance();
 const adminStatePersistence = new AdminStatePersistence();
 
-export function ConfigWebsite() {
+export function ConfigWebsite({initialLogInStatus}) {
     //state variables and methods for login page
     const [logInInput, setLogInInput] = useState('');
     const [visible, setVisible] = useState(false);
-    const [loggedInStatus, setLoggedInStatus] = useState(false);
+    const [loggedInStatus, setLoggedInStatus] = useState(initialLogInStatus);
     const [adminState, setAdminState] = useState(true);
 
     const handleInput = (

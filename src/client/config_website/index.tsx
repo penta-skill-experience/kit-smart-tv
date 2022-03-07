@@ -5,6 +5,6 @@ import {ConfigWebsite} from "./ConfigWebsite";
 
 ReactDOM.render(
 
-    <ConfigWebsite/>,
+    <ConfigWebsite initialLogInStatus={false}/>,
     document.getElementById("root")
 );
