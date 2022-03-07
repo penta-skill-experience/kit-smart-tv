@@ -169,12 +169,19 @@ exports[`config website login page tests expect login page 1`] = `
 />
 `;
 
-exports[`config website login page tests login test 1`] = `
-<LogInPage
-  handleClickShowPassword={[Function]}
-  handleInput={[Function]}
-  handleLogIn={[Function]}
-  logInInput=""
-  visible={false}
-/>
+exports[`tab panel tests snapshot test for tab panel 1`] = `
+<div
+  hidden={false}
+  role="tabpanel"
+>
+  <ForwardRef(Box)
+    sx={
+      Object {
+        "p": 3,
+      }
+    }
+  >
+    <ForwardRef(Typography) />
+  </ForwardRef(Box)>
+</div>
 `;

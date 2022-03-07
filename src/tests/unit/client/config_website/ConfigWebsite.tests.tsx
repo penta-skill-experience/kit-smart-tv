@@ -1,7 +1,6 @@
-import 'jsdom-global/register';
 import React from "react";
-import {ConfigWebsite} from "../../../../client/config_website/ConfigWebsite";
-import {shallow, configure, mount} from "enzyme";
+import {ConfigWebsite, TabPanel} from "../../../../client/config_website/ConfigWebsite";
+import {shallow, configure} from "enzyme";
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import toJson from "enzyme-to-json";
 import {act} from 'react-dom/test-utils';
@@ -9,9 +8,6 @@ import {AdminStatePersistence} from "../../../../shared/persistence/AdminStatePe
 import {DesignConfigPersistence} from "../../../../shared/persistence/DesignConfigPersistence";
 import {WidgetPersistence} from "../../../../shared/persistence/WidgetPersistence";
 import {AnnouncementPersistence} from "../../../../shared/persistence/announcements/AnnouncementPersistence";
-import {
-    AnnouncementPersistenceFrontend
-} from "../../../../shared/persistence/announcements/AnnouncementPersistenceFrontend";
 
 
 configure({adapter: new Adapter()});
@@ -53,6 +49,14 @@ describe("config website login page tests", () => {
         expect(getAdminStateMock).toHaveBeenCalled();
     });
 
+    test("handleClickShowPassword function test", () => {
+        act(() =>{
+            wrapper.find("LogInPage").prop("handleClickShowPassword")();
+        });
+        wrapper.update();
+        expect(wrapper.find("LogInPage").prop("visible")).toEqual(true);
+    });
+
     afterAll(() => {
         jest.restoreAllMocks();
     });
@@ -73,7 +77,7 @@ describe("config website admin interface tests", () => {
     test("handleLogout function test", () => {
         const handleLogoutMock = jest.spyOn(AdminStatePersistence.prototype, "logout");
         handleLogoutMock.mockImplementation(() => {
-            return new Promise<void>(resolve => {});
+            return new Promise<void>(resolve => {resolve()});
         });
         wrapper.find("ForwardRef(Button)").simulate("click");
         expect(handleLogoutMock).toHaveBeenCalled();
@@ -166,7 +170,7 @@ describe("config website admin interface tests", () => {
     test("handlePasswordChange function test", () => {
         const handlePasswordChangeMock = jest.spyOn(AdminStatePersistence.prototype, "setPassword");
         handlePasswordChangeMock.mockImplementation(() => {
-            return new Promise<void>(resolve => {});
+            return new Promise<void>(resolve => {resolve()});
         });
         wrapper.find("AdminPage").prop("handlePasswordChange")({target:{}})
         expect(handlePasswordChangeMock).toHaveBeenCalled();
@@ -263,16 +267,31 @@ describe("config website admin interface tests", () => {
     test("handleVerUserList function test", () => {
         const setVerifiedUsersMock = jest.spyOn(AnnouncementPersistence.getInstance(), "setVerifiedUsers");
         setVerifiedUsersMock.mockImplementation(() => {
-            return new Promise<void>(resolve => {});
+            return new Promise<void>(resolve => {resolve()});
         });
         wrapper.find("AnnouncementsPage").prop("handleVerUserList")();
         expect(setVerifiedUsersMock).toHaveBeenCalled();
     });
 
+    test("change tab function test", () => {
+        act(() => {
+            wrapper.find("ForwardRef(Tabs)").prop("onChange")({event:""}, 2);
+        });
+        wrapper.update();
+        expect(wrapper.find("ForwardRef(Tabs)").prop("value")).toEqual(2);
+    });
+
     afterAll(() => {
         jest.restoreAllMocks();
     });
+});
 
 
+describe("tab panel tests", () => {
+
+    test("snapshot test for tab panel", async () => {
+        wrapper = shallow(<TabPanel index={2} value={2}/>);
+        expect(toJson(wrapper)).toMatchSnapshot();
+    });
 
 });
