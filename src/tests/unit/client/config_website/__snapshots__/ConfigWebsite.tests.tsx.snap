@@ -1,6 +1,175 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`hanlde methods test snapshot test for login page 1`] = `
+exports[`config website admin interface tests expect admin interface 1`] = `
+<div>
+  <ForwardRef(Box)
+    sx={
+      Object {
+        "backgroundColor": "text.primary",
+        "border": 1,
+      }
+    }
+  >
+    <ForwardRef(Grid)
+      alignItems="center"
+      container={true}
+      direction="row"
+      spacing={2}
+    >
+      <ForwardRef(Grid)
+        item={true}
+        xs={2}
+      >
+        ''
+      </ForwardRef(Grid)>
+      <ForwardRef(Grid)
+        alignItems="center"
+        container={true}
+        item={true}
+        justifyContent="center"
+        xs={8}
+      >
+        <ForwardRef(Grid)
+          alignItems="center"
+          container={true}
+          item={true}
+          justifyContent="center"
+        >
+          <ForwardRef(Grid)
+            item={true}
+          >
+            <ForwardRef(Typography)
+              color="white"
+              variant="h6"
+            >
+              Admin Interface
+            </ForwardRef(Typography)>
+          </ForwardRef(Grid)>
+        </ForwardRef(Grid)>
+      </ForwardRef(Grid)>
+      <ForwardRef(Grid)
+        container={true}
+        direction="column"
+        item={true}
+        xs={2}
+      >
+        <ForwardRef(Button)
+          onClick={[Function]}
+        >
+          Log Out
+        </ForwardRef(Button)>
+      </ForwardRef(Grid)>
+    </ForwardRef(Grid)>
+  </ForwardRef(Box)>
+  <ForwardRef(Box)
+    sx={
+      Object {
+        "borderBottom": 1,
+        "borderColor": "divider",
+      }
+    }
+  >
+    <ForwardRef(Tabs)
+      onChange={[Function]}
+      value={0}
+    >
+      <ForwardRef(Tab)
+        label="Look"
+      />
+      <ForwardRef(Tab)
+        label="Widgets"
+      />
+      <ForwardRef(Tab)
+        label="Password"
+      />
+      <ForwardRef(Tab)
+        label="Announcements"
+      />
+    </ForwardRef(Tabs)>
+  </ForwardRef(Box)>
+  <TabPanel
+    index={0}
+    value={0}
+  >
+    <PersonalizationPage
+      colorScheme={null}
+      fontSize={null}
+      handleBackgroundSelect={[Function]}
+      handleColorSchemeChange={[Function]}
+      handleFontSizeChange={[Function]}
+      handlePersonalizationChange={[Function]}
+      selectedBackground=""
+    />
+  </TabPanel>
+  <TabPanel
+    index={1}
+    value={0}
+  >
+    <LayoutPage
+      handleAddWidget={[Function]}
+      handleDeleteWidget={[Function]}
+      handleLayoutChange={[Function]}
+      handlePosition={[Function]}
+      handleRawConfigSave={[Function]}
+      handleWidgetSelection={[Function]}
+      list={Array []}
+      widgetListElement={
+        Object {
+          "id": 0,
+          "position": "",
+          "widget": null,
+          "widgetData": null,
+          "widgetNameText": "",
+        }
+      }
+    />
+  </TabPanel>
+  <TabPanel
+    index={2}
+    value={0}
+  >
+    <AdminPage
+      handleNewPassword={[Function]}
+      handleOldPassword={[Function]}
+      handlePasswordChange={[Function]}
+      newPassword=""
+      oldPassword=""
+    />
+  </TabPanel>
+  <TabPanel
+    index={3}
+    value={0}
+  >
+    <AnnouncementsPage
+      handleAddMail={[Function]}
+      handleDeleteUser={[Function]}
+      handleMailChange={[Function]}
+      handleNameChange={[Function]}
+      handleVerUserList={[Function]}
+      mailList={Array []}
+      verUser={
+        Object {
+          "mail": "",
+          "name": "",
+          "verUser": null,
+        }
+      }
+    />
+  </TabPanel>
+</div>
+`;
+
+exports[`config website login page tests expect login page 1`] = `
+<LogInPage
+  handleClickShowPassword={[Function]}
+  handleInput={[Function]}
+  handleLogIn={[Function]}
+  logInInput=""
+  visible={false}
+/>
+`;
+
+exports[`config website login page tests login test 1`] = `
 <LogInPage
   handleClickShowPassword={[Function]}
   handleInput={[Function]}
