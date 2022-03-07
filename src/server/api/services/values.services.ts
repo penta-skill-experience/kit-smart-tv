@@ -6,7 +6,7 @@ import {ValuesData} from "../../../shared/interfaces/interfaces";
 export async function createValues(input: DocumentDefinition<ValuesData>) {
     //before creating a Users, delete all Users in the collection, to guarantee there ist only one stored at a time
     //delete all
-    await ValuesModel.remove({});
+    await ValuesModel.deleteMany();
     await ValuesModel.create(input);
     return await ValuesModel.findOne({}).then(o => omit(o.toJSON(), ["_id", "createdAt", "updatedAt", "__v"]));
 }

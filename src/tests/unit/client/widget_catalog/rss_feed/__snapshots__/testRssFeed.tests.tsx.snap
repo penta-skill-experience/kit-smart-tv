@@ -1,9 +1,60 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RSS-Feed Snapshots RSS-Feed Snapshot 1`] = `
+exports[`RSS-Feed Snapshots RSS-Feed Snapshot parse successful 1`] = `
+<div
+  className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl"
+>
+  <h1>
+    RSS Feed
+  </h1>
+  <div
+    key="0"
+  >
+    <h1>
+      RSS Tutorial
+    </h1>
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "New RSS tutorial on W3Schools",
+        }
+      }
+    />
+    <br />
+  </div>
+  <div
+    key="1"
+  >
+    <h1>
+      XML Tutorial
+    </h1>
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "New XML tutorial on W3Schools",
+        }
+      }
+    />
+    <br />
+  </div>
+</div>
+`;
+
+exports[`RSS-Feed Snapshots RSS-Feed Snapshot parse successful 2`] = `
 <div
   className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl 8xl:text-4xl"
 >
   loading...
 </div>
+`;
+
+exports[`RSS-Feed Snapshots Rss-Feed Snapshot fallback 1`] = `
+<div
+  className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl"
+  dangerouslySetInnerHTML={
+    Object {
+      "__html": undefined,
+    }
+  }
+/>
 `;

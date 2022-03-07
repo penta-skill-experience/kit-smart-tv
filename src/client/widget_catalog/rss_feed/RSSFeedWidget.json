@@ -1,3 +1,4 @@
 {
-  "URL": "http://feeds.bbci.co.uk/news/rss.xml"
+  "URL": "http://feeds.bbci.co.uk/news/rss.xml",
+  "REFRESH_RATE": 600000
 }

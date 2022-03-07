@@ -19,10 +19,68 @@ global.Headers = class {
 configure({adapter: new Adapter()});
 
 describe("RSS-Feed Snapshots", () => {
-    test("RSS-Feed Snapshot", async () => {
-        fetchMock.mockResponse("test.google.com");
+
+    test("RSS-Feed Snapshot parse successful", async () => {
+        fetchMock.mockResponse("\n<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n" +
+            "<rss version=\"2.0\">\n" +
+            "\n" +
+            "<channel>\n" +
+            "  <title>W3Schools Home Page</title>\n" +
+            "  <link>https://www.w3schools.com</link>\n" +
+            "  <description>Free web building tutorials</description>\n" +
+            "  <item>\n" +
+            "    <title>RSS Tutorial</title>\n" +
+            "    <link>https://www.w3schools.com/xml/xml_rss.asp</link>\n" +
+            "    <description>New RSS tutorial on W3Schools</description>\n" +
+            "  </item>\n" +
+            "  <item>\n" +
+            "    <title>XML Tutorial</title>\n" +
+            "    <link>https://www.w3schools.com/xml</link>\n" +
+            "    <description>New XML tutorial on W3Schools</description>\n" +
+            "  </item>\n" +
+            "</channel>\n" +
+            "\n" +
+            "</rss> ");
         const wrapper = shallow(<RssFeedDisplayComponent error={(msg => {})} config={RSSFeedWidgetConfig.URL} specialBoldFontColor={"ForestGreen"} specialSubtleFontColor={"DarkOrange"}/>);
-        //wrapper.setState({loaded: true, loadedRss: true});
+        await new Promise(process.nextTick);
+        expect(toJson(wrapper)).toMatchSnapshot();
+        wrapper.unmount();
+    });
+
+    test("RSS-Feed Snapshot parse successful", async () => {
+        fetchMock.mockResponse("not an rss feed");
+        const wrapper = shallow(<RssFeedDisplayComponent error={(msg => {})} config={RSSFeedWidgetConfig.URL} specialBoldFontColor={"ForestGreen"} specialSubtleFontColor={"DarkOrange"}/>);
+        await new Promise(process.nextTick);
+        expect(toJson(wrapper)).toMatchSnapshot();
+    });
+
+    test("Rss-Feed Snapshot fallback", async () => {
+        fetchMock.mockResponse("\n<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n" +
+            "<rss version=\"2.0\">\n" +
+            "\n" +
+            "<channel>\n" +
+            "  <title>W3Schools Home Page</title>\n" +
+            "  <link>https://www.w3schools.com</link>\n" +
+            "  <description>Free web building tutorials</description>\n" +
+            "  <item>\n" +
+            "    <title>RSS Tutorial</title>\n" +
+            "    <link>https://www.w3schools.com/xml/xml_rss.asp</link>\n" +
+            "    <description>New RSS tutorial on W3Schools</description>\n" +
+            "  </item>\n" +
+            "  <item>\n" +
+            "    <title>XML Tutorial</title>\n" +
+            "    <link>https://www.w3schools.com/xml</link>\n" +
+            "    <description>New XML tutorial on W3Schools</description>\n" +
+            "  </item>\n" +
+            "</channel>\n" +
+            "\n" +
+            "</rss> ");
+        const wrapper = shallow(<RssFeedDisplayComponent error={(msg => {})} config={RSSFeedWidgetConfig.URL} specialBoldFontColor={"ForestGreen"} specialSubtleFontColor={"DarkOrange"}/>);
+        await new Promise(process.nextTick);
+        wrapper.setState({
+            loaded: true,
+            loadedRss: false
+        });
         await new Promise(process.nextTick);
         expect(toJson(wrapper)).toMatchSnapshot();
     });

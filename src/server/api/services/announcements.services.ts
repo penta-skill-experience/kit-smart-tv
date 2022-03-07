@@ -15,7 +15,7 @@ function createAnnouncements(announcements: Announcement[]): Promise<void> {
 
     //before creating an announcements, delete all announcements in the collection, to guarantee there ist only one stored at a tim
     return new Promise<void>((resolve, reject) => {
-        AnnouncementsModel.remove().then(
+        AnnouncementsModel.deleteMany().then(
             () => {
                 AnnouncementsModel.create(doc).then(
                     () => {

@@ -48,7 +48,7 @@ describe("testing individual designConfigPersistence setters", () => {
             fontSize: testFontSize,
             colorScheme: testColorScheme,
             background: testBackground
-        })).mockResponseOnce(JSON.stringify({status: 200}));;
+        })).mockResponseOnce(JSON.stringify({status: 200}));
     });
 
     test("testing setSelectedFontSizeId", async () => {
