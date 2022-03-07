@@ -19,7 +19,7 @@ describe("GET routines", () => {
         app = createServer();
     });
 
-    afterAll(done => {
+    afterAll(() => {
 
     });
 
@@ -122,4 +122,11 @@ describe("GET routines", () => {
         };
         expect(widgetDataList[0]).toEqual(expectedWidgetData);
     });
+
+    // test("should return a 200 status code", async () => {
+    //     const {statusCode} = await supertest(app)
+    //         .get("/healthcheck")
+    //         .send();
+    //     expect(statusCode).toBe(200);
+    // });
 });
