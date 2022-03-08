@@ -8,11 +8,13 @@ import {AdminStatePersistence} from "../../../../shared/persistence/AdminStatePe
 import {DesignConfigPersistence} from "../../../../shared/persistence/DesignConfigPersistence";
 import {WidgetPersistence} from "../../../../shared/persistence/WidgetPersistence";
 import {AnnouncementPersistence} from "../../../../shared/persistence/announcements/AnnouncementPersistence";
+import {ConfigData} from "../../../../shared/interfaces/interfaces";
+import {undefined} from "zod";
+import { WidgetData } from "../../../../client/widget/WidgetData";
+import {VerifiedUser} from "../../../../shared/values/VerifiedUser";
 
 
 configure({adapter: new Adapter()});
-
-const getAdminStateMock = jest.spyOn(AdminStatePersistence.prototype, "login");
 
 let wrapper;
 
@@ -24,9 +26,9 @@ describe("config website login page tests", () => {
     });
 
 
-   test("expect login page", async () => {
+    test("expect login page", async () => {
        expect(toJson(wrapper)).toMatchSnapshot();
-   });
+    });
 
     test("test for password input", async () => {
 
@@ -39,7 +41,8 @@ describe("config website login page tests", () => {
     });
 
     test("login test", () => {
-        getAdminStateMock.mockImplementation(async () => {
+        const getAdminStateMock = jest.spyOn(AdminStatePersistence.prototype, "login");
+        getAdminStateMock.mockImplementation(() => {
             return new Promise<void>( resolve => resolve());
         });
         act(() => {
@@ -281,6 +284,7 @@ describe("config website admin interface tests", () => {
         expect(wrapper.find("ForwardRef(Tabs)").prop("value")).toEqual(2);
     });
 
+
     afterAll(() => {
         jest.restoreAllMocks();
     });
@@ -295,3 +299,74 @@ describe("tab panel tests", () => {
     });
 
 });
+
+
+
+describe("useEffect test", () => {
+    let useEffectMock;
+
+    /*const mockUseEffect = () => {
+        useEffectMock.mockImplementationOnce(f => f());
+    }
+
+    beforeEach(() => {
+        getConfigDataMock.mockImplementation(() => {
+            return new Promise<ConfigData>(resolve => {});
+        });
+
+        getAdminLoginStateMock.mockImplementation(() => {
+            return new Promise<void>( resolve => resolve());
+        });
+
+        getWidgetDataListMock.mockImplementation(() => {
+            return new Promise<WidgetData[]>(resolve => {});
+        });
+
+        getVerifiedUsers.mockImplementation(() => {
+            return new Promise<VerifiedUser[]>(resolve => {});
+        })
+
+        useEffectMock = jest.spyOn(React, "useEffect");
+        mockUseEffect();
+
+        wrapper =  shallow(<ConfigWebsite initialLogInStatus={true}/>);
+    })*/
+
+    test("useEffect function test",  () => {
+        const getConfigDataMock = jest.spyOn(DesignConfigPersistence.prototype, "getConfigData");
+        const getAdminLoginStateMock = jest.spyOn(AdminStatePersistence.prototype, "getAdminLoginState");
+        const getWidgetDataListMock = jest.spyOn(WidgetPersistence.prototype, "getWidgetDataList");
+        const getVerifiedUsers = jest.spyOn(AnnouncementPersistence.getInstance(), "getVerifiedUsers");
+        const testWidgetData : WidgetData = {widgetId: "tram-schedule", location: 2, rawConfig: undefined,};
+        const testConfigData : ConfigData = {fontSize: "small", colorScheme: "light", background: ""};
+
+        getAdminLoginStateMock.mockImplementation(() => {
+            return new Promise<void>( resolve => resolve());
+        });
+
+        getConfigDataMock.mockImplementation(() => {
+            return new Promise<ConfigData>(resolve => {resolve(testConfigData)});
+        });
+
+        getWidgetDataListMock.mockImplementation(() => {
+            return new Promise<WidgetData[]>(resolve => {resolve([testWidgetData])});
+        });
+
+        getVerifiedUsers.mockImplementation(() => {
+            return new Promise<VerifiedUser[]>(resolve => {resolve([])});
+        })
+        useEffectMock = jest.spyOn(React, "useEffect").mockImplementationOnce(f => f());
+
+        wrapper =  shallow(<ConfigWebsite initialLogInStatus={true}/>);
+
+
+        expect(useEffectMock).toHaveBeenCalled();
+        //expect(getConfigDataMock).toHaveBeenCalled();
+    })
+
+    afterAll(() => {
+        jest.restoreAllMocks();
+    });
+
+});
+

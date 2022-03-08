@@ -1,6 +1,6 @@
 import Typography from '@mui/material/Typography';
 import * as React from "react";
-import {useEffect, useState} from "react";
+import { useState} from "react";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
@@ -74,7 +74,7 @@ export function ConfigWebsite({initialLogInStatus}) {
         setVisible(!visible)
     };
 
-    useEffect( () => {
+    /*React.useEffect( () => {
         if (adminState) {
             adminStatePersistence.getAdminLoginState()
                 .then(() => setLoggedInStatus(true))
@@ -82,7 +82,7 @@ export function ConfigWebsite({initialLogInStatus}) {
             ;
         }
         setAdminState(false);
-    });
+    });*/
 
     //state variables and methods for tabs
     const [pageNumber, setPageNumber] = React.useState(0);
@@ -119,7 +119,7 @@ export function ConfigWebsite({initialLogInStatus}) {
             .catch(() => false)
     };
 
-    useEffect(() => {
+    /*React.useEffect(() => {
         if (needConfigData) {
             designConfigPersistence.getConfigData().then(configData => {
                 setFontSize(configData.fontSize);
@@ -128,7 +128,7 @@ export function ConfigWebsite({initialLogInStatus}) {
             });
             setNeedConfigData(false);
         }
-    })
+    })*/
 
     //state variables and methods for layout page
     const initialWidgetList = [];
@@ -147,7 +147,7 @@ export function ConfigWebsite({initialLogInStatus}) {
 
     const [needInitialWidgetDataList, setNeedInitialWidgetDataList] = useState(true);  // only query initial data once
 
-    useEffect(() => {
+    /*React.useEffect(() => {
         if (needInitialWidgetDataList) {
             widgetPersistence.getWidgetDataList().then(list => {
 
@@ -171,7 +171,7 @@ export function ConfigWebsite({initialLogInStatus}) {
                 setCounter(c);
             });
         }
-    });
+    });*/
 
     const handleWidgetSelection = (event: SelectChangeEvent) => {
         const newWidget = widgetLoader.getWidget(event.target.value);
@@ -310,7 +310,7 @@ export function ConfigWebsite({initialLogInStatus}) {
             .catch(reason => console.warn(`could not save verified users list: ${reason}`));
     }
 
-    useEffect(() => {
+    /*React.useEffect(() => {
         if (needInitialVerUserList) {
             announcementPersistence.getVerifiedUsers().then(list => {
                 const newList = [];
@@ -325,7 +325,62 @@ export function ConfigWebsite({initialLogInStatus}) {
                 setMailList(newList);
             })
         }
-    })
+    })*/
+
+    React.useEffect( () => {
+        if (adminState) {
+            adminStatePersistence.getAdminLoginState()
+                .then(() => setLoggedInStatus(true))
+                .catch(() => console.log('Not already logged in'))
+            ;
+        }
+        if (needConfigData) {
+            designConfigPersistence.getConfigData().then(configData => {
+                setFontSize(configData.fontSize);
+                setColorScheme(configData.colorScheme);
+                setSelectedBackground(configData.background);
+            });
+            setNeedConfigData(false);
+        }
+        if (needInitialWidgetDataList) {
+            widgetPersistence.getWidgetDataList().then(list => {
+
+                const newList = [];
+
+                let c = 0;
+                for (const widgetData of list) {
+                    const widget = widgetLoader.getWidget(widgetData.widgetId);
+                    newList.push({
+                        id: c,
+                        position: '',
+                        widgetNameText: widget.getTitle(),
+                        widget: widget,
+                        widgetData: widgetData,
+                    });
+                    c++;
+                }
+
+                setNeedInitialWidgetDataList(false);
+                setWidgetList(newList);
+                setCounter(c);
+            });
+        }
+        if (needInitialVerUserList) {
+            announcementPersistence.getVerifiedUsers().then(list => {
+                const newList = [];
+                for (const verUser of list) {
+                    newList.push({
+                        mail:verUser.email,
+                        name:verUser.name,
+                        verUser:verUser,
+                    })
+                }
+                setNeedInitialVerUserList(false);
+                setMailList(newList);
+            })
+        }
+        setAdminState(false);
+    });
 
     //state variable for log out
 
