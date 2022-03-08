@@ -7,7 +7,7 @@ export function updateOrCreateUsers(users: IVerifiedUser[]) {
         .catch(() => createUsers(users));  // try to create users instead
 }
 
-function createUsers(users: IVerifiedUser[]): Promise<void> {
+export function createUsers(users: IVerifiedUser[]): Promise<void> {
     //before creating a Users, delete all Users in the collection, to guarantee there ist only one stored at a time
 
     const doc: DocumentDefinition<VerifiedUsersData> = {

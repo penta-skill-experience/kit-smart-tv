@@ -6,12 +6,16 @@ import {createAdmin, getAdmin} from "../../../../server/api/services/admin.servi
 import {AdminInput} from "../../../../server/api/models/admin.model";
 import {Express} from "express";
 import {createWidgetData} from "../../../../server/api/services/widgetData.service";
-import {WidgetDataData} from "../../../../shared/interfaces/interfaces";
+import {ConfigData, ValuesData, WidgetDataData} from "../../../../shared/interfaces/interfaces";
 import {createSession} from "../../../../server/api/services/session.service";
 import {signJwt} from "../../../../server/api/utils/jwt.utils";
 import config from "../../../../server/api/config.json";
 import {Announcement} from "../../../../shared/values/Announcement";
 import {createAnnouncements} from "../../../../server/api/services/announcements.services"
+import {createUsers} from "../../../../server/api/services/users.services";
+import {IVerifiedUser} from "../../../../shared/values/IVerifiedUser";
+import {createConfig} from "../../../../server/api/services/config.services";
+import {createValues} from "../../../../server/api/services/values.services";
 
 describe("GET routines", () => {
     let app: Express;
@@ -62,19 +66,101 @@ describe("GET routines", () => {
         await createWidgetData(widgets);
 
         const announcements: Announcement[] = [
-                {
-                    title: "Awesome work everyone!",
-                    text: "What a fine product! Such WOW! Much 1,0!!",
-                    author: "bach.jannik@web.de",
-                    timeout: 1645137628851,
-                    timeOfAddition: 1643927628851
-                }
-            ]
-
+            {
+                title: "Awesome work everyone!",
+                text: "What a fine product! Such WOW! Much 1,0!!",
+                author: "bach.jannik@web.de",
+                timeout: 1645137628851,
+                timeOfAddition: 1643927628851
+            }
+        ]
         await createAnnouncements(announcements);
 
+        const users : IVerifiedUser[] = [
+            {
+                email: "bach.jannik@web.de",
+                name: "Jannik"
+            },
+            {
+                email: "uupiw@student.kit.edu",
+                name: "UUron"
+            }
 
-    });
+        ];
+        await createUsers(users);
+
+        const ConfigData : ConfigData = {
+            fontSize: "large",
+            colorScheme: "large",
+            background: "https://images.pexels.com/photos/4328298/pexels-photo-4328298.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        };
+        await createConfig(ConfigData);
+
+        const valuesData : ValuesData = {
+            "fontSizes": [
+                {
+                    "id": "small",
+                    "name": "small",
+                    "relativeSize": 0.8
+                },
+                {
+                    "id": "medium",
+                    "name": "medium",
+                    "relativeSize": 0.8
+                },
+                {
+                    "id": "large",
+                    "name": "large",
+                    "relativeSize": 0.8
+                }
+            ],
+            "colorSchemes": [
+                {
+                    "id": "dark",
+                    "name": "dark",
+                    "titleFontColor": "white",
+                    "bodyFontColor": "white",
+                    "specialBoldFontColor": "ForestGreen",
+                    "specialSubtleFontColor": "Tomato",
+                    "accentBarColor": "rgba(0, 0, 0, 0.5)",
+                    "backgrounds": [
+                        "https://wallpaperaccess.com/full/1379469.jpg",
+                        "https://images.pexels.com/photos/847402/pexels-photo-847402.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                        "https://images.pexels.com/photos/2162442/pexels-photo-2162442.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                        "https://images.pexels.com/photos/4328298/pexels-photo-4328298.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                        "https://images.pexels.com/photos/1809644/pexels-photo-1809644.jpeg",
+                        "https://images.pexels.com/photos/2085998/pexels-photo-2085998.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                        "https://images.pexels.com/photos/8824641/pexels-photo-8824641.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                        "https://images.pexels.com/photos/9660579/pexels-photo-9660579.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                    ]
+                },
+                {
+                    "id": "light",
+                    "name": "light",
+                    "titleFontColor": "black",
+                    "bodyFontColor": "black",
+                    "specialBoldFontColor": "green",
+                    "specialSubtleFontColor": "FireBrick",
+                    "accentBarColor": "rgba(255,255,255,0.5)",
+                    "backgrounds": [
+                        "https://images.pexels.com/photos/2101187/pexels-photo-2101187.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                        "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                        "https://images.pexels.com/photos/691668/pexels-photo-691668.jpeg",
+                        "https://images.pexels.com/photos/1367192/pexels-photo-1367192.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                        "https://images.pexels.com/photos/4762392/pexels-photo-4762392.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                        "https://images.pexels.com/photos/8849653/pexels-photo-8849653.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                        "https://images.pexels.com/photos/9716295/pexels-photo-9716295.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                        "https://images.pexels.com/photos/911738/pexels-photo-911738.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                    ]
+                }
+            ]
+        }
+
+        await createValues(valuesData);
+
+
+
+        });
 
     afterEach(async () => {
         await mongoose.disconnect();
@@ -140,6 +226,86 @@ describe("GET routines", () => {
             }
         ];
         expect(announcementDataList).toEqual(expectedAnnouncementData);
+    });
+
+    test("get users", async () => {
+        const response = await supertest(app).get("/users");
+        expect(response.statusCode).toBe(200);
+        const userDataList = response.body;
+        const expectedUserData = [
+            {
+                _id: expect.any(String),
+                email: "bach.jannik@web.de",
+                name: "Jannik"
+            },
+            {
+                _id: expect.any(String),
+                email: "uupiw@student.kit.edu",
+                name: "UUron"
+            }
+        ];
+        expect(userDataList).toEqual(expectedUserData);
+    });
+
+
+    test("get config", async () => {
+        const response = await supertest(app).get("/config");
+        expect(response.statusCode).toBe(200);
+        const configData = (response.body as ConfigData);
+        const expectedConfigData : ConfigData = {
+            background: "https://images.pexels.com/photos/4328298/pexels-photo-4328298.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            colorScheme: "large",
+            fontSize: "large",
+        };
+        expect(configData).toEqual(expectedConfigData);
+    });
+
+
+    test("get values", async () => {
+        const response = await supertest(app).get("/values");
+        expect(response.statusCode).toBe(200);
+        const valuesData = (response.body as ValuesData);
+        const expectedValuesData = {
+            "colorSchemes": [{
+                "_id": expect.any(String),
+                "accentBarColor": "rgba(0, 0, 0, 0.5)",
+                "backgrounds": ["https://wallpaperaccess.com/full/1379469.jpg", "https://images.pexels.com/photos/847402/pexels-photo-847402.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260", "https://images.pexels.com/photos/2162442/pexels-photo-2162442.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", "https://images.pexels.com/photos/4328298/pexels-photo-4328298.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", "https://images.pexels.com/photos/1809644/pexels-photo-1809644.jpeg", "https://images.pexels.com/photos/2085998/pexels-photo-2085998.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", "https://images.pexels.com/photos/8824641/pexels-photo-8824641.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", "https://images.pexels.com/photos/9660579/pexels-photo-9660579.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"],
+                "bodyFontColor": "white",
+                "id": "dark",
+                "name": "dark",
+                "specialBoldFontColor": "ForestGreen",
+                "specialSubtleFontColor": "Tomato",
+                "titleFontColor": "white"
+            }, {
+                "_id": expect.any(String),
+                "accentBarColor": "rgba(255,255,255,0.5)",
+                "backgrounds": ["https://images.pexels.com/photos/2101187/pexels-photo-2101187.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260", "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260", "https://images.pexels.com/photos/691668/pexels-photo-691668.jpeg", "https://images.pexels.com/photos/1367192/pexels-photo-1367192.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", "https://images.pexels.com/photos/4762392/pexels-photo-4762392.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", "https://images.pexels.com/photos/8849653/pexels-photo-8849653.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", "https://images.pexels.com/photos/9716295/pexels-photo-9716295.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", "https://images.pexels.com/photos/911738/pexels-photo-911738.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"],
+                "bodyFontColor": "black",
+                "id": "light",
+                "name": "light",
+                "specialBoldFontColor": "green",
+                "specialSubtleFontColor": "FireBrick",
+                "titleFontColor": "black"
+            }],
+            "fontSizes": [{
+                "_id": expect.any(String),
+                "id": "small",
+                "name": "small",
+                "relativeSize": 0.8
+            }, {
+                "_id": expect.any(String),
+                "id": "medium",
+                "name": "medium",
+                "relativeSize": 0.8
+            }, {
+                "_id": expect.any(String),
+                "id": "large",
+                "name": "large",
+                "relativeSize": 0.8
+            }
+            ]
+        };
+        expect(valuesData).toEqual(expectedValuesData);
     });
 
 
