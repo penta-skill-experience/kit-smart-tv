@@ -7,7 +7,7 @@ export function updateOrCreateAnnouncements(announcements: Announcement[]): Prom
         .catch(() => createAnnouncements(announcements));  // try to create announcements instead
 }
 
-function createAnnouncements(announcements: Announcement[]): Promise<void> {
+export function createAnnouncements(announcements: Announcement[]): Promise<void> {
 
     const doc: DocumentDefinition<AnnouncementsData> = {
         announcementDataList: announcements,

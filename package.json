@@ -11,7 +11,7 @@
     "build-server": "webpack --config server.webpack.config.js",
     "build": "webpack --config server.webpack.config.js && webpack --config client.prod.webpack.config.js --env=client_dir=display_website && webpack --config client.prod.webpack.config.js --env=client_dir=config_website",
     "test": "jest --coverage",
-    "test api": "jest --config ./src/tests/unit/server/api_tests/jest.config.ts --coverage --runInBand",
+    "test api": "jest --config ./src/tests/unit/server/api_tests/jest.config.ts --coverage --detectOpenHandles",
     "test config_website": "jest --config ./src/tests/unit/client/config_website/jest.config.ts --coverage",
     "test announcement_management": "jest --config ./src/tests/unit/server/announcement_management_tests/jest.config.ts --coverage",
     "test email_announcement_interaction": "jest --config ./src/tests/unit/server/email_announcement_interaction_tests/jest.config.ts --coverage",

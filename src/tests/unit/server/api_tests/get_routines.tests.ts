@@ -10,10 +10,20 @@ import {WidgetDataData} from "../../../../shared/interfaces/interfaces";
 import {createSession} from "../../../../server/api/services/session.service";
 import {signJwt} from "../../../../server/api/utils/jwt.utils";
 import config from "../../../../server/api/config.json";
+import {Announcement} from "../../../../shared/values/Announcement";
+import {createAnnouncements} from "../../../../server/api/services/announcements.services"
 
 describe("GET routines", () => {
     let app: Express;
     const testPassword = "password1234";
+    let admin : AdminInput = {
+        password: testPassword,
+    };
+    let adminTmp;
+    let adminId;
+    let sessionTest;
+    let accessTokenTest;
+
 
     beforeAll(async () => {
         app = createServer();
@@ -28,11 +38,13 @@ describe("GET routines", () => {
         await mongoose.connect(mongoServer.getUri());
 
         // fill database with content
-
-        const admin: AdminInput = {
-            password: testPassword,
-        };
         await createAdmin(admin);
+        adminTmp = await getAdmin();
+        adminId = adminTmp.toJSON()._id;
+        sessionTest = await createSession(adminId, "user agent");
+        accessTokenTest = signJwt({ ...adminTmp, session: sessionTest._id },
+            "accessTokenPrivateKey",
+            { expiresIn: config.accessTokenTtl})
 
 
         const widgets: WidgetDataData = {
@@ -49,7 +61,17 @@ describe("GET routines", () => {
         };
         await createWidgetData(widgets);
 
+        const announcements: Announcement[] = [
+                {
+                    title: "Awesome work everyone!",
+                    text: "What a fine product! Such WOW! Much 1,0!!",
+                    author: "bach.jannik@web.de",
+                    timeout: 1645137628851,
+                    timeOfAddition: 1643927628851
+                }
+            ]
 
+        await createAnnouncements(announcements);
 
 
     });
@@ -60,12 +82,6 @@ describe("GET routines", () => {
     });
 
     test("get session", async () => {
-        const adminTmp = await getAdmin();
-        const adminId = adminTmp.toJSON()._id;
-        const sessionTest = await createSession(adminId, "user agent");
-        const accessTokenTest = signJwt({ ...adminTmp, session: sessionTest._id },
-            "accessTokenPrivateKey",
-            { expiresIn: config.accessTokenTtl})
 
         const response = await supertest(app).get("/api/sessions").set("Authorization", `Bearer ${accessTokenTest}`);
         expect(response.statusCode).toBe(200);
@@ -101,10 +117,31 @@ describe("GET routines", () => {
         expect(widgetDataList[0]).toEqual(expectedWidgetData);
     });
 
-    test("should return a 200 status code", async () => {
+    test("get healthcheck", async () => {
         const {statusCode} = await supertest(app)
             .get("/healthcheck")
             .send();
         expect(statusCode).toBe(200);
     });
+
+
+    test("get announcements", async () => {
+        const response = await supertest(app).get("/announcements");
+        expect(response.statusCode).toBe(200);
+        const announcementDataList = response.body;
+        const expectedAnnouncementData = [
+            {
+                title: 'Awesome work everyone!',
+                text: 'What a fine product! Such WOW! Much 1,0!!',
+                author: 'bach.jannik@web.de',
+                timeout: 1645137628851,
+                timeOfAddition: 1643927628851,
+                _id: expect.any(String),
+            }
+        ];
+        expect(announcementDataList).toEqual(expectedAnnouncementData);
+    });
+
+
+
 });
