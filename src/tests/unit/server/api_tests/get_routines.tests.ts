@@ -2,18 +2,18 @@ import createServer from "../../../../server/api/utils/server";
 import supertest from "supertest";
 import mongoose from "mongoose";
 import {MongoMemoryServer} from "mongodb-memory-server";
-import {createAdmin} from "../../../../server/api/services/admin.service";
+import {createAdmin, getAdmin} from "../../../../server/api/services/admin.service";
 import {AdminInput} from "../../../../server/api/models/admin.model";
 import {Express} from "express";
 import {createWidgetData} from "../../../../server/api/services/widgetData.service";
 import {WidgetDataData} from "../../../../shared/interfaces/interfaces";
+import {createSession} from "../../../../server/api/services/session.service";
+import {signJwt} from "../../../../server/api/utils/jwt.utils";
+import config from "../../../../server/api/config.json";
 
 describe("GET routines", () => {
-
     let app: Express;
-
-    const testPassword = "password123";
-    const testPasswordWrong = "wrongPassword123";
+    const testPassword = "password1234";
 
     beforeAll(async () => {
         app = createServer();
@@ -34,6 +34,7 @@ describe("GET routines", () => {
         };
         await createAdmin(admin);
 
+
         const widgets: WidgetDataData = {
             widgetDataList: [
                 {
@@ -47,6 +48,10 @@ describe("GET routines", () => {
             ]
         };
         await createWidgetData(widgets);
+
+
+
+
     });
 
     afterEach(async () => {
@@ -54,57 +59,30 @@ describe("GET routines", () => {
         await mongoose.connection.close();
     });
 
-    test("create new session with correct admin password", async () => {
+    test("get session", async () => {
+        const adminTmp = await getAdmin();
+        const adminId = adminTmp.toJSON()._id;
+        const sessionTest = await createSession(adminId, "user agent");
+        const accessTokenTest = signJwt({ ...adminTmp, session: sessionTest._id },
+            "accessTokenPrivateKey",
+            { expiresIn: config.accessTokenTtl})
 
-        // create new session with correct password
-        const {statusCode, body} = await supertest(app).post("/api/sessions").send({password: testPassword});
-
-        expect(statusCode).toBe(200);
-        const {accessToken, refreshToken} = body;
-        expect(typeof accessToken).toBe("string");
-        expect(typeof refreshToken).toBe("string");
-    });
-
-    test("creating new session with wrong admin password should fail", async () => {
-        // create new session with correct password
-        const {statusCode} = await supertest(app).post("/api/sessions").send({password: testPasswordWrong});
-        expect(statusCode).toBe(401);
-    });
-
-    test("update password", async () => {
-
-        const newPassword = "newPassword123";
-
-        // create session with current password
-        const response0 = await supertest(app).post("/api/sessions").send({password: testPassword});
-        expect(response0.statusCode).toBe(200);
-        const {accessToken} = response0.body;
-
-        // set new password
-        const response = await supertest(app).put("/admin/update-password").set("Authorization", `Bearer ${accessToken}`).send({
-            password: testPassword,
-            new_password: newPassword,
-        });
+        const response = await supertest(app).get("/api/sessions").set("Authorization", `Bearer ${accessTokenTest}`);
         expect(response.statusCode).toBe(200);
+        const expectedSessionData = {
+            session: {
+                _id: expect.any(String),
+                admin: expect.any(String),
+                valid: true,
+                userAgent: 'user agent',
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String),
+                __v: 0
+            },
+            valid_until: expect.any(String)
+        };
 
-        // test if new password works
-        const response2 = await supertest(app).post("/api/sessions").send({password: newPassword});
-        expect(response2.statusCode).toBe(200);
-    });
-
-    test("updating password with current password should fail", async () => {
-
-        // create session with current password
-        const response0 = await supertest(app).post("/api/sessions").send({password: testPassword});
-        expect(response0.statusCode).toBe(200);
-        const {accessToken} = response0.body;
-
-        // try to set new password with same value as current password
-        const response = await supertest(app).put("/admin/update-password").set("Authorization", `Bearer ${accessToken}`).send({
-            password: testPassword,
-            new_password: testPassword,
-        });
-        expect(response.statusCode).toBe(410);
+        expect(response.body).toEqual(expectedSessionData);
     });
 
     test("get widgets", async () => {
@@ -123,10 +101,10 @@ describe("GET routines", () => {
         expect(widgetDataList[0]).toEqual(expectedWidgetData);
     });
 
-    // test("should return a 200 status code", async () => {
-    //     const {statusCode} = await supertest(app)
-    //         .get("/healthcheck")
-    //         .send();
-    //     expect(statusCode).toBe(200);
-    // });
+    test("should return a 200 status code", async () => {
+        const {statusCode} = await supertest(app)
+            .get("/healthcheck")
+            .send();
+        expect(statusCode).toBe(200);
+    });
 });
