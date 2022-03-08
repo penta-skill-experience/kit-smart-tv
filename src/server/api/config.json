@@ -1,6 +1,5 @@
 {
     "port": 1337,
-    "dbUri": "mongodb://localhost:27017/",
     "saltWorkFactor": 9,
     "accessTokenTtl": "1d",
     "refreshTokenTtl": "1y",
