@@ -6,7 +6,6 @@ import config from "../config.json";
  */
 export async function connect(uri: string) {
     const dbUri = uri;
-
     try {
         await mongoose.connect(dbUri);
         console.log("DB connected");

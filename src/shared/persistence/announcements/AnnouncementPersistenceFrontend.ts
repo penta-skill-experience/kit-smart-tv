@@ -9,39 +9,9 @@ import {IVerifiedUser} from "../../values/IVerifiedUser";
  * and uses the fetch() API to access the database through our REST API.
  */
 export class AnnouncementPersistenceFrontend implements AnnouncementPersistence {
-
-    setAnnouncements(announcements: Announcement[]) {
-
-        const headers = new Headers();
-        headers.append("x-refresh", sessionStorage.getItem('refreshToken'));
-        headers.append("Authorization", `Bearer ${sessionStorage.getItem('accessToken')}`);
-        headers.append("Content-Type", "application/json");
-
-        //create body
-        let body = {announcementDataList: announcements};
-
-        const requestOptions = {
-            method: 'PUT',
-            headers: headers,
-            body: JSON.stringify(body),
-        };
-
-        return new Promise<void>((resolve, reject) => {
-            fetch(`${config.DOMAIN}/announcements`, requestOptions)
-                .then(response => {
-                    const new_accessToken = response.headers.get('x-access-token');
-                    if (new_accessToken) {
-                        //if a new accessToken is provided, update it.
-                        sessionStorage.setItem('accessToken', response.headers.get('x-access-token'));
-                    }
-                    if (response.status == 200) {
-                        resolve();
-                    }
-                    reject();
-                })
-                .catch(reason => reject(reason));
-        });
-
+    setAnnouncements(announcements: Announcement[]): Promise<void> {
+        // not implemented, will not be used in the front end
+        return Promise.resolve(undefined);
     }
 
     getAnnouncements(): Promise<Announcement[]> {

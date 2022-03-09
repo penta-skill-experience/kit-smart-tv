@@ -35,7 +35,13 @@ function updateUsers(users: IVerifiedUser[]): Promise<void> {
 
     return new Promise<void>((resolve, reject) => {
         UsersModel.findOneAndUpdate(undefined, doc).then(
-            () => resolve(),
+            doc => {
+                if (doc === null) {
+                    reject();
+                } else {
+                    resolve();
+                }
+            },
             reason => reject(reason)
         );
     });

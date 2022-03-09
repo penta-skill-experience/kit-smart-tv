@@ -2,6 +2,8 @@ import {Request, Response} from "express";
 import {getAnnouncements, updateOrCreateAnnouncements} from "../services/announcements.services";
 
 export function updateAnnouncementsHandler(req: Request, res: Response): void {
+    console.log("got announcement request:");
+    console.log(req);
     updateOrCreateAnnouncements(req.body)
         .then(() => {
             res.send();

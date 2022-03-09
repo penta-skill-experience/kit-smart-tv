@@ -2,7 +2,6 @@ import {
     AnnouncementPersistenceFrontend
 } from "../../../../shared/persistence/announcements/AnnouncementPersistenceFrontend";
 import fetchMock from "jest-fetch-mock";
-import {newAnnouncement} from "../../server/util/newAnnouncement";
 import {VerifiedUser} from "../../../../shared/values/VerifiedUser";
 import {IVerifiedUser} from "../../../../shared/values/IVerifiedUser";
 fetchMock.enableMocks();
@@ -69,17 +68,6 @@ describe("announcementPersistenceFrontend tests", () => {
         expect(announcements[0].timeOfAddition).toEqual(timeOfAdditionValue);
     });
 
-    test("testing setAnnouncements successful", async () => {
-        const announcements = [newAnnouncement("Hello", "bob.smith@example.com", "Hello World",0)];
-        const body = {announcementDataList: announcements};
-        fetchMock.mockResponse(JSON.stringify({status: 200}));
-
-        await new AnnouncementPersistenceFrontend().setAnnouncements(announcements);
-
-        expect(fetchMock.mock.calls.length).toEqual(1);
-        expect(fetchMock.mock.calls[0][1].method).toEqual("PUT");
-        expect(fetchMock.mock.calls[0][1].body).toEqual(JSON.stringify(body));
-    });
 
     test("testing setVerifiedUsers successful", async () => {
         const verifiedUsers = [new VerifiedUser("bob.smith@example.com", "Bob Smith")];
