@@ -49,8 +49,53 @@ describe("GET routines", () => {
         accessTokenTest = signJwt({ ...adminTmp, session: sessionTest._id },
             "accessTokenPrivateKey",
             { expiresIn: config.accessTokenTtl})
+        });
+
+    afterEach(async () => {
+        await mongoose.disconnect();
+        await mongoose.connection.close();
+    });
+
+    test("get session with existing session should return 200", async () => {
+
+        const response = await supertest(app).get("/api/sessions").set("Authorization", `Bearer ${accessTokenTest}`);
+        expect(response.statusCode).toBe(200);
+        const expectedSessionData = {
+            session: {
+                _id: expect.any(String),
+                admin: expect.any(String),
+                valid: true,
+                userAgent: 'user agent',
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String),
+                __v: 0
+            },
+            valid_until: expect.any(String)
+        };
+
+        expect(response.body).toEqual(expectedSessionData);
+    });
+
+    test("get session without existing session should return 403", async () => {
+        const accessTokenWrong = signJwt({...adminTmp, session: (new mongoose.Types.ObjectId().toString())},
+            "accessTokenPrivateKey",
+            {expiresIn: config.accessTokenTtl})
+        const response = await supertest(app).get("/api/sessions").set("Authorization", `Bearer ${accessTokenWrong}`);
+        expect(response.statusCode).toBe(403);
+    });
+
+    test("get session with out admin should return 403", async () => {
+        //create 2nd admin which is not possible from routine calls
+        const accessTokenWrong = signJwt({},
+            "accessTokenPrivateKey",
+            {expiresIn: config.accessTokenTtl})
+        const response = await supertest(app).get("/api/sessions").set("Authorization", `Bearer ${accessTokenWrong}`);
+        expect(response.statusCode).toBe(403);
+    });
 
 
+    test("get widgets with existing widgets should return 200 and the widgets", async () => {
+        //write to database
         const widgets: WidgetDataData = {
             widgetDataList: [
                 {
@@ -65,6 +110,43 @@ describe("GET routines", () => {
         };
         await createWidgetData(widgets);
 
+
+        const response = await supertest(app).get("/widgets");
+        expect(response.statusCode).toBe(200);
+        const widgetDataList = (response.body as WidgetDataData).widgetDataList;
+        const expectedWidgetData = {
+            "_id": expect.any(String),
+            widgetId: "tram-schedule",
+            location: 3,
+            rawConfig: {
+                stop: "Durlacher Tor/K I T (U)",
+                count: 5,
+            },
+        };
+        expect(widgetDataList[0]).toEqual(expectedWidgetData);
+    });
+
+
+    test("get widgets without existing widgets should return 501", async () => {
+        const response = await supertest(app).get("/widgets");
+        expect(response.statusCode).toBe(501);
+    });
+
+
+    test("get healthcheck", async () => {
+        const {statusCode} = await supertest(app)
+            .get("/healthcheck")
+            .send();
+        expect(statusCode).toBe(200);
+    });
+
+    test("get announcements without existing announcements should return 501", async () => {
+        const response = await supertest(app).get("/announcements");
+        expect(response.statusCode).toBe(501);
+    });
+
+    test("get announcements with existing announcements should return 200 and the announcements", async () => {
+        // write to database
         const announcements: Announcement[] = [
             {
                 title: "Awesome work everyone!",
@@ -76,6 +158,29 @@ describe("GET routines", () => {
         ]
         await createAnnouncements(announcements);
 
+        const response = await supertest(app).get("/announcements");
+        expect(response.statusCode).toBe(200);
+        const announcementDataList = response.body;
+        const expectedAnnouncementData = [
+            {
+                title: 'Awesome work everyone!',
+                text: 'What a fine product! Such WOW! Much 1,0!!',
+                author: 'bach.jannik@web.de',
+                timeout: 1645137628851,
+                timeOfAddition: 1643927628851,
+                _id: expect.any(String),
+            }
+        ];
+        expect(announcementDataList).toEqual(expectedAnnouncementData);
+    });
+
+    test("get users without existing users should return 501", async () => {
+        const response = await supertest(app).get("/users");
+        expect(response.statusCode).toBe(501);
+    });
+
+    test("get users with existing users should return 200 and the users", async () => {
+        //write users to database
         const users : IVerifiedUser[] = [
             {
                 email: "bach.jannik@web.de",
@@ -89,6 +194,31 @@ describe("GET routines", () => {
         ];
         await createUsers(users);
 
+        const response = await supertest(app).get("/users");
+        expect(response.statusCode).toBe(200);
+        const userDataList = response.body;
+        const expectedUserData = [
+            {
+                _id: expect.any(String),
+                email: "bach.jannik@web.de",
+                name: "Jannik"
+            },
+            {
+                _id: expect.any(String),
+                email: "uupiw@student.kit.edu",
+                name: "UUron"
+            }
+        ];
+        expect(userDataList).toEqual(expectedUserData);
+    });
+
+    test("get config without existing config should return 501", async () => {
+        const response = await supertest(app).get("/config");
+        expect(response.statusCode).toBe(501);
+    });
+
+    test("get config with existing config should return 200 and the config", async () => {
+        //write config to database
         const ConfigData : ConfigData = {
             fontSize: "large",
             colorScheme: "large",
@@ -96,7 +226,27 @@ describe("GET routines", () => {
         };
         await createConfig(ConfigData);
 
-        const valuesData : ValuesData = {
+        const response = await supertest(app).get("/config");
+        expect(response.statusCode).toBe(200);
+        const configData = (response.body as ConfigData);
+        const expectedConfigData : ConfigData = {
+            background: "https://images.pexels.com/photos/4328298/pexels-photo-4328298.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            colorScheme: "large",
+            fontSize: "large",
+        };
+        expect(configData).toEqual(expectedConfigData);
+    });
+
+
+    test("get values without existing values should return 501", async () => {
+        const response = await supertest(app).get("/values");
+        expect(response.statusCode).toBe(501);
+    });
+
+    test("get values with existing values should return 200 and the values", async () => {
+        //write values to database
+
+        const valuesDataWrite : ValuesData = {
             "fontSizes": [
                 {
                     "id": "small",
@@ -155,113 +305,9 @@ describe("GET routines", () => {
                 }
             ]
         }
-
-        await createValues(valuesData);
-
+        await createValues(valuesDataWrite);
 
 
-        });
-
-    afterEach(async () => {
-        await mongoose.disconnect();
-        await mongoose.connection.close();
-    });
-
-    test("get session", async () => {
-
-        const response = await supertest(app).get("/api/sessions").set("Authorization", `Bearer ${accessTokenTest}`);
-        expect(response.statusCode).toBe(200);
-        const expectedSessionData = {
-            session: {
-                _id: expect.any(String),
-                admin: expect.any(String),
-                valid: true,
-                userAgent: 'user agent',
-                createdAt: expect.any(String),
-                updatedAt: expect.any(String),
-                __v: 0
-            },
-            valid_until: expect.any(String)
-        };
-
-        expect(response.body).toEqual(expectedSessionData);
-    });
-
-    test("get widgets", async () => {
-        const response = await supertest(app).get("/widgets");
-        expect(response.statusCode).toBe(200);
-        const widgetDataList = (response.body as WidgetDataData).widgetDataList;
-        const expectedWidgetData = {
-            "_id": expect.any(String),
-            widgetId: "tram-schedule",
-            location: 3,
-            rawConfig: {
-                stop: "Durlacher Tor/K I T (U)",
-                count: 5,
-            },
-        };
-        expect(widgetDataList[0]).toEqual(expectedWidgetData);
-    });
-
-    test("get healthcheck", async () => {
-        const {statusCode} = await supertest(app)
-            .get("/healthcheck")
-            .send();
-        expect(statusCode).toBe(200);
-    });
-
-
-    test("get announcements", async () => {
-        const response = await supertest(app).get("/announcements");
-        expect(response.statusCode).toBe(200);
-        const announcementDataList = response.body;
-        const expectedAnnouncementData = [
-            {
-                title: 'Awesome work everyone!',
-                text: 'What a fine product! Such WOW! Much 1,0!!',
-                author: 'bach.jannik@web.de',
-                timeout: 1645137628851,
-                timeOfAddition: 1643927628851,
-                _id: expect.any(String),
-            }
-        ];
-        expect(announcementDataList).toEqual(expectedAnnouncementData);
-    });
-
-    test("get users", async () => {
-        const response = await supertest(app).get("/users");
-        expect(response.statusCode).toBe(200);
-        const userDataList = response.body;
-        const expectedUserData = [
-            {
-                _id: expect.any(String),
-                email: "bach.jannik@web.de",
-                name: "Jannik"
-            },
-            {
-                _id: expect.any(String),
-                email: "uupiw@student.kit.edu",
-                name: "UUron"
-            }
-        ];
-        expect(userDataList).toEqual(expectedUserData);
-    });
-
-
-    test("get config", async () => {
-        const response = await supertest(app).get("/config");
-        expect(response.statusCode).toBe(200);
-        const configData = (response.body as ConfigData);
-        const expectedConfigData : ConfigData = {
-            background: "https://images.pexels.com/photos/4328298/pexels-photo-4328298.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-            colorScheme: "large",
-            fontSize: "large",
-        };
-        expect(configData).toEqual(expectedConfigData);
-    });
-
-
-    test("get values", async () => {
         const response = await supertest(app).get("/values");
         expect(response.statusCode).toBe(200);
         const valuesData = (response.body as ValuesData);

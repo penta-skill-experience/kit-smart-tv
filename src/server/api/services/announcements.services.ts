@@ -54,7 +54,15 @@ function updateAnnouncements(announcements: Announcement[]): Promise<void> {
 export function getAnnouncements(): Promise<Announcement[]> {
     return new Promise<Announcement[]>((resolve, reject) => {
         AnnouncementsModel.findOne().then(
-            (document: AnnouncementsDocument) => resolve(document.announcementDataList),
+            (document: AnnouncementsDocument) => {
+                if(document == null){
+                    reject("no announcements found");
+                }
+                else{
+                    resolve(document.announcementDataList)
+                }
+
+            },
             reason => reject(reason)
         );
     });

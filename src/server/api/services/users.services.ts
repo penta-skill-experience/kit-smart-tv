@@ -44,7 +44,14 @@ function updateUsers(users: IVerifiedUser[]): Promise<void> {
 export function getUsers(): Promise<IVerifiedUser[]> {
     return new Promise<IVerifiedUser[]>((resolve, reject) => {
         UsersModel.findOne().then(
-            (document: UsersDocument) => resolve(document.usersDataList),
+            (document: UsersDocument) => {
+                if (document == null){
+                    reject("no users found")
+                }
+                else{
+                    resolve(document.usersDataList)
+                }
+            },
             reason => reject(reason));
     });
 }
