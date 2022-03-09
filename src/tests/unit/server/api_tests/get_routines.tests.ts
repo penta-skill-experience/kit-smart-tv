@@ -221,7 +221,7 @@ describe("GET routines", () => {
         //write config to database
         const ConfigData : ConfigData = {
             fontSize: "large",
-            colorScheme: "large",
+            colorScheme: "dark",
             background: "https://images.pexels.com/photos/4328298/pexels-photo-4328298.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
         };
         await createConfig(ConfigData);
@@ -231,7 +231,7 @@ describe("GET routines", () => {
         const configData = (response.body as ConfigData);
         const expectedConfigData : ConfigData = {
             background: "https://images.pexels.com/photos/4328298/pexels-photo-4328298.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-            colorScheme: "large",
+            colorScheme: "dark",
             fontSize: "large",
         };
         expect(configData).toEqual(expectedConfigData);
