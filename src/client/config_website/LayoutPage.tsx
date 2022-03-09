@@ -210,17 +210,19 @@ export const LayoutPage = ({list, widgetListElement, handleWidgetSelection, hand
                             .then(() => setOpen(true))
                             .catch(() => setSessionBar(true))
                     }}>
-                        Save
+                        Save Changes
                     </Button>
                     <Snackbar
+                        anchorOrigin={{vertical:'bottom', horizontal:'right'}}
                         open={open}
-                        autoHideDuration={6000}
+                        autoHideDuration={2000}
                         onClose={handleClose}
                         message={'Changes Saved'}
                     />
                     <Snackbar
+                        anchorOrigin={{vertical:'bottom', horizontal:'right'}}
                         open={sessionBar}
-                        autoHideDuration={6000}
+                        autoHideDuration={2000}
                         onClose={handleClose}
                         message={'Session expired'}
                     />

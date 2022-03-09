@@ -64,20 +64,23 @@ export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNa
                         Add
                     </Button>
                     <Snackbar
+                        anchorOrigin={{vertical:'bottom', horizontal:'right'}}
                         open={invalidMailBar}
-                        autoHideDuration={6000}
+                        autoHideDuration={2000}
                         onClose={handleClose}
                         message={'E-Mail does not exist'}
                     />
                     <Snackbar
+                        anchorOrigin={{vertical:'bottom', horizontal:'right'}}
                         open={doubleMailBar}
-                        autoHideDuration={6000}
+                        autoHideDuration={2000}
                         onClose={handleClose}
                         message={'This E-Mail already exists'}
                     />
                     <Snackbar
+                        anchorOrigin={{vertical:'bottom', horizontal:'right'}}
                         open={emptyErrorBar}
-                        autoHideDuration={6000}
+                        autoHideDuration={2000}
                         onClose={handleClose}
                         message={'Username and email have to be filled out'}
                     />
@@ -112,7 +115,7 @@ export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNa
                     </ul>
                 </Grid>
                 <Grid item xs={12}>
-                    <Button variant='outlined' onClick={() => {
+                    <Button variant='contained' onClick={() => {
                         handleVerUserList();
                         adminStatePersistence.getAdminLoginState()
                             .then(() => setOpen(true))
@@ -121,14 +124,16 @@ export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNa
                         Save Changes
                     </Button>
                     <Snackbar
+                        anchorOrigin={{vertical:'bottom', horizontal:'right'}}
                         open={open}
-                        autoHideDuration={6000}
+                        autoHideDuration={2000}
                         onClose={handleClose}
                         message={'Verified Users Saved'}
                     />
                     <Snackbar
+                        anchorOrigin={{vertical:'bottom', horizontal:'right'}}
                         open={sessionBar}
-                        autoHideDuration={6000}
+                        autoHideDuration={2000}
                         onClose={handleClose}
                         message={'Session expired'}
                     />

@@ -106,31 +106,35 @@ export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNe
                                     }
                                 })
                             }}
-                            variant="outlined"
+                            variant="contained"
                         >
                             Save Password
                         </Button>
                         <Snackbar
+                            anchorOrigin={{vertical:'bottom', horizontal:'right'}}
                             open={successfulBar}
-                            autoHideDuration={6000}
+                            autoHideDuration={2000}
                             onClose={handleClose}
                             message={'Password Saved'}
                         />
                         <Snackbar
+                            anchorOrigin={{vertical:'bottom', horizontal:'right'}}
                             open={errorBar}
-                            autoHideDuration={6000}
+                            autoHideDuration={2000}
                             onClose={handleClose}
                             message={'Changing Password failed'}
                         />
                         <Snackbar
+                            anchorOrigin={{vertical:'bottom', horizontal:'right'}}
                             open={sessionErrorBar}
-                            autoHideDuration={6000}
+                            autoHideDuration={2000}
                             onClose={handleClose}
                             message={'Session expired'}
                         />
                         <Snackbar
+                            anchorOrigin={{vertical:'bottom', horizontal:'right'}}
                             open={emptyErrorBar}
-                            autoHideDuration={6000}
+                            autoHideDuration={2000}
                             onClose={handleClose}
                             message={'Old and new password must not be empty'}
                         />

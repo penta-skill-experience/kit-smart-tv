@@ -124,25 +124,28 @@ export class PersonalizationPage extends React.Component<PersonalizationPageProp
                                     }
                                 })
                             }}
-                            variant="outlined"
+                            variant="contained"
                         >
                             Save Changes
                         </Button>
                         <Snackbar
+                            anchorOrigin={{vertical:'bottom', horizontal:'right'}}
                             open={this.state.successfulBar}
-                            autoHideDuration={6000}
+                            autoHideDuration={2000}
                             onClose={this.handleClose}
                             message={'Changes Saved'}
                         />
                         <Snackbar
+                            anchorOrigin={{vertical:'bottom', horizontal:'right'}}
                             open={this.state.errorBar}
-                            autoHideDuration={6000}
+                            autoHideDuration={2000}
                             onClose={this.handleClose}
                             message={'Color scheme, font size and a background must be chosen'}
                         />
                         <Snackbar
+                            anchorOrigin={{vertical:'bottom', horizontal:'right'}}
                             open={this.state.sessionErrorBar}
-                            autoHideDuration={6000}
+                            autoHideDuration={2000}
                             onClose={this.handleClose}
                             message={'Session expired'}
                         />
