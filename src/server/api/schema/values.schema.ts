@@ -16,7 +16,7 @@ export const updateValuesSchema = z.object({
             bodyFontColor: z.string(),
             specialBoldFontColor: z.string(),
             specialSubtleFontColor: z.string(),
-            accentBarFontColor: z.string(),
+            accentBarColor: z.string(),
             backgrounds: z.array(z.string()),
         })),
     }),

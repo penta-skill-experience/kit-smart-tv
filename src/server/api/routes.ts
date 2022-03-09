@@ -52,8 +52,6 @@ function routes(app: Express) {
     /**
      *   Announcement Routines
      **/
-
-    app.put("/announcements", ensureRequestStructure(updateAnnouncementsSchema), updateAnnouncementsHandler);
     app.get("/announcements", getAnnouncementsHandler);
 
     /**

@@ -20,7 +20,7 @@ import {createValues} from "../../../../server/api/services/values.services";
 describe("GET routines", () => {
     let app: Express;
     const testPassword = "password1234";
-    let admin : AdminInput = {
+    let admin: AdminInput = {
         password: testPassword,
     };
     let adminTmp;
@@ -46,10 +46,10 @@ describe("GET routines", () => {
         adminTmp = await getAdmin();
         adminId = adminTmp.toJSON()._id;
         sessionTest = await createSession(adminId, "user agent");
-        accessTokenTest = signJwt({ ...adminTmp, session: sessionTest._id },
+        accessTokenTest = signJwt({...adminTmp, session: sessionTest._id},
             "accessTokenPrivateKey",
-            { expiresIn: config.accessTokenTtl})
-        });
+            {expiresIn: config.accessTokenTtl});
+    });
 
     afterEach(async () => {
         await mongoose.disconnect();
@@ -181,7 +181,7 @@ describe("GET routines", () => {
 
     test("get users with existing users should return 200 and the users", async () => {
         //write users to database
-        const users : IVerifiedUser[] = [
+        const users: IVerifiedUser[] = [
             {
                 email: "bach.jannik@web.de",
                 name: "Jannik"
@@ -219,7 +219,7 @@ describe("GET routines", () => {
 
     test("get config with existing config should return 200 and the config", async () => {
         //write config to database
-        const ConfigData : ConfigData = {
+        const ConfigData: ConfigData = {
             fontSize: "large",
             colorScheme: "dark",
             background: "https://images.pexels.com/photos/4328298/pexels-photo-4328298.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -229,7 +229,7 @@ describe("GET routines", () => {
         const response = await supertest(app).get("/config");
         expect(response.statusCode).toBe(200);
         const configData = (response.body as ConfigData);
-        const expectedConfigData : ConfigData = {
+        const expectedConfigData: ConfigData = {
             background: "https://images.pexels.com/photos/4328298/pexels-photo-4328298.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
             colorScheme: "dark",
             fontSize: "large",
@@ -246,7 +246,7 @@ describe("GET routines", () => {
     test("get values with existing values should return 200 and the values", async () => {
         //write values to database
 
-        const valuesDataWrite : ValuesData = {
+        const valuesDataWrite: ValuesData = {
             "fontSizes": [
                 {
                     "id": "small",
@@ -304,7 +304,7 @@ describe("GET routines", () => {
                     ]
                 }
             ]
-        }
+        };
         await createValues(valuesDataWrite);
 
 
@@ -353,7 +353,4 @@ describe("GET routines", () => {
         };
         expect(valuesData).toEqual(expectedValuesData);
     });
-
-
-
 });
