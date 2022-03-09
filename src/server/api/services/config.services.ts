@@ -4,7 +4,6 @@ import {ConfigModel} from "../models/config.model";
 import {ConfigData} from "../../../shared/interfaces/interfaces";
 
 export async function createConfig(input: DocumentDefinition<ConfigData>) {
-    //before creating a Users, delete all Users in the collection, to guarantee there ist only one stored at a time
     //delete all
     await ConfigModel.deleteMany();
     await ConfigModel.create(input);
