@@ -408,16 +408,28 @@ exports[`Layout page tests snapshot test for layout page 1`] = `
         onClick={[Function]}
         variant="contained"
       >
-        Save
+        Save Changes
       </ForwardRef(Button)>
       <ForwardRef(Snackbar)
-        autoHideDuration={6000}
+        anchorOrigin={
+          Object {
+            "horizontal": "right",
+            "vertical": "bottom",
+          }
+        }
+        autoHideDuration={2000}
         message="Changes Saved"
         onClose={[Function]}
         open={false}
       />
       <ForwardRef(Snackbar)
-        autoHideDuration={6000}
+        anchorOrigin={
+          Object {
+            "horizontal": "right",
+            "vertical": "bottom",
+          }
+        }
+        autoHideDuration={2000}
         message="Session expired"
         onClose={[Function]}
         open={false}

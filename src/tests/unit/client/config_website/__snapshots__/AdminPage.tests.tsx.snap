@@ -91,30 +91,54 @@ exports[`Admin page tests snapshot test for personalisation page 1`] = `
       >
         <ForwardRef(Button)
           onClick={[Function]}
-          variant="outlined"
+          variant="contained"
         >
           Save Password
         </ForwardRef(Button)>
         <ForwardRef(Snackbar)
-          autoHideDuration={6000}
+          anchorOrigin={
+            Object {
+              "horizontal": "right",
+              "vertical": "bottom",
+            }
+          }
+          autoHideDuration={2000}
           message="Password Saved"
           onClose={[Function]}
           open={false}
         />
         <ForwardRef(Snackbar)
-          autoHideDuration={6000}
+          anchorOrigin={
+            Object {
+              "horizontal": "right",
+              "vertical": "bottom",
+            }
+          }
+          autoHideDuration={2000}
           message="Changing Password failed"
           onClose={[Function]}
           open={false}
         />
         <ForwardRef(Snackbar)
-          autoHideDuration={6000}
+          anchorOrigin={
+            Object {
+              "horizontal": "right",
+              "vertical": "bottom",
+            }
+          }
+          autoHideDuration={2000}
           message="Session expired"
           onClose={[Function]}
           open={false}
         />
         <ForwardRef(Snackbar)
-          autoHideDuration={6000}
+          anchorOrigin={
+            Object {
+              "horizontal": "right",
+              "vertical": "bottom",
+            }
+          }
+          autoHideDuration={2000}
           message="Old and new password must not be empty"
           onClose={[Function]}
           open={false}
