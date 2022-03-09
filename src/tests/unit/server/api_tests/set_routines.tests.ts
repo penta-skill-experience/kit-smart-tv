@@ -15,10 +15,6 @@ describe("PUT PUSH DELETE routines", () => {
 
     const testPassword = "password123";
     const testPasswordWrong = "wrongPassword123";
-
-    let admin: AdminInput = {
-        password: testPassword,
-    };
     let adminTmp;
     let adminId;
     let sessionTest;
@@ -261,4 +257,56 @@ describe("PUT PUSH DELETE routines", () => {
             }
         ]
     });
+
+    test("request with expired accesToken and valid refreshToken", async () => {
+
+        //create expired access token
+        const accessTokenExpired = signJwt({...adminTmp, session: sessionTest._id},
+            "accessTokenPrivateKey",
+            {expiresIn: "-1m"});
+        //create valid refreshtoken
+        const refreshTokenValid = signJwt({...adminTmp, session: sessionTest._id},
+            "refreshTokenPrivateKey",
+            {expiresIn: "10m"});
+
+        const {statusCode, header} = await supertest(app).get("/api/sessions").set({
+            "Authorization": `Bearer ${accessTokenExpired}`,
+            "Content-Type": "application/json",
+            "x-refresh": refreshTokenValid,
+        });
+
+        expect(statusCode).toBe(200);
+        const accessTokenGenerated = header['x-access-token'];
+        console.log(accessTokenGenerated);
+        expect(typeof accessTokenGenerated).toBe("string");
+
+        const validTokenResponse = await supertest(app).get("/api/sessions").set({
+            "Authorization": `Bearer ${accessTokenGenerated}`,
+            "Content-Type": "application/json"
+        });
+        expect(validTokenResponse.statusCode).toBe(200);
+
+    })
+
+    test("request with expired accesToken and expired refreshToken", async () => {
+
+        //create expired access token
+        const accessTokenExpired = signJwt({...adminTmp, session: sessionTest._id},
+            "accessTokenPrivateKey",
+            {expiresIn: "-1m"});
+        //create valid refreshtoken
+        const refreshTokenExpired = signJwt({...adminTmp, session: sessionTest._id},
+            "refreshTokenPrivateKey",
+            {expiresIn: "-10m"});
+
+        const {statusCode} = await supertest(app).get("/api/sessions").set({
+            "Authorization": `Bearer ${accessTokenExpired}`,
+            "Content-Type": "application/json",
+            "x-refresh": refreshTokenExpired,
+        });
+
+        expect(statusCode).toBe(403);
+
+    })
+
 });
