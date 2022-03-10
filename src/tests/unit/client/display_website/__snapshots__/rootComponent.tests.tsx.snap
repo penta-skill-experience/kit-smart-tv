@@ -22,22 +22,6 @@ exports[`rootComponent Snapshots rootComponent Snapshots with design values and 
     }
   >
     <div
-      className="z-50"
-      style={
-        Object {
-          "left": "4.7vh",
-          "position": "absolute",
-          "top": "45.7vh",
-        }
-      }
-    >
-      <img
-        alt="IHKLogo"
-        className="sm:w-24 lg:w-36 2xl:w-52 4xl:w-72"
-        src="https://www.artwork.de/wp-content/uploads/2015/08/logo_TF_NEU_4c_ai.png"
-      />
-    </div>
-    <div
       className="z-20 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30"
       style={
         Object {
@@ -47,6 +31,57 @@ exports[`rootComponent Snapshots rootComponent Snapshots with design values and 
       }
     />
     <div
+      className="z-50"
+      style={
+        Object {
+          "left": "5.5vh",
+          "position": "absolute",
+          "top": "5.5vh",
+          "width": "45vh",
+        }
+      }
+    >
+      <TimeDisplayComponent
+        error={[Function]}
+        specialBoldFontColor=""
+        specialSubtleFontColor=""
+      />
+    </div>
+    <div
+      className="z-50"
+      style={
+        Object {
+          "height": "16vh",
+          "left": "3.9vh",
+          "position": "absolute",
+          "top": "23.7vh",
+          "width": "28vw",
+        }
+      }
+    >
+      <WeatherDisplayComponent
+        error={[Function]}
+        specialBoldFontColor=""
+        specialSubtleFontColor=""
+      />
+    </div>
+    <div
+      className="z-50"
+      style={
+        Object {
+          "left": "5.5vh",
+          "position": "absolute",
+          "top": "42.4vh",
+        }
+      }
+    >
+      <img
+        alt="CESLogo"
+        className="sm:w-5 md:w-7 lg:w-9 xl:w-12 2xl:w-16 8xl:w-20"
+        src="https://i.postimg.cc/pyN3LY0y/unnamed.jpg"
+      />
+    </div>
+    <div
       className="box-border z-20 grid grid-cols-3 absolute left-0 grid-rows-2 sm:gap-2 md:gap-3 lg:gap-5 xl:gap-7 4xl:gap-10 sm:p-2 md:p-3 lg:p-5 xl:p-7 4xl:p-10"
       style={
         Object {
@@ -55,20 +90,7 @@ exports[`rootComponent Snapshots rootComponent Snapshots with design values and 
         }
       }
     >
-      <div
-        className="sm:pl-2 md:pl-3 lg:pl-5 xl:pl-7 4xl:pl-10 grid grid-rows-2 h-full sm:gap-2 md:gap-3 lg:gap-4 xl:gap-6 4xl:gap-8"
-      >
-        <TimeDisplayComponent
-          error={[Function]}
-          specialBoldFontColor=""
-          specialSubtleFontColor=""
-        />
-        <WeatherDisplayComponent
-          error={[Function]}
-          specialBoldFontColor=""
-          specialSubtleFontColor=""
-        />
-      </div>
+      <div />
       <div />
       <RotatorComponent>
         <div
