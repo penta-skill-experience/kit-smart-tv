@@ -26,13 +26,13 @@ exports[`Delete Dialog Component tests snapshot test for DeleteDialogComponent 1
         onClick={[Function]}
         variant="outlined"
       >
-        Disagree
+        Cancel
       </ForwardRef(Button)>
       <ForwardRef(Button)
         onClick={[Function]}
-        variant="outlined"
+        variant="contained"
       >
-        Agree
+        Delete
       </ForwardRef(Button)>
     </ForwardRef(DialogActions)>
   </ForwardRef(Dialog)>
