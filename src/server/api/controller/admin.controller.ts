@@ -12,8 +12,6 @@ export async function createAdminHandler(req: Request<CreateAdminInput["body"]>,
 }
 
 export async function updatePasswordHandler(req: Request<updatePasswordInput["body"]>, res: Response) {
-    try {
-
         // admin in datenbank updaten
         const updated_admin = await updatePassword({
             old_password: req.body.password,
@@ -24,9 +22,4 @@ export async function updatePasswordHandler(req: Request<updatePasswordInput["bo
         } else {
             return res.status(409).send("could not update password");
         }
-
-    } catch (e: any) {
-        console.log(e.message);
-        return res.status(409).send(e.message);
-    }
 }
