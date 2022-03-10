@@ -1,6 +1,6 @@
 # kit-smart-tv
 
-This is a server application hosting a dashboard with (to KIT ITEC) relevant information on localhost. The dashboard is meant to be dispalyed on big screens. People passing by the screen should read the information while passing by.
+This is a server application hosting a dashboard with (to KIT ITEC) relevant information on localhost. The dashboard is meant to be dispalyed on big screens. People passing by the screen can read the information.
 
 # System Requirements
 The server has to run on a linux or darwin (macOS) system. (Windows is possible, but some widgets will not fetch the data correctly if the server is hosted on windows.)
