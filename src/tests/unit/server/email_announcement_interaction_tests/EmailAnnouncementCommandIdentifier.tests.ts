@@ -4,7 +4,7 @@ import {
 import {SetAnnouncementCommand} from "../../../../server/announcement_management/SetAnnouncementCommand";
 import {RemoveAnnouncementCommand} from "../../../../server/announcement_management/RemoveAnnouncementCommand";
 import * as MailInteractionConfig from "../../../../server/email_announcement_interaction/MailInteractionConfig.json"
-import {newAnnouncement} from "../util/newAnnouncement";
+import {newAnnouncement} from "../../../../server/email_announcement_interaction/newAnnouncement";
 
 describe("testing EmailAnnouncementCommandIdentifier identifies the correct command", () => {
     test("testing EmailAnnouncementCommandIdentifier identifies SetAnnouncementCommand correctly", () => {

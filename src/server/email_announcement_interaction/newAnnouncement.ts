@@ -1,7 +1,7 @@
-import * as AnnouncementConfig from "../../../../server/announcement_management/AnnouncementConfig.json";
-import {AnnouncementAuthorError} from "../../../../server/announcement_management/AnnouncementAuthorError";
+import * as AnnouncementConfig from "../announcement_management/AnnouncementConfig.json";
+import {AnnouncementAuthorError} from "../announcement_management/AnnouncementAuthorError";
 import * as emailValidator from "email-validator";
-import {Announcement} from "../../../../shared/values/Announcement";
+import {Announcement} from "../../shared/values/Announcement";
 
 /**
  * Creates an announcement with the specified parameters.

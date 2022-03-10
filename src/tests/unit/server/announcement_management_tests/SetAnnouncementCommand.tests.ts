@@ -6,7 +6,7 @@ import {
     AnnouncementCommandError,
     IllegalAnnouncementTextForCommandError
 } from "../../../../server/announcement_management/AnnouncementCommand";
-import {newAnnouncement} from "../util/newAnnouncement";
+import {newAnnouncement} from "../../../../server/email_announcement_interaction/newAnnouncement";
 import {Announcement} from "../../../../shared/values/Announcement";
 
 // mocking AnnouncementConfig.json
