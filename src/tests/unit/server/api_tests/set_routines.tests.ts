@@ -9,10 +9,10 @@ import {createSession} from "../../../../server/api/services/session.service";
 import {signJwt} from "../../../../server/api/utils/jwt.utils";
 import config from "../../../../server/api/config.json";
 
+
 describe("PUT PUSH DELETE routines", () => {
 
     let app: Express;
-
     const testPassword = "password123";
     const testPasswordWrong = "wrongPassword123";
     let adminTmp;
@@ -304,9 +304,6 @@ describe("PUT PUSH DELETE routines", () => {
             "Content-Type": "application/json",
             "x-refresh": refreshTokenExpired,
         });
-
         expect(statusCode).toBe(403);
-
     })
-
 });

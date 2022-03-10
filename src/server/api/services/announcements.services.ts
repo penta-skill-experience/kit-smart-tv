@@ -1,10 +1,22 @@
 import {DocumentDefinition} from "mongoose";
 import {AnnouncementsData, AnnouncementsDocument, AnnouncementsModel} from "../models/announcements.model";
 import {Announcement} from "../../../shared/values/Announcement";
+import {WidgetDataModel} from "../models/widgetDataModel";
+import {omit} from "lodash";
+import {UsersModel} from "../models/users.model";
 
 export function updateOrCreateAnnouncements(announcements: Announcement[]): Promise<void> {
-    return updateAnnouncements(announcements)
-        .catch(() => createAnnouncements(announcements));  // try to create announcements instead
+    return new Promise<void>((resolve, reject) => {
+        updateAnnouncements(announcements)
+            .then(() => {
+                resolve()
+            })
+            .catch(() => {
+                createAnnouncements(announcements)
+                    .then(() => resolve())
+                    .catch(() => reject())
+            }); // try to create announcements instead
+    });
 }
 
 export function createAnnouncements(announcements: Announcement[]): Promise<void> {
@@ -27,12 +39,14 @@ export function createAnnouncements(announcements: Announcement[]): Promise<void
                     reason => reject(reason),
                 );
             },
-            reason => reject(reason),
+            reason => {
+
+            },
         );
     });
 }
 
-function updateAnnouncements(announcements: Announcement[]): Promise<void> {
+export function updateAnnouncements(announcements: Announcement[]): Promise<void> {
 
     const doc: DocumentDefinition<AnnouncementsData> = {
         announcementDataList: announcements,
@@ -40,25 +54,26 @@ function updateAnnouncements(announcements: Announcement[]): Promise<void> {
 
     return new Promise<void>((resolve, reject) => {
         AnnouncementsModel.findOneAndUpdate(undefined, doc).then(
-            () => {
-                AnnouncementsModel.findOne(undefined).then(
-                    () => resolve(),
-                    reason => reject(reason),
-                );
+            doc => {
+                if (doc === null) {
+                    reject();
+                } else {
+                    resolve();
+                }
             },
-            reason => reject(reason),
+            reason => reject(reason)
         );
     });
+
 }
 
 export function getAnnouncements(): Promise<Announcement[]> {
     return new Promise<Announcement[]>((resolve, reject) => {
         AnnouncementsModel.findOne().then(
             (document: AnnouncementsDocument) => {
-                if(document == null){
+                if (document == null) {
                     reject("no announcements found");
-                }
-                else{
+                } else {
                     resolve(document.announcementDataList)
                 }
 

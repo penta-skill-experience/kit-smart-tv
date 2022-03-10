@@ -123,7 +123,7 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
             $("body,html, #" + this.state.uniqueIdOutsideScroll).delay(SquareHolderConfig.SMALL_WIDGET_WAIT).animate({scrollTop: 0}, speed * (document.getElementById(this.state.uniqueIdInsideScroll).scrollHeight) / 65, 'linear');
             return;
         }
-        $("body,html, #" + this.state.uniqueIdOutsideScroll).animate({scrollTop: 0}, speed * (document.getElementById(this.state.uniqueIdInsideScroll).scrollHeight) / 50 * 1.5, 'linear');
+        $("body,html, #" + this.state.uniqueIdOutsideScroll).animate({scrollTop: 0}, 1000);
     }
 
     private pageScrollToBottom = function (speed: number) {
