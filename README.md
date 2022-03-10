@@ -11,8 +11,8 @@ Requirements:
    Use `node --version` to check that your NodeJS version is 16 or higher. Version 8 will not work!
    On Ubuntu, higher versions of NodeJS cannot be installed with `apt-get`.
    Use [nvm](https://github.com/nvm-sh/nvm#installing-and-updating) to install NodeJS instead.
-4. You need an instance of mongoDB. Either locally or cloud-based.<br>
-   If you use a cloud-based instance of mongoDB, make sure that your machine is able to reach the required URL and port.
+4. You need an instance of MongoDB. Either locally or cloud-based.<br>
+   If you use a cloud-based instance of MongoDB, make sure that your machine is able to reach the required URL and port.
    For example, if you use [Atlas](https://www.mongodb.com/atlas/database), your machine [needs to be able to reach port 27017](https://docs.atlas.mongodb.com/troubleshoot-connection/#attempting-to-connect-to-a-database-deployment-from-behind-a-firewall).
 
 Deployment:
@@ -45,32 +45,29 @@ Deployment:
     node ./dist/server/server.js
     ```
 5. The dashboard is now accessible under your server's IP address with port `1337`, via HTTPS.
+6. If you are using a local MongoDB instance, you need to initalize an admin before you can use the dashboard and the admin interface properly.
+   While the server is running, run the following in your server's console to create an admin with your own password. This command will only succeed once.
+   ```
+   curl --location --request POST 'https://localhost:1337/admin/create-admin' \
+   --header 'Content-Type: application/json' \
+   --data-raw '{
+      "password": {{yourpassword}}
+   }'
+   ```
 
-# Optional: Use Own MongoDB Instance
+# Announcements
 
-If you need your own MongoDB instance, you need to preset an admin before you can use the dashboard and the admin interface properly.
-After running the server, use the following in the console to create a admin with your own password. This command will only succeed once.
-
-```
-curl --location --request POST 'https://localhost:1337/admin/create-admin' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "password": {{yourpassword}}
-}'
-```
-
-
-# Announcement Admins
+## Announcement Admins
 
 The announcement admins are specified in the field "ADMINS" in ./src/server/announcement_management/AnnouncementConfig.json-
 To add an admin, add an entry with the e-mail address of the admin to this field.
 To remove an admin, remove the corresponding entry from the field.
 
-# Verified Users
+## Verified Users
 
 Verified Users can interact with announcements. They are added and removed by an admin in the admin interface.
 
-# Configuring the e-mail address for announcements
+## Configuring the e-mail address for announcements
 
 The e-mail address is configured in ./src/server/email_announcement_interaction/MailAccountConfig.json. with the password being entered in
 the .env file with the key "ANNOUNCEMENT_EMAIL_ACCOUNT_PW".
@@ -100,7 +97,7 @@ This is an example for the MailInteractionConfig.json:
 }
 ```
 
-# How to send announcements
+## How to send announcements
 
 To send an announcement, send an e-mail to the USERNAME specified in ./src/server/email_announcement_interaction/MailAccountConfig.json.
 The subject of the e-mail becomes the title of the announcement.
@@ -108,14 +105,14 @@ The text of the e-mail becomes the text of the announcement.
 If the announcement title already exists, see "How to change announcements".
 This functionality is limited to Verified Users and the announcement admins.
 
-# How to change announcements
+## How to change announcements
 
 To change an announcement, send an announcement with the same title as the announcement you wish to change.
 The original text of the announcement gets deleted and is replaced with the text from the sent announcement.
 This is only possible, if the sent announcement is from the same Verified User as the original announcement or if the sent announcemnt is from
 an announcement admin.
 
-# How to remove announcements
+## How to remove announcements
 
 To remove an announcement, send an announcement with the same title as the announcement you wish to change. Additionally, the sent 
 announcement must have an empty text.
@@ -125,6 +122,6 @@ an announcement admin.
 
 # RSSFeed Warning
 
-!!!Only enter trusted rss feeds into an rss-feed widget!!!
+**Only enter trusted rss feeds into an rss-feed widget!**
 The rss feed embeds foreign HTML. This is a potential security risk.
 
