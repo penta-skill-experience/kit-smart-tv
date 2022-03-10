@@ -1,5 +1,5 @@
 import * as React from "react";
-import {DialogContent, MenuItem, Select} from "@mui/material";
+import {DialogContent, FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 import DialogTitle from "@mui/material/DialogTitle";
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
@@ -150,8 +150,10 @@ export class TramScheduleConfigComponent extends ConfigComponent<TramScheduleCon
                             this.setState({value: newValue || ""});
                         }}
                     />
-                    <Label>Number of Entries</Label>
+                    <div style={{height: 50}}/>
+                    <span>Number of Entries to Display:</span>
                     <Select
+                        style={{width: 300}}
                         value={this.state.selectedCount}
                         onChange={event => this.setState({selectedCount: event.target.value})}>
                         {[1, 2, 3, 4, 5].map(count => <MenuItem value={count}>{count}</MenuItem>)}
