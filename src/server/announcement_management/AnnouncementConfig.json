@@ -1,10 +1,19 @@
 {
   "DEFAULT_ANNOUNCEMENT_TIMEOUT": 1210000000,
-  "ADMINS": [
-    "bakr.sikal@kit.edu",
-    "georgios.zervakis@kit.edu",
-    "om.prakash@kit.edu",
-    "faeze.faghih@kit.edu",
-    "heba.khdr@kit.edu"
+  "ADMINS": [{
+      "EMAIL": "bakr.sikal@kit.edu"
+  },
+    {
+      "EMAIL": "georgios.zervakis@kit.edu"
+    },
+    {
+      "EMAIL": "om.prakash@kit.edu"
+    },
+    {
+      "EMAIL": "faeze.faghih@kit.edu"
+    },
+    {
+      "EMAIL": "heba.khdr@kit.edu"
+    }
   ]
 }
