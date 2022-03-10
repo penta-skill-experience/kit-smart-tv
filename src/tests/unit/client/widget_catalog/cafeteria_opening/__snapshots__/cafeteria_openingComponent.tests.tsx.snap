@@ -15,7 +15,7 @@ exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all cl
         Dining Hall: 
       </div>
       <div
-        className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+        className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
         style={
           Object {
             "backgroundColor": "Tomato",
@@ -37,7 +37,7 @@ exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all cl
         Cafeteria: 
       </div>
       <div
-        className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+        className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
         style={
           Object {
             "backgroundColor": "Tomato",
@@ -59,7 +59,7 @@ exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all cl
         [koeri]Werk: 
       </div>
       <div
-        className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+        className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
         style={
           Object {
             "backgroundColor": "Tomato",
@@ -81,7 +81,7 @@ exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all cl
         [pizza]Werk: 
       </div>
       <div
-        className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+        className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
         style={
           Object {
             "backgroundColor": "Tomato",
@@ -98,7 +98,7 @@ exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all cl
     </div>
   </div>
   <div
-    className="font-extralight leading-normal sm:text-xs md:text-sm lg:text-baselg xl:text-xl 2xl:text-1.5xl 4xl:text-3xl 8xl:text-4.5xl sm:text-left"
+    className="font-light leading-normal sm:text-xs md:text-sm lg:text-baselg xl:text-xl 2xl:text-1.5xl 4xl:text-3xl 8xl:text-4.5xl sm:text-left"
   >
     <div>
       Reopens: 
@@ -123,7 +123,7 @@ exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all op
         Dining Hall: 
       </div>
       <div
-        className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+        className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
         style={
           Object {
             "backgroundColor": "ForestGreen",
@@ -145,7 +145,7 @@ exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all op
         Cafeteria: 
       </div>
       <div
-        className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+        className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
         style={
           Object {
             "backgroundColor": "ForestGreen",
@@ -167,7 +167,7 @@ exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all op
         [koeri]Werk: 
       </div>
       <div
-        className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+        className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
         style={
           Object {
             "backgroundColor": "ForestGreen",
@@ -189,7 +189,7 @@ exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all op
         [pizza]Werk: 
       </div>
       <div
-        className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+        className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
         style={
           Object {
             "backgroundColor": "ForestGreen",
@@ -206,7 +206,7 @@ exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all op
     </div>
   </div>
   <div
-    className="font-extralight leading-normal sm:text-xs md:text-sm lg:text-baselg xl:text-xl 2xl:text-1.5xl 4xl:text-3xl 8xl:text-4.5xl sm:text-left"
+    className="font-light leading-normal sm:text-xs md:text-sm lg:text-baselg xl:text-xl 2xl:text-1.5xl 4xl:text-3xl 8xl:text-4.5xl sm:text-left"
   >
     <div />
   </div>
