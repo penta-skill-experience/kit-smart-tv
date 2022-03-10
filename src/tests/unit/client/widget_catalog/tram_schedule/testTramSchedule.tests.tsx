@@ -35,7 +35,7 @@ describe("Tram Schedule Snapshots", () => {
                 {"timestamp":"2022-03-06 16:18:32","stopName":"Durlacher Tor/K I T","departures":[{"route":"4","destination":"Waldstadt","direction":"2","time":"6 min","lowfloor":false,"realtime":true,"traction":0},{"route":"3","destination":"Rappenwört über Hbf","direction":"1","time":"7 min","lowfloor":false,"realtime":true,"traction":0},{"route":"30","destination":"Elbinger Straße","direction":"2","time":"16:30","lowfloor":true,"realtime":true,"traction":0},{"route":"3","destination":"Rintheim","direction":"2","time":"16:31","lowfloor":false,"realtime":true,"traction":0},{"route":"4","destination":"Oberreut","direction":"1","time":"16:32","lowfloor":false,"realtime":true,"traction":0},{"route":"4","destination":"Waldstadt","direction":"2","time":"16:45","lowfloor":false,"realtime":true,"traction":0},{"route":"3","destination":"Rappenwört über Hbf","direction":"1","time":"16:46","lowfloor":false,"realtime":true,"traction":0},{"route":"3","destination":"Rintheim","direction":"2","time":"16:51","lowfloor":false,"realtime":true,"traction":0},{"route":"4","destination":"Oberreut","direction":"1","time":"16:52","lowfloor":false,"realtime":true,"traction":0},{"route":"4","destination":"Waldstadt","direction":"2","time":"17:05","lowfloor":false,"realtime":true,"traction":0}]}            )
         );
         const configuration = {
-            stop: TramScheduleConfig.DEFAULT_STOP_NAME,
+            stop: TramScheduleConfig.DEFAULT_STOP_ID,
             count: TramScheduleConfig.DEFAULT_ITEM_COUNT,
         };
         const wrapper = shallow(<TramScheduleDisplayComponent error={(msg => {})} config={configuration} specialBoldFontColor={"ForestGreen"} specialSubtleFontColor={"DarkOrange"}/>);
@@ -45,7 +45,7 @@ describe("Tram Schedule Snapshots", () => {
     });
     test("Tram schedule testing without content", async () => {
         const configuration = {
-            stop: TramScheduleConfig.DEFAULT_STOP_NAME,
+            stop: TramScheduleConfig.DEFAULT_STOP_ID,
             count: TramScheduleConfig.DEFAULT_ITEM_COUNT,
         };
         const wrapper = shallow(<TramScheduleDisplayComponent error={(msg => {})} config={configuration} specialBoldFontColor={"ForestGreen"} specialSubtleFontColor={"DarkOrange"}/>);
@@ -55,7 +55,7 @@ describe("Tram Schedule Snapshots", () => {
     });
     test("Tram schedule config without content", async () => {
         const configuration = {
-            stop: TramScheduleConfig.DEFAULT_STOP_NAME,
+            stop: TramScheduleConfig.DEFAULT_STOP_ID,
             count: TramScheduleConfig.DEFAULT_ITEM_COUNT,
         };
         const wrapper = shallow(<TramScheduleConfigComponent config={configuration}/>);

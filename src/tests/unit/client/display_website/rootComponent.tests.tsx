@@ -96,7 +96,7 @@ describe("rootComponent Snapshots", () => {
                 expect(filler.isConfigurable()).toBe(true);
                 expect(filler.getDisplayComponentClass()).toBe(TramScheduleDisplayComponent);
                 expect(filler.getDefaultRawConfig()).toStrictEqual({
-                    stop: TramScheduleConfig.DEFAULT_STOP_NAME,
+                    stop: TramScheduleConfig.DEFAULT_STOP_ID,
                     count: TramScheduleConfig.DEFAULT_ITEM_COUNT,
                 });
                 expect(filler.getConfigComponentClass()).toBe(TramScheduleConfigComponent);

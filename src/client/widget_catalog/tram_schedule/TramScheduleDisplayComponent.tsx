@@ -17,7 +17,8 @@ let justArrived = (x: string): string => {
 };
 
 interface TramScheduleState {
-    trains: DepartureData[];
+    departures: DepartureData[];
+    stopName: string;
 }
 
 export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleState> {
@@ -27,60 +28,39 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
     constructor(props) {
         super(props);
         this.state = {
-            trains: [],
+            departures: [],
+            stopName: "unknown",
         };
     }
 
-    private querySchedule() {
-        const stopName = this.getStopName();
-        TramScheduleUtility.requestStops(stopName)
-            .then((resp: Response) => {
-                if (resp.ok) {
-                    return resp.json()
-                        .catch(reason => this.props.error(reason));
-                } else {
-                    resp.text().then(responseText => {
-                        this.props.error(`Failed to get tram schedule from server (status: ${resp.status} ${resp.statusText}). Reason: ${responseText}`);
-                    });
-                }
-            })
-            .then(data => {
-                if (data.stops.length == 0) {
-                    this.props.error(`The stop "${stopName}" does not exist.`);
-                } else {
-                    return this.queryDepartureData(data.stops[0].id);
-                }
-            })
-            .catch(reason => {
-                this.props.error(`Failed to get tram schedule from server. Reason: ${reason}`);
-            });
-    };
+    private queryDepartureData() {
 
-    private queryDepartureData(stopId: string) {
+        const stopId = this.props.config["stop"];
+
         TramScheduleUtility.requestDepartureData(stopId)
             .then((value: Response) => value.json().catch(reason => this.props.error(reason)))
             .then(data => {
-                this.setState({
-                    trains: data.departures.map(d => ({
-                        route: d.route,
-                        destination: d.destination,
-                        time: justArrived(d.time)
-                    }))
-                });
+                if (!data) {
+                    this.props.error(`No data returned by KVV API for stop ID "${stopId}"`);
+                } else {
+                    this.setState({
+                        stopName: data["stopName"],
+                        departures: data["departures"].map(d => ({
+                            route: d.route,
+                            destination: d.destination,
+                            time: justArrived(d.time)
+                        })),
+                    });
+                }
             });
     }
-
-    private getStopName(): string {
-        return this.props.config["stop"];
-    }
-
     private getConfigCount(): number {
         return this.props.config["count"] || 4;
     }
 
     componentDidMount() {
-        this.querySchedule();
-        this.intervalHandle = setInterval(() => this.querySchedule(), TramScheduleConfig.REFRESH_RATE);
+        this.queryDepartureData();
+        this.intervalHandle = setInterval(() => this.queryDepartureData(), TramScheduleConfig.REFRESH_RATE);
     }
 
 
@@ -91,21 +71,21 @@ export class TramScheduleDisplayComponent extends DisplayComponent<TramScheduleS
     render() {
         return <div className="grid grid-flow-row sm:g-0.5 xl:gap-1.5 2xl:gap-2 box-border">
             <div className="font-light leading-none sm:text-sm sm:text-center lg:text-base xl:text-xl 2xl:text-2xl
-             4xl:text-3xl 8xl:text-5xl sm:pb-1 lg:pb-2 xl:pb-3 4xl:pb-4">  {this.getStopName()}
+             4xl:text-3xl 8xl:text-5xl sm:pb-1 lg:pb-2 xl:pb-3 4xl:pb-4">  {this.state.stopName}
             </div>
             {
-                ((!this.state.trains.length) ? <div className="font-light leading-normal sm:text-sm sm:text-left lg:text-base xl:text-xl 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl">
+                ((!this.state.departures.length) ? <div className="font-light leading-normal sm:text-sm sm:text-left lg:text-base xl:text-xl 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl">
                 No Trains Currently
                 </div>:
                     <div
                         className="font-light leading-normal sm:text-sm sm:text-left lg:text-base xl:text-xl 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl">
-                        {this.state.trains[0].route} {this.state.trains[0].destination}: &nbsp;&nbsp;&nbsp;{this.state.trains[0].time}
+                        {this.state.departures[0].route} {this.state.departures[0].destination}: &nbsp;&nbsp;&nbsp;{this.state.departures[0].time}
                     </div>
                 )
 
             }
             {
-                this.state.trains.slice(1, this.getConfigCount()).map((d, index) =>
+                this.state.departures.slice(1, this.getConfigCount()).map((d, index) =>
                     <div key={index}
                          className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl">
                         {d.route} {d.destination}: &nbsp;&nbsp;&nbsp;{d.time}
