@@ -14,8 +14,8 @@ import {updateConfigSchema} from "./schema/config.schema";
 import {getConfigHandler, updateConfigHandler} from "./controller/config.controller";
 import {updateValuesSchema} from "./schema/values.schema";
 import {getValuesHandler, updateValuesHandler} from "./controller/values.controller";
-import {putKvvSchema} from "./schema/kvv.schema";
-import {putKvvHandler} from "./controller/kvv.controller";
+import {putCurlSchema} from "./schema/curl.schema";
+import {putCurlHandler} from "./controller/curl.controller";
 
 function routes(app: Express) {
     app.get("/healthcheck", (req: Request, res: Response) => res.sendStatus(200));
@@ -72,7 +72,7 @@ function routes(app: Express) {
     app.put("/values", requireAdmin, ensureRequestStructure(updateValuesSchema), updateValuesHandler);
     app.get("/values", getValuesHandler);
 
-    app.put("/kvv", ensureRequestStructure(putKvvSchema), putKvvHandler);
+    app.put("/curl", ensureRequestStructure(putCurlSchema), putCurlHandler);
 
 }
 

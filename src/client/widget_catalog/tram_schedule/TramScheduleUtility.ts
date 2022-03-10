@@ -16,7 +16,7 @@ export class TramScheduleUtility {
                     + TramScheduleConfig.API_KEY
             })
         };
-        return fetch(`${config.DOMAIN}/kvv`, requestOptions);
+        return fetch(`${config.DOMAIN}/curl`, requestOptions);
     }
 
     static requestDepartureData(stopId: string): Promise<Response> {
@@ -32,7 +32,7 @@ export class TramScheduleUtility {
                     + TramScheduleConfig.API_KEY
             })
         };
-        return fetch(`${config.DOMAIN}/kvv`, requestOptions);
+        return fetch(`${config.DOMAIN}/curl`, requestOptions);
     }
 
     static requestStopName(stopId: string): Promise<string> {
