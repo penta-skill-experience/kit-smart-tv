@@ -3,7 +3,7 @@ import {VerifiedUser} from "../../../../shared/values/VerifiedUser";
 import {AnnouncementPersistenceBackend} from "../../../../shared/persistence/announcements/AnnouncementPersistenceBackend";
 import {RemoveAnnouncementCommand} from "../../../../server/announcement_management/RemoveAnnouncementCommand";
 import {AnnouncementCommandError} from "../../../../server/announcement_management/AnnouncementCommand";
-import {newAnnouncement} from "../util/newAnnouncement";
+import {newAnnouncement} from "../../../../server/email_announcement_interaction/newAnnouncement";
 import {Announcement} from "../../../../shared/values/Announcement";
 
 // mocking AnnouncementConfig.json

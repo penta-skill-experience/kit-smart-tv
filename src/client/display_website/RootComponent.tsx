@@ -121,33 +121,47 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             <div className={"flex "} style={{
                 color: this.state.bodyFontColor
             }}>
-                <div className="z-50" style={{
-                    position: "absolute",
-                    left: "4.7vh",
-                    top: "45.7vh"
-                }}>
-                    <img className="sm:w-24 lg:w-36 2xl:w-52 4xl:w-72"
-                         src="https://www.artwork.de/wp-content/uploads/2015/08/logo_TF_NEU_4c_ai.png" alt="IHKLogo"/>
-                </div>
                 <div className="z-20 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30"
                      style={{
                          height: "100vh",
                          width: "33.55vw"
                      }}>
                 </div>
+                <div className="z-50" style={{
+                    position: "absolute",
+                    left: "5.5vh",
+                    top: "5.5vh",
+                    width: "45vh",
+                }}>
+                    <TimeDisplayComponent error={() => {
+                    }} specialBoldFontColor="" specialSubtleFontColor=""/>
+                </div>
+                <div className="z-50" style={{
+                    position: "absolute",
+                    left: "3.9vh",
+                    top: "23.7vh",
+                    width: "28vw",
+                    height: "16vh"
+                }}>
+                    <WeatherDisplayComponent error={() => {
+                    }} specialBoldFontColor="" specialSubtleFontColor=""/>
+                </div>
+                <div className="z-50" style={{
+                    position: "absolute",
+                    left: "5.5vh",
+                    top: "42.4vh"
+                }}>
+                    <img className="sm:w-5 md:w-7 lg:w-9 xl:w-12 2xl:w-16 8xl:w-20"
+                         src="https://i.postimg.cc/pyN3LY0y/unnamed.jpg" alt="CESLogo"/>
+                </div>
+
                 <div
                     className="box-border z-20 grid grid-cols-3 absolute left-0 grid-rows-2 sm:gap-2 md:gap-3 lg:gap-5 xl:gap-7 4xl:gap-10 sm:p-2 md:p-3 lg:p-5 xl:p-7 4xl:p-10"
                     style={{
                         width: "100vw",
                         height: "100vh",
                     }}>
-                    <div className="sm:pl-2 md:pl-3 lg:pl-5 xl:pl-7 4xl:pl-10 grid grid-rows-2 h-full sm:gap-2 md:gap-3 lg:gap-4 xl:gap-6 4xl:gap-8">
-                        {/*todo: log errors*/}
-                        <TimeDisplayComponent error={() => {
-                        }} specialBoldFontColor="" specialSubtleFontColor=""/>
-                        <WeatherDisplayComponent error={() => {
-                        }} specialBoldFontColor="" specialSubtleFontColor=""/>
-                    </div>
+                    <div/>
                     {this.renderLocation(1)}
                     {this.renderLocation(2)}
                     {this.renderLocation(3)}

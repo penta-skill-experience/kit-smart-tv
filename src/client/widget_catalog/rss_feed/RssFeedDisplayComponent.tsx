@@ -68,7 +68,7 @@ export class RssFeedDisplayComponent extends DisplayComponent<RssFeedDisplayStat
                 url: url
             })
         };
-        return fetch(`${config.DOMAIN}/kvv`, requestOptions)
+        return fetch(`${config.DOMAIN}/curl`, requestOptions)
             .then(resp => resp.text());
     }
 

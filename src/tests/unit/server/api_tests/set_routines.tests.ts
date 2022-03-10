@@ -8,11 +8,13 @@ import {Express} from "express";
 import {createSession} from "../../../../server/api/services/session.service";
 import {signJwt} from "../../../../server/api/utils/jwt.utils";
 import config from "../../../../server/api/config.json";
+import {updateOrCreateAnnouncements} from "../../../../server/api/services/announcements.services";
+import {exec} from "child_process";
+
 
 describe("PUT PUSH DELETE routines", () => {
 
     let app: Express;
-
     const testPassword = "password123";
     const testPasswordWrong = "wrongPassword123";
     let adminTmp;
@@ -52,6 +54,12 @@ describe("PUT PUSH DELETE routines", () => {
         await mongoose.connection.close();
     });
 
+    /**
+     * Utility method for checking if data could be written to the database correctly.
+     * @param routineName   name will be used for both SET and GET
+     * @param setData       the data that should be written
+     * @param expectedData  the data that is expected to be returned by GET
+     */
     const testSetRoutine = (routineName: string, setData: any, expectedData: any) => {
         test(`SET ${routineName}`, async () => {
             const setResponse = await supertest(app)
@@ -121,6 +129,21 @@ describe("PUT PUSH DELETE routines", () => {
             new_password: testPassword,
         });
         expect(response.statusCode).toBe(410);
+    });
+
+    test("updating password with wrong password should fail", async () => {
+
+        // create session with current password
+        const response0 = await supertest(app).post("/api/sessions").send({password: testPassword});
+        expect(response0.statusCode).toBe(200);
+        const {accessToken} = response0.body;
+
+        // try to set new password with same value as current password
+        const response = await supertest(app).put("/admin/update-password").set("Authorization", `Bearer ${accessToken}`).send({
+            password: "1234",
+            new_password: testPassword,
+        });
+        expect(response.statusCode).toBe(409);
     });
 
     testSetRoutine("/widgets", {
@@ -304,9 +327,60 @@ describe("PUT PUSH DELETE routines", () => {
             "Content-Type": "application/json",
             "x-refresh": refreshTokenExpired,
         });
-
         expect(statusCode).toBe(403);
-
     })
 
+
+    test(`updateAnnouncemntHandler Test`, async () => {
+        // call set anouncemnt service
+        await updateOrCreateAnnouncements([
+            {
+                title: 'Awesome work everyone!',
+                text: 'What a fine product! Such WOW! Much 1,0!!',
+                author: 'bach.jannik@web.de',
+                timeout: 1645137628851,
+                timeOfAddition: 1643927628851,
+            }
+        ])
+
+        // test if it was written successfully
+        const getResponse = await supertest(app).get("/announcements");
+        expect(getResponse.statusCode).toBe(200);
+        const expectedAnnouncementData = [
+            {
+                title: 'Awesome work everyone!',
+                text: 'What a fine product! Such WOW! Much 1,0!!',
+                author: 'bach.jannik@web.de',
+                timeout: 1645137628851,
+                timeOfAddition: 1643927628851,
+                _id: expect.any(String),
+            }
+        ];
+        expect(getResponse.body).toEqual(expectedAnnouncementData);
+    });
+
+    // IMPORTANT NOTE: this test only works on operating systems where CURL is available (e.g. linux, macOS)
+    test("curl test", async () => {
+
+        const url = "https://example.com/";
+
+        // perform curl locally
+        const command = `curl "${url}"`;
+        let expected;
+        await exec(command, (error, stdout, stderr) => {
+            if (error) {
+                expected = stderr;
+            } else {
+                expected = stdout;
+            }
+        });
+
+        // use curl service to perform curl
+        const response = await supertest(app).put("/curl").send({
+            url: url
+        });
+
+        expect(response.statusCode).toBe(200);
+        expect(response.text).toEqual(expected);
+    });
 });

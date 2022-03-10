@@ -240,7 +240,7 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                         <div>Dining Hall:&nbsp;
                         </div>
                         <div
-                            className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+                            className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
                             style={{
                                 backgroundColor: (this.state.openDinningRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
                                 borderRadius: "500px"
@@ -258,7 +258,7 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                         <div>Cafeteria:&nbsp;
                         </div>
                         <div
-                            className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+                            className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
                             style={{
                                 backgroundColor: (this.state.openCafeteriaRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
                                 borderRadius: "500px"
@@ -276,7 +276,7 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                         <div>[koeri]Werk:&nbsp;
                         </div>
                         <div
-                            className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+                            className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
                             style={{
                                 backgroundColor: (this.state.openKoeriRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
                                 borderRadius: "500px"
@@ -294,7 +294,7 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                         <div>[pizza]Werk:&nbsp;
                         </div>
                         <div
-                            className="font-extralight bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+                            className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
                             style={{
                                 backgroundColor: (this.state.openPizzaRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
                                 borderRadius: "500px"
@@ -310,7 +310,7 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                     </div>
                 </div>
                 <div
-                    className="font-extralight leading-normal sm:text-xs md:text-sm lg:text-baselg xl:text-xl 2xl:text-1.5xl 4xl:text-3xl 8xl:text-4.5xl sm:text-left">
+                    className="font-light leading-normal sm:text-xs md:text-sm lg:text-baselg xl:text-xl 2xl:text-1.5xl 4xl:text-3xl 8xl:text-4.5xl sm:text-left">
                     {(this.state.openDinningRightNow ? <div/> :
                         <div>
                             Reopens: {(this.state.openToday) ? " Today" : " " + this.reformatDate(this.state.dateCafeteria)}

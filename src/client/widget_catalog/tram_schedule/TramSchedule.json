@@ -7,5 +7,5 @@
   "URL_STOP_SEARCH_BEFORE_STOP": "https://live.kvv.de/webapp/stops/byname/",
   "URL_STOP_SEARCH_AFTER_STOP": "?key=",
   "DEFAULT_ITEM_COUNT": 4,
-  "DEFAULT_STOP_NAME": "Hauptfriedhof"
+  "DEFAULT_STOP_ID": "HFR"
 }

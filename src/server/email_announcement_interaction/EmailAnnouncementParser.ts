@@ -3,7 +3,7 @@ import {IMailObject} from "mail-listener-typescript";
 import {Announcement} from "../../shared/values/Announcement";
 import * as emailValidator from "email-validator";
 import {AnnouncementAuthorError} from "../announcement_management/AnnouncementAuthorError";
-import {newAnnouncement} from "../../tests/unit/server/util/newAnnouncement";
+import {newAnnouncement} from "./newAnnouncement";
 
 /**
  * This class is used to parse IMailObjects parsed from mails to instances of Announcement.

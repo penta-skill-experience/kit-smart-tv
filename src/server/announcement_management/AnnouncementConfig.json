@@ -1,4 +1,10 @@
 {
   "DEFAULT_ANNOUNCEMENT_TIMEOUT": 1210000000,
-  "ADMINS": []
+  "ADMINS": [
+    "bakr.sikal@kit.edu",
+    "georgios.zervakis@kit.edu",
+    "om.prakash@kit.edu",
+    "faeze.faghih@kit.edu",
+    "heba.khdr@kit.edu"
+  ]
 }

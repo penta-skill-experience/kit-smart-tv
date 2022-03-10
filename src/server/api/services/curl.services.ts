@@ -1,5 +1,5 @@
 import {DocumentDefinition} from "mongoose";
-import {KvvDocument} from "../models/kvv.model";
+import {CurlDocument} from "../models/curl.model";
 import {exec} from "child_process";
 
 /**
@@ -13,11 +13,11 @@ const allowedPlatforms = [
 
 const runningOnCorrectPlatform: boolean = allowedPlatforms.includes(process.platform);
 
-export function putKvv(input: DocumentDefinition<KvvDocument>): Promise<string> {
-    return runKvvCommand(input.url.toString());
+export function putCurl(input: DocumentDefinition<CurlDocument>): Promise<string> {
+    return runCurlCommand(input.url.toString());
 }
 
-function runKvvCommand(url: string): Promise<string> {
+function runCurlCommand(url: string): Promise<string> {
     return new Promise<string>((resolve, reject) => {
         if (runningOnCorrectPlatform) {
             const command = `curl "${url}"`;
@@ -30,7 +30,7 @@ function runKvvCommand(url: string): Promise<string> {
             });
         } else {
             reject(`Server platform is "${process.platform}", `
-                + `but must be one of ${JSON.stringify(allowedPlatforms)} to support accessing the KVV API.`);
+                + `but must be one of ${JSON.stringify(allowedPlatforms)} to support the "curl" command.`);
         }
     });
 }

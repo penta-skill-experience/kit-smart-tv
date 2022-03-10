@@ -1,6 +1,6 @@
 import * as AnnouncementConfig from "../../../../server/announcement_management/AnnouncementConfig.json";
 import {AnnouncementAuthorError} from "../../../../server/announcement_management/AnnouncementAuthorError";
-import {newAnnouncement} from "../util/newAnnouncement";
+import {newAnnouncement} from "../../../../server/email_announcement_interaction/newAnnouncement";
 
 const announcementTitle = "HelloWorld";
 const announcementAuthor = "john.smith@example.com";

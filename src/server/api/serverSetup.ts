@@ -10,19 +10,7 @@ import {connect} from "./utils/conntectDb";
 export function serverSetup(dbUri: string): https.Server {
     const mail = new AnnouncementMailListener;
     mail.createMailListener();
-
-    const port = config.port;
-
     const app = createServer();
-
-    app.use(cors());
-
-
-    app.use("/",
-        express.static(path.resolve(__dirname, "..", "display_website")));
-    app.use("/admin-interface",
-        express.static(path.resolve(__dirname, "..", "config_website")));
-
     const sslServer = https.createServer(
         {
             key: process.env.HTTPS_KEY,
@@ -31,9 +19,9 @@ export function serverSetup(dbUri: string): https.Server {
         app
     );
 
-    sslServer.listen(port, async () => {
+    sslServer.listen(config.port, async () => {
         await connect(dbUri);
-        console.log(`this app is running at https://localhost:${port}`)
+        console.log(`this app is running at https://localhost:${config.port}`)
     });
 
     return sslServer;

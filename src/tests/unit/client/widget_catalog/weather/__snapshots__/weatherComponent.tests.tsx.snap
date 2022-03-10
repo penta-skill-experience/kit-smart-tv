@@ -32,7 +32,7 @@ exports[`Weather widget Snapshots Weather widget test 1`] = `
     >
       Precipitation: 
       <span
-        className="font-medium sm:text-sm xl:text-lg 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl sm:text-left"
+        className="font-medium sm:text-xs xl:text-lg 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl sm:text-left"
       >
         0
       </span>
@@ -43,7 +43,7 @@ exports[`Weather widget Snapshots Weather widget test 1`] = `
     >
       Humidity: 
       <span
-        className="font-medium sm:text-sm xl:text-lg 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl sm:text-left"
+        className="font-medium sm:text-xs xl:text-lg 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl sm:text-left"
       >
         71
       </span>
@@ -54,7 +54,7 @@ exports[`Weather widget Snapshots Weather widget test 1`] = `
     >
       Wind: 
       <span
-        className="font-medium sm:text-sm xl:text-lg 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl sm:text-left"
+        className="font-medium sm:text-xs xl:text-lg 2xl:text-2xl 4xl:text-3xl 8xl:text-5xl sm:text-left"
       >
         9
       </span>

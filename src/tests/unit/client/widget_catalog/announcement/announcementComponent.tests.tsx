@@ -1,6 +1,6 @@
 import React from "react";
 import {VerifiedUser} from "../../../../../shared/values/VerifiedUser";
-import {newAnnouncement} from "../../../server/util/newAnnouncement";
+import {newAnnouncement} from "../../../../../server/email_announcement_interaction/newAnnouncement";
 import {
     AnnouncementPersistenceBackend
 } from "../../../../../shared/persistence/announcements/AnnouncementPersistenceBackend";

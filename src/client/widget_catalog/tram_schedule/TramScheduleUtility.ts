@@ -16,7 +16,7 @@ export class TramScheduleUtility {
                     + TramScheduleConfig.API_KEY
             })
         };
-        return fetch(`${config.DOMAIN}/kvv`, requestOptions);
+        return fetch(`${config.DOMAIN}/curl`, requestOptions);
     }
 
     static requestDepartureData(stopId: string): Promise<Response> {
@@ -32,6 +32,21 @@ export class TramScheduleUtility {
                     + TramScheduleConfig.API_KEY
             })
         };
-        return fetch(`${config.DOMAIN}/kvv`, requestOptions);
+        return fetch(`${config.DOMAIN}/curl`, requestOptions);
+    }
+
+    static requestStopName(stopId: string): Promise<string> {
+        return new Promise<string>((resolve, reject) => {
+            this.requestDepartureData(stopId)
+                .then((value: Response) => value.json().catch(reason => reject(reason)))
+                .then(data => {
+                    if (data) {
+                        resolve(data["stopName"]);
+                    } else {
+                        reject(`No data returned by KVV API for stop ID "${stopId}"`);
+                    }
+                })
+                .catch(reason => reject(reason));
+        });
     }
 }

@@ -8,6 +8,7 @@ import toJson from "enzyme-to-json";
 import {RssFeedDisplayComponent} from "../../../../../client/widget_catalog/rss_feed/RssFeedDisplayComponent";
 import * as RSSFeedWidgetConfig from "../../../../../client/widget_catalog/rss_feed/RSSFeedWidget.json";
 import fetchMock from "jest-fetch-mock";
+import {RssFeedConfigComponent} from "../../../../../client/widget_catalog/rss_feed/RssFeedConfigComponent";
 fetchMock.enableMocks();
 
 const responseMock = jest.spyOn(Response.prototype, "json");
@@ -85,6 +86,11 @@ describe("RSS-Feed Snapshots", () => {
         expect(toJson(wrapper)).toMatchSnapshot();
     });
 
+    test("RSS-Feed Config without content", async () => {
+        const wrapper = shallow(<RssFeedConfigComponent config={RSSFeedWidgetConfig.URL}/>);
+        await new Promise(process.nextTick);
+        expect(toJson(wrapper)).toMatchSnapshot();
+    });
     afterEach(() => {
         jest.restoreAllMocks();
     });

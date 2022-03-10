@@ -5,12 +5,12 @@ exports[`time Component Snapshots time component Snapshot time 1`] = `
   className="flex-col"
 >
   <div
-    className="font-light sm:text-3xl md:text-4xl lg:text-6xl xl:text-7xl 2xl:text-8xl 4xl:text-9xl 8xl:text-10xl sm:text-left"
+    className="font-light sm:text-3xl md:text-4xl lg:text-6xl xl:text-7xl 2xl:text-8xl 8xl:text-10xl sm:text-left sm:-mt-1 md:-mt-2 lg:-mt-3 xl:-mt-5 2xl:-mt-6 4xl:-mt-8 8xl:-mt-12"
   >
     11:23
   </div>
   <div
-    className="sm:text-xs md:text-sm lg:text-base lg:text-xl 2xl:text-2xl 4xl:text-4xl 8xl:text-5xl sm:text-left sm:-mt-1 md:-mt-2 lg:-mt-3 xl:-mt-5 2xl:-mt-6 4xl:-mt-8 8xl:-mt-10"
+    className="sm:text-xs md:text-sm lg:text-base lg:text-xl 2xl:text-2xl 4xl:text-4xl 8xl:text-5xl sm:text-left sm:-mt-1 md:-mt-2 lg:-mt-3 xl:-mt-5 2xl:-mt-6 4xl:-mt-8 8xl:-mt-12"
   >
     Thursday
     , 

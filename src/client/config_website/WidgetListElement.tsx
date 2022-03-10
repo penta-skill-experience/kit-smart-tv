@@ -96,9 +96,9 @@ export function DeleteDialogComponent({id ,handleDeleteWidget}) {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button variant="outlined" onClick={handleDisagree}>Disagree</Button>
-                    <Button variant="outlined" onClick={handleAgree}>
-                        Agree
+                    <Button variant="outlined" onClick={handleDisagree}>Cancel</Button>
+                    <Button variant="contained" onClick={handleAgree}>
+                        Delete
                     </Button>
                 </DialogActions>
             </Dialog>
