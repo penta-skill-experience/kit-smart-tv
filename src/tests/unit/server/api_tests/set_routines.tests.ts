@@ -124,6 +124,21 @@ describe("PUT PUSH DELETE routines", () => {
         expect(response.statusCode).toBe(410);
     });
 
+    test("updating password with wrong password should fail", async () => {
+
+        // create session with current password
+        const response0 = await supertest(app).post("/api/sessions").send({password: testPassword});
+        expect(response0.statusCode).toBe(200);
+        const {accessToken} = response0.body;
+
+        // try to set new password with same value as current password
+        const response = await supertest(app).put("/admin/update-password").set("Authorization", `Bearer ${accessToken}`).send({
+            password: "1234",
+            new_password: testPassword,
+        });
+        expect(response.statusCode).toBe(409);
+    });
+
     testSetRoutine("/widgets", {
             widgetDataList: [
                 {
