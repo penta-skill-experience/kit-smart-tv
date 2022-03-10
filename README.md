@@ -1,45 +1,50 @@
 # kit-smart-tv
 
-This is a server application hosting a dashboard with (to KIT ITEC) relevant information on localhost. The dashboard is meant to be dispalyed on big screens. People passing by the screen can read the information.
+This is a server application hosting a dashboard. The dashboard is meant to be dispalyed on big screens where people passing by can read the information.
 
-# System Requirements
-The server has to run on a linux or darwin (macOS) system. (Windows is possible, but some widgets will not fetch the data correctly if the server is hosted on windows.)
-You need either a locally running instance of mongoDB or a cloud based one.
-To run the server you need "node" and "npm" installed on the machine.
+# Server Deployment
 
-# How To Run This Project Locally
-Checkout the project using `git clone penta-skill-experience/kit-smart-tv`.
+Requirements:
+1. The server has to run on a linux or darwin (macOS) system. (Windows is possible, but some widgets will not fetch the data correctly if the server is hosted on windows.)
+2. `curl` must be installed on your machine.
+3. NodeJS version 16 or higher must be installed on your machine.<br>
+   Use `node --version` to check that your NodeJS version is 16 or higher. Version 8 will not work!
+   On Ubuntu, higher versions of NodeJS cannot be installed with `apt-get`.
+   Use [nvm](https://github.com/nvm-sh/nvm#installing-and-updating) to install NodeJS instead.
+4. You need an instance of mongoDB. Either locally or cloud-based.<br>
+   If you use a cloud-based instance of mongoDB, make sure that your machine is able to reach the required URL and port.
+   For example, if you use [Atlas](https://www.mongodb.com/atlas/database), your machine [needs to be able to reach port 27017](https://docs.atlas.mongodb.com/troubleshoot-connection/#attempting-to-connect-to-a-database-deployment-from-behind-a-firewall).
 
-Navigate to the root directory of the project and run `npm install` once to install all dependencies.
-
-You also need to add a file called `.env` in your project root directory.
-This file must contain the following parameters:
-```
-ACCESS_TOKEN_PUBLIC_KEY=""
-ACCESS_TOKEN_PRIVATE_KEY=""
-REFRESH_TOKEN_PRIVATE_KEY=""
-REFRESH_TOKEN_PUBLIC_KEY=""
-MONGO_URI=""
-ANNOUNCEMENT_EMAIL_ACCOUNT_PW=""
-HTTPS_KEY=""
-HTTPS_CERT=""
-```
-
-Build the project:
-```sh
-npm run build
-```
-This generates a `dist` folder with executable JavaScript under the project root.
-
-Start the server:
-```sh
-node ./dist/server/server.js
-```
-This will print a URL to the console under which the dashboard is hosted.
-
-The dashboard is accessible via <https://localhost:1337>.
-
-The admin interface is accessible via <https://localhost:1337/admin-interface>.
+Deployment:
+1. Checkout the project:
+   ```sh
+   git clone penta-skill-experience/kit-smart-tv
+   ```
+2. Navigate to the root directory of the project and run `npm install` once to install all dependencies.
+3. Make sure that the `DOMAIN` value in `src/shared/persistence/persistence.config.json` matches the IP address of your server.
+   For example, if you want to access your server via `localhost`, use `https://localhost:1337`.
+4. You also need to add a file called `.env` in your project root directory.
+    This file must contain the following parameters:
+    ```
+    ACCESS_TOKEN_PUBLIC_KEY=""
+    ACCESS_TOKEN_PRIVATE_KEY=""
+    REFRESH_TOKEN_PRIVATE_KEY=""
+    REFRESH_TOKEN_PUBLIC_KEY=""
+    MONGO_URI=""
+    ANNOUNCEMENT_EMAIL_ACCOUNT_PW=""
+    HTTPS_KEY=""
+    HTTPS_CERT=""
+    ```
+5. Build the project:
+    ```sh
+    npm run build
+    ```
+    This generates a `dist` folder with executable JavaScript under the project root.
+6. Start the server:
+    ```sh
+    node ./dist/server/server.js
+    ```
+5. The dashboard is now accessible under your server's IP address with port `1337`, via HTTPS.
 
 # Optional: Use Own MongoDB Instance
 
