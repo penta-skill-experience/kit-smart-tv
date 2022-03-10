@@ -9,6 +9,7 @@ import {createSession} from "../../../../server/api/services/session.service";
 import {signJwt} from "../../../../server/api/utils/jwt.utils";
 import config from "../../../../server/api/config.json";
 import {updateOrCreateAnnouncements} from "../../../../server/api/services/announcements.services";
+import {exec} from "child_process";
 
 
 describe("PUT PUSH DELETE routines", () => {
@@ -53,6 +54,12 @@ describe("PUT PUSH DELETE routines", () => {
         await mongoose.connection.close();
     });
 
+    /**
+     * Utility method for checking if data could be written to the database correctly.
+     * @param routineName   name will be used for both SET and GET
+     * @param setData       the data that should be written
+     * @param expectedData  the data that is expected to be returned by GET
+     */
     const testSetRoutine = (routineName: string, setData: any, expectedData: any) => {
         test(`SET ${routineName}`, async () => {
             const setResponse = await supertest(app)
@@ -352,4 +359,28 @@ describe("PUT PUSH DELETE routines", () => {
         expect(getResponse.body).toEqual(expectedAnnouncementData);
     });
 
+    // IMPORTANT NOTE: this test only works on operating systems where CURL is available (e.g. linux, macOS)
+    test("curl test", async () => {
+
+        const url = "https://example.com/";
+
+        // perform curl locally
+        const command = `curl "${url}"`;
+        let expected;
+        await exec(command, (error, stdout, stderr) => {
+            if (error) {
+                expected = stderr;
+            } else {
+                expected = stdout;
+            }
+        });
+
+        // use curl service to perform curl
+        const response = await supertest(app).put("/curl").send({
+            url: url
+        });
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toEqual(expected);
+    });
 });
