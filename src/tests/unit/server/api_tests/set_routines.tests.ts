@@ -8,6 +8,7 @@ import {Express} from "express";
 import {createSession} from "../../../../server/api/services/session.service";
 import {signJwt} from "../../../../server/api/utils/jwt.utils";
 import config from "../../../../server/api/config.json";
+import {updateOrCreateAnnouncements} from "../../../../server/api/services/announcements.services";
 
 
 describe("PUT PUSH DELETE routines", () => {
@@ -306,4 +307,34 @@ describe("PUT PUSH DELETE routines", () => {
         });
         expect(statusCode).toBe(403);
     })
+
+
+    test(`updateAnnouncemntHandler Test`, async () => {
+        // call set anouncemnt service
+        await updateOrCreateAnnouncements([
+            {
+                title: 'Awesome work everyone!',
+                text: 'What a fine product! Such WOW! Much 1,0!!',
+                author: 'bach.jannik@web.de',
+                timeout: 1645137628851,
+                timeOfAddition: 1643927628851,
+            }
+        ])
+
+        // test if it was written successfully
+        const getResponse = await supertest(app).get("/announcements");
+        expect(getResponse.statusCode).toBe(200);
+        const expectedAnnouncementData = [
+            {
+                title: 'Awesome work everyone!',
+                text: 'What a fine product! Such WOW! Much 1,0!!',
+                author: 'bach.jannik@web.de',
+                timeout: 1645137628851,
+                timeOfAddition: 1643927628851,
+                _id: expect.any(String),
+            }
+        ];
+        expect(getResponse.body).toEqual(expectedAnnouncementData);
+    });
+
 });
