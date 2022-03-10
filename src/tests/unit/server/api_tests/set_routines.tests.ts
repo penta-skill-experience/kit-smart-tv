@@ -379,8 +379,6 @@ describe("PUT PUSH DELETE routines", () => {
         const response = await supertest(app).put("/curl").send({
             url: url
         });
-        console.log("pip");
-        console.log(response);
 
         expect(response.statusCode).toBe(200);
         expect(response.text).toEqual(expected);
