@@ -38,7 +38,7 @@ export class TramScheduleUtility {
     static requestStopName(stopId: string): Promise<string> {
         return new Promise<string>((resolve, reject) => {
             this.requestDepartureData(stopId)
-                .then((value: Response) => value.json())
+                .then((value: Response) => value.json().catch(reason => reject(reason)))
                 .then(data => {
                     if (data) {
                         resolve(data["stopName"]);
