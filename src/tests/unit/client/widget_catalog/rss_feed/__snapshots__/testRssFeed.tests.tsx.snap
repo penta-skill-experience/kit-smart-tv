@@ -1,5 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`RSS-Feed Snapshots RSS-Feed Config without content 1`] = `
+<div>
+  <ForwardRef(DialogTitle)>
+    RSS Feed Settings
+  </ForwardRef(DialogTitle)>
+  <ForwardRef(DialogContent)>
+    <br />
+    <ForwardRef(TextField)
+      label="RSS Feed URL"
+      onChange={[Function]}
+    />
+  </ForwardRef(DialogContent)>
+</div>
+`;
+
 exports[`RSS-Feed Snapshots RSS-Feed Snapshot parse successful 1`] = `
 <div
   className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl"
