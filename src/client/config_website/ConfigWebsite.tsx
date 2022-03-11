@@ -99,7 +99,13 @@ export function ConfigWebsite({initialLogInStatus}) {
 
     const handleColorSchemeChange = (event: React.MouseEvent<HTMLElement>, newColorScheme: string | null) => {
         setColorScheme(newColorScheme);
-        setSelectedBackground('');
+        if (newColorScheme === 'light') {
+            setSelectedBackground('https://images.pexels.com/photos/8849653/pexels-photo-8849653.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+        } else  if (newColorScheme === 'dark') {
+            setSelectedBackground('https://images.pexels.com/photos/1809644/pexels-photo-1809644.jpeg');
+        } else {
+            setSelectedBackground('');
+        }
     };
 
     const handleFontSizeChange = (
