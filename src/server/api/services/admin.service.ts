@@ -4,7 +4,7 @@ import {AdminModel, AdminInput} from "../models/admin.model";
 
 export async function createAdmin(input: DocumentDefinition<AdminInput>) { // input: DocumentDefinition<AdminInput> //input: CreateAdminInput["body"]
     await AdminModel.create(input);
-    const admin =  await AdminModel.findOne({name: "admin"});
+    const admin = await AdminModel.findOne({name: "admin"});
     return omit(admin.toJSON(), "password");
 }
 

@@ -1,12 +1,12 @@
-import { Request, Response } from "express";
+import {Request, Response} from "express";
 import config from "../config.json";
 import {
     createSession, deleteSession,
     findSession,
     updateSession,
 } from "../services/session.service";
-import { validatePassword } from "../services/admin.service";
-import { signJwt } from "../utils/jwt.utils";
+import {validatePassword} from "../services/admin.service";
+import {signJwt} from "../utils/jwt.utils";
 
 export async function createAdminSessionHandler(req: Request, res: Response) {
     // Validate the admin's password
@@ -15,9 +15,9 @@ export async function createAdminSessionHandler(req: Request, res: Response) {
     if (!admin) {
         return res.status(401).send("Invalid password");
     }
-    const session_previously_started = await findSession({ admin: admin._id });
-    if(session_previously_started) {
-        await deleteSession({ _id: session_previously_started._id });
+    const session_previously_started = await findSession({admin: admin._id});
+    if (session_previously_started) {
+        await deleteSession({_id: session_previously_started._id});
     }
     // create a session
     const session = await createSession(admin._id, req.get("user-agent") || "");
@@ -25,29 +25,29 @@ export async function createAdminSessionHandler(req: Request, res: Response) {
     // create an access token
 
     const accessToken = signJwt(
-        { ...admin, session: session._id },
+        {...admin, session: session._id},
         "accessTokenPrivateKey",
-        { expiresIn: config.accessTokenTtl} // 15 minutes,
+        {expiresIn: config.accessTokenTtl} // 15 minutes,
     );
 
     // create a refresh token
     const refreshToken = signJwt(
-        { ...admin, session: session._id },
+        {...admin, session: session._id},
         "refreshTokenPrivateKey",
-        { expiresIn: config.refreshTokenTtl} // 1y
+        {expiresIn: config.refreshTokenTtl} // 1y
     );
 
     // return access & refresh tokens
 
-    return res.send({ accessToken, refreshToken });
+    return res.send({accessToken, refreshToken});
 }
 
 export async function getSessionHandler(req: Request, res: Response) {
     const sessionId = res.locals.admin.session;
 
-    const session = await findSession({ _id: sessionId, valid: true });
-    await updateSession({ _id: sessionId }, { valid: true });
-    const valid_until = new Date(Date.now() + config.sessionTtlInMinutes*60*1000);
+    const session = await findSession({_id: sessionId, valid: true});
+    await updateSession({_id: sessionId}, {valid: true});
+    const valid_until = new Date(Date.now() + config.sessionTtlInMinutes * 60 * 1000);
 
     return res.send({session, valid_until});
 }
@@ -55,7 +55,7 @@ export async function getSessionHandler(req: Request, res: Response) {
 export async function deleteSessionHandler(req: Request, res: Response) {
     const sessionId = res.locals.admin.session;
 
-    await deleteSession({ _id: sessionId });
+    await deleteSession({_id: sessionId});
 
     return res.send({
         accessToken: null,

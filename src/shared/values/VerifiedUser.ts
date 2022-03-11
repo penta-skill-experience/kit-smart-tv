@@ -8,9 +8,6 @@ export class VerifiedUser {
 
     private static readonly INVALID_EMAIL_ERROR_MSG = "Error, the given email was not a valid email-address."
 
-    private _email: string;
-    private _name: string;
-
     /**
      * Creates a verified user with the given email and the given name
      * @param email the given email
@@ -26,9 +23,13 @@ export class VerifiedUser {
         this._name = name;
     }
 
+    private _email: string;
+
     get email(): string {
         return this._email;
     }
+
+    private _name: string;
 
     get name(): string {
         return this._name;

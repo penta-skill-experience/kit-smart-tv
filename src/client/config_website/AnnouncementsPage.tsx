@@ -8,7 +8,16 @@ import {AdminStatePersistence} from "../../shared/persistence/AdminStatePersiste
 
 const adminStatePersistence = new AdminStatePersistence();
 
-export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNameChange, handleAddMail, handleDeleteUser, handleVerUserList, children}) => {
+export const AnnouncementsPage = ({
+                                      mailList,
+                                      verUser,
+                                      handleMailChange,
+                                      handleNameChange,
+                                      handleAddMail,
+                                      handleDeleteUser,
+                                      handleVerUserList,
+                                      children
+                                  }) => {
     const [open, setOpen] = React.useState(false);
     const [sessionBar, setSessionBar] = React.useState(false);
     const [invalidMailBar, setInvalidMailBar] = React.useState(false);
@@ -27,9 +36,10 @@ export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNa
         setEmptyErrorBar(false);
     }
 
-    return(
+    return (
         <div>
-            <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
+            <Grid container spacing={2} direction="row" justifyContent="flex-start"
+                  alignItems="center">
                 <Grid item xs={12}>
                     <h1>Add e-mail as verified: </h1>
                 </Grid>
@@ -64,21 +74,21 @@ export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNa
                         Add
                     </Button>
                     <Snackbar
-                        anchorOrigin={{vertical:'bottom', horizontal:'right'}}
+                        anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
                         open={invalidMailBar}
                         autoHideDuration={2000}
                         onClose={handleClose}
                         message={'E-Mail does not exist'}
                     />
                     <Snackbar
-                        anchorOrigin={{vertical:'bottom', horizontal:'right'}}
+                        anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
                         open={doubleMailBar}
                         autoHideDuration={2000}
                         onClose={handleClose}
                         message={'This E-Mail already exists'}
                     />
                     <Snackbar
-                        anchorOrigin={{vertical:'bottom', horizontal:'right'}}
+                        anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
                         open={emptyErrorBar}
                         autoHideDuration={2000}
                         onClose={handleClose}
@@ -98,7 +108,8 @@ export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNa
                 <Grid item xs={12}>
                     <ul>
                         {mailList.map(item => (
-                            <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
+                            <Grid container spacing={2} direction="row" justifyContent="flex-start"
+                                  alignItems="center">
                                 <Grid item xs={4}>
                                     {item.mail}
                                 </Grid>
@@ -106,7 +117,9 @@ export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNa
                                     {item.name}
                                 </Grid>
                                 <Grid item xs={1}>
-                                    <Button onClick={() => {handleDeleteUser(item)}}>
+                                    <Button onClick={() => {
+                                        handleDeleteUser(item)
+                                    }}>
                                         <DeleteIcon/>
                                     </Button>
                                 </Grid>
@@ -124,14 +137,14 @@ export const AnnouncementsPage = ({mailList, verUser, handleMailChange, handleNa
                         Save Changes
                     </Button>
                     <Snackbar
-                        anchorOrigin={{vertical:'bottom', horizontal:'right'}}
+                        anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
                         open={open}
                         autoHideDuration={2000}
                         onClose={handleClose}
                         message={'Verified Users Saved'}
                     />
                     <Snackbar
-                        anchorOrigin={{vertical:'bottom', horizontal:'right'}}
+                        anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
                         open={sessionBar}
                         autoHideDuration={2000}
                         onClose={handleClose}

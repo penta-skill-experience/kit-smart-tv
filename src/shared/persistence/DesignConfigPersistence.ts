@@ -48,7 +48,7 @@ export class DesignConfigPersistence {
             .then((value: Response) => value.json());
     }
 
-    setConfigData(configData : ConfigData) {
+    setConfigData(configData: ConfigData) {
 
         const headers = new Headers();
         headers.append("x-refresh", sessionStorage.getItem('refreshToken'));

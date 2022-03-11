@@ -8,7 +8,14 @@ import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-export const LogInPage = ({logInInput, handleInput, visible, handleLogIn, handleClickShowPassword, children}) => {
+export const LogInPage = ({
+                              logInInput,
+                              handleInput,
+                              visible,
+                              handleLogIn,
+                              handleClickShowPassword,
+                              children
+                          }) => {
 
 
     return (

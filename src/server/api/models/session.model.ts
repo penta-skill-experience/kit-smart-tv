@@ -1,5 +1,5 @@
 import * as mongoose from "mongoose";
-import { AdminDocument } from "./admin.model";
+import {AdminDocument} from "./admin.model";
 
 export interface SessionDocument extends mongoose.Document {
     admin: AdminDocument["_id"];
@@ -11,9 +11,9 @@ export interface SessionDocument extends mongoose.Document {
 
 const sessionSchema = new mongoose.Schema(
     {
-        admin: { type: mongoose.Schema.Types.ObjectId, ref: "Admin" },
-        valid: { type: Boolean, default: true },
-        userAgent: { type: String },
+        admin: {type: mongoose.Schema.Types.ObjectId, ref: "Admin"},
+        valid: {type: Boolean, default: true},
+        userAgent: {type: String},
     },
     {
         timestamps: true,

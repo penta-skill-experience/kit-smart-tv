@@ -7,12 +7,6 @@ export class RotatorComponent extends React.Component<any, any> {
 
     private intervalHandle;
 
-    private pageSwitch() {
-        this.setState({
-            index: (this.state.index + 1) % React.Children.count(this.props.children)
-        });
-    }
-
     constructor(props) {
         super(props);
         this.state = {
@@ -34,8 +28,10 @@ export class RotatorComponent extends React.Component<any, any> {
             {
                 multipleChildren ?
                     <Carousel showIndicators={true} showStatus={false} showArrows={false} autoPlay
-                              showThumbs={false} transitionTime={RotatorComponentConfig.SWITCH_SPEED}
-                              interval={RotatorComponentConfig.SWITCH_RATE} infiniteLoop={true} dynamicHeight={false}>
+                              showThumbs={false}
+                              transitionTime={RotatorComponentConfig.SWITCH_SPEED}
+                              interval={RotatorComponentConfig.SWITCH_RATE} infiniteLoop={true}
+                              dynamicHeight={false}>
                         {
                             React.Children.map(this.props.children, child =>
                                 <div>
@@ -46,5 +42,11 @@ export class RotatorComponent extends React.Component<any, any> {
                     : <div>{this.props.children}</div>
             }
         </div>
+    }
+
+    private pageSwitch() {
+        this.setState({
+            index: (this.state.index + 1) % React.Children.count(this.props.children)
+        });
     }
 }

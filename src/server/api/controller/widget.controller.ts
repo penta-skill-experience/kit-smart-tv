@@ -14,11 +14,10 @@ export async function updateWidgetDataHandler(req: Request, res: Response) {
 }
 
 
-export async function getWidgetDataHandler(req: Request, res: Response){
+export async function getWidgetDataHandler(req: Request, res: Response) {
     try {
         return res.send(await getWidgetData());
-    }
-    catch(e: any){
+    } catch (e: any) {
         return res.status(501).send(`could not get widget data: ${e.message}`);
     }
 }

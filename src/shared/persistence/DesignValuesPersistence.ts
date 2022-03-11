@@ -6,7 +6,7 @@ import {ValuesData} from "../interfaces/interfaces";
 export class DesignValuesPersistence {
 
     getColorSchemeTypes(): Promise<ColorScheme[]> {
-        return new Promise<ColorScheme[]>( (resolve)=>{
+        return new Promise<ColorScheme[]>((resolve) => {
             this.getValuesData().then(values => resolve(values.colorSchemes));
         });
 
@@ -18,7 +18,7 @@ export class DesignValuesPersistence {
 
 
     getFontSizes(): Promise<FontSize[]> {
-        return new Promise<FontSize[]>( (resolve)=>{
+        return new Promise<FontSize[]>((resolve) => {
             this.getValuesData().then(values => resolve(values.fontSizes))
         });
     }

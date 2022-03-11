@@ -21,7 +21,7 @@ export interface AnnouncementCommand {
  */
 export class AnnouncementCommandError extends Error {
 
-    constructor(msg : string) {
+    constructor(msg: string) {
         super(msg);
 
         Object.setPrototypeOf(this, AnnouncementCommandError.prototype);
@@ -36,7 +36,7 @@ export class AnnouncementCommandError extends Error {
  */
 export class IllegalAnnouncementTextForCommandError extends Error {
 
-    constructor(msg : string) {
+    constructor(msg: string) {
         super(msg);
 
         Object.setPrototypeOf(this, IllegalAnnouncementTextForCommandError.prototype);
@@ -48,7 +48,7 @@ export class IllegalAnnouncementTextForCommandError extends Error {
  *
  * @param announcements the supplied announcements
  */
-export function getAnnouncementTitles(announcements: Announcement[]) : string[] {
+export function getAnnouncementTitles(announcements: Announcement[]): string[] {
     return announcements.map(announcement => {
         return announcement.title;
     });
@@ -61,8 +61,8 @@ export function getAnnouncementTitles(announcements: Announcement[]) : string[] 
  * @param announcements the supplied announcements
  * @param title the title of the announcement to find
  */
-export function getAnnouncementForTitle(announcements : Announcement[], title : string): Announcement | undefined {
-    let announcementToReturn : Announcement;
+export function getAnnouncementForTitle(announcements: Announcement[], title: string): Announcement | undefined {
+    let announcementToReturn: Announcement;
     announcements.forEach(currentAnnouncement => {
         // there is only ever one announcement for each title, if it exists That announcement is found and stored.
         if (currentAnnouncement.title === title) {

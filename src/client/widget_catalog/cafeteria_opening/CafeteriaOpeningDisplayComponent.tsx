@@ -57,6 +57,102 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
         };
     }
 
+    componentDidMount() {
+        this.setter();
+        setInterval(() => this.setter(), CafeteriaOpeningConfig.REFRESH_RATE);
+    }
+
+    render() {
+        return ((this.state.loadedDinning && this.state.loadedPizza && this.state.loadedKoeri && this.state.loadedCafeteria && this.state.loadedDiningOpen &&
+            this.state.loadedPizzaOpen && this.state.loadedKoeriOpen && this.state.loadedCafeteriaOpen && this.state.loadedDiningOpenDate && this.state.loadedOpen) ?
+            <div className="grid grid-flow-row sm:gap-1 lg:gap-2 xl:gap-3 4xl:gap-4 8xl:gap-5">
+                <div
+                    className="grid grid-flow-row sm:gap-1 lg:gap-2 xl:gap-3 4xl:gap-4 8xl:gap-5 items-center box-border h-fit font-light leading-normal
+                    sm:text-xs md:text-sm lg:text-baselg xl:text-xl 2xl:text-1.5xl 4xl:text-3xl 8xl:text-4.5xl sm:text-left">
+                    <div className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center">
+                        <div>Dining Hall:&nbsp;
+                        </div>
+                        <div
+                            className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+                            style={{
+                                backgroundColor: (this.state.openDinningRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
+                                borderRadius: "500px"
+                            }}>
+                            {(this.state.openDinningRightNow ? "open" : "closed")}
+                        </div>
+                        until
+                        {(this.state.openDinningRightNow ? <div>
+                            {this.getTime(this.state.timesDinning[1])}
+                        </div> : <div>
+                            {this.getTime(this.state.timesDinning[0])}
+                        </div>)}
+                    </div>
+                    <div className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center">
+                        <div>Cafeteria:&nbsp;
+                        </div>
+                        <div
+                            className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+                            style={{
+                                backgroundColor: (this.state.openCafeteriaRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
+                                borderRadius: "500px"
+                            }}>
+                            {(this.state.openCafeteriaRightNow ? "open" : "closed")}
+                        </div>
+                        until
+                        {(this.state.openCafeteriaRightNow ? <div>
+                            {this.getTime(this.state.timesCafeteria[1])}
+                        </div> : <div>
+                            {this.getTime(this.state.timesCafeteria[0])}
+                        </div>)}
+                    </div>
+                    <div className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center">
+                        <div>[koeri]Werk:&nbsp;
+                        </div>
+                        <div
+                            className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+                            style={{
+                                backgroundColor: (this.state.openKoeriRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
+                                borderRadius: "500px"
+                            }}>
+                            {(this.state.openKoeriRightNow ? "open" : "closed")}
+                        </div>
+                        until
+                        {(this.state.openKoeriRightNow ? <div>
+                            {this.getTime(this.state.timesKoeri[1])}
+                        </div> : <div>
+                            {this.getTime(this.state.timesKoeri[0])}
+                        </div>)}
+                    </div>
+                    <div className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center">
+                        <div>[pizza]Werk:&nbsp;
+                        </div>
+                        <div
+                            className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
+                            style={{
+                                backgroundColor: (this.state.openPizzaRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
+                                borderRadius: "500px"
+                            }}>
+                            {(this.state.openPizzaRightNow ? "open" : "closed")}
+                        </div>
+                        until
+                        {(this.state.openPizzaRightNow ? <div>
+                            {this.getTime(this.state.timesPizza[1])}
+                        </div> : <div>
+                            {this.getTime(this.state.timesPizza[0])}
+                        </div>)}
+                    </div>
+                </div>
+                <div
+                    className="font-light leading-normal sm:text-xs md:text-sm lg:text-baselg xl:text-xl 2xl:text-1.5xl 4xl:text-3xl 8xl:text-4.5xl sm:text-left">
+                    {(this.state.openDinningRightNow ? <div/> :
+                        <div>
+                            Reopens: {(this.state.openToday) ? " Today" : " " + this.reformatDate(this.state.dateCafeteria)}
+                        </div>)
+                    }
+                </div>
+            </div> : <div/>)
+    }
+
     private getDateOpening(url: string): Promise<Date> {
         const current = new Date();
         const currentDay = new Date(current.getFullYear(), current.getMonth(), current.getDate());
@@ -197,11 +293,6 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
         });
     }
 
-    componentDidMount() {
-        this.setter();
-        setInterval(() => this.setter(), CafeteriaOpeningConfig.REFRESH_RATE);
-    }
-
     /**
      * assume that dateString is of format YYYY-MM-DD
      */
@@ -227,96 +318,5 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
 
     private getTime(date: Date) {
         return date.toLocaleTimeString("de", {hour: '2-digit', minute: '2-digit'});
-    }
-
-    render() {
-        return ((this.state.loadedDinning && this.state.loadedPizza && this.state.loadedKoeri && this.state.loadedCafeteria && this.state.loadedDiningOpen &&
-            this.state.loadedPizzaOpen && this.state.loadedKoeriOpen && this.state.loadedCafeteriaOpen && this.state.loadedDiningOpenDate &&  this.state.loadedOpen) ?
-            <div className = "grid grid-flow-row sm:gap-1 lg:gap-2 xl:gap-3 4xl:gap-4 8xl:gap-5">
-                <div
-                    className="grid grid-flow-row sm:gap-1 lg:gap-2 xl:gap-3 4xl:gap-4 8xl:gap-5 items-center box-border h-fit font-light leading-normal
-                    sm:text-xs md:text-sm lg:text-baselg xl:text-xl 2xl:text-1.5xl 4xl:text-3xl 8xl:text-4.5xl sm:text-left">
-                    <div className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center">
-                        <div>Dining Hall:&nbsp;
-                        </div>
-                        <div
-                            className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
-                            style={{
-                                backgroundColor: (this.state.openDinningRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
-                                borderRadius: "500px"
-                            }}>
-                            {(this.state.openDinningRightNow ? "open" : "closed")}
-                        </div>
-                        until
-                        {(this.state.openDinningRightNow ? <div>
-                            {this.getTime(this.state.timesDinning[1])}
-                        </div> : <div>
-                            {this.getTime(this.state.timesDinning[0])}
-                        </div>)}
-                    </div>
-                    <div className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center">
-                        <div>Cafeteria:&nbsp;
-                        </div>
-                        <div
-                            className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
-                            style={{
-                                backgroundColor: (this.state.openCafeteriaRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
-                                borderRadius: "500px"
-                            }}>
-                            {(this.state.openCafeteriaRightNow ? "open" : "closed")}
-                        </div>
-                        until
-                        {(this.state.openCafeteriaRightNow ? <div>
-                            {this.getTime(this.state.timesCafeteria[1])}
-                        </div> : <div>
-                            {this.getTime(this.state.timesCafeteria[0])}
-                        </div>)}
-                    </div>
-                    <div className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center">
-                        <div>[koeri]Werk:&nbsp;
-                        </div>
-                        <div
-                            className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
-                            style={{
-                                backgroundColor: (this.state.openKoeriRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
-                                borderRadius: "500px"
-                            }}>
-                            {(this.state.openKoeriRightNow ? "open" : "closed")}
-                        </div>
-                        until
-                        {(this.state.openKoeriRightNow ? <div>
-                            {this.getTime(this.state.timesKoeri[1])}
-                        </div> : <div>
-                            {this.getTime(this.state.timesKoeri[0])}
-                        </div>)}
-                    </div>
-                    <div className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center">
-                        <div>[pizza]Werk:&nbsp;
-                        </div>
-                        <div
-                            className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
-                            style={{
-                                backgroundColor: (this.state.openPizzaRightNow ? this.props.specialBoldFontColor : this.props.specialSubtleFontColor),
-                                borderRadius: "500px"
-                            }}>
-                            {(this.state.openPizzaRightNow ? "open" : "closed")}
-                        </div>
-                        until
-                        {(this.state.openPizzaRightNow ? <div>
-                            {this.getTime(this.state.timesPizza[1])}
-                        </div> : <div>
-                            {this.getTime(this.state.timesPizza[0])}
-                        </div>)}
-                    </div>
-                </div>
-                <div
-                    className="font-light leading-normal sm:text-xs md:text-sm lg:text-baselg xl:text-xl 2xl:text-1.5xl 4xl:text-3xl 8xl:text-4.5xl sm:text-left">
-                    {(this.state.openDinningRightNow ? <div/> :
-                        <div>
-                            Reopens: {(this.state.openToday) ? " Today" : " " + this.reformatDate(this.state.dateCafeteria)}
-                        </div>)
-                    }
-                </div>
-            </div> : <div/>)
     }
 }

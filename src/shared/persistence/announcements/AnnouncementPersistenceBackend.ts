@@ -1,6 +1,9 @@
 import {AnnouncementPersistence} from "./AnnouncementPersistence";
 import {VerifiedUser} from "../../values/VerifiedUser";
-import {getAnnouncements, updateOrCreateAnnouncements} from "../../../server/api/services/announcements.services";
+import {
+    getAnnouncements,
+    updateOrCreateAnnouncements
+} from "../../../server/api/services/announcements.services";
 import {Announcement} from "../../values/Announcement";
 import {getUsers, updateOrCreateUsers} from "../../../server/api/services/users.services";
 import {IVerifiedUser} from "../../values/IVerifiedUser";

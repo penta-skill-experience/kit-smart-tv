@@ -29,15 +29,14 @@ interface PersonalizationPageState {
     loadedDesignState: boolean;
     designValues: ValuesData;
     designConfig: ConfigData;
-    successfulBar:boolean;
-    errorBar:boolean;
-    sessionErrorBar:boolean;
+    successfulBar: boolean;
+    errorBar: boolean;
+    sessionErrorBar: boolean;
 }
 
 const adminStatePersistence = new AdminStatePersistence();
 
 export class PersonalizationPage extends React.Component<PersonalizationPageProps, PersonalizationPageState> {
-
 
 
     constructor(props: Readonly<PersonalizationPageProps> | PersonalizationPageProps) {
@@ -46,9 +45,9 @@ export class PersonalizationPage extends React.Component<PersonalizationPageProp
             loadedDesignState: false,
             designValues: undefined,
             designConfig: undefined,
-            successfulBar:false,
-            errorBar:false,
-            sessionErrorBar:false,
+            successfulBar: false,
+            errorBar: false,
+            sessionErrorBar: false,
         };
     }
 
@@ -56,31 +55,23 @@ export class PersonalizationPage extends React.Component<PersonalizationPageProp
         this.queryDesignState();
     }
 
-    private queryDesignState(): void {
-        new DesignValuesPersistence().getValuesData().then(valuesData => {
-            new DesignConfigPersistence().getConfigData().then(configData => this.setState({
-                loadedDesignState: true,
-                designValues: valuesData,
-                designConfig: configData,
-            }));
-        });
-    }
-
     handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
-        this.setState({successfulBar:false, errorBar:false, sessionErrorBar:false});
+        this.setState({successfulBar: false, errorBar: false, sessionErrorBar: false});
     }
 
     render() {
         return (
             <div>
-                <Grid container spacing={2} direction="row" justifyContent="center" alignItems="center">
+                <Grid container spacing={2} direction="row" justifyContent="center"
+                      alignItems="center">
                     <Grid item xs={12}>
                         <FormControl>
                             <FormLabel>Choose your color scheme:</FormLabel>
-                            <RadioGroup onChange={this.props.handleColorSchemeChange} value={this.props.colorScheme}>
+                            <RadioGroup onChange={this.props.handleColorSchemeChange}
+                                        value={this.props.colorScheme}>
                                 {this.state.loadedDesignState &&
                                     this.state.designValues.colorSchemes.map(colorScheme =>
                                         <FormControlLabel
@@ -95,7 +86,8 @@ export class PersonalizationPage extends React.Component<PersonalizationPageProp
                     <Grid item xs={12}>
                         <FormControl>
                             <FormLabel>Choose your preferred font size:</FormLabel>
-                            <RadioGroup onChange={this.props.handleFontSizeChange} value={this.props.fontSize}>
+                            <RadioGroup onChange={this.props.handleFontSizeChange}
+                                        value={this.props.fontSize}>
                                 {this.state.loadedDesignState &&
                                     this.state.designValues.fontSizes.map(fontSize =>
                                         <FormControlLabel
@@ -116,11 +108,11 @@ export class PersonalizationPage extends React.Component<PersonalizationPageProp
                             onClick={() => {
                                 this.props.handlePersonalizationChange().then(myBoolean => {
                                     if (myBoolean) {
-                                        this.setState({successfulBar:true})
+                                        this.setState({successfulBar: true})
                                     } else {
                                         adminStatePersistence.getAdminLoginState()
-                                            .then(() => this.setState({errorBar:true}))
-                                            .catch(() => this.setState({sessionErrorBar:true}))
+                                            .then(() => this.setState({errorBar: true}))
+                                            .catch(() => this.setState({sessionErrorBar: true}))
                                     }
                                 })
                             }}
@@ -129,21 +121,21 @@ export class PersonalizationPage extends React.Component<PersonalizationPageProp
                             Save Changes
                         </Button>
                         <Snackbar
-                            anchorOrigin={{vertical:'bottom', horizontal:'right'}}
+                            anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
                             open={this.state.successfulBar}
                             autoHideDuration={2000}
                             onClose={this.handleClose}
                             message={'Changes Saved'}
                         />
                         <Snackbar
-                            anchorOrigin={{vertical:'bottom', horizontal:'right'}}
+                            anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
                             open={this.state.errorBar}
                             autoHideDuration={2000}
                             onClose={this.handleClose}
                             message={'Color scheme, font size and a background must be chosen'}
                         />
                         <Snackbar
-                            anchorOrigin={{vertical:'bottom', horizontal:'right'}}
+                            anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
                             open={this.state.sessionErrorBar}
                             autoHideDuration={2000}
                             onClose={this.handleClose}
@@ -153,6 +145,16 @@ export class PersonalizationPage extends React.Component<PersonalizationPageProp
                 </Grid>
             </div>
         );
+    }
+
+    private queryDesignState(): void {
+        new DesignValuesPersistence().getValuesData().then(valuesData => {
+            new DesignConfigPersistence().getConfigData().then(configData => this.setState({
+                loadedDesignState: true,
+                designValues: valuesData,
+                designConfig: configData,
+            }));
+        });
     }
 
     private renderBackgroundImages() {
@@ -174,12 +176,12 @@ export class PersonalizationPage extends React.Component<PersonalizationPageProp
                                     <img
                                         src={`${backgroundUrl}`}
                                         loading="lazy"
-                                        alt = "background image"
-                                    style = {{
-                                        width: "164px",
-                                        height:"164px",
-                                        objectFit: "cover"
-                                    }}/>
+                                        alt="background image"
+                                        style={{
+                                            width: "164px",
+                                            height: "164px",
+                                            objectFit: "cover"
+                                        }}/>
                                 </ImageListItem>
                             </Grid>
                             <Grid item>

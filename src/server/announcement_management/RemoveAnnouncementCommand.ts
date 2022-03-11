@@ -4,7 +4,9 @@ import {
     getAnnouncementTitles,
     getAnnouncementForTitle
 } from "./AnnouncementCommand";
-import {AnnouncementPersistence} from "../../shared/persistence/announcements/AnnouncementPersistence";
+import {
+    AnnouncementPersistence
+} from "../../shared/persistence/announcements/AnnouncementPersistence";
 import {AnnouncementAuthorTypeIdentifier} from "./AnnouncementAuthorTypeIdentifier";
 import {Announcement} from "../../shared/values/Announcement";
 
@@ -20,12 +22,12 @@ export class RemoveAnnouncementCommand implements AnnouncementCommand {
 
     private readonly announcementToRemove;
 
-    constructor(announcement : Announcement) {
+    constructor(announcement: Announcement) {
         this.announcementToRemove = announcement;
     }
 
     async executeCommand() {
-        let currentAnnouncements : Announcement[]
+        let currentAnnouncements: Announcement[]
         await AnnouncementPersistence.getInstance().getAnnouncements().then(result => currentAnnouncements = result);
         const announcementTitles = getAnnouncementTitles(currentAnnouncements);
         if (!announcementTitles.includes(this.announcementToRemove.title)) {
