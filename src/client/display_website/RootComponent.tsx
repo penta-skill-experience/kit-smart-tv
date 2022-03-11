@@ -126,6 +126,7 @@ export class RootComponent extends React.Component<any, RootComponentState> {
                          height: "100vh",
                          width: "33.55vw"
                      }}>
+                    <b/>
                 </div>
                 <div className="z-50" style={{
                     position: "absolute",
