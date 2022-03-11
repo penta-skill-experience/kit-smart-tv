@@ -118,15 +118,11 @@ export class RootComponent extends React.Component<any, RootComponentState> {
             height: "100vh",
             fontSize: this.state.relativeSize + "rem",
         }}>
-            <div className={"flex "} style={{
-                color: this.state.bodyFontColor
-            }}>
-                <div className="z-20 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30"
-                     style={{
-                         height: "100vh",
-                         width: "33.55vw"
-                     }}>
-                </div>
+            <div className="z-20 mx-0 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30"
+                 style={{
+                     height: "100vh",
+                     width: "33.55vw"
+                 }}>
                 <div className="z-50" style={{
                     position: "absolute",
                     left: "5.5vh",
@@ -136,6 +132,10 @@ export class RootComponent extends React.Component<any, RootComponentState> {
                     <TimeDisplayComponent error={() => {
                     }} specialBoldFontColor="" specialSubtleFontColor=""/>
                 </div>
+            </div>
+            <div className={"flex "} style={{
+                color: this.state.bodyFontColor
+            }}>
                 <div className="z-50" style={{
                     position: "absolute",
                     left: "3.9vh",
