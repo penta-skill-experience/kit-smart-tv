@@ -120,7 +120,7 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
             return;
         }
         if (!(document.getElementById(this.state.uniqueIdInsideScroll).scrollHeight > (document.getElementById(this.state.uniqueIdOutsideScroll).clientHeight * SquareHolderConfig.RATIO))) {
-            $("body,html, #" + this.state.uniqueIdOutsideScroll).delay(SquareHolderConfig.SMALL_WIDGET_WAIT).animate({scrollTop: 0}, speed * (document.getElementById(this.state.uniqueIdInsideScroll).scrollHeight) / 65, 'linear');
+            $("body,html, #" + this.state.uniqueIdOutsideScroll).delay(SquareHolderConfig.SMALL_WIDGET_WAIT).animate({scrollTop: 0}, 2500, 'linear');
             return;
         }
         $("body,html, #" + this.state.uniqueIdOutsideScroll).animate({scrollTop: 0}, 1000);
@@ -135,7 +135,7 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
             $("body,html, #" + this.state.uniqueIdOutsideScroll).delay(SquareHolderConfig.SMALL_WIDGET_WAIT).animate({
                 scrollTop: document.getElementById(this.state.uniqueIdInsideScroll).scrollHeight
                     - document.getElementById(this.state.uniqueIdOutsideScroll).clientHeight
-            }, speed * (document.getElementById(this.state.uniqueIdInsideScroll).scrollHeight) / 65, 'linear');
+            }, 2500, 'linear');
             return;
         }
         $("body,html, #" + this.state.uniqueIdOutsideScroll).animate({
