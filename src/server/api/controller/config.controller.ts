@@ -14,11 +14,10 @@ export async function updateConfigHandler(req: Request, res: Response) {
 }
 
 
-export async function getConfigHandler(req: Request, res: Response){
+export async function getConfigHandler(req: Request, res: Response) {
     try {
         return res.send(await getConfig());
-    }
-    catch(e: any){
+    } catch (e: any) {
         return res.status(501).send(`could not get Config data: ${e.message}`);
     }
 }

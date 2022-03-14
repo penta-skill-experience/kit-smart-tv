@@ -40,14 +40,6 @@ export class TramScheduleConfigComponent extends ConfigComponent<TramScheduleCon
         };
     }
 
-    private getSelectedId(): string {
-        if (this.state.suggestions.length) {
-            return (this.state.suggestions[0] as Suggestion).id;
-        } else {
-            return "";
-        }
-    }
-
     componentDidMount() {
         // initially, request the name for the stop ID that was previously set
         const stopId = this.props.config["stop"];
@@ -81,40 +73,6 @@ export class TramScheduleConfigComponent extends ConfigComponent<TramScheduleCon
                 this.querySuggestions(queryString);
             }
         }
-    }
-
-    private querySuggestions(text: string) {
-        TramScheduleUtility.requestStops(text)
-            .then(resp => resp.json())
-            .then(data => {
-                this.setState({
-                    usedQuery: text,
-                    suggestions: data.stops.map(stop => ({
-                        name: stop.name,
-                        id: stop.id,
-                    })),
-                });
-            });
-    }
-
-    /**
-     * Generate a list of stop names.
-     * If any stop name is contained more than once,
-     * also add the unique ID of the stop to the name.
-     * @private
-     */
-    private getSuggestionEntries(): string[] {
-
-        // count how many times each name is in the array
-        const count: Map<string, number> = new Map();  // mapping name -> count
-        this.state.suggestions.forEach((s: Suggestion) => {
-            const c = count.get(s.name) || 0;
-            count.set(s.name, c + 1);
-        });
-        return this.state.suggestions.map((s: Suggestion) =>
-            count.get(s.name) > 1 ?
-                `${s.name} #${s.id}` : s.name
-        );
     }
 
     render() {
@@ -161,5 +119,47 @@ export class TramScheduleConfigComponent extends ConfigComponent<TramScheduleCon
                 </div>
             </DialogContent>
         </div>;
+    }
+
+    private getSelectedId(): string {
+        if (this.state.suggestions.length) {
+            return (this.state.suggestions[0] as Suggestion).id;
+        } else {
+            return "";
+        }
+    }
+
+    private querySuggestions(text: string) {
+        TramScheduleUtility.requestStops(text)
+            .then(resp => resp.json())
+            .then(data => {
+                this.setState({
+                    usedQuery: text,
+                    suggestions: data.stops.map(stop => ({
+                        name: stop.name,
+                        id: stop.id,
+                    })),
+                });
+            });
+    }
+
+    /**
+     * Generate a list of stop names.
+     * If any stop name is contained more than once,
+     * also add the unique ID of the stop to the name.
+     * @private
+     */
+    private getSuggestionEntries(): string[] {
+
+        // count how many times each name is in the array
+        const count: Map<string, number> = new Map();  // mapping name -> count
+        this.state.suggestions.forEach((s: Suggestion) => {
+            const c = count.get(s.name) || 0;
+            count.set(s.name, c + 1);
+        });
+        return this.state.suggestions.map((s: Suggestion) =>
+            count.get(s.name) > 1 ?
+                `${s.name} #${s.id}` : s.name
+        );
     }
 }

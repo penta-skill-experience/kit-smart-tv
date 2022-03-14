@@ -7,7 +7,7 @@
  */
 export class VerifiedUserError extends Error {
 
-    constructor(msg : string) {
+    constructor(msg: string) {
         super(msg);
 
         Object.setPrototypeOf(this, VerifiedUserError.prototype);

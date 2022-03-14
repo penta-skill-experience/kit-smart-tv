@@ -6,7 +6,9 @@ import {
     getAnnouncementForTitle
 } from "./AnnouncementCommand";
 import {AnnouncementAuthorTypeIdentifier} from "./AnnouncementAuthorTypeIdentifier";
-import {AnnouncementPersistence} from "../../shared/persistence/announcements/AnnouncementPersistence";
+import {
+    AnnouncementPersistence
+} from "../../shared/persistence/announcements/AnnouncementPersistence";
 import {AnnouncementAuthorType} from "./AnnouncementAuthorType";
 import {Announcement} from "../../shared/values/Announcement";
 

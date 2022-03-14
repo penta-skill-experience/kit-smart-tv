@@ -62,9 +62,11 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
     renderErrorMessage(): JSX.Element {
         return <div
             className="w-full h-full font-light leading-normal sm:text-xs lg:text-sm xl:text-base 2xl:text-lg 4xl:text-xl text-center">
-            <div className="xs:w-10 sm:w-12 md:w-14 base:w-18 lg:w-24 xl:w-35 2xl:w-43 4xl:w-50 8xl:w-60">
+            <div
+                className="xs:w-10 sm:w-12 md:w-14 base:w-18 lg:w-24 xl:w-35 2xl:w-43 4xl:w-50 8xl:w-60">
                 <div/>
-                <img alt="Error_Robot" src="https://upload.wikimedia.org/wikipedia/commons/2/24/094-robot-face-3.svg"/>
+                <img alt="Error_Robot"
+                     src="https://upload.wikimedia.org/wikipedia/commons/2/24/094-robot-face-3.svg"/>
                 <div/>
             </div>
             <span className="text-left">Render error: {this.state.errorMessage}</span>
@@ -79,7 +81,8 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
         } else {
             if (this.props.displayComponentClass) {
                 // @ts-ignore
-                content = React.createElement(this.props.displayComponentClass, { error: msg => this.setState({hasError: true, errorMessage: msg}),
+                content = React.createElement(this.props.displayComponentClass, {
+                    error: msg => this.setState({hasError: true, errorMessage: msg}),
                     config: this.props.rawConfig,
                     specialBoldFontColor: this.props.specialBoldFontColor,
                     specialSubtleFontColor: this.props.specialSubtleFontColor,
@@ -102,8 +105,9 @@ export class SquareHolder extends React.Component<SquareHolderProps, SquareHolde
                     }}>
                     {this.props.title}
                 </div>
-                <div className="z-10 sm:pl-5 sm:pb-2 sm:pr-2 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12 scrollbar-hide"
-                     id={this.state.uniqueIdOutsideScroll} style={{
+                <div
+                    className="z-10 sm:pl-5 sm:pb-2 sm:pr-2 xl:pl-8 xl:pr-5 xl:pb-4 4xl:pl-12 scrollbar-hide"
+                    id={this.state.uniqueIdOutsideScroll} style={{
                     height: "35vh",
                     overflow: "scroll"
                 }}>

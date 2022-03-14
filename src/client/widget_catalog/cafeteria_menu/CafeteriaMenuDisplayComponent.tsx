@@ -49,14 +49,14 @@ export class CafeteriaMenuDisplayComponent<CafeteriaMenuState> extends DisplayCo
             {
                 this.state.menus//.slice(1, CafeteriaMenuConfig.ITEM_COUNT)
                     .map((d, index) =>
-                        <div key = {index}
-                            className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl">
+                        <div key={index}
+                             className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl">
                             <b>{d.food}</b>:
                             <div
                                 className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl">
                                 {d.location}
                             </div>
-                            <br />
+                            <br/>
                         </div>
                     )
             }

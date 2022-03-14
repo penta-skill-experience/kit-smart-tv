@@ -4,7 +4,11 @@ import {createAdminSchema, updatePasswordSchema} from "./schema/admin.schema";
 import {createAdminHandler, updatePasswordHandler} from "./controller/admin.controller";
 import requireAdmin from "./middleware/requireAdmin";
 import {createSessionSchema} from "./schema/session.schema";
-import {createAdminSessionHandler, deleteSessionHandler, getSessionHandler} from "./controller/session.controller";
+import {
+    createAdminSessionHandler,
+    deleteSessionHandler,
+    getSessionHandler
+} from "./controller/session.controller";
 import {getWidgetDataHandler, updateWidgetDataHandler} from "./controller/widget.controller";
 import {updateWidgetSchema} from "./schema/widgetData.schema";
 import {getAnnouncementsHandler} from "./controller/announcements.controller";

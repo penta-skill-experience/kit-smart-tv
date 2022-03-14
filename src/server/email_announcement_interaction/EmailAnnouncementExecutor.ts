@@ -12,12 +12,12 @@ export class EmailAnnouncementExecutor {
      * executes the appropriate AnnouncementCommand for the received mailObject.
      * @param mail the received mailObject, an IMailObject parsed from an email
      */
-    executeEmailCommand(mail : IMailObject) {
+    executeEmailCommand(mail: IMailObject) {
         const parsedAnnouncement = new EmailAnnouncementParser(mail).parseToAnnouncement();
 
         try {
             new EmailAnnouncementCommandIdentifier(parsedAnnouncement).identifyCommand().executeCommand();
-        } catch(e) {
+        } catch (e) {
             if (e instanceof AnnouncementCommandError) {
                 // can later be used to send feedback
             } else {

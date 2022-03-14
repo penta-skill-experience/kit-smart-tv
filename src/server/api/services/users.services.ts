@@ -51,10 +51,9 @@ export function getUsers(): Promise<IVerifiedUser[]> {
     return new Promise<IVerifiedUser[]>((resolve, reject) => {
         UsersModel.findOne().then(
             (document: UsersDocument) => {
-                if (document == null){
+                if (document == null) {
                     reject("no users found")
-                }
-                else{
+                } else {
                     resolve(document.usersDataList)
                 }
             },

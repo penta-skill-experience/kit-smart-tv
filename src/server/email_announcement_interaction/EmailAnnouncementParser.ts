@@ -10,9 +10,9 @@ import {newAnnouncement} from "./newAnnouncement";
  */
 export class EmailAnnouncementParser implements AnnouncementParser {
 
-    private mail : IMailObject;
+    private mail: IMailObject;
 
-    constructor(mail : IMailObject) {
+    constructor(mail: IMailObject) {
         this.mail = mail;
     }
 

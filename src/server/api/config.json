@@ -1,7 +1,7 @@
 {
-    "port": 1337,
-    "saltWorkFactor": 9,
-    "accessTokenTtl": "1d",
-    "refreshTokenTtl": "1y",
-    "sessionTtlInMinutes": 11
+  "port": 1337,
+  "saltWorkFactor": 9,
+  "accessTokenTtl": "1d",
+  "refreshTokenTtl": "1y",
+  "sessionTtlInMinutes": 11
 }

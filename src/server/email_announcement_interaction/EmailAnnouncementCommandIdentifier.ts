@@ -9,9 +9,9 @@ import {Announcement} from "../../shared/values/Announcement";
  */
 export class EmailAnnouncementCommandIdentifier {
 
-    private readonly announcement : Announcement;
+    private readonly announcement: Announcement;
 
-    constructor(announcement : Announcement) {
+    constructor(announcement: Announcement) {
         this.announcement = announcement;
     }
 
@@ -21,7 +21,7 @@ export class EmailAnnouncementCommandIdentifier {
      *
      * @returns the created instance of AnnouncementCommand
      */
-    identifyCommand() : AnnouncementCommand {
+    identifyCommand(): AnnouncementCommand {
         if (!this.announcement.text || (this.announcement.text.trim() === MailInteractionConfig.REMOVE_ANNOUNCEMENT_TEXT)) {
             return new RemoveAnnouncementCommand(this.announcement);
         } else {

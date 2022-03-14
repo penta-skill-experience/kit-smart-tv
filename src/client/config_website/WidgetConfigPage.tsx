@@ -25,18 +25,6 @@ export class WidgetConfigPage extends React.Component<WidgetConfigPageProps, Wid
         };
     }
 
-    private open() {
-        this.setState({open: true});
-    }
-
-    private close() {
-        this.setState({open: false});
-    }
-
-    private save() {
-        this.props.save(this.configComponentRef.current.save());
-    }
-
     render() {
         return <Grid item>
             <Button onClick={() => this.open()}>
@@ -72,5 +60,17 @@ export class WidgetConfigPage extends React.Component<WidgetConfigPageProps, Wid
                 </ButtonGroup>
             </Dialog>
         </Grid>;
+    }
+
+    private open() {
+        this.setState({open: true});
+    }
+
+    private close() {
+        this.setState({open: false});
+    }
+
+    private save() {
+        this.props.save(this.configComponentRef.current.save());
     }
 }

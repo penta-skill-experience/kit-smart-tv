@@ -17,7 +17,17 @@ const widgetLoader = new WidgetLoader();
 const widgetList = widgetLoader.getWidgetIds();
 const adminStatePersistence = new AdminStatePersistence();
 
-export const LayoutPage = ({list, widgetListElement, handleWidgetSelection, handleAddWidget, handleDeleteWidget, handlePosition, handleRawConfigSave, handleLayoutChange, children}) => {
+export const LayoutPage = ({
+                               list,
+                               widgetListElement,
+                               handleWidgetSelection,
+                               handleAddWidget,
+                               handleDeleteWidget,
+                               handlePosition,
+                               handleRawConfigSave,
+                               handleLayoutChange,
+                               children
+                           }) => {
 
     const [open, setOpen] = React.useState(false);
     const [sessionBar, setSessionBar] = React.useState(false);
@@ -30,9 +40,10 @@ export const LayoutPage = ({list, widgetListElement, handleWidgetSelection, hand
         setSessionBar(false);
     }
 
-    return(
+    return (
         <div>
-            <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="flex-start">
+            <Grid container spacing={2} direction="row" justifyContent="flex-start"
+                  alignItems="flex-start">
                 <Grid item container spacing={2} direction="row" xs={12}>
                     <Grid item>
                         <Box
@@ -43,10 +54,11 @@ export const LayoutPage = ({list, widgetListElement, handleWidgetSelection, hand
                             }
                             }
                         >
-                            <Grid container direction="row" alignItems="center" justifyContent="space-between">
+                            <Grid container direction="row" alignItems="center"
+                                  justifyContent="space-between">
                                 <Grid item xs={12}>''</Grid>
                                 <Grid item xs={12}>''</Grid>
-                                <Grid item  container alignItems="center" justifyContent="center">
+                                <Grid item container alignItems="center" justifyContent="center">
                                     <Grid item>
                                         <LockIcon color='error'/>
                                     </Grid>
@@ -62,15 +74,17 @@ export const LayoutPage = ({list, widgetListElement, handleWidgetSelection, hand
                                 width: 150,
                                 height: 150,
                                 backgroundColor: 'text.primary',
-                                }
+                            }
                             }
                         >
-                            <Grid container direction="row" alignItems="center" justifyContent="space-between">
+                            <Grid container direction="row" alignItems="center"
+                                  justifyContent="space-between">
                                 <Grid item xs={12}>''</Grid>
                                 <Grid item xs={12}>''</Grid>
-                                <Grid item  container alignItems="center" justifyContent="center">
+                                <Grid item container alignItems="center" justifyContent="center">
                                     <Grid item>
-                                        <Typography variant="h6" color='white'>1.top center</Typography>
+                                        <Typography variant="h6" color='white'>1.top
+                                            center</Typography>
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -87,12 +101,14 @@ export const LayoutPage = ({list, widgetListElement, handleWidgetSelection, hand
                             }
                             }
                         >
-                            <Grid container direction="row" alignItems="center" justifyContent="space-between">
+                            <Grid container direction="row" alignItems="center"
+                                  justifyContent="space-between">
                                 <Grid item xs={12}>''</Grid>
                                 <Grid item xs={12}>''</Grid>
-                                <Grid item  container alignItems="center" justifyContent="center">
+                                <Grid item container alignItems="center" justifyContent="center">
                                     <Grid item>
-                                        <Typography variant="h6" color='white'>2.top right</Typography>
+                                        <Typography variant="h6" color='white'>2.top
+                                            right</Typography>
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -112,12 +128,14 @@ export const LayoutPage = ({list, widgetListElement, handleWidgetSelection, hand
                             }
                             }
                         >
-                            <Grid container direction="row" alignItems="center" justifyContent="space-between">
+                            <Grid container direction="row" alignItems="center"
+                                  justifyContent="space-between">
                                 <Grid item xs={12}>''</Grid>
                                 <Grid item xs={12}>''</Grid>
-                                <Grid item  container alignItems="center" justifyContent="center">
+                                <Grid item container alignItems="center" justifyContent="center">
                                     <Grid item>
-                                        <Typography variant="h6" color='white'>3.bottom left</Typography>
+                                        <Typography variant="h6" color='white'>3.bottom
+                                            left</Typography>
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -134,12 +152,14 @@ export const LayoutPage = ({list, widgetListElement, handleWidgetSelection, hand
                             }
                             }
                         >
-                            <Grid container direction="row" alignItems="center" justifyContent="space-between">
+                            <Grid container direction="row" alignItems="center"
+                                  justifyContent="space-between">
                                 <Grid item xs={12}>''</Grid>
                                 <Grid item xs={12}>''</Grid>
-                                <Grid item  container alignItems="center" justifyContent="center">
+                                <Grid item container alignItems="center" justifyContent="center">
                                     <Grid item>
-                                        <Typography variant="h6" color='white'>4.bottom center</Typography>
+                                        <Typography variant="h6" color='white'>4.bottom
+                                            center</Typography>
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -156,12 +176,14 @@ export const LayoutPage = ({list, widgetListElement, handleWidgetSelection, hand
                             }
                             }
                         >
-                            <Grid container direction="row" alignItems="center" justifyContent="space-between">
+                            <Grid container direction="row" alignItems="center"
+                                  justifyContent="space-between">
                                 <Grid item xs={12}>''</Grid>
                                 <Grid item xs={12}>''</Grid>
-                                <Grid item  container alignItems="center" justifyContent="center">
+                                <Grid item container alignItems="center" justifyContent="center">
                                     <Grid item>
-                                        <Typography variant="h6" color='white'>5.bottom right</Typography>
+                                        <Typography variant="h6" color='white'>5.bottom
+                                            right</Typography>
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -187,7 +209,7 @@ export const LayoutPage = ({list, widgetListElement, handleWidgetSelection, hand
                     <FormControl sx={{minWidth: 150}}>
                         <InputLabel>Select Widget</InputLabel>
                         <Select
-                            key = {widgetListElement.id}
+                            key={widgetListElement.id}
                             value={widgetListElement.widgetNameText}
                             onChange={handleWidgetSelection}
                             label={"Select Widget"}
@@ -213,14 +235,14 @@ export const LayoutPage = ({list, widgetListElement, handleWidgetSelection, hand
                         Save Changes
                     </Button>
                     <Snackbar
-                        anchorOrigin={{vertical:'bottom', horizontal:'right'}}
+                        anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
                         open={open}
                         autoHideDuration={2000}
                         onClose={handleClose}
                         message={'Changes Saved'}
                     />
                     <Snackbar
-                        anchorOrigin={{vertical:'bottom', horizontal:'right'}}
+                        anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
                         open={sessionBar}
                         autoHideDuration={2000}
                         onClose={handleClose}

@@ -28,10 +28,10 @@ export abstract class AnnouncementAuthorType {
             return true;
         }
 
-        isThisAuthorType(author: string, verifiedUsers : VerifiedUser[]): Boolean {
+        isThisAuthorType(author: string, verifiedUsers: VerifiedUser[]): Boolean {
             for (const admin of AnnouncementConfig.ADMINS) {
                 if (admin.EMAIL === author) {
-                   return true;
+                    return true;
                 }
             }
             return false;
@@ -54,7 +54,7 @@ export abstract class AnnouncementAuthorType {
             return false;
         }
 
-        isThisAuthorType(author: string, verifiedUsers : VerifiedUser[]): Boolean {
+        isThisAuthorType(author: string, verifiedUsers: VerifiedUser[]): Boolean {
             if (AnnouncementAuthorType.ADMIN.isThisAuthorType(author, verifiedUsers)) {
                 return false;
             }
@@ -82,7 +82,7 @@ export abstract class AnnouncementAuthorType {
             return false;
         }
 
-        isThisAuthorType(author: string, verifiedUsers : VerifiedUser[]): Boolean {
+        isThisAuthorType(author: string, verifiedUsers: VerifiedUser[]): Boolean {
             return !AnnouncementAuthorType.VERIFIED.isThisAuthorType(author, verifiedUsers) &&
                 !AnnouncementAuthorType.ADMIN.isThisAuthorType(author, verifiedUsers);
         }
@@ -96,7 +96,7 @@ export abstract class AnnouncementAuthorType {
      * @param author the given author
      * @param verifiedUsers the current verified users as loaded from the persistence
      */
-    abstract isThisAuthorType(author: string, verifiedUsers : VerifiedUser[]): Boolean;
+    abstract isThisAuthorType(author: string, verifiedUsers: VerifiedUser[]): Boolean;
 
     /**
      * returns true, if the author type this is called for is allowed to add announcements, otherwise false.

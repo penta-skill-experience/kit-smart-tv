@@ -13,7 +13,13 @@ import DialogActions from "@mui/material/DialogActions";
 import {WidgetConfigPage} from "./WidgetConfigPage";
 
 
-export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, handleRawConfigSave, children}) => {
+export const WidgetListElement = ({
+                                      item,
+                                      handlePosition,
+                                      handleDeleteWidget,
+                                      handleRawConfigSave,
+                                      children
+                                  }) => {
 
     return (
         <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
@@ -23,15 +29,15 @@ export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, han
             <Grid item>
                 <FormControl>
                     <RadioGroup row>
-                        {renderPosition({item:item, position:1, handlePosition: handlePosition})}
-                        {renderPosition({item:item, position:2, handlePosition: handlePosition})}
-                        {renderPosition({item:item, position:3, handlePosition: handlePosition})}
-                        {renderPosition({item:item, position:4, handlePosition: handlePosition})}
-                        {renderPosition({item:item, position:5, handlePosition: handlePosition})}
+                        {renderPosition({item: item, position: 1, handlePosition: handlePosition})}
+                        {renderPosition({item: item, position: 2, handlePosition: handlePosition})}
+                        {renderPosition({item: item, position: 3, handlePosition: handlePosition})}
+                        {renderPosition({item: item, position: 4, handlePosition: handlePosition})}
+                        {renderPosition({item: item, position: 5, handlePosition: handlePosition})}
                     </RadioGroup>
                 </FormControl>
             </Grid>
-            <Grid item >
+            <Grid item>
                 <DeleteDialogComponent id={item.id} handleDeleteWidget={handleDeleteWidget}/>
             </Grid>
             <Grid item>
@@ -49,7 +55,7 @@ export const WidgetListElement = ({item, handlePosition, handleDeleteWidget, han
 }
 
 function renderPosition({item, position, handlePosition}) {
-    return(
+    return (
         <FormControlLabel
             label={position}
             control={
@@ -66,7 +72,7 @@ function renderPosition({item, position, handlePosition}) {
     );
 }
 
-export function DeleteDialogComponent({id ,handleDeleteWidget}) {
+export function DeleteDialogComponent({id, handleDeleteWidget}) {
     const [open, setOpen] = React.useState(false);
 
 
@@ -83,7 +89,7 @@ export function DeleteDialogComponent({id ,handleDeleteWidget}) {
         setOpen(false);
     };
 
-    return(
+    return (
         <Grid item>
             <Button onClick={handleOpen}>
                 <DeleteIcon/>

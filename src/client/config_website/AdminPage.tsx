@@ -14,15 +14,22 @@ import {AdminStatePersistence} from "../../shared/persistence/AdminStatePersiste
 
 const adminStatePersistence = new AdminStatePersistence()
 
-export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNewPassword, handlePasswordChange, children} ) => {
+export const AdminPage = ({
+                              oldPassword,
+                              newPassword,
+                              handleOldPassword,
+                              handleNewPassword,
+                              handlePasswordChange,
+                              children
+                          }) => {
     const [showOldPassword, setShowOldPassword] = React.useState(false);
     const [showNewPassword, setShowNewPassword] = React.useState(false);
 
-    const handleShowOldPassword  = () => {
+    const handleShowOldPassword = () => {
         setShowOldPassword(!showOldPassword)
     }
 
-    const handleShowNewPassword  = () => {
+    const handleShowNewPassword = () => {
         setShowNewPassword(!showNewPassword)
     }
 
@@ -43,16 +50,17 @@ export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNe
 
     return (
         <Box
-        sx={{
-            width: 300,
-            height: 300,
+            sx={{
+                width: 300,
+                height: 300,
             }
-        }
+            }
         >
             <div>
-                <Grid container spacing={2} direction="row" justifyContent="center" alignItems="center">
+                <Grid container spacing={2} direction="row" justifyContent="center"
+                      alignItems="center">
                     <Grid item xs={12}>
-                        <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
+                        <FormControl sx={{m: 1, width: '25ch'}} variant="standard">
                             <InputLabel>Old Password</InputLabel>
                             <Input
                                 type={showOldPassword ? 'text' : 'password'}
@@ -63,7 +71,7 @@ export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNe
                                         <IconButton
                                             onClick={handleShowOldPassword}
                                         >
-                                            {showOldPassword ? <VisibilityOff /> : <Visibility />}
+                                            {showOldPassword ? <VisibilityOff/> : <Visibility/>}
                                         </IconButton>
                                     </InputAdornment>
                                 }
@@ -71,29 +79,29 @@ export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNe
                         </FormControl>
                     </Grid>
                     <Grid item xs={12}>
-                        <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
+                        <FormControl sx={{m: 1, width: '25ch'}} variant="standard">
                             <InputLabel>New Password</InputLabel>
-                                <Input
+                            <Input
                                 type={showNewPassword ? 'text' : 'password'}
                                 value={newPassword}
                                 onChange={handleNewPassword}
                                 endAdornment={
                                     <InputAdornment position="end">
                                         <IconButton
-                                        onClick={handleShowNewPassword}
+                                            onClick={handleShowNewPassword}
                                         >
-                                        {showNewPassword ? <VisibilityOff /> : <Visibility />}
+                                            {showNewPassword ? <VisibilityOff/> : <Visibility/>}
                                         </IconButton>
                                     </InputAdornment>
                                 }
-                                />
+                            />
                         </FormControl>
                     </Grid>
                     <Grid item xs={12}>
                         <Button
                             onClick={() => {
                                 handlePasswordChange().then(myBoolean => {
-                                    if(myBoolean) {
+                                    if (myBoolean) {
                                         setSuccessfulBar(true);
                                     } else {
                                         if (oldPassword === '' || newPassword === '') {
@@ -111,28 +119,28 @@ export const AdminPage = ({oldPassword, newPassword, handleOldPassword, handleNe
                             Save Password
                         </Button>
                         <Snackbar
-                            anchorOrigin={{vertical:'bottom', horizontal:'right'}}
+                            anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
                             open={successfulBar}
                             autoHideDuration={2000}
                             onClose={handleClose}
                             message={'Password Saved'}
                         />
                         <Snackbar
-                            anchorOrigin={{vertical:'bottom', horizontal:'right'}}
+                            anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
                             open={errorBar}
                             autoHideDuration={2000}
                             onClose={handleClose}
                             message={'Changing Password failed'}
                         />
                         <Snackbar
-                            anchorOrigin={{vertical:'bottom', horizontal:'right'}}
+                            anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
                             open={sessionErrorBar}
                             autoHideDuration={2000}
                             onClose={handleClose}
                             message={'Session expired'}
                         />
                         <Snackbar
-                            anchorOrigin={{vertical:'bottom', horizontal:'right'}}
+                            anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
                             open={emptyErrorBar}
                             autoHideDuration={2000}
                             onClose={handleClose}

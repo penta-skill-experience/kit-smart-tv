@@ -1,6 +1,6 @@
 import Typography from '@mui/material/Typography';
 import * as React from "react";
-import { useState} from "react";
+import {useState} from "react";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
@@ -17,7 +17,9 @@ import {WidgetLoader} from "../widget/WidgetLoader";
 import {WidgetData} from "../widget/WidgetData";
 import {WidgetPersistence} from "../../shared/persistence/WidgetPersistence";
 import {VerifiedUser} from "../../shared/values/VerifiedUser";
-import {AnnouncementPersistence} from "../../shared/persistence/announcements/AnnouncementPersistence";
+import {
+    AnnouncementPersistence
+} from "../../shared/persistence/announcements/AnnouncementPersistence";
 import {AdminStatePersistence} from "../../shared/persistence/AdminStatePersistence";
 import Snackbar from '@mui/material/Snackbar';
 
@@ -37,7 +39,7 @@ export function TabPanel(props: TabPanelProps) {
             hidden={value !== index}
         >
             {value === index && (
-                <Box sx={{ p: 3 }}>
+                <Box sx={{p: 3}}>
                     <Typography>{children}</Typography>
                 </Box>
             )}
@@ -64,7 +66,7 @@ export function ConfigWebsite({initialLogInStatus}) {
         setLogInInput(event.target.value);
     };
 
-    const handleLogIn= () => {
+    const handleLogIn = () => {
         adminStatePersistence.login(logInInput)
             .then(() => setLoggedInStatus(true))
             .catch(() => alert('Password not correct.'));
@@ -92,7 +94,7 @@ export function ConfigWebsite({initialLogInStatus}) {
     };
 
     //state variables and methods for personalization page
-    const [colorScheme,setColorScheme] = useState<string | null>(null);
+    const [colorScheme, setColorScheme] = useState<string | null>(null);
     const [fontSize, setFontSize] = useState<string | null>(null);
     const [selectedBackground, setSelectedBackground] = React.useState('');
     const [needConfigData, setNeedConfigData] = React.useState(true);
@@ -144,11 +146,11 @@ export function ConfigWebsite({initialLogInStatus}) {
     const [counter, setCounter] = useState(1);
 
     const [widgetListElement, setWidgetListElement] = React.useState({
-        id:0,
-        position:'',
-        widgetNameText:'',
+        id: 0,
+        position: '',
+        widgetNameText: '',
         widget: null,
-        widgetData:null,
+        widgetData: null,
     });
 
     const [needInitialWidgetDataList, setNeedInitialWidgetDataList] = useState(true);  // only query initial data once
@@ -182,9 +184,9 @@ export function ConfigWebsite({initialLogInStatus}) {
     const handleWidgetSelection = (event: SelectChangeEvent) => {
         const newWidget = widgetLoader.getWidget(event.target.value);
         const updatedValue = {
-            id:counter,
-            position:'',
-            widgetNameText:event.target.value,
+            id: counter,
+            position: '',
+            widgetNameText: event.target.value,
             widget: newWidget,
             widgetData: new WidgetData(event.target.value, -1, newWidget.isConfigurable() ? newWidget.getDefaultRawConfig() : {}),
         }
@@ -194,9 +196,9 @@ export function ConfigWebsite({initialLogInStatus}) {
     const handleAddWidget = () => {
         if (widgetListElement.widget !== null) {
             const newWidget = {
-                id:counter,
-                position:'',
-                widgetNameText:widgetListElement.widgetNameText,
+                id: counter,
+                position: '',
+                widgetNameText: widgetListElement.widgetNameText,
                 widget: widgetListElement.widget,
                 widgetData: widgetListElement.widgetData,
             }
@@ -259,9 +261,8 @@ export function ConfigWebsite({initialLogInStatus}) {
         return adminStatePersistence.setPassword(oldPassword, newPassword)
             .then(() => true)
             .catch(() => false)
-        ;
+            ;
     };
-
 
 
     //state variables and methods for announcements page
@@ -269,17 +270,17 @@ export function ConfigWebsite({initialLogInStatus}) {
     const [mailList, setMailList] = React.useState(initialMailList);
     const [needInitialVerUserList, setNeedInitialVerUserList] = React.useState(true);
     const [verUserListElement, setVerUserListElement] = React.useState({
-        mail:'',
-        name:'',
-        verUser:null,
+        mail: '',
+        name: '',
+        verUser: null,
     });
 
     const handleMailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setVerUserListElement({...verUserListElement, mail:event.target.value});
+        setVerUserListElement({...verUserListElement, mail: event.target.value});
     };
 
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setVerUserListElement({...verUserListElement, name:event.target.value});
+        setVerUserListElement({...verUserListElement, name: event.target.value});
     };
 
     const handleAddMail = () => {
@@ -333,7 +334,7 @@ export function ConfigWebsite({initialLogInStatus}) {
         }
     })*/
 
-    React.useEffect( () => {
+    React.useEffect(() => {
         if (adminState) {
             adminStatePersistence.getAdminLoginState()
                 .then(() => setLoggedInStatus(true))
@@ -376,9 +377,9 @@ export function ConfigWebsite({initialLogInStatus}) {
                 const newList = [];
                 for (const verUser of list) {
                     newList.push({
-                        mail:verUser.email,
-                        name:verUser.name,
-                        verUser:verUser,
+                        mail: verUser.email,
+                        name: verUser.name,
+                        verUser: verUser,
                     })
                 }
                 setNeedInitialVerUserList(false);
@@ -403,7 +404,7 @@ export function ConfigWebsite({initialLogInStatus}) {
     };
 
     function renderConfigWebsite() {
-        if(loggedInStatus === false) {
+        if (loggedInStatus === false) {
             return (
                 <LogInPage
                     logInInput={logInInput}
@@ -419,14 +420,16 @@ export function ConfigWebsite({initialLogInStatus}) {
                 <div>
                     <Box sx={{
                         border: 1,
-                        backgroundColor:'text.primary',}
+                        backgroundColor: 'text.primary',
+                    }
                     }>
                         <Grid container spacing={2} direction="row" alignItems="center">
                             <Grid item xs={2}>''</Grid>
                             <Grid item container xs={8} alignItems="center" justifyContent="center">
                                 <Grid item container alignItems="center" justifyContent="center">
                                     <Grid item>
-                                        <Typography variant="h6" color='white'>Admin Interface</Typography>
+                                        <Typography variant="h6" color='white'>Admin
+                                            Interface</Typography>
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -438,7 +441,7 @@ export function ConfigWebsite({initialLogInStatus}) {
                         </Grid>
                     </Box>
 
-                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
                         <Tabs value={pageNumber} onChange={handleChange}>
                             <Tab label="Look"/>
                             <Tab label="Widgets"/>
@@ -498,5 +501,6 @@ export function ConfigWebsite({initialLogInStatus}) {
             );
         }
     }
+
     return renderConfigWebsite();
 }

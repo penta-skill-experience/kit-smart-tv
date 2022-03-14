@@ -1,5 +1,9 @@
 import {DocumentDefinition} from "mongoose";
-import {AnnouncementsData, AnnouncementsDocument, AnnouncementsModel} from "../models/announcements.model";
+import {
+    AnnouncementsData,
+    AnnouncementsDocument,
+    AnnouncementsModel
+} from "../models/announcements.model";
 import {Announcement} from "../../../shared/values/Announcement";
 import {WidgetDataModel} from "../models/widgetDataModel";
 import {omit} from "lodash";

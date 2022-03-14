@@ -12,14 +12,14 @@ export async function createAdminHandler(req: Request<CreateAdminInput["body"]>,
 }
 
 export async function updatePasswordHandler(req: Request<updatePasswordInput["body"]>, res: Response) {
-        // admin in datenbank updaten
-        const updated_admin = await updatePassword({
-            old_password: req.body.password,
-            new_password: req.body.new_password
-        })
-        if (updated_admin) {
-            return res.send("password updated");
-        } else {
-            return res.status(409).send("could not update password");
-        }
+    // admin in datenbank updaten
+    const updated_admin = await updatePassword({
+        old_password: req.body.password,
+        new_password: req.body.new_password
+    })
+    if (updated_admin) {
+        return res.send("password updated");
+    } else {
+        return res.status(409).send("could not update password");
+    }
 }
