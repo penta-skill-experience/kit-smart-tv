@@ -27,6 +27,7 @@ interface CafeteriaOpeningState {
     openColor: string,
     closedColor: string,
 }
+const weekday = ["Sun.", "Mon.", "Tue.", "Wed.", "Thu.", "Fri.", "Sat."];
 
 export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
     constructor(props) {
@@ -70,7 +71,7 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                     className="grid grid-flow-row sm:gap-1 lg:gap-2 xl:gap-3 4xl:gap-4 8xl:gap-5 items-center box-border h-fit font-light leading-normal
                     sm:text-xs md:text-sm lg:text-baselg xl:text-xl 2xl:text-1.5xl 4xl:text-3xl 8xl:text-4.5xl sm:text-left">
                     <div className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center">
-                        <div>Dining Hall:&nbsp;
+                        <div>Dining Hall:
                         </div>
                         <div
                             className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
@@ -79,16 +80,10 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                                 borderRadius: "500px"
                             }}>
                             {(this.state.openDinningRightNow ? "open" : "closed")}
-                        </div>
-                        until
-                        {(this.state.openDinningRightNow ? <div>
-                            {this.getTime(this.state.timesDinning[1])}
-                        </div> : <div>
-                            {this.getTime(this.state.timesDinning[0])}
-                        </div>)}
+                        </div>until&nbsp;{(this.state.openDinningRightNow ? this.getTime(this.state.timesDinning[1]) : this.reformatDate(this.state.dateCafeteria) + " " + this.getTime(this.state.timesDinning[0]))}
                     </div>
                     <div className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center">
-                        <div>Cafeteria:&nbsp;
+                        <div>Cafeteria:
                         </div>
                         <div
                             className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
@@ -97,16 +92,10 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                                 borderRadius: "500px"
                             }}>
                             {(this.state.openCafeteriaRightNow ? "open" : "closed")}
-                        </div>
-                        until
-                        {(this.state.openCafeteriaRightNow ? <div>
-                            {this.getTime(this.state.timesCafeteria[1])}
-                        </div> : <div>
-                            {this.getTime(this.state.timesCafeteria[0])}
-                        </div>)}
+                        </div>until&nbsp;{(this.state.openDinningRightNow ? this.getTime(this.state.timesDinning[1]) : this.reformatDate(this.state.dateCafeteria) + " " + this.getTime(this.state.timesDinning[0]))}
                     </div>
                     <div className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center">
-                        <div>[koeri]Werk:&nbsp;
+                        <div>[koeri]Werk:
                         </div>
                         <div
                             className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
@@ -115,16 +104,10 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                                 borderRadius: "500px"
                             }}>
                             {(this.state.openKoeriRightNow ? "open" : "closed")}
-                        </div>
-                        until
-                        {(this.state.openKoeriRightNow ? <div>
-                            {this.getTime(this.state.timesKoeri[1])}
-                        </div> : <div>
-                            {this.getTime(this.state.timesKoeri[0])}
-                        </div>)}
+                        </div>until&nbsp;{(this.state.openDinningRightNow ? this.getTime(this.state.timesDinning[1]) : this.reformatDate(this.state.dateCafeteria) + " " + this.getTime(this.state.timesDinning[0]))}
                     </div>
                     <div className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center">
-                        <div>[pizza]Werk:&nbsp;
+                        <div>[pizza]Werk:
                         </div>
                         <div
                             className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
@@ -133,22 +116,8 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                                 borderRadius: "500px"
                             }}>
                             {(this.state.openPizzaRightNow ? "open" : "closed")}
-                        </div>
-                        until
-                        {(this.state.openPizzaRightNow ? <div>
-                            {this.getTime(this.state.timesPizza[1])}
-                        </div> : <div>
-                            {this.getTime(this.state.timesPizza[0])}
-                        </div>)}
+                        </div>until&nbsp;{(this.state.openDinningRightNow ? this.getTime(this.state.timesDinning[1]) : this.reformatDate(this.state.dateCafeteria) + " " + this.getTime(this.state.timesDinning[0]))}
                     </div>
-                </div>
-                <div
-                    className="font-light leading-normal sm:text-xs md:text-sm lg:text-baselg xl:text-xl 2xl:text-1.5xl 4xl:text-3xl 8xl:text-4.5xl sm:text-left">
-                    {(this.state.openDinningRightNow ? <div/> :
-                        <div>
-                            Reopens: {(this.state.openToday) ? " Today" : " " + this.reformatDate(this.state.dateCafeteria)}
-                        </div>)
-                    }
                 </div>
             </div> : <div/>)
     }
@@ -307,10 +276,7 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
 
     private reformatDate(date: Date): string {
         try {
-            return date.toLocaleDateString(["en"], {
-                day: "numeric",
-                month: "long",
-            });
+            return weekday[date.getDay()];
         } catch (e) {
             //ignore
         }
