@@ -26,6 +26,7 @@ export const LayoutPage = ({
                                handlePosition,
                                handleRawConfigSave,
                                handleLayoutChange,
+                               handleLogOut,
                                children
                            }) => {
 
@@ -230,7 +231,7 @@ export const LayoutPage = ({
                         handleLayoutChange();
                         adminStatePersistence.getAdminLoginState()
                             .then(() => setOpen(true))
-                            .catch(() => setSessionBar(true))
+                            .catch(() => handleLogOut())
                     }}>
                         Save Changes
                     </Button>

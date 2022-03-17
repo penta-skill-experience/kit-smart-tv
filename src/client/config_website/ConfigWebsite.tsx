@@ -59,6 +59,8 @@ export function ConfigWebsite({initialLogInStatus}) {
     const [visible, setVisible] = useState(false);
     const [loggedInStatus, setLoggedInStatus] = useState(initialLogInStatus);
     const [adminState, setAdminState] = useState(true);
+    const [open, setOpen] = React.useState(false);
+
 
     const handleInput = (
         event: React.ChangeEvent<HTMLInputElement>
@@ -70,6 +72,10 @@ export function ConfigWebsite({initialLogInStatus}) {
         adminStatePersistence.login(logInInput)
             .then(() => setLoggedInStatus(true))
             .catch(() => alert('Password not correct.'));
+    };
+
+    const closeSessionSnackbar = () => {
+        setOpen(false);
     };
 
     const handleClickShowPassword = () => {
@@ -400,9 +406,14 @@ export function ConfigWebsite({initialLogInStatus}) {
             .catch(() => {
                 setLoggedInStatus(false);
                 setLogInInput('');
+                setOpen(true);
             });
     };
+    const handleLogoutbutton = () => {
 
+                setLoggedInStatus(false);
+                setLogInInput('');
+    };
     function renderConfigWebsite() {
         if (loggedInStatus === false) {
             return (
@@ -412,6 +423,8 @@ export function ConfigWebsite({initialLogInStatus}) {
                     handleInput={handleInput}
                     handleLogIn={handleLogIn}
                     handleClickShowPassword={handleClickShowPassword}
+                    open = {open}
+                    closeSessionSnackbar = {closeSessionSnackbar}
                 >
                 </LogInPage>
             );
@@ -434,7 +447,7 @@ export function ConfigWebsite({initialLogInStatus}) {
                                 </Grid>
                             </Grid>
                             <Grid item container xs={2} direction="column">
-                                <Button onClick={handleLogout}>
+                                <Button onClick={handleLogoutbutton}>
                                     Log Out
                                 </Button>
                             </Grid>
@@ -458,6 +471,7 @@ export function ConfigWebsite({initialLogInStatus}) {
                             selectedBackground={selectedBackground}
                             handleBackgroundSelect={url => setSelectedBackground(url)}
                             handlePersonalizationChange={handlePersonalizationChange}
+                            handleLogOut = {handleLogout}
                         >
                         </PersonalizationPage>
 
@@ -472,6 +486,8 @@ export function ConfigWebsite({initialLogInStatus}) {
                             handlePosition={handlePosition}
                             handleRawConfigSave={handleRawConfigSave}
                             handleLayoutChange={handleLayoutChange}
+                            handleLogOut = {handleLogout}
+
                         >
                         </LayoutPage>
                     </TabPanel>
@@ -482,6 +498,8 @@ export function ConfigWebsite({initialLogInStatus}) {
                             handleOldPassword={handleOldPassword}
                             handleNewPassword={handleNewPassword}
                             handlePasswordChange={handlePasswordChange}
+                            handleLogOut = {handleLogout}
+
                         >
                         </AdminPage>
                     </TabPanel>
@@ -494,6 +512,8 @@ export function ConfigWebsite({initialLogInStatus}) {
                             handleAddMail={handleAddMail}
                             handleDeleteUser={handleDeleteUser}
                             handleVerUserList={handleVerUserList}
+                            handleLogOut = {handleLogout}
+
                         >
                         </AnnouncementsPage>
                     </TabPanel>

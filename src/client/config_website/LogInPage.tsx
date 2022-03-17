@@ -7,6 +7,7 @@ import Input from '@mui/material/Input';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Snackbar from "@mui/material/Snackbar";
 
 export const LogInPage = ({
                               logInInput,
@@ -14,8 +15,14 @@ export const LogInPage = ({
                               visible,
                               handleLogIn,
                               handleClickShowPassword,
+                              open,
+                              closeSessionSnackbar,
                               children
                           }) => {
+
+    const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+        closeSessionSnackbar();
+    }
 
 
     return (
@@ -49,6 +56,13 @@ export const LogInPage = ({
                 />
             </FormControl>
             <Button onClick={handleLogIn} variant="contained">Log In</Button>
+            <Snackbar
+                anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
+                open={open}
+                autoHideDuration={2000}
+                onClose={handleClose}
+                message={'Session expired'}
+            />
         </div>
     );
 }

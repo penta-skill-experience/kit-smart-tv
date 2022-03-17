@@ -40,6 +40,7 @@ describe("Announcement page tests", () => {
                 handleAddMail={method}
                 handleDeleteUser={handleDeleteUserMock}
                 handleVerUserList={setVerifiedUsersMock}
+                handleLogOut={method}
             >
             </AnnouncementsPage>
         );
@@ -98,6 +99,7 @@ describe("add verified user tests", () => {
                 handleAddMail={errorType0Mock}
                 handleDeleteUser={method}
                 handleVerUserList={method}
+                handleLogOut={method}
             >
             </AnnouncementsPage>
         );
@@ -116,6 +118,7 @@ describe("add verified user tests", () => {
                 handleAddMail={errorType1Mock}
                 handleDeleteUser={method}
                 handleVerUserList={method}
+                handleLogOut={method}
             >
             </AnnouncementsPage>
         );
@@ -134,6 +137,7 @@ describe("add verified user tests", () => {
                 handleAddMail={errorType2Mock}
                 handleDeleteUser={method}
                 handleVerUserList={method}
+                handleLogOut={method}
             >
             </AnnouncementsPage>
         );

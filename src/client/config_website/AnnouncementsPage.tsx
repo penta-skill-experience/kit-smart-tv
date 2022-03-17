@@ -16,6 +16,7 @@ export const AnnouncementsPage = ({
                                       handleAddMail,
                                       handleDeleteUser,
                                       handleVerUserList,
+                                      handleLogOut,
                                       children
                                   }) => {
     const [open, setOpen] = React.useState(false);
@@ -132,7 +133,7 @@ export const AnnouncementsPage = ({
                         handleVerUserList();
                         adminStatePersistence.getAdminLoginState()
                             .then(() => setOpen(true))
-                            .catch(() => setSessionBar(true));
+                            .catch(() => handleLogOut());
                     }}>
                         Save Changes
                     </Button>

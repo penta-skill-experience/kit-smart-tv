@@ -20,6 +20,8 @@ describe("LogInPage tests", () => {
                 handleInput={method}
                 handleLogIn={method}
                 handleClickShowPassword={method}
+                open ={''}
+                closeSessionSnackbar = {method}
             >
             </LogInPage>
         );

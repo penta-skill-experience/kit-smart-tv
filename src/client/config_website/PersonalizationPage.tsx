@@ -22,6 +22,7 @@ interface PersonalizationPageProps {
     selectedBackground: any;
     handleBackgroundSelect: any;
     handlePersonalizationChange: any;
+    handleLogOut: any;
     children: any;
 }
 
@@ -110,9 +111,8 @@ export class PersonalizationPage extends React.Component<PersonalizationPageProp
                                     if (myBoolean) {
                                         this.setState({successfulBar: true})
                                     } else {
-                                        adminStatePersistence.getAdminLoginState()
-                                            .then(() => this.setState({errorBar: true}))
-                                            .catch(() => this.setState({sessionErrorBar: true}))
+                                        adminStatePersistence.getAdminLoginState().catch(() => this.setState({sessionErrorBar: true}))
+                                        this.props.handleLogOut();
                                     }
                                 })
                             }}

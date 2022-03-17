@@ -36,6 +36,7 @@ describe("Layout page tests", () => {
                handlePosition={method}
                handleRawConfigSave={method}
                handleLayoutChange={method}
+               handleLogOut={method}
            >
 
            </LayoutPage>

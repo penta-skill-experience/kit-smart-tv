@@ -69,6 +69,7 @@ describe("Personalization page tests", () => {
                 selectedBackground={method}
                 handleBackgroundSelect={method}
                 handlePersonalizationChange={method}
+                handleLogOut = {method}
             >
             </PersonalizationPage>
         );
@@ -97,6 +98,7 @@ describe("Personalization page tests", () => {
                 selectedBackground={method}
                 handleBackgroundSelect={method}
                 handlePersonalizationChange={method}
+                handleLogOut = {method}
             >
             </PersonalizationPage>
         )
@@ -127,6 +129,7 @@ describe("snack bar test", () => {
                 selectedBackground={method}
                 handleBackgroundSelect={method}
                 handlePersonalizationChange={handlePersonalizationChangeThenMock}
+                handleLogOut = {method}
             >
             </PersonalizationPage>
         );
@@ -146,6 +149,7 @@ describe("snack bar test", () => {
                 selectedBackground={method}
                 handleBackgroundSelect={method}
                 handlePersonalizationChange={handlePersonalizationChangeCatchMock}
+                handleLogOut = {method}
             >
             </PersonalizationPage>
         );
@@ -168,6 +172,7 @@ describe("background image render test", () => {
                 selectedBackground={method}
                 handleBackgroundSelect={method}
                 handlePersonalizationChange={method}
+                handleLogOut = {method}
             >
             </PersonalizationPage>
         )

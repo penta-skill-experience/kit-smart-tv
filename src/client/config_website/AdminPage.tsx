@@ -20,6 +20,7 @@ export const AdminPage = ({
                               handleOldPassword,
                               handleNewPassword,
                               handlePasswordChange,
+                              handleLogOut,
                               children
                           }) => {
     const [showOldPassword, setShowOldPassword] = React.useState(false);
@@ -109,7 +110,7 @@ export const AdminPage = ({
                                         } else {
                                             adminStatePersistence.getAdminLoginState()
                                                 .then(() => setErrorBar(true))
-                                                .catch(() => setSessionErrorBar(true));
+                                                .catch(() => handleLogOut());
                                         }
                                     }
                                 })

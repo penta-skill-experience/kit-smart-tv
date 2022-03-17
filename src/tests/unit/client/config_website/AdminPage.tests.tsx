@@ -21,6 +21,7 @@ describe("Admin page tests", () => {
                 handleOldPassword={method}
                 handleNewPassword={method}
                 handlePasswordChange={handlePasswordThenMock}
+                handleLogOut={method}
             >
             </AdminPage>
         );
@@ -57,6 +58,7 @@ describe("Admin page tests", () => {
                 handleOldPassword={method}
                 handleNewPassword={method}
                 handlePasswordChange={handlePasswordCatchMock}
+                handleLogOut={method}
             >
             </AdminPage>
         );
@@ -72,6 +74,7 @@ describe("Admin page tests", () => {
                 handleOldPassword={method}
                 handleNewPassword={method}
                 handlePasswordChange={handlePasswordCatchMock}
+                handleLogOut={method}
             >
             </AdminPage>
         );
