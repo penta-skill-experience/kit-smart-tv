@@ -29,7 +29,9 @@ exports[`rootComponent Snapshots rootComponent Snapshots with design values and 
           "width": "33.55vw",
         }
       }
-    />
+    >
+      <b />
+    </div>
     <div
       className="z-50"
       style={

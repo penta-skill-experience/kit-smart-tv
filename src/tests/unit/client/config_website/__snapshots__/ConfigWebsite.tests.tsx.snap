@@ -97,6 +97,7 @@ exports[`config website admin interface tests expect admin interface 1`] = `
       handleBackgroundSelect={[Function]}
       handleColorSchemeChange={[Function]}
       handleFontSizeChange={[Function]}
+      handleLogOut={[Function]}
       handlePersonalizationChange={[Function]}
       selectedBackground=""
     />
@@ -109,6 +110,7 @@ exports[`config website admin interface tests expect admin interface 1`] = `
       handleAddWidget={[Function]}
       handleDeleteWidget={[Function]}
       handleLayoutChange={[Function]}
+      handleLogOut={[Function]}
       handlePosition={[Function]}
       handleRawConfigSave={[Function]}
       handleWidgetSelection={[Function]}
@@ -129,6 +131,7 @@ exports[`config website admin interface tests expect admin interface 1`] = `
     value={0}
   >
     <AdminPage
+      handleLogOut={[Function]}
       handleNewPassword={[Function]}
       handleOldPassword={[Function]}
       handlePasswordChange={[Function]}
@@ -143,6 +146,7 @@ exports[`config website admin interface tests expect admin interface 1`] = `
     <AnnouncementsPage
       handleAddMail={[Function]}
       handleDeleteUser={[Function]}
+      handleLogOut={[Function]}
       handleMailChange={[Function]}
       handleNameChange={[Function]}
       handleVerUserList={[Function]}
@@ -161,10 +165,12 @@ exports[`config website admin interface tests expect admin interface 1`] = `
 
 exports[`config website login page tests expect login page 1`] = `
 <LogInPage
+  closeSessionSnackbar={[Function]}
   handleClickShowPassword={[Function]}
   handleInput={[Function]}
   handleLogIn={[Function]}
   logInInput=""
+  open={false}
   visible={false}
 />
 `;

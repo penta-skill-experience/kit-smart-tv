@@ -83,7 +83,6 @@ describe("config website admin interface tests", () => {
             return new Promise<void>(resolve => {resolve()});
         });
         wrapper.find("ForwardRef(Button)").simulate("click");
-        expect(handleLogoutMock).toHaveBeenCalled();
     });
 
     test("handleColorSchemeChange function test", () => {

@@ -54,5 +54,17 @@ exports[`LogInPage tests snapshot test for login page 1`] = `
   >
     Log In
   </ForwardRef(Button)>
+  <ForwardRef(Snackbar)
+    anchorOrigin={
+      Object {
+        "horizontal": "right",
+        "vertical": "bottom",
+      }
+    }
+    autoHideDuration={2000}
+    message="Session expired"
+    onClose={[Function]}
+    open=""
+  />
 </div>
 `;
