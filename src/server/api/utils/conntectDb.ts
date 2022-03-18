@@ -1,13 +1,16 @@
 import mongoose from "mongoose";
-import config from "../config.json";
+import {ensureDatabaseContent} from "./db_setup";
 
 /**
  * Connects to a MongoDB database running locally.
  */
 export async function connect(uri: string) {
-    const dbUri = uri;
     try {
-        await mongoose.connect(dbUri);
+        await mongoose.connect(uri);
+
+        //ensure db is initialized
+        await ensureDatabaseContent();
+
         console.log("DB connected");
     } catch (error) {
         console.log(error.message);

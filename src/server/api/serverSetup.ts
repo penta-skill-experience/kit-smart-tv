@@ -2,9 +2,6 @@ import https from "https";
 import {AnnouncementMailListener} from "../email_announcement_interaction/AnnouncementMailListener";
 import config from "./config.json";
 import createServer from "./utils/server";
-import cors from "cors";
-import express from "express";
-import path from "path";
 import {connect} from "./utils/conntectDb";
 
 export function serverSetup(dbUri: string): https.Server {
