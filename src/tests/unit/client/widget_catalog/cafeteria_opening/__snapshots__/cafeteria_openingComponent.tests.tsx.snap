@@ -12,7 +12,7 @@ exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all cl
       className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center"
     >
       <div>
-        Dining Hall: 
+        Dining Hall:
       </div>
       <div
         className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
@@ -25,16 +25,14 @@ exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all cl
       >
         closed
       </div>
-      until
-      <div>
-        11:00
-      </div>
+      until 
+      Fri. 11:00
     </div>
     <div
       className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center"
     >
       <div>
-        Cafeteria: 
+        Cafeteria:
       </div>
       <div
         className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
@@ -47,16 +45,14 @@ exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all cl
       >
         closed
       </div>
-      until
-      <div>
-        07:30
-      </div>
+      until 
+      Fri. 07:30
     </div>
     <div
       className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center"
     >
       <div>
-        [koeri]Werk: 
+        [koeri]Werk:
       </div>
       <div
         className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
@@ -69,16 +65,14 @@ exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all cl
       >
         closed
       </div>
-      until
-      <div>
-        11:00
-      </div>
+      until 
+      Fri. 11:00
     </div>
     <div
       className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center"
     >
       <div>
-        [pizza]Werk: 
+        [pizza]Werk:
       </div>
       <div
         className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
@@ -91,18 +85,8 @@ exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all cl
       >
         closed
       </div>
-      until
-      <div>
-        11:00
-      </div>
-    </div>
-  </div>
-  <div
-    className="font-light leading-normal sm:text-xs md:text-sm lg:text-baselg xl:text-xl 2xl:text-1.5xl 4xl:text-3xl 8xl:text-4.5xl sm:text-left"
-  >
-    <div>
-      Reopens: 
-       March 4
+      until 
+      Fri. 11:00
     </div>
   </div>
 </div>
@@ -120,7 +104,7 @@ exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all op
       className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center"
     >
       <div>
-        Dining Hall: 
+        Dining Hall:
       </div>
       <div
         className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
@@ -133,16 +117,14 @@ exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all op
       >
         open
       </div>
-      until
-      <div>
-        14:00
-      </div>
+      until 
+      14:00
     </div>
     <div
       className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center"
     >
       <div>
-        Cafeteria: 
+        Cafeteria:
       </div>
       <div
         className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
@@ -155,16 +137,14 @@ exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all op
       >
         open
       </div>
-      until
-      <div>
-        17:00
-      </div>
+      until 
+      17:00
     </div>
     <div
       className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center"
     >
       <div>
-        [koeri]Werk: 
+        [koeri]Werk:
       </div>
       <div
         className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
@@ -177,16 +157,14 @@ exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all op
       >
         open
       </div>
-      until
-      <div>
-        14:00
-      </div>
+      until 
+      14:00
     </div>
     <div
       className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center"
     >
       <div>
-        [pizza]Werk: 
+        [pizza]Werk:
       </div>
       <div
         className="font-light bg-transparent w-auto h-auto inline-block text-white sm:px-1 xl:px-2 2xl:px-3"
@@ -199,16 +177,9 @@ exports[`cafeteria_opening Component Snapshots cafeteria-opening Snapshot all op
       >
         open
       </div>
-      until
-      <div>
-        15:00
-      </div>
+      until 
+      15:00
     </div>
-  </div>
-  <div
-    className="font-light leading-normal sm:text-xs md:text-sm lg:text-baselg xl:text-xl 2xl:text-1.5xl 4xl:text-3xl 8xl:text-4.5xl sm:text-left"
-  >
-    <div />
   </div>
 </div>
 `;

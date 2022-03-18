@@ -92,7 +92,7 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                                 borderRadius: "500px"
                             }}>
                             {(this.state.openCafeteriaRightNow ? "open" : "closed")}
-                        </div>until&nbsp;{(this.state.openDinningRightNow ? this.getTime(this.state.timesDinning[1]) : this.reformatDate(this.state.dateCafeteria) + " " + this.getTime(this.state.timesDinning[0]))}
+                        </div>until&nbsp;{(this.state.openCafeteriaRightNow ? this.getTime(this.state.timesCafeteria[1]) : this.reformatDate(this.state.dateCafeteria) + " " + this.getTime(this.state.timesCafeteria[0]))}
                     </div>
                     <div className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center">
                         <div>[koeri]Werk:
@@ -104,7 +104,7 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                                 borderRadius: "500px"
                             }}>
                             {(this.state.openKoeriRightNow ? "open" : "closed")}
-                        </div>until&nbsp;{(this.state.openDinningRightNow ? this.getTime(this.state.timesDinning[1]) : this.reformatDate(this.state.dateCafeteria) + " " + this.getTime(this.state.timesDinning[0]))}
+                        </div>until&nbsp;{(this.state.openKoeriRightNow ? this.getTime(this.state.timesKoeri[1]) : this.reformatDate(this.state.dateCafeteria) + " " + this.getTime(this.state.timesKoeri[0]))}
                     </div>
                     <div className="flex sm:gap-1 lg:gap-2 4xl:gap-3 box-border items-center">
                         <div>[pizza]Werk:
@@ -116,7 +116,7 @@ export class CafeteriaOpeningDisplayComponent extends DisplayComponent<any> {
                                 borderRadius: "500px"
                             }}>
                             {(this.state.openPizzaRightNow ? "open" : "closed")}
-                        </div>until&nbsp;{(this.state.openDinningRightNow ? this.getTime(this.state.timesDinning[1]) : this.reformatDate(this.state.dateCafeteria) + " " + this.getTime(this.state.timesDinning[0]))}
+                        </div>until&nbsp;{(this.state.openPizzaRightNow ? this.getTime(this.state.timesPizza[1]) : this.reformatDate(this.state.dateCafeteria) + " " + this.getTime(this.state.timesPizza[0]))}
                     </div>
                 </div>
             </div> : <div/>)
