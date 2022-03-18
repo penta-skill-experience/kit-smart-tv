@@ -44,16 +44,8 @@ Deployment:
     ```sh
     node ./dist/server/server.js
     ```
-5. The dashboard is now accessible under your server's IP address with port `1337`, via HTTPS.
-6. If you are using a local MongoDB instance, you need to initalize an admin before you can use the dashboard and the admin interface properly.
-   While the server is running, run the following in your server's console to create an admin with your own password. This command will only succeed once.
-   ```
-   curl --location --request POST 'https://localhost:1337/admin/create-admin' \
-   --header 'Content-Type: application/json' \
-   --data-raw '{
-      "password": {{yourpassword}}
-   }'
-   ```
+7. The dashboard is now accessible under your server's IP address with port `1337`, via HTTPS.
+8. The default admin password is `admin`. Please change this immediately via the admin interface to a secure password.
 
 # Announcements
 
