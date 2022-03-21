@@ -80,15 +80,6 @@ This is an example for the MailAccountConfig.json:
 }
 ```
 
-Addidtionally, the text to remove an announcement can be altered in MailInteractionConfig.json
-
-This is an example for the MailInteractionConfig.json:
-```
-{
-    "REMOVE_ANNOUNCEMENT_TEXT": ""                  The text of an Announcement to signal, that this announcement should be removed.
-}
-```
-
 ## How to send announcements
 
 To send an announcement, send an e-mail to the USERNAME specified in ./src/server/email_announcement_interaction/MailAccountConfig.json.
