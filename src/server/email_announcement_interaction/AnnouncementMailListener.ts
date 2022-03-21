@@ -1,4 +1,4 @@
-import * as EmailConfig from "./MailAccontConfig.json";
+import * as EmailConfig from "./MailAccountConfig.json";
 import {MailListener} from "mail-listener-typescript";
 import {EmailAnnouncementExecutor} from "./EmailAnnouncementExecutor";
 import "dotenv/config"
@@ -17,18 +17,18 @@ export class AnnouncementMailListener {
         const options = {
             username: EmailConfig.USERNAME,
             password: process.env.ANNOUNCEMENT_EMAIL_ACCOUNT_PW,
-            host: EmailConfig.HOST,
-            port: EmailConfig.PORT,
-            tls: EmailConfig.TLS,
+            host:  EmailConfig.HOST,
+            port:  EmailConfig.PORT,
+            tls:  EmailConfig.TLS,
             connTimeout: EmailConfig.CONN_TIMEOUT,
-            authTimeout: EmailConfig.AUTH_TIMEOUT,
-            debug: console.log(),
-            tlsOptions: {rejectUnauthorized: EmailConfig.TLS_OPTIONS.REJECT_UNAUTHORIZED},
+            authTimeout:  EmailConfig.AUTH_TIMEOUT,
+            debug: console.log,
+            tlsOptions: { rejectUnauthorized: EmailConfig.TLS_OPTIONS.REJECT_UNAUTHORIZED },
             mailbox: EmailConfig.MAILBOX,
             searchFilter: ["NEW"],
             markSeen: true,
             fetchUnreadOnStart: EmailConfig.FETCH_UNREAD_ON_START,
-            mailParserOptions: {streamAttachments: false},
+            mailParserOptions: { streamAttachments: false },
             attachments: false,
             attachmentOptions: {
                 saveAttachments: false,
@@ -51,7 +51,7 @@ export class AnnouncementMailListener {
             }
         });
 
-        this.mailListener.on("error", async (error: any) => {
+        this.mailListener.on("error", async (error : any) =>  {
             this.stopMailListener();
             await new Promise(resolve => setTimeout(resolve, EmailConfig.ON_ERROR_TIME_TO_RECONNECTION_ATTEMPT));
             this.createMailListener();
