@@ -67,7 +67,7 @@ the .env file with the key "ANNOUNCEMENT_EMAIL_ACCOUNT_PW".
 This is an example for the MailAccountConfig.json:
 ```
 {
-  "USERNAME": "kit-smart-tv.testing@outlook.de",    This is the e-mail address the announcements must be sent to
+  "USERNAME": "ces-smart-tv@outlook.de",            This is the e-mail address the announcements must be sent to
   "HOST": "outlook.office365.com",                  The host of that e-mail address
   "PORT": 993,                                      The corresponding port
   "TLS": true,                                      Whether to use tls
