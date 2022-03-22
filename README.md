@@ -51,7 +51,7 @@ Deployment:
 
 ## Announcement Admins
 
-The announcement admins are specified in the field "ADMINS" in ./src/server/announcement_management/AnnouncementConfig.json-
+The announcement admins are specified in the field `ADMINS` in ./src/server/announcement_management/AnnouncementConfig.json-
 To add an admin, add an entry with the e-mail address of the admin to this field.
 To remove an admin, remove the corresponding entry from the field.
 
