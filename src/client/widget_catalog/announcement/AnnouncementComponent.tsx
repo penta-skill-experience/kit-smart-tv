@@ -50,7 +50,7 @@ export class AnnouncementComponent extends DisplayComponent<AnnouncementState> {
                 this.state.announcements.slice(0, AnnouncementConfig.DISPLAYED_ANNOUNCEMENTS + 1).map((announcement, index) =>
                     <div key={index}
                          className="font-light leading-normal sm:text-xs lg:text-base xl:text-base 2xl:text-xl 4xl:text-2xl sm:text-left 8xl:text-4xl">
-                        <b>{announcement.title} - {this.getAuthorForAnnouncement(announcement)} </b><br/>
+                        <b>{announcement.title}</b> - by {this.getAuthorForAnnouncement(announcement)}<br/>
                         {announcement.text} <br/>
                         {index < this.state.announcements.slice(0, AnnouncementConfig.DISPLAYED_ANNOUNCEMENTS + 1).length - 1 ?
                             <br/> : ""}
