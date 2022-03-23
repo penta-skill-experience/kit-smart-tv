@@ -10,9 +10,9 @@ exports[`announcementComponent Snapshots announcementComponent Snapshot with ann
   >
     <b>
       Announcement from alice
+       - by 
+      alice@example.com
     </b>
-     - by 
-    alice@example.com
     <br />
     This announcement is from alice
      
@@ -25,9 +25,9 @@ exports[`announcementComponent Snapshots announcementComponent Snapshot with ann
   >
     <b>
       Bobs Announcement
+       - by 
+      bob
     </b>
-     - by 
-    bob
     <br />
     This is bobs announcement.
      
